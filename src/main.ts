@@ -15,6 +15,13 @@ import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
 
 import { Font } from "@ckeditor/ckeditor5-font";
 
+const arrayRange = (start: number, stop: number, step: number) => {
+  Array.from(
+    { length: (stop - start) / step + 1 },
+    (value, index) => start + index * step,
+  );
+};
+
 BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
   plugins: [
     Essentials,
@@ -35,9 +42,12 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
       "Ubuntu Mono, Courier New, Courier, monospace",
     ],
   },
-
+  fontSize: {
+    options: Array.from({ length: 80 }, (_, i) => i + 1),
+  },
   toolbar: [
     "fontFamily",
+    "fontSize",
     "|",
     "bold",
     "italic",
