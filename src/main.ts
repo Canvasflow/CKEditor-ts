@@ -12,15 +12,8 @@ import {
 
 import { List } from "@ckeditor/ckeditor5-list";
 import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
-
 import { Font } from "@ckeditor/ckeditor5-font";
-
-const arrayRange = (start: number, stop: number, step: number) => {
-  Array.from(
-    { length: (stop - start) / step + 1 },
-    (value, index) => start + index * step,
-  );
-};
+import { Alignment } from "@ckeditor/ckeditor5-alignment";
 
 BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
   plugins: [
@@ -34,6 +27,7 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     Subscript,
     Superscript,
     Font,
+    Alignment,
   ],
   fontFamily: {
     options: [
@@ -45,9 +39,67 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
   fontSize: {
     options: Array.from({ length: 80 }, (_, i) => i + 1),
   },
+  fontColor: {
+    colors: [
+      {
+        color: "hsl(0, 0%, 0%)",
+        label: "Black",
+      },
+      {
+        color: "hsl(0, 0%, 30%)",
+        label: "Dim grey",
+      },
+      {
+        color: "hsl(0, 0%, 60%)",
+        label: "Grey",
+      },
+      {
+        color: "hsl(0, 0%, 90%)",
+        label: "Light grey",
+      },
+      {
+        color: "hsl(0, 0%, 100%)",
+        label: "White",
+        hasBorder: true,
+      },
+      // More colors.
+      // ...
+    ],
+  },
+  alignment: {
+    options: ["left", "right", "center", "justify"],
+  },
+  fontBackgroundColor: {
+    colors: [
+      {
+        color: "hsl(0, 75%, 60%)",
+        label: "Red",
+      },
+      {
+        color: "hsl(30, 75%, 60%)",
+        label: "Orange",
+      },
+      {
+        color: "hsl(60, 75%, 60%)",
+        label: "Yellow",
+      },
+      {
+        color: "hsl(90, 75%, 60%)",
+        label: "Light green",
+      },
+      {
+        color: "hsl(120, 75%, 60%)",
+        label: "Green",
+      },
+      // More colors.
+      // ...
+    ],
+  },
   toolbar: [
     "fontFamily",
     "fontSize",
+    "fontColor",
+    "fontBackgroundColor",
     "|",
     "bold",
     "italic",
@@ -58,7 +110,8 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     "strikethrough",
     "subscript",
     "superscript",
-    "fontSize",
+    "|",
+    "alignment",
   ],
 })
   .then((editor) => {
