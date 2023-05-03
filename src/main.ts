@@ -1,5 +1,5 @@
-// import { ClassicEditor } from "@ckeditor/ckeditor5-editor-classic";
 import { Essentials } from "@ckeditor/ckeditor5-essentials";
+import { BalloonEditor } from "@ckeditor/ckeditor5-editor-balloon";
 
 import {
   Bold,
@@ -12,10 +12,10 @@ import {
 
 import { List } from "@ckeditor/ckeditor5-list";
 import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
-import { BalloonEditor } from "@ckeditor/ckeditor5-editor-balloon";
+
+import { Font } from "@ckeditor/ckeditor5-font";
 
 BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
-  // The plugins are now passed directly to .create().
   plugins: [
     Essentials,
     Bold,
@@ -26,12 +26,18 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     Strikethrough,
     Subscript,
     Superscript,
+    Font,
   ],
-
-  // So is the rest of the default configuration.
+  fontFamily: {
+    options: [
+      "default",
+      "Ubuntu, Arial, sans-serif",
+      "Ubuntu Mono, Courier New, Courier, monospace",
+    ],
+  },
 
   toolbar: [
-    "",
+    "fontFamily",
     "|",
     "bold",
     "italic",
