@@ -1,18 +1,53 @@
+// import { ClassicEditor } from "@ckeditor/ckeditor5-editor-classic";
 import { Essentials } from "@ckeditor/ckeditor5-essentials";
-import { Underline } from "@ckeditor/ckeditor5-basic-styles";
-// import BalloonEditor from "./lib/BalloonEditor";
+
+import {
+  Bold,
+  Italic,
+  Underline,
+  Strikethrough,
+  Subscript,
+  Superscript,
+} from "@ckeditor/ckeditor5-basic-styles";
+
+import { List } from "@ckeditor/ckeditor5-list";
+import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
 import { BalloonEditor } from "@ckeditor/ckeditor5-editor-balloon";
-import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold";
 
-const editorElement = document.querySelector("#editor") as HTMLElement;
+BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
+  // The plugins are now passed directly to .create().
+  plugins: [
+    Essentials,
+    Bold,
+    Italic,
+    List,
+    Paragraph,
+    Underline,
+    Strikethrough,
+    Subscript,
+    Superscript,
+  ],
 
-BalloonEditor.create(editorElement, {
-  plugins: [Bold],
-  toolbar: {
-    items: ["bold"],
-  },
+  // So is the rest of the default configuration.
+
+  toolbar: [
+    "",
+    "|",
+    "bold",
+    "italic",
+    "underline",
+    "bulletedList",
+    "numberedList",
+    "underline",
+    "strikethrough",
+    "subscript",
+    "superscript",
+    "fontSize",
+  ],
 })
   .then((editor) => {
-    // window.editor = editor;
+    console.log(editor);
   })
-  .catch(console.error);
+  .catch((error) => {
+    console.error(error);
+  });
