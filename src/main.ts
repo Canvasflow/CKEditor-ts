@@ -26,6 +26,7 @@ import {
 class Timestamp extends Plugin {
   init() {
     const editor = this.editor;
+
     // The button must be registered among the UI components of the editor
     // to be displayed in the toolbar.
     editor.ui.componentFactory.add("timestamp", () => {
@@ -53,6 +54,20 @@ class Timestamp extends Plugin {
   }
 }
 
+function SpecialCharactersEmoji(editor: any) {
+  editor.plugins.get("SpecialCharacters").addItems(
+    "Emoji",
+    [
+      { title: "smiley face", character: "😊" },
+      { title: "rocket", character: "🚀" },
+      { title: "wind blowing face", character: "🌬️" },
+      { title: "floppy disk", character: "💾" },
+      { title: "heart", character: "❤️" },
+    ],
+    { label: "Emoticons" },
+  );
+}
+
 BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
   plugins: [
     Essentials,
@@ -70,6 +85,7 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     Timestamp,
     SpecialCharacters,
     SpecialCharactersEssentials,
+    SpecialCharactersEmoji,
   ],
   fontFamily: {
     options: [
