@@ -16,12 +16,17 @@ import { Font } from "@ckeditor/ckeditor5-font";
 import { Alignment } from "@ckeditor/ckeditor5-alignment";
 
 import { Link } from "@ckeditor/ckeditor5-link";
-import { ButtonView } from "@ckeditor/ckeditor5-ui";
-import { Plugin } from "ckeditor5/src/core";
 
-import { Image, ImageStyle } from "@ckeditor/ckeditor5-image";
-
+import {
+  Image,
+  ImageInsert,
+  AutoImage,
+  ImageResizeEditing,
+  ImageResizeHandles,
+} from "@ckeditor/ckeditor5-image";
 import { Timestamp } from "./plugins/custom";
+
+import { Base64UploadAdapter } from "@ckeditor/ckeditor5-upload";
 
 import {
   SpecialCharacters,
@@ -60,6 +65,39 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     SpecialCharacters,
     SpecialCharactersEssentials,
     SpecialCharactersEmoji,
+    Base64UploadAdapter,
+    Image,
+    ImageInsert,
+    AutoImage,
+    ImageResizeEditing,
+    ImageResizeHandles,
+  ],
+  toolbar: [
+    "link",
+    "fontFamily",
+    "fontSize",
+    "fontColor",
+    "fontBackgroundColor",
+    "|",
+    "bold",
+    "italic",
+    "underline",
+    "bulletedList",
+    "numberedList",
+    "strikethrough",
+    "subscript",
+    "superscript",
+    "|",
+    "alignment",
+    "|",
+    "timestamp",
+    "specialCharacters",
+    "insertImage",
+    // {
+    //   label: "More basic styles",
+    //   icon: "plus",
+    //   items: ["strikethrough", "superscript", "subscript"],
+    // },
   ],
   fontFamily: {
     options: [
@@ -68,6 +106,7 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
       "Ubuntu Mono, Courier New, Courier, monospace",
     ],
   },
+
   fontSize: {
     options: Array.from({ length: 80 }, (_, i) => i + 1),
   },
@@ -304,32 +343,6 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
       },
     ],
   },
-  toolbar: [
-    "link",
-    "fontFamily",
-    "fontSize",
-    "fontColor",
-    "fontBackgroundColor",
-    "|",
-    "bold",
-    "italic",
-    "underline",
-    "bulletedList",
-    "numberedList",
-    "strikethrough",
-    "subscript",
-    "superscript",
-    "|",
-    "alignment",
-    "|",
-    "timestamp",
-    "specialCharacters",
-    {
-      label: "More basic styles",
-      icon: "plus",
-      items: ["strikethrough", "superscript", "subscript"],
-    },
-  ],
 })
   .then((editor) => {
     console.log(editor);

@@ -1,5 +1,6 @@
 import { ButtonView } from "@ckeditor/ckeditor5-ui";
 import { Plugin } from "ckeditor5/src/core";
+
 export class Timestamp extends Plugin {
   init() {
     const editor = this.editor;
@@ -34,36 +35,13 @@ export class Timestamp extends Plugin {
           const imgBase64 = await getBase64(fileData);
           console.log(`Img base64`, imgBase64);
           const src: string = imgBase64 as string;
-          editor.model.change((writer) => {
-            const viewFragment = editor.data.processor.toView(
-              `<img src="${src}"></img>`,
+          editor.model.change(async (writer) => {
+            const viewFragment = await editor.data.processor.toView(
+              `<img src="${src}">`,
             );
-            console.log(viewFragment);
             const modelFragment = editor.data.toModel(viewFragment);
-
-            writer.model.insertContent(modelFragment);
-            // writer.setSelection( editor.model.document.getRoot(), 'end' );
-            const imageElement = writer.createElement("image", {
-              src,
-              alt: "random text",
-            });
-
-            editor.model.insertContent(
-              imageElement,
-              editor.model.document.selection,
-            );
+            editor.model.insertContent(modelFragment);
           });
-          /*editor.model.change((writer) => {
-                //editor.model.insertContent(writer.appendElement)
-              });*/
-
-          /*
-              
-                const viewFragment = editor.data.processor.toView( content );
-const modelFragment = editor.data.toModel( viewFragment );
-
-editor.model.insertContent( modelFragment );
-              */
         });
       });
 
