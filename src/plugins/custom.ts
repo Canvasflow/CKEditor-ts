@@ -31,9 +31,7 @@ export class Timestamp extends Plugin {
         w.showOpenFilePicker(pickerOpts).then(async (response: any) => {
           const [fileHandle] = response;
           const fileData = await fileHandle.getFile();
-          console.log(`RESPONSE`, fileData);
           const imgBase64 = await getBase64(fileData);
-          console.log(`Img base64`, imgBase64);
           const src: string = imgBase64 as string;
           editor.model.change(async (writer) => {
             const viewFragment = await editor.data.processor.toView(

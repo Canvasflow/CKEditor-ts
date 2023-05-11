@@ -33,6 +33,12 @@ import {
   SpecialCharactersEssentials,
 } from "@ckeditor/ckeditor5-special-characters";
 
+import { Picker } from "./plugins/picker/picker";
+
+import { FontColor } from "./plugins/fontcolor/fontcolor";
+
+import { Colors } from "./plugins/colors/colors";
+
 function SpecialCharactersEmoji(editor: any) {
   editor.plugins.get("SpecialCharacters").addItems(
     "Emoji",
@@ -71,28 +77,31 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     AutoImage,
     ImageResizeEditing,
     ImageResizeHandles,
+    Colors,
+    // FontColor,
   ],
   toolbar: [
-    "link",
-    "fontFamily",
-    "fontSize",
-    "fontColor",
-    "fontBackgroundColor",
-    "|",
-    "bold",
-    "italic",
-    "underline",
-    "bulletedList",
-    "numberedList",
-    "strikethrough",
-    "subscript",
-    "superscript",
-    "|",
-    "alignment",
-    "|",
-    "timestamp",
-    "specialCharacters",
-    "insertImage",
+    // "link",
+    // "fontFamily",
+    // "fontSize",
+    //"fontColor",
+    // "fontBackgroundColor",
+    // "|",
+    // "bold",
+    // "italic",
+    // "underline",
+    // "bulletedList",
+    // "numberedList",
+    // "strikethrough",
+    // "subscript",
+    // "superscript",
+    // "|",
+    // "alignment",
+    // "|",
+    // "timestamp",
+    // "specialCharacters",
+    // "insertImage",
+    "abbreviation",
     // {
     //   label: "More basic styles",
     //   icon: "plus",

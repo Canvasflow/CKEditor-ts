@@ -31,6 +31,7 @@
     "@ckeditor/ckeditor5-special-characters": "^37.1.0",
     "@ckeditor/ckeditor5-theme-lark": "^37.1.0",
     "@ckeditor/ckeditor5-upload": "^37.1.0",
-    "@ckeditor/vite-plugin-ckeditor5": "^0.1.1"
+    "@ckeditor/vite-plugin-ckeditor5": "^0.1.1",
+    "@solomoto/ckeditor5-font-color": "^17.0.0"
   }
 }
