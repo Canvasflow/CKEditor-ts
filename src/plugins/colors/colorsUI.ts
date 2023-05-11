@@ -1,7 +1,7 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
-import { FormView } from "./colorsview";
+import { FormView } from "./colorsView";
 
 export class ColorPickerUI extends Plugin {
   _balloon: any;
@@ -36,6 +36,7 @@ export class ColorPickerUI extends Plugin {
 
     this.listenTo(formView, "submit", () => {
       const input = document.getElementById("color-picker");
+      input.type = "color";
       input?.click();
     });
 
@@ -54,6 +55,12 @@ export class ColorPickerUI extends Plugin {
   }
 
   showUI() {
+    setTimeout(() => {
+      const input = document.getElementById("color-picker");
+      if (input) {
+        input.setAttribute("style", "visibility: hidden;");
+      }
+    }, 10);
     this._balloon.add({
       view: this.formView,
       position: null, //this.getBalloonPositionData(),
@@ -64,6 +71,10 @@ export class ColorPickerUI extends Plugin {
 
   hideUI() {
     console.log("i tried to close the picker");
+    console.log(
+      "value of picker is:",
+      document.getElementById("color-picker").value,
+    );
     // this.formView.element.reset();
     // this._balloon.remove(this.formView);
     // this.editor.editing.view.focus();
