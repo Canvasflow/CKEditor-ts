@@ -3,7 +3,7 @@ import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { FormView } from "./colorsview";
 
-export class AbbreviationUI extends Plugin {
+export class ColorPickerUI extends Plugin {
   _balloon: any;
   formView: any;
   static get requires() {
@@ -12,21 +12,18 @@ export class AbbreviationUI extends Plugin {
 
   init() {
     const editor = this.editor;
-
-    // Create the balloon and the form view.
     this._balloon = this.editor.plugins.get(ContextualBalloon);
     this.formView = this._createFormView();
 
-    editor.ui.componentFactory.add("abbreviation", () => {
+    editor.ui.componentFactory.add("colorPicker", () => {
       const button = new ButtonView();
 
       button.label = "Color picker";
       button.tooltip = true;
       button.withText = true;
 
-      // Show the UI on button click.
       this.listenTo(button, "execute", () => {
-        this._showUI();
+        this.showUI();
       });
 
       return button;
@@ -37,71 +34,51 @@ export class AbbreviationUI extends Plugin {
     const editor = this.editor;
     const formView = new FormView(editor.locale);
 
-    // Execute the command after clicking the "Save" button.
     this.listenTo(formView, "submit", () => {
-      // Grab values from the abbreviation and title input fields.
-      const title = formView.titleInputView.fieldView.element.value;
-      const abbr = formView.abbrInputView.fieldView.element.value;
-
-      editor.model.change((writer) => {
-        editor.model.insertContent(
-          writer.createText(abbr, { abbreviation: title }),
-        );
-      });
-
-      // Hide the form view after submit.
-      this._hideUI();
+      const input = document.getElementById("color-picker");
+      input?.click();
     });
 
-    // Hide the form view after clicking the "Cancel" button.
     this.listenTo(formView, "cancel", () => {
-      this._hideUI();
+      this.hideUI();
     });
 
-    // Hide the form view when clicking outside the balloon.
     clickOutsideHandler({
       emitter: formView,
       activator: () => this._balloon.visibleView === formView,
       contextElements: [this._balloon.view.element],
-      callback: () => this._hideUI(),
+      callback: () => this.hideUI(),
     });
 
     return formView;
   }
 
-  _showUI() {
+  showUI() {
     this._balloon.add({
       view: this.formView,
-      position: this._getBalloonPositionData(),
+      position: null, //this.getBalloonPositionData(),
     });
 
     this.formView.focus();
   }
 
-  _hideUI() {
-    // Clear the input field values and reset the form.
-    this.formView.abbrInputView.fieldView.value = "";
-    this.formView.titleInputView.fieldView.value = "";
-    this.formView.element.reset();
-
-    this._balloon.remove(this.formView);
-
-    // Focus the editing view after inserting the abbreviation so the user can start typing the content
-    // right away and keep the editor focused.
-    this.editor.editing.view.focus();
+  hideUI() {
+    console.log("i tried to close the picker");
+    // this.formView.element.reset();
+    // this._balloon.remove(this.formView);
+    // this.editor.editing.view.focus();
   }
 
-  _getBalloonPositionData() {
-    const view = this.editor.editing.view;
-    const viewDocument = view.document;
-    console.log(viewDocument);
-    let target: any;
+  // getBalloonPositionData() {
+  //   const view = this.editor.editing.view;
+  //   const viewDocument = view.document;
+  //   let target: any;
 
-    target = () =>
-      view.domConverter.viewRangeToDom(viewDocument.selection.getFirstRange());
+  //   target = () =>
+  //     view.domConverter.viewRangeToDom(viewDocument.selection.getFirstRange());
 
-    return {
-      target,
-    };
-  }
+  //   return {
+  //     target,
+  //   };
+  // }
 }

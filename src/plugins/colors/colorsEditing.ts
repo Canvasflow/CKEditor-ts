@@ -1,6 +1,6 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 
-export class AbbreviationEditing extends Plugin {
+export class ColorEditing extends Plugin {
   init() {
     this._defineSchema();
     this._defineConverters();

@@ -35,8 +35,6 @@ import {
 
 import { Picker } from "./plugins/picker/picker";
 
-import { FontColor } from "./plugins/fontcolor/fontcolor";
-
 import { Colors } from "./plugins/colors/colors";
 
 function SpecialCharactersEmoji(editor: any) {
@@ -101,7 +99,7 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     // "timestamp",
     // "specialCharacters",
     // "insertImage",
-    "abbreviation",
+    "colorPicker",
     // {
     //   label: "More basic styles",
     //   icon: "plus",
