@@ -35,8 +35,10 @@ export class ColorPickerUI extends Plugin {
     const formView = new FormView(editor.locale);
 
     this.listenTo(formView, "submit", () => {
+      console.log("called submit");
       const input = document.getElementById("color-picker");
       input.type = "color";
+
       input?.click();
       console.log(formView);
     });
@@ -59,7 +61,7 @@ export class ColorPickerUI extends Plugin {
     setTimeout(() => {
       const input = document.getElementById("color-picker");
       if (input) {
-        input.setAttribute("style", "visibility: hidden;");
+        input.setAttribute("style", "");
       }
     }, 10);
     this.balloon.add({
@@ -67,7 +69,7 @@ export class ColorPickerUI extends Plugin {
       position: this.getBalloonPositionData(),
     });
 
-    this.formView.focus();
+    // this.formView.focus();
   }
 
   hideUI() {
