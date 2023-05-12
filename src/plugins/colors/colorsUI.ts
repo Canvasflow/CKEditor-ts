@@ -4,7 +4,7 @@ import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { FormView } from "./colorsView";
 
 export class ColorPickerUI extends Plugin {
-  _balloon: any;
+  balloon: any;
   formView: any;
   static get requires() {
     return [ContextualBalloon];
@@ -12,8 +12,8 @@ export class ColorPickerUI extends Plugin {
 
   init() {
     const editor = this.editor;
-    this._balloon = this.editor.plugins.get(ContextualBalloon);
-    this.formView = this._createFormView();
+    this.balloon = this.editor.plugins.get(ContextualBalloon);
+    this.formView = this.createFormView();
 
     editor.ui.componentFactory.add("colorPicker", () => {
       const button = new ButtonView();
@@ -30,7 +30,7 @@ export class ColorPickerUI extends Plugin {
     });
   }
 
-  _createFormView() {
+  createFormView() {
     const editor = this.editor;
     const formView = new FormView(editor.locale);
 
@@ -38,6 +38,7 @@ export class ColorPickerUI extends Plugin {
       const input = document.getElementById("color-picker");
       input.type = "color";
       input?.click();
+      console.log(formView);
     });
 
     this.listenTo(formView, "cancel", () => {
@@ -46,8 +47,8 @@ export class ColorPickerUI extends Plugin {
 
     clickOutsideHandler({
       emitter: formView,
-      activator: () => this._balloon.visibleView === formView,
-      contextElements: [this._balloon.view.element],
+      activator: () => this.balloon.visibleView === formView,
+      contextElements: [this.balloon.view.element],
       callback: () => this.hideUI(),
     });
 
@@ -61,9 +62,9 @@ export class ColorPickerUI extends Plugin {
         input.setAttribute("style", "visibility: hidden;");
       }
     }, 10);
-    this._balloon.add({
+    this.balloon.add({
       view: this.formView,
-      position: null, //this.getBalloonPositionData(),
+      position: this.getBalloonPositionData(),
     });
 
     this.formView.focus();
@@ -75,21 +76,24 @@ export class ColorPickerUI extends Plugin {
       "value of picker is:",
       document.getElementById("color-picker").value,
     );
+
+    let selectedColor = document.getElementById("selected-color");
+    selectedColor.value = document.getElementById("color-picker").value;
     // this.formView.element.reset();
     // this._balloon.remove(this.formView);
     // this.editor.editing.view.focus();
   }
 
-  // getBalloonPositionData() {
-  //   const view = this.editor.editing.view;
-  //   const viewDocument = view.document;
-  //   let target: any;
+  getBalloonPositionData() {
+    const view = this.editor.editing.view;
+    const viewDocument = view.document;
+    let target: any;
 
-  //   target = () =>
-  //     view.domConverter.viewRangeToDom(viewDocument.selection.getFirstRange());
+    target = () =>
+      view.domConverter.viewRangeToDom(viewDocument.selection.getFirstRange());
 
-  //   return {
-  //     target,
-  //   };
-  // }
+    return {
+      target,
+    };
+  }
 }
