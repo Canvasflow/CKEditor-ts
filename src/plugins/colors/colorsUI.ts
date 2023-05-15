@@ -38,7 +38,6 @@ export class ColorPickerUI extends Plugin {
       console.log("called submit");
       const input = document.getElementById("color-picker");
       input.type = "color";
-
       input?.click();
       console.log(formView);
     });
@@ -61,7 +60,7 @@ export class ColorPickerUI extends Plugin {
     setTimeout(() => {
       const input = document.getElementById("color-picker");
       if (input) {
-        input.setAttribute("style", "");
+        input.setAttribute("style", "visibility: hidden");
       }
     }, 10);
     this.balloon.add({
@@ -79,8 +78,11 @@ export class ColorPickerUI extends Plugin {
       document.getElementById("color-picker").value,
     );
 
+    const color = document.getElementById("color-picker").value;
+
     let selectedColor = document.getElementById("selected-color");
-    selectedColor.value = document.getElementById("color-picker").value;
+    selectedColor.value = color;
+    selectedColor.setAttribute("style", `background-color:${color}`);
     // this.formView.element.reset();
     // this._balloon.remove(this.formView);
     // this.editor.editing.view.focus();
