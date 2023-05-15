@@ -2,6 +2,8 @@ import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { FormView } from "./colorsView";
+import { customColors } from "./colorValues";
+import Command from "@ckeditor/ckeditor5-core/src/command";
 
 export class ColorPickerUI extends Plugin {
   balloon: any;
@@ -33,17 +35,16 @@ export class ColorPickerUI extends Plugin {
   createFormView() {
     const editor = this.editor;
     const formView = new FormView(editor.locale);
-
+    console.log(formView);
     this.listenTo(formView, "submit", () => {
-      console.log("called submit");
       const input = document.getElementById("color-picker");
       input.type = "color";
       input?.click();
-      console.log(formView);
     });
 
-    this.listenTo(formView, "cancel", () => {
-      this.hideUI();
+    this.listenTo(formView, "execute", (element, data) => {
+      console.log("clicked execute", data);
+      //  editor.execute("fontColor", { value: "#afafaf" }); ERROR HERE
     });
 
     clickOutsideHandler({
@@ -67,22 +68,29 @@ export class ColorPickerUI extends Plugin {
       view: this.formView,
       position: this.getBalloonPositionData(),
     });
-
-    // this.formView.focus();
   }
 
   hideUI() {
     console.log("i tried to close the picker");
-    console.log(
-      "value of picker is:",
-      document.getElementById("color-picker").value,
-    );
-
     const color = document.getElementById("color-picker").value;
+    if (color && color !== "#000000") {
+      console.log("value of picker is:", color);
+      customColors.push({
+        label: color,
+        color: color,
+        source: "customs",
+      });
+      this.init();
+      this.balloon.add({
+        view: this.formView,
+        position: this.getBalloonPositionData(),
+      });
+    }
 
-    let selectedColor = document.getElementById("selected-color");
-    selectedColor.value = color;
-    selectedColor.setAttribute("style", `background-color:${color}`);
+    // let selectedColor = document.getElementById("selected-color");
+    // selectedColor.value = color;
+    // selectedColor.setAttribute("style", `background-color:${color}`);
+
     // this.formView.element.reset();
     // this._balloon.remove(this.formView);
     // this.editor.editing.view.focus();

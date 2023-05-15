@@ -1,9 +1,12 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
+import { FontColorCommand } from "./colorCommands";
 
 export class ColorEditing extends Plugin {
   init() {
     this._defineSchema();
     this._defineConverters();
+
+    //this.editor.commands.add("fontColor", new FontColorCommand(this.editor));
   }
   _defineSchema() {
     const schema = this.editor.model.schema;
