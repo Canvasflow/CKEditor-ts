@@ -35,8 +35,6 @@ import {
 
 import { Colors } from "./plugins/colors/colors";
 
-import { FontColor } from "./plugins/fontcolor/fontcolor";
-
 function SpecialCharactersEmoji(editor: any) {
   editor.plugins.get("SpecialCharacters").addItems(
     "Emoji",
@@ -62,7 +60,7 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     Strikethrough,
     Subscript,
     Superscript,
-    //Font,
+    Font,
     Alignment,
     Link,
     Timestamp,
@@ -76,31 +74,30 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     ImageResizeEditing,
     ImageResizeHandles,
     Colors,
-    //FontColor,
   ],
   toolbar: [
-    // "link",
-    // "fontFamily",
-    // "fontSize",
-
-    // "fontBackgroundColor",
-    // "|",
-    // "bold",
-    // "italic",
-    // "underline",
-    // "bulletedList",
-    // "numberedList",
-    // "strikethrough",
-    // "subscript",
-    // "superscript",
-    // "|",
-    // "alignment",
-    // "|",
-    // "timestamp",
-    // "specialCharacters",
-    // "insertImage",
-    //"fontColor",
+    "link",
+    "fontFamily",
+    "fontSize",
     "colorPicker",
+    "fontBackgroundColor",
+    "|",
+    "bold",
+    "italic",
+    "underline",
+    "bulletedList",
+    "numberedList",
+    "strikethrough",
+    "subscript",
+    "superscript",
+    "|",
+    "alignment",
+    "|",
+    "timestamp",
+    "specialCharacters",
+    "insertImage",
+    "fontColor",
+
     // {
     //   label: "More basic styles",
     //   icon: "plus",
@@ -353,7 +350,7 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
   },
 })
   .then((editor) => {
-    console.log(editor);
+    //console.log(editor);
   })
   .catch((error) => {
     console.error(error);
