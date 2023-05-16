@@ -17,30 +17,25 @@ export class FontColorCommand extends Command {
   }
 
   execute(paletteKey: any, color: any) {
+    console.log("in command execute");
     const model = this.editor.model;
     const document = model.document;
     const selection = document.selection;
     const value = paletteKey || color;
-
     model.change((writer) => {
-      if (selection.isCollapsed) {
-        if (value) {
-          writer.setSelectionAttribute(FONT_COLOR, value);
-        } else {
-          writer.removeSelectionAttribute(FONT_COLOR);
-        }
-      } else {
-        const ranges = model.schema.getValidRanges(
-          selection.getRanges(),
-          FONT_COLOR,
-        );
+      const ranges = model.schema.getValidRanges(
+        selection.getRanges(),
+        FONT_COLOR,
+      );
 
-        for (const range of ranges) {
-          if (value) {
-            writer.setAttribute(FONT_COLOR, value, range);
-          } else {
-            writer.removeAttribute(FONT_COLOR, range);
-          }
+      for (const range of ranges) {
+        if (value) {
+          writer.setAttributes(
+            {
+              fontColor: value,
+            },
+            range,
+          );
         }
       }
     });

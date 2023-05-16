@@ -1,48 +1,48 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { FontColorCommand } from "./colorCommands";
+const FONT_COLOR = "fontColor";
+const THEME_COLOR_ATTRIBUTE = "theme-palette";
+import { defaultColors, customColors } from "./colorValues";
+
+function renderDowncastElement(themeColors: any) {
+  return (modelAttributeValue: any, viewWriter: any) => {
+    const themeColor = themeColors.find(
+      (item: any) => item.paletteKey === modelAttributeValue,
+    );
+    const attributes = themeColor
+      ? {
+          [THEME_COLOR_ATTRIBUTE]: themeColor.paletteKey,
+          style: `color:${themeColor.color}`,
+        }
+      : modelAttributeValue
+      ? {
+          style: `color:${modelAttributeValue}`,
+        }
+      : {};
+    return viewWriter.writer.createAttributeElement("span", attributes, {
+      priority: 7,
+    });
+  };
+}
 
 export class ColorEditing extends Plugin {
-  init() {
-    this._defineSchema();
-    this._defineConverters();
-
-    //this.editor.commands.add("fontColor", new FontColorCommand(this.editor));
+  static get pluginName() {
+    return "ColorEditing";
   }
-  _defineSchema() {
-    const schema = this.editor.model.schema;
 
-    schema.extend("$text", {
-      allowAttributes: ["color-picker"],
+  constructor(editor: any) {
+    super(editor);
+
+    editor.conversion.for("downcast").attributeToElement({
+      model: FONT_COLOR,
+      view: renderDowncastElement(defaultColors),
     });
-  }
-  _defineConverters() {
-    const conversion = this.editor.conversion;
 
-    // conversion.for("downcast").attributeToElement({
-    //   model: "color-picker",
-    //   view: (modelAttributeValue, conversionApi) => {
-    //     const { writer } = conversionApi;
-    //     return writer.createAttributeElement("abbr", {
-    //       title: modelAttributeValue,
-    //     });
-    //   },
-    // });
-
-    // // Conversion from a view element to a model attribute
-    // conversion.for("upcast").elementToAttribute({
-    //   view: {
-    //     name: "abbr",
-    //     attributes: ["title"],
-    //   },
-    //   model: {
-    //     key: "abbreviation",
-
-    //     // Callback function provides access to the view element
-    //     value: (viewElement: any) => {
-    //       const title = viewElement.getAttribute("title");
-    //       return title;
-    //     },
-    //   },
-    // });
+    editor.commands.add(FONT_COLOR, new FontColorCommand(editor));
+    editor.model.schema.extend("$text", { allowAttributes: FONT_COLOR });
+    editor.model.schema.setAttributeProperties(FONT_COLOR, {
+      isFormatting: true,
+      copyOnEnter: true,
+    });
   }
 }
