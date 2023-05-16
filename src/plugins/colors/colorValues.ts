@@ -9,6 +9,7 @@ export const defaultColors: any[] = [
   { label: "#2c3e50", color: "#2c3e50", source: "defaults" },
   { label: "#f1c40f", color: "#f1c40f", source: "defaults" },
   { label: "#e74c3c", color: "#e74c3c", source: "defaults" },
+  { label: "#afafaf", color: "#afafaf", source: "defaults" },
 ];
 
 export let customColors: any[] = [];

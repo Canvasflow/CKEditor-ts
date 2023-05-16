@@ -1,7 +1,7 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
-import { FormView } from "./colorsView";
+import { ColorsView } from "./colorsView";
 import { customColors } from "./colorValues";
 import Command from "@ckeditor/ckeditor5-core/src/command";
 
@@ -34,11 +34,37 @@ export class ColorPickerUI extends Plugin {
 
   createFormView() {
     const editor = this.editor;
-    const formView = new FormView(editor.locale);
+    const formView = new ColorsView(editor.locale);
     console.log(formView);
     this.listenTo(formView, "submit", () => {
-      const input = document.getElementById("color-picker");
+      const input: HTMLInputElement | null = document.getElementById(
+        "color-picker",
+      ) as HTMLInputElement;
+      if (input === null) {
+        return;
+      }
       input.type = "color";
+      input.setAttribute("style", "visibility: hidden");
+      input.onchange = (e: any) => {
+        console.log(`AQUI SELECCIONE EL COLOR`, e.target.value);
+        const color = e.target.value;
+        if (color && color !== "#000000") {
+          customColors.push({
+            label: color,
+            color: color,
+            source: "customs",
+          });
+          this.init();
+          this.balloon.add({
+            view: this.formView,
+            position: this.getBalloonPositionData(),
+          });
+          // const input = document.getElementById("color-picker");
+          // input.value = "#000000";
+        }
+        // const input = document.getElementById("color-picker");
+        // input.value = "#000000";
+      };
       input?.click();
     });
 
@@ -58,12 +84,6 @@ export class ColorPickerUI extends Plugin {
   }
 
   showUI() {
-    setTimeout(() => {
-      const input = document.getElementById("color-picker");
-      if (input) {
-        input.setAttribute("style", "visibility: hidden");
-      }
-    }, 10);
     this.balloon.add({
       view: this.formView,
       position: this.getBalloonPositionData(),
@@ -71,29 +91,30 @@ export class ColorPickerUI extends Plugin {
   }
 
   hideUI() {
-    console.log("i tried to close the picker");
-    const color = document.getElementById("color-picker").value;
-    if (color && color !== "#000000") {
-      console.log("value of picker is:", color);
-      customColors.push({
-        label: color,
-        color: color,
-        source: "customs",
-      });
-      this.init();
-      this.balloon.add({
-        view: this.formView,
-        position: this.getBalloonPositionData(),
-      });
-    }
-
+    //this.formView.element.reset();
+    //this.balloon.remove(this.formView);
+    // this.editor.editing.view.focus();
+    // console.log("i tried to close the picker");
+    // const color = document.getElementById("color-picker").value;
+    // if (color && color !== "#000000") {
+    //   console.log("value of picker is:", color);
+    //   customColors.push({
+    //     label: color,
+    //     color: color,
+    //     source: "customs",
+    //   });
+    //   this.init();
+    //   this.balloon.add({
+    //     view: this.formView,
+    //     position: this.getBalloonPositionData(),
+    //   });
+    //   // const input = document.getElementById("color-picker");
+    //   // input.value = "#000000";
+    // } else {
+    // }
     // let selectedColor = document.getElementById("selected-color");
     // selectedColor.value = color;
     // selectedColor.setAttribute("style", `background-color:${color}`);
-
-    // this.formView.element.reset();
-    // this._balloon.remove(this.formView);
-    // this.editor.editing.view.focus();
   }
 
   getBalloonPositionData() {

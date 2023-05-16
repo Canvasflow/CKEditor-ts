@@ -8,20 +8,22 @@ import {
 } from "@ckeditor/ckeditor5-ui";
 
 import { defaultColors, customColors } from "./colorValues";
-
-export class FormView extends View {
+import { FocusTracker } from "@ckeditor/ckeditor5-utils";
+export class ColorsView extends View {
   columns: number | undefined;
+  items: any;
+  focusTracker: FocusTracker;
 
   constructor(locale: any) {
     super(locale);
-
-    let items = this.createCollection();
-    items.add(this.createLabel("Default Colors"));
+    this.focusTracker = new FocusTracker();
+    this.items = this.createCollection();
+    this.items.add(this.createLabel("Default Colors"));
     if (defaultColors.length > 0) {
       const colorList = defaultColors.filter((value) => {
         return value.source === "defaults";
       });
-      items.add(this.createColorsGrid(colorList));
+      this.items.add(this.createColorsGrid(colorList));
     }
 
     let pickerButton = this.createButton(
@@ -30,15 +32,15 @@ export class FormView extends View {
       "",
     );
     pickerButton.type = "submit";
-    items.add(this.createLabel("Custom colors"));
+    this.items.add(this.createLabel("Custom colors"));
     if (customColors.length > 0) {
       const colorList = customColors.filter((value) => {
         return value.source === "customs";
       });
-      items.add(this.createColorsGrid(colorList));
+      this.items.add(this.createColorsGrid(colorList));
     }
-    items.add(pickerButton);
-    items.add(this.createColorInput());
+    this.items.add(pickerButton);
+    this.items.add(this.createColorInput());
 
     //items.add(this.createBlankColorInput("#fff"));
 
@@ -47,15 +49,24 @@ export class FormView extends View {
       attributes: {
         class: ["ck", "ck-colors"],
       },
-      children: items,
+      children: this.items,
     });
   }
 
   render() {
     super.render();
+
     submitHandler({
       view: this,
     });
+    this.items._items.forEach((view: { element: Element }) => {
+      this.focusTracker.add(view.element);
+    });
+  }
+
+  destroy() {
+    super.destroy();
+    this.focusTracker.destroy();
   }
 
   createButton(label: any, icon: any, className: any) {
@@ -88,8 +99,6 @@ export class FormView extends View {
   createColorInput() {
     const colorInput = new InputView(this.locale);
     colorInput.id = "color-picker";
-    //colorInput.delegate("change").to(this);
-
     return colorInput;
   }
 
