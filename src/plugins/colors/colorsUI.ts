@@ -50,6 +50,10 @@ export class ColorPickerUI extends Plugin {
             color: color,
             source: "customs",
           });
+          localStorage.setItem(
+            "customColorsSet",
+            JSON.stringify(JSON.stringify(Array.from(customColorsSet))),
+          );
 
           this.balloon.remove(this.formView);
           this.init();

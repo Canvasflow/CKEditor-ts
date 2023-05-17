@@ -16,6 +16,3 @@ export const defaultColors = new Set();
 });
 
 export let customColorsSet = new Set();
-
-localStorage.setItem("defaultColors", JSON.stringify(defaultColors));
-localStorage.setItem("customColorsSet", JSON.stringify(customColorsSet));

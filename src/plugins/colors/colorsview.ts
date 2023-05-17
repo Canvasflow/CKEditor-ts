@@ -19,9 +19,13 @@ export class ColorsView extends View {
     this.focusTracker = new FocusTracker();
     this.items = this.createCollection();
     this.items.add(this.createLabel("Default Colors"));
-    if (defaultColors.size > 0) {
-      const colorList = Array.from(defaultColors);
-      this.items.add(this.createColorsGrid(colorList));
+    const defaultColorList = JSON.parse(
+      localStorage.getItem("defaultColors") || "[]",
+    );
+
+    if (defaultColorList.length > 0) {
+      // const colorList = Array.from(defaultColors);
+      this.items.add(this.createColorsGrid(defaultColorList));
     }
 
     let pickerButton = this.createButton(
