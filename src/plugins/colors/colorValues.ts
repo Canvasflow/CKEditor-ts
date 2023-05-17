@@ -1,4 +1,5 @@
-export const defaultColors: any[] = [
+export const defaultColors = new Set();
+[
   { label: "#1abc9c", color: "#1abc9c", source: "defaults" },
   { label: "#2ecc71", color: "#2ecc71", source: "defaults" },
   { label: "#3498db", color: "#3498db", source: "defaults" },
@@ -10,6 +11,11 @@ export const defaultColors: any[] = [
   { label: "#f1c40f", color: "#f1c40f", source: "defaults" },
   { label: "#e74c3c", color: "#e74c3c", source: "defaults" },
   { label: "#afafaf", color: "#afafaf", source: "defaults" },
-];
+].map((value) => {
+  defaultColors.add(value);
+});
 
 export let customColorsSet = new Set();
+
+localStorage.setItem("defaultColors", JSON.stringify(defaultColors));
+localStorage.setItem("customColorsSet", JSON.stringify(customColorsSet));
