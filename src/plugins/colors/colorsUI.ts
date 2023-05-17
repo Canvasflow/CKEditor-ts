@@ -2,7 +2,7 @@ import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { ColorsView } from "./colorsView";
-import { customColors } from "./colorValues";
+import { customColorsSet } from "./colorValues";
 
 export class ColorPickerUI extends Plugin {
   balloon: any;
@@ -45,7 +45,7 @@ export class ColorPickerUI extends Plugin {
       input.onchange = (e: any) => {
         const color = e.target.value;
         if (color && color !== "#000000") {
-          customColors.push({
+          customColorsSet.add({
             label: color,
             color: color,
             source: "customs",
@@ -95,7 +95,7 @@ export class ColorPickerUI extends Plugin {
       if (!firstRange) {
         return;
       }
-      view.domConverter.viewRangeToDom(firstRange);
+      return view.domConverter.viewRangeToDom(firstRange);
     };
     return {
       target,

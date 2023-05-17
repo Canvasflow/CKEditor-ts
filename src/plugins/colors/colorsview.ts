@@ -7,7 +7,7 @@ import {
   LabelView,
 } from "@ckeditor/ckeditor5-ui";
 
-import { defaultColors, customColors } from "./colorValues";
+import { defaultColors, customColorsSet } from "./colorValues";
 import { FocusTracker } from "@ckeditor/ckeditor5-utils";
 export class ColorsView extends View {
   columns: number | undefined;
@@ -33,10 +33,8 @@ export class ColorsView extends View {
     );
     pickerButton.type = "submit";
     this.items.add(this.createLabel("Custom colors"));
-    if (customColors.length > 0) {
-      const colorList = customColors.filter((value) => {
-        return value.source === "customs";
-      });
+    if (customColorsSet.size > 0) {
+      const colorList = Array.from(customColorsSet);
       this.items.add(this.createColorsGrid(colorList));
     }
     this.items.add(pickerButton);

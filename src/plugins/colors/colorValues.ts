@@ -12,4 +12,4 @@ export const defaultColors: any[] = [
   { label: "#afafaf", color: "#afafaf", source: "defaults" },
 ];
 
-export let customColors: any[] = [];
+export let customColorsSet = new Set();
