@@ -93,10 +93,8 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     "|",
     "alignment",
     "|",
-    "timestamp",
     "specialCharacters",
     "insertImage",
-    "fontColor",
 
     // {
     //   label: "More basic styles",

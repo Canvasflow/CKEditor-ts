@@ -90,12 +90,13 @@ export class ColorPickerUI extends Plugin {
   getBalloonPositionData() {
     const view = this.editor.editing.view;
     const viewDocument = view.document;
-    const selection = this.editor.model.document.selection;
-    console.log(selection.getFirstRange());
-    console.log(viewDocument.selection.getFirstRange());
-    let target = () =>
-      view.domConverter.viewRangeToDom(selection.getFirstRange());
-
+    let target = () => {
+      const firstRange = viewDocument.selection.getFirstRange();
+      if (!firstRange) {
+        return;
+      }
+      view.domConverter.viewRangeToDom(firstRange);
+    };
     return {
       target,
     };

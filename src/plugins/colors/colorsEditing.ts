@@ -2,7 +2,7 @@ import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { FontColorCommand } from "./colorCommands";
 const FONT_COLOR = "fontColor";
 const THEME_COLOR_ATTRIBUTE = "theme-palette";
-import { defaultColors, customColors } from "./colorValues";
+import { defaultColors } from "./colorValues";
 
 function renderDowncastElement(themeColors: any) {
   return (modelAttributeValue: any, viewWriter: any) => {

@@ -17,7 +17,6 @@ export class FontColorCommand extends Command {
   }
 
   execute(paletteKey: any, color: any) {
-    console.log("in command execute");
     const model = this.editor.model;
     const document = model.document;
     const selection = document.selection;
