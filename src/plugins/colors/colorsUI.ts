@@ -45,22 +45,26 @@ export class ColorPickerUI extends Plugin {
       input.onchange = (e: any) => {
         const color = e.target.value;
         if (color && color !== "#000000") {
-          customColorsSet.add({
-            label: color,
-            color: color,
-            source: "customs",
+          const findList = Array.from(customColorsSet).find((value: any) => {
+            if (value.color === color) return value;
           });
-          localStorage.setItem(
-            "customColorsSet",
-            JSON.stringify(JSON.stringify(Array.from(customColorsSet))),
-          );
 
-          this.balloon.remove(this.formView);
-          this.init();
-          this.balloon.add({
-            view: this.formView,
-            position: this.getBalloonPositionData(),
-          });
+          if (!findList) {
+            customColorsSet.add({
+              label: color,
+              color: color,
+            });
+            localStorage.setItem(
+              "customColorsSet",
+              JSON.stringify(JSON.stringify(Array.from(customColorsSet))),
+            );
+            this.balloon.remove(this.formView);
+            this.init();
+            this.balloon.add({
+              view: this.formView,
+              position: this.getBalloonPositionData(),
+            });
+          }
         }
       };
       input?.click();
