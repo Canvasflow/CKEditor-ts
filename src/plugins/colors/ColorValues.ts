@@ -1,5 +1,4 @@
-export const defaultColors = new Set();
-[
+export const defaultColors = [
   { label: "#1abc9c", color: "#1abc9c" },
   { label: "#2ecc71", color: "#2ecc71" },
   { label: "#3498db", color: "#3498db" },
@@ -11,8 +10,6 @@ export const defaultColors = new Set();
   { label: "#f1c40f", color: "#f1c40f" },
   { label: "#e74c3c", color: "#e74c3c" },
   { label: "#afafaf", color: "#afafaf" },
-].map((value) => {
-  defaultColors.add(value);
-});
+];
 
 export let customColorsSet = new Set();

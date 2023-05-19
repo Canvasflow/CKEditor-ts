@@ -143,10 +143,7 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
   },
 })
   .then(() => {
-    localStorage.setItem(
-      "defaultColors",
-      JSON.stringify(Array.from(defaultColors)),
-    );
+    localStorage.setItem("defaultColors", JSON.stringify(defaultColors));
     localStorage.setItem(
       "customColorsSet",
       JSON.stringify(JSON.stringify(Array.from(customColorsSet))),
