@@ -29,12 +29,10 @@
     "@ckeditor/ckeditor5-link": "^37.1.0",
     "@ckeditor/ckeditor5-list": "^37.1.0",
     "@ckeditor/ckeditor5-paragraph": "^37.1.0",
+    "@ckeditor/ckeditor5-remove-format": "^38.0.1",
     "@ckeditor/ckeditor5-special-characters": "^37.1.0",
     "@ckeditor/ckeditor5-theme-lark": "^37.1.0",
     "@ckeditor/ckeditor5-upload": "^37.1.0",
-    "@ckeditor/vite-plugin-ckeditor5": "^0.1.1",
-    "@solomoto/ckeditor5-font-color": "^17.0.0",
-    "i": "^0.3.7",
-    "npm": "^9.6.7"
+    "@ckeditor/vite-plugin-ckeditor5": "^0.1.1"
   }
 }

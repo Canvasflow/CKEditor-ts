@@ -24,7 +24,6 @@ import {
   ImageResizeEditing,
   ImageResizeHandles,
 } from "@ckeditor/ckeditor5-image";
-import { Timestamp } from "./plugins/custom";
 import { DarkMode } from "./plugins/darkMode/DarkMode";
 import { Base64UploadAdapter } from "@ckeditor/ckeditor5-upload";
 
@@ -35,6 +34,8 @@ import {
 
 import { Colors } from "./plugins/colors/Colors";
 import { defaultColors, customColorsSet } from "./plugins/colors/ColorValues";
+
+import { Timestamp } from "./plugins/custom";
 
 function SpecialCharactersEmoji(editor: any) {
   editor.plugins.get("SpecialCharacters").addItems(
@@ -225,6 +226,7 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     ImageResizeHandles,
     Colors,
     DarkMode,
+    Timestamp,
   ],
   toolbar: [
     "link",
@@ -247,6 +249,7 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     "specialCharacters",
     "insertImage",
     "dark-mode",
+    "timestamp",
 
     // {
     //   label: "More basic styles",
