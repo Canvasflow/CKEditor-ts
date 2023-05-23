@@ -1,4 +1,4 @@
-import Plugin from "@ckeditor/ckthis is a dark text in Appleeditor5-core/src/plugin";
+import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { FontColorCommand } from "./ColorCommands";
 const FONT_COLOR = "fontColor";
 const THEME_COLOR_ATTRIBUTE = "theme-palette";
