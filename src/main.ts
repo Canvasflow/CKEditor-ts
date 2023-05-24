@@ -32,10 +32,11 @@ import {
   SpecialCharactersEssentials,
 } from "@ckeditor/ckeditor5-special-characters";
 
-import { Colors } from "./plugins/colors/Colors";
 import { defaultColors, customColorsSet } from "./plugins/colors/ColorValues";
 
 import { Timestamp } from "./plugins/custom";
+import { Colors } from "./plugins/colors/Colors";
+import { PageLink } from "./plugins/pageLink/Page";
 
 function SpecialCharactersEmoji(editor: any) {
   editor.plugins.get("SpecialCharacters").addItems(
@@ -227,6 +228,7 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     Colors,
     DarkMode,
     Timestamp,
+    PageLink,
   ],
   toolbar: [
     "link",
@@ -246,10 +248,11 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     "|",
     "alignment",
     "|",
-    "specialCharacters",
     "insertImage",
+    "specialCharacters",
     "dark-mode",
-    "timestamp",
+    "pageLink",
+    // "timestamp",
 
     // {
     //   label: "More basic styles",

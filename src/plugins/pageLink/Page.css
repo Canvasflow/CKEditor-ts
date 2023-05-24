@@ -1,0 +1,14 @@
+.ck-page {
+  height: 200px !important;
+  width: 300px !important;
+}
+
+.button-blue {
+  background-color: #168cf3 !important;
+  border: none !important;
+  color: white !important;
+
+  text-decoration: none !important;
+  margin: 4px 2px !important;
+  cursor: pointer !important;
+}
