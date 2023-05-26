@@ -7,11 +7,12 @@ import {
   LabelView,
   addListToDropdown,
   createDropdown,
+  Model,
 } from "@ckeditor/ckeditor5-ui";
 
-import { FocusTracker } from "@ckeditor/ckeditor5-utils";
+import { FocusTracker, Collection } from "@ckeditor/ckeditor5-utils";
 
-export class PageView extends View {
+export class PageLinkView extends View {
   columns: number | undefined;
   items: any;
   focusTracker: FocusTracker;
@@ -26,6 +27,10 @@ export class PageView extends View {
       label: "Select Page",
       withText: true,
     });
+    listDropdown.id = "dropdown-element";
+
+    const collection = new Collection();
+
     //AGREGAMOS PAGINAS?
     this.items.add(listDropdown);
     this.items.add(this.createLabel(""));

@@ -1,6 +1,6 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 
-export class PageEditing extends Plugin {
+export class PageLinkEditing extends Plugin {
   static get pluginName() {
     return "PageEditing";
   }

@@ -1,5 +1,5 @@
 .ck-page {
-  height: 200px !important;
+  height: 150px !important;
   width: 300px !important;
 }
 
@@ -11,4 +11,8 @@
   text-decoration: none !important;
   margin: 4px 2px !important;
   cursor: pointer !important;
+}
+
+.ck-dropdown {
+  border: red 2px solid;
 }

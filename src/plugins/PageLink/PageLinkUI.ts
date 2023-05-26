@@ -1,10 +1,10 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
-import { PageView } from "./PageView";
+import { PageLinkView } from "./PageLinkView";
 import check from "@ckeditor/ckeditor5-core/theme/icons/check.svg";
 
-export class PageUI extends Plugin {
+export class PageLinkUI extends Plugin {
   balloon: any;
   formView: any;
   static get requires() {
@@ -32,7 +32,7 @@ export class PageUI extends Plugin {
 
   createFormView() {
     const editor = this.editor;
-    const formView = new PageView(editor.locale);
+    const formView = new PageLinkView(editor.locale);
     this.listenTo(formView, "submit", () => {
       console.log("called submit");
     });

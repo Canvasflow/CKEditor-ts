@@ -32,11 +32,13 @@ import {
   SpecialCharactersEssentials,
 } from "@ckeditor/ckeditor5-special-characters";
 
-import { defaultColors, customColorsSet } from "./plugins/colors/ColorValues";
+import { defaultColors, customColorsSet } from "./plugins/Colors/ColorValues";
 
 import { Timestamp } from "./plugins/custom";
-import { Colors } from "./plugins/colors/Colors";
-import { PageLink } from "./plugins/pageLink/Page";
+import { Colors } from "./plugins/Colors/Colors";
+import { PageLink } from "./plugins/PageLink/PageLink";
+
+import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 
 function SpecialCharactersEmoji(editor: any) {
   editor.plugins.get("SpecialCharacters").addItems(
