@@ -2,12 +2,8 @@ import {
   View,
   ButtonView,
   submitHandler,
-  InputView,
-  ColorGridView,
   LabelView,
-  addListToDropdown,
   createDropdown,
-  Model,
 } from "@ckeditor/ckeditor5-ui";
 
 import { FocusTracker, Collection } from "@ckeditor/ckeditor5-utils";
