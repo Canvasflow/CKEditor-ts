@@ -1,5 +1,4 @@
 import { Essentials } from "@ckeditor/ckeditor5-essentials";
-import { BalloonEditor } from "@ckeditor/ckeditor5-editor-balloon";
 
 import {
   Bold,
@@ -28,7 +27,6 @@ import {
   SpecialCharacters,
   SpecialCharactersEssentials,
 } from "@ckeditor/ckeditor5-special-characters";
-import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 
 import { defaultColors, customColorsSet } from "./plugins/Colors/ColorValues";
 import { DarkMode } from "./plugins/DarkMode/DarkMode";
@@ -37,8 +35,10 @@ import { Colors } from "./plugins/Colors/Colors";
 import { PageLink } from "./plugins/PageLink/PageLink";
 import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
 
+import { CanvasflowEditor } from './CanvasflowEditor'
 
-BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
+
+CanvasflowEditor.create(document.querySelector("#editor") as HTMLElement, {
   plugins: [
     Essentials,
     Bold,
@@ -55,7 +55,7 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     Timestamp,
     SpecialCharacters,
     SpecialCharactersEssentials,
-    SpecialCharactersEmoji,
+    SpecialCharactersEmoji as any,
     Base64UploadAdapter,
     Image,
     ImageInsert,
@@ -96,6 +96,9 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     //   icon: "plus",
     //   items: ["strikethrough", "superscript", "subscript"],
     // },
+  ],
+  fontColors: [
+    'red'
   ],
   fontFamily: {
     options: [

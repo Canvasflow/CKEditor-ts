@@ -1,4 +1,6 @@
-export function SpecialCharactersEmoji(editor: any) {
+import CanvasflowEditor from '../../BaseCanvasflowEditor';
+export function SpecialCharactersEmoji(editor: CanvasflowEditor) {
+    console.log(`CONFIG IN SPECIAL CHARACTER`, editor.config)
     editor.plugins.get("SpecialCharacters").addItems(
         "Emoji",
         [
@@ -7,6 +9,7 @@ export function SpecialCharactersEmoji(editor: any) {
             { title: "wind blowing face", character: "🌬️" },
             { title: "floppy disk", character: "💾" },
             { title: "heart", character: "❤️" },
+            { title: "laugh", character: "🤣" },
         ],
         { label: "Emoticons" },
     );
