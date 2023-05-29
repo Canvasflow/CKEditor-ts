@@ -9,36 +9,31 @@ import {
 } from "@ckeditor/ckeditor5-ui";
 
 import { FocusTracker, Collection } from "@ckeditor/ckeditor5-utils";
+import CanvasflowEditor, { PageLinkSource } from '../../BaseCanvasflowEditor'
 
 export class PageLinkView extends View {
+  declare editor: CanvasflowEditor;
+  pageLinkSources: Array<PageLinkSource> = [];
   columns: number | undefined;
   items: any;
   focusTracker: FocusTracker;
 
-  constructor(locale: any) {
-    super(locale);
+  constructor(editor: CanvasflowEditor) {
+    super(editor.locale);
+    this.editor = editor;
+    this.pageLinkSources = editor.config.get('pageLinkSources') as Array<PageLinkSource>;
+    console.log(`FROM THE VIEW`, this.pageLinkSources)
     this.focusTracker = new FocusTracker();
     this.items = this.createCollection();
     this.items.add(this.createLabel("Insert Page Link"));
-    const listDropdown = createDropdown(locale);
-    listDropdown.buttonView.set({
-      label: "Select Page",
-      withText: true,
-    });
-    listDropdown.id = "dropdown-element";
-    const collection = new Collection();
+    const listDropdown = this.getDropdown();
 
-    for (let x = 1; x < 10; x++) {
-      collection.add({
-        type: "button",
-        model: new Model({
-          label: `${x} - Page example`,
-          withText: true,
-        }),
-      });
-    }
+    const collection: Collection<any> = this.pageLinkSources.reduce(reduceCollection, new Collection());
+
     // working on adding the button actions
     addListToDropdown(listDropdown, collection);
+
+
 
     //AGREGAMOS PAGINAS?
     this.items.add(listDropdown);
@@ -71,6 +66,25 @@ export class PageLinkView extends View {
     this.focusTracker.destroy();
   }
 
+  getDropdown() {
+    const listDropdown = createDropdown(this.editor.locale);
+    listDropdown.on('execute', this.onSelectPageLink)
+
+    listDropdown.buttonView.set({
+      label: "Select Page",
+      withText: true,
+    });
+    listDropdown.id = "dropdown-element";
+    return listDropdown
+  }
+
+  onSelectPageLink(evt: any) {
+    const { source } = evt;
+    const { data } = source;
+    // TODO In Here you detect which page link was selected
+    console.log(`This is the pageLink that was selected`, data);
+  }
+
   createButton(label: any, icon: any, className: any) {
     const button = new ButtonView();
     button.set({
@@ -80,6 +94,8 @@ export class PageLinkView extends View {
       class: className,
       withText: true,
     });
+
+
 
     return button;
   }
@@ -94,4 +110,21 @@ export class PageLinkView extends View {
     });
     return labelView;
   }
+}
+
+function reduceCollection(acc: Collection<any>, pageLink: PageLinkSource, index: number) {
+  const { title } = pageLink;
+  const model = new Model({
+    label: title,
+    withText: true,
+  });
+  model.set('data', {
+    pageLink,
+    index
+  })
+  acc.add({
+    type: "button",
+    model,
+  })
+  return acc;
 }

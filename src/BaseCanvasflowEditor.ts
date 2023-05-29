@@ -13,4 +13,17 @@ export default abstract class BaseCanvasflowEditor extends BalloonEditor {
 
 export interface CanvasflowEditorConfig extends EditorConfig {
     fontColors?: Array<string>
+    pageLinkSources?: Array<PageLinkSource>
+    pageAnchorSources?: Array<PageAnchorSource>
+}
+
+export interface PageLinkSource {
+    id: string
+    title: string
+}
+
+export interface PageAnchorSource {
+    id: string;
+    title: string;
+    articleId: string;
 }

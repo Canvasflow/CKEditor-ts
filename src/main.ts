@@ -1,102 +1,19 @@
-import { Essentials } from "@ckeditor/ckeditor5-essentials";
-
-import {
-  Bold,
-  Italic,
-  Underline,
-  Strikethrough,
-  Subscript,
-  Superscript,
-} from "@ckeditor/ckeditor5-basic-styles";
-
-import { List } from "@ckeditor/ckeditor5-list";
-import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
-import { Font } from "@ckeditor/ckeditor5-font";
-import { Alignment } from "@ckeditor/ckeditor5-alignment";
-import { Link } from "@ckeditor/ckeditor5-link";
-import {
-  Image,
-  ImageInsert,
-  AutoImage,
-  ImageResizeEditing,
-  ImageResizeHandles,
-} from "@ckeditor/ckeditor5-image";
-import { Base64UploadAdapter } from "@ckeditor/ckeditor5-upload";
-
-import {
-  SpecialCharacters,
-  SpecialCharactersEssentials,
-} from "@ckeditor/ckeditor5-special-characters";
-
 import { defaultColors, customColorsSet } from "./plugins/Colors/ColorValues";
-import { DarkMode } from "./plugins/DarkMode/DarkMode";
-import { Timestamp } from "./plugins/custom";
-import { Colors } from "./plugins/Colors/Colors";
-import { PageLink } from "./plugins/PageLink/PageLink";
-import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
-
 import { CanvasflowEditor } from './CanvasflowEditor'
 
-
 CanvasflowEditor.create(document.querySelector("#editor") as HTMLElement, {
-  plugins: [
-    Essentials,
-    Bold,
-    Italic,
-    List,
-    Paragraph,
-    Underline,
-    Strikethrough,
-    Subscript,
-    Superscript,
-    Font,
-    Alignment,
-    Link,
-    Timestamp,
-    SpecialCharacters,
-    SpecialCharactersEssentials,
-    SpecialCharactersEmoji as any,
-    Base64UploadAdapter,
-    Image,
-    ImageInsert,
-    AutoImage,
-    ImageResizeEditing,
-    ImageResizeHandles,
-    Colors,
-    DarkMode,
-    Timestamp,
-    PageLink,
-  ],
-  toolbar: [
-    "link",
-    "fontFamily",
-    "fontSize",
-    "colorPicker",
-    "fontBackgroundColor",
-    "|",
-    "bold",
-    "italic",
-    "underline",
-    "bulletedList",
-    "numberedList",
-    "strikethrough",
-    "subscript",
-    "superscript",
-    "|",
-    "alignment",
-    "|",
-    "insertImage",
-    "specialCharacters",
-    "dark-mode",
-    "pageLink",
-    // "timestamp",
-
-    // {
-    //   label: "More basic styles",
-    //   icon: "plus",
-    //   items: ["strikethrough", "superscript", "subscript"],
-    // },
-  ],
+  pageLinkSources: [{
+    id: '1111',
+    title: 'Example'
+  }, {
+    id: '1112',
+    title: 'Example 2'
+  }],
+  pageAnchorSources: [{
+    id: 'CF-123123123',
+    title: 'Component 1',
+    articleId: '1111'
+  }],
   fontColors: [
     'red'
   ],
