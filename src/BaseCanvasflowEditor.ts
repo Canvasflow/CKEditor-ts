@@ -25,5 +25,4 @@ export interface PageLinkSource {
 export interface PageAnchorSource {
     id: string;
     title: string;
-    articleId: string;
 }

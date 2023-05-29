@@ -1,10 +1,9 @@
-import { defaultColors, customColorsSet } from "./plugins/Colors/ColorValues";
 import { CanvasflowEditor } from './CanvasflowEditor'
 
 CanvasflowEditor.create(document.querySelector("#editor") as HTMLElement, {
   pageLinkSources: [{
     id: '1111',
-    title: 'Example'
+    title: 'Example',
   }, {
     id: '1112',
     title: 'Example 2'
@@ -12,7 +11,6 @@ CanvasflowEditor.create(document.querySelector("#editor") as HTMLElement, {
   pageAnchorSources: [{
     id: 'CF-123123123',
     title: 'Component 1',
-    articleId: '1111'
   }],
   fontColors: [
     'red'
@@ -56,11 +54,7 @@ CanvasflowEditor.create(document.querySelector("#editor") as HTMLElement, {
   },
 })
   .then(() => {
-    localStorage.setItem("defaultColors", JSON.stringify(defaultColors));
-    localStorage.setItem(
-      "customColorsSet",
-      JSON.stringify(JSON.stringify(Array.from(customColorsSet)))
-    );
+
   })
   .catch((error) => {
     console.error(error);

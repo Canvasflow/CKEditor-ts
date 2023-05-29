@@ -45,6 +45,12 @@ export class CanvasflowEditor extends BaseCanvasflowEditor {
             config.toolbar = TOOLBAR
         }
 
+        localStorage.setItem("defaultColors", JSON.stringify(defaultColors));
+        localStorage.setItem(
+            "customColorsSet",
+            JSON.stringify(JSON.stringify(Array.from(customColorsSet)))
+        );
+
         super(sourceElementOrData, config);
     }
 }
