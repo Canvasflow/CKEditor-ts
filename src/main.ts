@@ -36,12 +36,7 @@ import { Timestamp } from "./plugins/custom";
 import { Colors } from "./plugins/Colors/Colors";
 import { PageLink } from "./plugins/PageLink/PageLink";
 import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
-<<<<<<< HEAD
-=======
 
-import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
-
->>>>>>> fix
 
 BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
   plugins: [
@@ -71,7 +66,6 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     DarkMode,
     Timestamp,
     PageLink,
-    RemoveFormat as any,
   ],
   toolbar: [
     "link",
@@ -95,7 +89,6 @@ BalloonEditor.create(document.querySelector("#editor") as HTMLElement, {
     "specialCharacters",
     "dark-mode",
     "pageLink",
-    "removeFormat",
     // "timestamp",
 
     // {
