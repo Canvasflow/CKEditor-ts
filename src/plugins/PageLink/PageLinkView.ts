@@ -4,6 +4,8 @@ import {
   submitHandler,
   LabelView,
   createDropdown,
+  Model,
+  addListToDropdown,
 } from "@ckeditor/ckeditor5-ui";
 
 import { FocusTracker, Collection } from "@ckeditor/ckeditor5-utils";
@@ -24,8 +26,19 @@ export class PageLinkView extends View {
       withText: true,
     });
     listDropdown.id = "dropdown-element";
-
     const collection = new Collection();
+
+    for (let x = 1; x < 10; x++) {
+      collection.add({
+        type: "button",
+        model: new Model({
+          label: `${x} - Page example`,
+          withText: true,
+        }),
+      });
+    }
+    // working on adding the button actions
+    addListToDropdown(listDropdown, collection);
 
     //AGREGAMOS PAGINAS?
     this.items.add(listDropdown);
