@@ -30,7 +30,7 @@ export class PageLinkCommand extends Command {
         const selection = this.editor.model.document.selection;
         var position = selection.getFirstPosition();
         if (position) {
-          writer.insertText(value, { linkHref: `article/${id}` }, position);
+          writer.insertText(value, { linkHref: `/article/${id}` }, position);
         }
       }
     });

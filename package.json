@@ -34,5 +34,8 @@
     "@ckeditor/ckeditor5-theme-lark": "^37.1.0",
     "@ckeditor/ckeditor5-upload": "^37.1.0",
     "@ckeditor/vite-plugin-ckeditor5": "^0.1.1"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
