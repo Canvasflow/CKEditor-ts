@@ -20,18 +20,24 @@ export class PageLinkCommand extends Command {
     console.log(id);
     this.editor.model.change(async (writer) => {
       const selection = this.editor.model.document.selection;
+      if (!selection) {
+        return;
+      }
       const range = selection.getFirstRange();
-      if (range) {
-        let value = "";
-        for (const item of range.getItems()) {
-          value = item.data;
-          writer.remove(item);
-        }
-        const selection = this.editor.model.document.selection;
-        var position = selection.getFirstPosition();
-        if (position) {
-          writer.insertText(value, { linkHref: `/article/${id}` }, position);
-        }
+      if (!range) {
+        return;
+      }
+      let value = "";
+      console.log(range);
+      for (const item of range.getItems()) {
+        const proxy = item as any;
+        value = proxy.data;
+        writer.remove(item);
+      }
+
+      var position = selection.getFirstPosition();
+      if (position) {
+        writer.insertText(value, { linkHref: `/article/${id}` }, position);
       }
     });
   }
