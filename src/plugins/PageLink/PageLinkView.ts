@@ -9,7 +9,10 @@ import {
 } from "@ckeditor/ckeditor5-ui";
 
 import { FocusTracker, Collection } from "@ckeditor/ckeditor5-utils";
-import CanvasflowEditor, { PageLinkSource, AnchorFn } from '../../BaseCanvasflowEditor'
+import CanvasflowEditor, {
+  PageLinkSource,
+  AnchorFn,
+} from "../../BaseCanvasflowEditor";
 
 export class PageLinkView extends View {
   declare editor: CanvasflowEditor;
@@ -21,19 +24,22 @@ export class PageLinkView extends View {
   constructor(editor: CanvasflowEditor) {
     super(editor.locale);
     this.editor = editor;
-    this.pageLinkSources = editor.config.get('pageLinkSources') as Array<PageLinkSource>;
-    console.log(`FROM THE VIEW`, this.pageLinkSources)
+    this.pageLinkSources = editor.config.get(
+      "pageLinkSources",
+    ) as Array<PageLinkSource>;
+    console.log(`FROM THE VIEW`, this.pageLinkSources);
     this.focusTracker = new FocusTracker();
     this.items = this.createCollection();
     this.items.add(this.createLabel("Insert Page Link"));
     const listDropdown = this.getDropdown();
 
-    const collection: Collection<any> = this.pageLinkSources.reduce(reduceCollection, new Collection());
+    const collection: Collection<any> = this.pageLinkSources.reduce(
+      reduceCollection,
+      new Collection(),
+    );
 
     // working on adding the button actions
     addListToDropdown(listDropdown, collection);
-
-
 
     //AGREGAMOS PAGINAS?
     this.items.add(listDropdown);
@@ -68,27 +74,33 @@ export class PageLinkView extends View {
 
   getDropdown() {
     const listDropdown = createDropdown(this.editor.locale);
-    listDropdown.on('execute', this.onSelectPageLink)
+    console.log(this.editor);
+    listDropdown.on("execute", this.onSelectPageLink(this.editor));
 
     listDropdown.buttonView.set({
       label: "Select Page",
       withText: true,
     });
     listDropdown.id = "dropdown-element";
-    return listDropdown
+    return listDropdown;
   }
 
-  onSelectPageLink(evt: any) {
-    const { source } = evt;
-    const { data } = source;
-    // TODO In Here you detect which page link was selected
-    console.log(`This is the pageLink that was selected`, data);
-    const { id } = data;
-    const anchorFn: AnchorFn = this.editor.config.get('fetchAnchors') as AnchorFn;
-    anchorFn(id)
-      .then((anchors) => {
-        console.log(anchors)
-      })
+  onSelectPageLink(editor: CanvasflowEditor) {
+    return (evt: any) => {
+      const { source } = evt;
+      const { data } = source;
+      console.log(`This is the pageLink that was selected`, data);
+      console.log("editor value in onSelectPageLink", editor);
+      // TODO In Here you detect which page link was selected
+
+      const { id } = data;
+      editor.execute("PageLink", id);
+      // const anchorFn: AnchorFn = this.editor.config.get('fetchAnchors') as AnchorFn;
+      // anchorFn(id)
+      //   .then((anchors) => {
+      //     console.log(anchors)
+      //   })
+    };
   }
 
   createButton(label: any, icon: any, className: any) {
@@ -100,8 +112,6 @@ export class PageLinkView extends View {
       class: className,
       withText: true,
     });
-
-
 
     return button;
   }
@@ -118,19 +128,23 @@ export class PageLinkView extends View {
   }
 }
 
-function reduceCollection(acc: Collection<any>, pageLink: PageLinkSource, index: number) {
+function reduceCollection(
+  acc: Collection<any>,
+  pageLink: PageLinkSource,
+  index: number,
+) {
   const { title } = pageLink;
   const model = new Model({
     label: title,
     withText: true,
   });
-  model.set('data', {
+  model.set("data", {
     pageLink,
-    index
-  })
+    index,
+  });
   acc.add({
     type: "button",
     model,
-  })
+  });
   return acc;
 }
