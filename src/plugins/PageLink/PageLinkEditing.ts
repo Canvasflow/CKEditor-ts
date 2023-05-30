@@ -19,17 +19,16 @@ export class PageLinkEditing extends Plugin {
   constructor(editor: any) {
     super(editor);
     console.log("tried to update the value");
-    // editor.conversion.for("downcast").attributeToElement({
-    //   model: "PageLink",
-    //   view: renderDowncastElement(),
-    // });
+    editor.conversion.for("downcast").attributeToElement({
+      model: "PageLink",
+      view: renderDowncastElement(),
+    });
 
     editor.commands.add("PageLink", new PageLinkCommand(editor));
-
-    // editor.model.schema.extend("$text", { allowAttributes: FONT_COLOR });
-    // editor.model.schema.setAttributeProperties(FONT_COLOR, {
-    //   isFormatting: true,
-    //   copyOnEnter: true,
-    // });
+    editor.model.schema.extend("$text", { allowAttributes: "PageLink" });
+    editor.model.schema.setAttributeProperties("PageLink", {
+      isFormatting: true,
+      copyOnEnter: true,
+    });
   }
 }

@@ -16,16 +16,23 @@ export class PageLinkCommand extends Command {
     );
   }
 
-  execute() {
-    const model = this.editor.model;
-    const document = model.document;
-    const selection = document.selection;
-    console.log("PageLink Command Execute called");
-    this.editor.model.change((writer) => {
-      const insertPosition =
-        this.editor.model.document.selection.getFirstPosition();
-      console.log(insertPosition);
-      //writer.insertText(linkText, { linkHref: "google.com" }, insertPosition);
+  execute(id: string) {
+    console.log(id);
+    this.editor.model.change(async (writer) => {
+      const selection = this.editor.model.document.selection;
+      const range = selection.getFirstRange();
+      if (range) {
+        let value = "";
+        for (const item of range.getItems()) {
+          value = item.data;
+          writer.remove(item);
+        }
+        const selection = this.editor.model.document.selection;
+        var position = selection.getFirstPosition();
+        if (position) {
+          writer.insertText(value, { linkHref: `article/${id}` }, position);
+        }
+      }
     });
   }
 }

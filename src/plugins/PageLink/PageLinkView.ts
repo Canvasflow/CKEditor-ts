@@ -58,7 +58,6 @@ export class PageLinkView extends View {
 
   render() {
     super.render();
-
     submitHandler({
       view: this,
     });
@@ -74,7 +73,6 @@ export class PageLinkView extends View {
 
   getDropdown() {
     const listDropdown = createDropdown(this.editor.locale);
-    console.log(this.editor);
     listDropdown.on("execute", this.onSelectPageLink(this.editor));
 
     listDropdown.buttonView.set({
@@ -89,12 +87,12 @@ export class PageLinkView extends View {
     return (evt: any) => {
       const { source } = evt;
       const { data } = source;
-      console.log(`This is the pageLink that was selected`, data);
-      console.log("editor value in onSelectPageLink", editor);
+      // console.log(`This is the pageLink that was selected`, data);
+      // console.log("editor value in onSelectPageLink", editor);
       // TODO In Here you detect which page link was selected
-
-      const { id } = data;
-      editor.execute("PageLink", id);
+      console.log(data);
+      const { pageLink } = data;
+      editor.execute("PageLink", pageLink.id);
       // const anchorFn: AnchorFn = this.editor.config.get('fetchAnchors') as AnchorFn;
       // anchorFn(id)
       //   .then((anchors) => {
