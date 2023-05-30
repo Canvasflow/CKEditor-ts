@@ -1,4 +1,6 @@
+import { PageAnchorSource } from './BaseCanvasflowEditor';
 import { CanvasflowEditor } from './CanvasflowEditor'
+
 
 CanvasflowEditor.create(document.querySelector("#editor") as HTMLElement, {
   pageLinkSources: [{
@@ -7,10 +9,6 @@ CanvasflowEditor.create(document.querySelector("#editor") as HTMLElement, {
   }, {
     id: '1112',
     title: 'Example 2'
-  }],
-  pageAnchorSources: [{
-    id: 'CF-123123123',
-    title: 'Component 1',
   }],
   fontColors: [
     'red'
@@ -24,9 +22,6 @@ CanvasflowEditor.create(document.querySelector("#editor") as HTMLElement, {
   },
   fontSize: {
     options: Array.from({ length: 80 }, (_, i) => i + 1),
-  },
-  alignment: {
-    options: ["left", "right", "center", "justify"],
   },
   fontBackgroundColor: {
     colors: [
@@ -59,3 +54,4 @@ CanvasflowEditor.create(document.querySelector("#editor") as HTMLElement, {
   .catch((error) => {
     console.error(error);
   });
+

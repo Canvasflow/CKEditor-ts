@@ -9,7 +9,7 @@ import {
 } from "@ckeditor/ckeditor5-ui";
 
 import { FocusTracker, Collection } from "@ckeditor/ckeditor5-utils";
-import CanvasflowEditor, { PageLinkSource } from '../../BaseCanvasflowEditor'
+import CanvasflowEditor, { PageLinkSource, AnchorFn } from '../../BaseCanvasflowEditor'
 
 export class PageLinkView extends View {
   declare editor: CanvasflowEditor;
@@ -83,6 +83,12 @@ export class PageLinkView extends View {
     const { data } = source;
     // TODO In Here you detect which page link was selected
     console.log(`This is the pageLink that was selected`, data);
+    const { id } = data;
+    const anchorFn: AnchorFn = this.editor.config.get('fetchAnchors') as AnchorFn;
+    anchorFn(id)
+      .then((anchors) => {
+        console.log(anchors)
+      })
   }
 
   createButton(label: any, icon: any, className: any) {

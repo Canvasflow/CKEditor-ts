@@ -43,6 +43,9 @@ export class CanvasflowEditor extends BaseCanvasflowEditor {
         if (config) {
             config.plugins = PLUGINS;
             config.toolbar = TOOLBAR
+            config.alignment = {
+                options: ["left", "right", "center", "justify"],
+            }
         }
 
         localStorage.setItem("defaultColors", JSON.stringify(defaultColors));
