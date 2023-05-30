@@ -3,7 +3,7 @@ import { PageLinkCommand } from "./PageLinkCommands";
 
 function renderDowncastElement() {
   console.log("downcast was called");
-  return (modelAttributeValue: any, viewWriter: any) => {
+  return (viewWriter: any) => {
     const attributes = { href: "google.com" };
     return viewWriter.writer.createAttributeElement("a", attributes, {
       priority: 7,

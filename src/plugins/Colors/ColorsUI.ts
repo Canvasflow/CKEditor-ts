@@ -3,7 +3,7 @@ import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { ColorsView } from "./ColorsView";
 import { customColorsSet } from "./ColorValues";
-import CanvasflowEditor, { PageLinkSource } from './../../BaseCanvasflowEditor'
+import CanvasflowEditor from "./../../BaseCanvasflowEditor";
 
 export class ColorPickerUI extends Plugin {
   declare editor: CanvasflowEditor;
@@ -17,8 +17,8 @@ export class ColorPickerUI extends Plugin {
     const editor = this.editor;
     const config = this.editor.config;
 
-    const pageLinkSources: Array<PageLinkSource> = config.get('pageLinkSources') as Array<PageLinkSource>;
-    console.log(`PAGE LINK SOURCER`, config.get('fontColors'))
+    //const pageLinkSources: Array<PageLinkSource> = config.get('pageLinkSources') as Array<PageLinkSource>;
+    console.log(`PAGE LINK SOURCER`, config.get("fontColors"));
     this.balloon = this.editor.plugins.get(ContextualBalloon);
     this.formView = this.createFormView();
 

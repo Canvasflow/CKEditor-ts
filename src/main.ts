@@ -1,18 +1,18 @@
-import { PageAnchorSource } from './BaseCanvasflowEditor';
-import { CanvasflowEditor } from './CanvasflowEditor'
-
+// import { PageAnchorSource } from './BaseCanvasflowEditor';
+import { CanvasflowEditor } from "./CanvasflowEditor";
 
 CanvasflowEditor.create(document.querySelector("#editor") as HTMLElement, {
-  pageLinkSources: [{
-    id: '1111',
-    title: 'Example',
-  }, {
-    id: '1112',
-    title: 'Example 2'
-  }],
-  fontColors: [
-    'red'
+  pageLinkSources: [
+    {
+      id: "1111",
+      title: "Example",
+    },
+    {
+      id: "1112",
+      title: "Example 2",
+    },
   ],
+  fontColors: ["red"],
   fontFamily: {
     options: [
       "default",
@@ -48,10 +48,7 @@ CanvasflowEditor.create(document.querySelector("#editor") as HTMLElement, {
     ],
   },
 })
-  .then(() => {
-
-  })
+  .then(() => {})
   .catch((error) => {
     console.error(error);
   });
-

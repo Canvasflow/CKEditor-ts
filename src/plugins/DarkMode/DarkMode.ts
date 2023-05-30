@@ -17,7 +17,7 @@ export class DarkMode extends Plugin {
 
     editor.conversion.for("downcast").attributeToElement({
       model: "data-anf-dark-mode",
-      view: (modelElement, { writer }) => {
+      view: ({ writer }) => {
         return writer.createAttributeElement("span", {
           "data-anf-dark-mode": "true",
         });
