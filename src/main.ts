@@ -1,4 +1,5 @@
 // import { PageAnchorSource } from './BaseCanvasflowEditor';
+import { PageAnchorSource } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
 
 TextEditor.create(document.querySelector("#editor") as HTMLElement, {
@@ -47,8 +48,17 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, {
       },
     ],
   },
+  fetchAnchors
 })
   .then(() => { })
   .catch((error) => {
     console.error(error);
   });
+
+
+async function fetchAnchors(id: string): Promise<Array<PageAnchorSource>> {
+  return [{
+    id: '11223123123',
+    title: 'asdasdasdasd'
+  }];
+}
