@@ -16,8 +16,7 @@ export class PageLinkCommand extends Command {
     );
   }
 
-  execute(id: string) {
-    console.log(id);
+  execute(url: string) {
     this.editor.model.change(async (writer) => {
       const selection = this.editor.model.document.selection;
       if (!selection) {
@@ -37,7 +36,7 @@ export class PageLinkCommand extends Command {
 
       var position = selection.getFirstPosition();
       if (position) {
-        writer.insertText(value, { linkHref: `/article/${id}` }, position);
+        writer.insertText(value, { linkHref: url }, position);
       }
     });
   }

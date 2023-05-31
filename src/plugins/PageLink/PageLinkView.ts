@@ -19,6 +19,7 @@ export class PageLinkView extends View {
   focusTracker: FocusTracker;
   onSelectPageLink: OnSelectPageLink;
   pageLinkDropDown: any;
+  setButton: any;
   constructor(editor: CanvasflowEditor, onSelectPageLink: OnSelectPageLink) {
     super(editor.locale);
     this.onSelectPageLink = onSelectPageLink;
@@ -44,9 +45,10 @@ export class PageLinkView extends View {
     //AGREGAMOS PAGINAS?
     this.items.add(this.pageLinkDropDown);
     this.items.add(this.createLabel(""));
-    // let setButton = this.createButton("Insert Link", ``, "button-blue");
-    // //setButton. = "page-link-button"
-    //  this.items.add(setButton);
+    this.setButton = this.createButton("Insert Link", ``, "button-blue");
+    this.setButton.type = "submit";
+    this.setButton.isEnabled = false;
+    //this.items.add(this.setButton);
     this.setTemplate({
       tag: "form",
       attributes: {
@@ -57,8 +59,8 @@ export class PageLinkView extends View {
   }
 
   addChild = (element: any) => {
-    console.log("element in child", element);
-    console.log(`ITEMS`, this.items);
+    // console.log("element in child", element);
+    // console.log(`ITEMS`, this.items);
     // this.items.push(element);
     // this.registerChild([element]);
     this.items.add(element);

@@ -9,6 +9,8 @@ export class PageLinkUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
   formView?: PageLinkView;
+  selectedPage?: String;
+  selectedAnchor?: String;
   static get requires() {
     return [ContextualBalloon];
   }
@@ -43,7 +45,12 @@ export class PageLinkUI extends Plugin {
     const formView = new PageLinkView(editor, this.onSelectPageLink);
     this.formView = formView;
     this.listenTo(formView, "submit", () => {
-      console.log("called submit");
+      let url = `/article/${this.selectedPage}`;
+      if (this.selectedAnchor) {
+        url += `#${this.selectedAnchor}`;
+      }
+      editor.execute("PageLink", url);
+      this.hideUI();
     });
 
     this.listenTo(formView, "execute", (_) => {
@@ -70,12 +77,24 @@ export class PageLinkUI extends Plugin {
       // TODO In Here you detect which page link was selected
       console.log("DATA IN UI: ", data);
       console.log(`LLEGUE AQUI`);
-
+      this.selectedPage = data.pageLink.id;
       this.formView?.pageLinkDropDown?.buttonView.set({
         label: data.pageLink.title,
         withText: true,
       });
-      this.formView?.addChild(this.formView.getDropdown());
+
+      if (!editor.anchorFn) {
+        return;
+      }
+      editor.anchorFn(data.pageLink.id).then((anchors) => {
+        //usar return
+        if (anchors.length > 0) {
+          this.formView?.addChild(this.formView.getDropdown());
+        } else {
+          this.formView?.setButton.set({ isEnabled: true });
+        }
+      });
+
       /*const { pageLink } = data;
       editor.execute("PageLink", pageLink.id);
       if (!editor.anchorFn) {
