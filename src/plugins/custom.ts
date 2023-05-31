@@ -1,6 +1,5 @@
 import { ButtonView } from "@ckeditor/ckeditor5-ui";
 import { Plugin } from "ckeditor5/src/core";
-import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 
 export class Timestamp extends Plugin {
   init() {
@@ -48,13 +47,4 @@ export class Timestamp extends Plugin {
       return button;
     });
   }
-}
-
-function getBase64(file: any) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
 }
