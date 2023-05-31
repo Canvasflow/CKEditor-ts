@@ -1,4 +1,4 @@
-import BaseCanvasflowEditor, { CanvasflowEditorConfig } from "./BaseCanvasflowEditor";
+import BaseEditor, { TextEditorConfig } from "./BaseEditor";
 import { Essentials } from "@ckeditor/ckeditor5-essentials";
 
 import {
@@ -37,8 +37,8 @@ import { PageLink } from "./plugins/PageLink/PageLink";
 import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
 
 
-export class CanvasflowEditor extends BaseCanvasflowEditor {
-    constructor(sourceElementOrData: HTMLElement | string, config?: CanvasflowEditorConfig) {
+export class TextEditor extends BaseEditor {
+    constructor(sourceElementOrData: HTMLElement | string, config?: TextEditorConfig) {
         console.log(`Custom canvaflow editor loaded`)
         if (config) {
             config.plugins = PLUGINS;

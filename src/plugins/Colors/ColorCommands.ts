@@ -1,4 +1,4 @@
-import CanvasflowEditor from './../../BaseCanvasflowEditor'
+import CanvasflowEditor from '../../BaseEditor'
 import Command from "@ckeditor/ckeditor5-core/src/command";
 
 const FONT_COLOR = "fontColor";

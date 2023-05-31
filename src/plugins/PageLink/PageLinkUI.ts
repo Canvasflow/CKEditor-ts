@@ -3,7 +3,7 @@ import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { PageLinkView } from "./PageLinkView";
 import check from "@ckeditor/ckeditor5-core/theme/icons/check.svg";
-import CanvasflowEditor from "../../BaseCanvasflowEditor";
+import CanvasflowEditor from "../../BaseEditor";
 
 export class PageLinkUI extends Plugin {
   declare editor: CanvasflowEditor;

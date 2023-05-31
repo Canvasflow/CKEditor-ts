@@ -12,7 +12,7 @@ import { FocusTracker, Collection } from "@ckeditor/ckeditor5-utils";
 import CanvasflowEditor, {
   PageLinkSource,
   //AnchorFn,
-} from "../../BaseCanvasflowEditor";
+} from "../../BaseEditor";
 
 export class PageLinkView extends View {
   declare editor: CanvasflowEditor;

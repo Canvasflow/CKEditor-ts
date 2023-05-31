@@ -1,4 +1,4 @@
-import CanvasflowEditor from '../../BaseCanvasflowEditor';
+import CanvasflowEditor from '../../BaseEditor';
 export function SpecialCharactersEmoji(editor: CanvasflowEditor) {
     console.log(`CONFIG IN SPECIAL CHARACTER`, editor.config)
     editor.plugins.get("SpecialCharacters").addItems(

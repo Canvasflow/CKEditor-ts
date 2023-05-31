@@ -3,7 +3,7 @@ import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { ColorsView } from "./ColorsView";
 import { customColorsSet } from "./ColorValues";
-import CanvasflowEditor from "./../../BaseCanvasflowEditor";
+import CanvasflowEditor from "../../BaseEditor";
 
 export class ColorPickerUI extends Plugin {
   declare editor: CanvasflowEditor;

@@ -1,7 +1,7 @@
 // import { PageAnchorSource } from './BaseCanvasflowEditor';
-import { CanvasflowEditor } from "./CanvasflowEditor";
+import { TextEditor } from "./TextEditor";
 
-CanvasflowEditor.create(document.querySelector("#editor") as HTMLElement, {
+TextEditor.create(document.querySelector("#editor") as HTMLElement, {
   pageLinkSources: [
     {
       id: "1111",
