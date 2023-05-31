@@ -44,9 +44,9 @@ export class PageLinkView extends View {
     //AGREGAMOS PAGINAS?
     this.items.add(listDropdown);
     this.items.add(this.createLabel(""));
-    let setButton = this.createButton("Insert Link", ``, "button-blue");
-
-    this.items.add(setButton);
+    // let setButton = this.createButton("Insert Link", ``, "button-blue");
+    // //setButton. = "page-link-button"
+    //  this.items.add(setButton);
     this.setTemplate({
       tag: "form",
       attributes: {
