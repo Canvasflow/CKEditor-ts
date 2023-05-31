@@ -9,10 +9,7 @@ import {
 } from "@ckeditor/ckeditor5-ui";
 
 import { FocusTracker, Collection } from "@ckeditor/ckeditor5-utils";
-import CanvasflowEditor, {
-  PageLinkSource,
-  //AnchorFn,
-} from "../../BaseEditor";
+import CanvasflowEditor, { PageLinkSource, AnchorFn } from "../../BaseEditor";
 
 export class PageLinkView extends View {
   declare editor: CanvasflowEditor;
@@ -93,11 +90,13 @@ export class PageLinkView extends View {
       console.log(data);
       const { pageLink } = data;
       editor.execute("PageLink", pageLink.id);
-      // const anchorFn: AnchorFn = this.editor.config.get('fetchAnchors') as AnchorFn;
-      // anchorFn(id)
-      //   .then((anchors) => {
-      //     console.log(anchors)
-      //   })
+      if (!this.editor.anchorFn) {
+        return;
+      }
+
+      this.editor.anchorFn(pageLink.id).then((anchors) => {
+        console.log(anchors);
+      });
     };
   }
 

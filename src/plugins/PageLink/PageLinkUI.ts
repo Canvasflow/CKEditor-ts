@@ -3,7 +3,7 @@ import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { PageLinkView } from "./PageLinkView";
 import check from "@ckeditor/ckeditor5-core/theme/icons/check.svg";
-import CanvasflowEditor from "../../BaseEditor";
+import CanvasflowEditor, { PageLinkSource } from "../../BaseEditor";
 
 export class PageLinkUI extends Plugin {
   declare editor: CanvasflowEditor;
@@ -18,6 +18,13 @@ export class PageLinkUI extends Plugin {
     this.balloon = this.editor.plugins.get(ContextualBalloon);
     this.formView = this.createFormView();
 
+    const pageLinkSources: Array<PageLinkSource> = this.editor.config.get(
+      "pageLinkSources",
+    ) as Array<PageLinkSource>;
+    if (!pageLinkSources.length) {
+      return;
+    }
+
     editor.ui.componentFactory.add("pageLink", () => {
       const button = new ButtonView();
       button.label = "Go to Page";
@@ -27,7 +34,6 @@ export class PageLinkUI extends Plugin {
       this.listenTo(button, "execute", () => {
         this.showUI();
       });
-
       return button;
     });
   }

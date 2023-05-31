@@ -48,17 +48,18 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, {
       },
     ],
   },
-  fetchAnchors
+  fetchAnchors,
 })
-  .then(() => { })
+  .then(() => {})
   .catch((error) => {
     console.error(error);
   });
 
-
 async function fetchAnchors(id: string): Promise<Array<PageAnchorSource>> {
-  return [{
-    id: '11223123123',
-    title: 'asdasdasdasd'
-  }];
+  return [
+    {
+      id: "112233",
+      title: "asdasdasdasd",
+    },
+  ];
 }
