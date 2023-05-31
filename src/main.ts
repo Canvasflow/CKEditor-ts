@@ -12,6 +12,46 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, {
       id: "1112",
       title: "Example 2",
     },
+    {
+      id: "1111",
+      title: "Example",
+    },
+    {
+      id: "1112",
+      title: "Example 2",
+    },
+    {
+      id: "1111",
+      title: "Example",
+    },
+    {
+      id: "1112",
+      title: "Example 2",
+    },
+    {
+      id: "1111",
+      title: "Example",
+    },
+    {
+      id: "1112",
+      title: "Example 2",
+    },
+    {
+      id: "1111",
+      title: "Example",
+    },
+    {
+      id: "1112",
+      title: "Example 2",
+    },
+    {
+      id: "1111",
+      title: "Example",
+    },
+    {
+      id: "1112",
+      title: "Example 2",
+    },
   ],
   fontColors: ["red"],
   fontFamily: {

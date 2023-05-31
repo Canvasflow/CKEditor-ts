@@ -64,12 +64,14 @@ export class ColorPickerUI extends Plugin {
               "customColorsSet",
               JSON.stringify(JSON.stringify(Array.from(customColorsSet))),
             );
-            this.balloon.remove(this.formView);
-            this.init();
-            this.balloon.add({
+            this.formView.this.formView.render();
+
+            // this.balloon.remove(this.formView);
+            // this.init();
+            /*this.balloon.add({
               view: this.formView,
               position: this.getBalloonPositionData(),
-            });
+            });*/
           }
         }
       };

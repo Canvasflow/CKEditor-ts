@@ -8,7 +8,7 @@ import CanvasflowEditor, { PageLinkSource } from "../../BaseEditor";
 export class PageLinkUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
-  formView: any;
+  formView?: PageLinkView;
   static get requires() {
     return [ContextualBalloon];
   }
@@ -40,7 +40,8 @@ export class PageLinkUI extends Plugin {
 
   createFormView() {
     const editor = this.editor;
-    const formView = new PageLinkView(editor);
+    const formView = new PageLinkView(editor, this.onSelectPageLink);
+    this.formView = formView;
     this.listenTo(formView, "submit", () => {
       console.log("called submit");
     });
@@ -57,6 +58,43 @@ export class PageLinkUI extends Plugin {
     });
 
     return formView;
+  }
+
+  onSelectPageLink = (editor: CanvasflowEditor) => {
+    return (evt: any) => {
+      console.log(`EVENT`, evt);
+      const { source } = evt;
+      const { data } = source;
+      // console.log(`This is the pageLink that was selected`, data);
+      // console.log("editor value in onSelectPageLink", editor);
+      // TODO In Here you detect which page link was selected
+      console.log("DATA IN UI: ", data);
+      console.log(`LLEGUE AQUI`);
+
+      this.formView?.pageLinkDropDown?.buttonView.set({
+        label: data.pageLink.title,
+        withText: true,
+      });
+      this.formView?.addChild(this.formView.getDropdown());
+      /*const { pageLink } = data;
+      editor.execute("PageLink", pageLink.id);
+      if (!editor.anchorFn) {
+        return;
+      }
+      editor.anchorFn(pageLink.id).then((anchors) => {
+        formView?.addChild(formView.getDropdown());
+        // formView?.createAnchors(anchors, cb);
+        /*console.log(anchors);
+
+        balloon.remove(this.formView);
+        this.init();
+        this.showUI();
+      });*/
+    };
+  };
+
+  onSelectAnchorLink(evt: any) {
+    console.log(`I click the anchor`, evt);
   }
 
   showUI() {
