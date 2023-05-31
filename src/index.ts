@@ -1,1 +1,1 @@
-export { CanvasflowEditor } from "./CanvasflowEditor";
+export { CanvasflowEditor as TextEditor } from "./CanvasflowEditor";

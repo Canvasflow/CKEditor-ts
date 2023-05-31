@@ -7,7 +7,6 @@ vite.config.ts
 tsconfig.json
 *.svg
 *.css
-package.json
 .nova
 .hintrc
 *.yml

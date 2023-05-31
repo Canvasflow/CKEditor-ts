@@ -48,7 +48,7 @@ CanvasflowEditor.create(document.querySelector("#editor") as HTMLElement, {
     ],
   },
 })
-  .then(() => {})
+  .then(() => { })
   .catch((error) => {
     console.error(error);
   });
