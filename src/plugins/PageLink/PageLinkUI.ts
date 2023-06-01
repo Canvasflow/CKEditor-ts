@@ -47,6 +47,11 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
       }
       editor.execute("PageLink", url);
       this.hideUI();
+      this.selectedAnchor = undefined;
+      this.selectedPage = undefined;
+      this.pageLinkView?.removeButtonView();
+      this.pageLinkView?.removeAnchorDropdown();
+      this.pageLinkView?.resetPageLinkDropdown();
     });
 
     clickOutsideHandler({
@@ -119,6 +124,7 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
     const source: any = evt.source;
     const { data } = source;
     this.selectedAnchor = data.pageLink.id;
+    this.pageLinkView?.selectAnchor(data.pageLink.title);
     this.pageLinkView?.insertButtonView();
   };
 }

@@ -23,6 +23,7 @@ export class PageLinkView extends View {
   private addLinkButtonView?: ButtonView;
   private viewer: PageLinkViewer;
   private anchorDropdown?: DropdownView;
+  private listDropdown?: DropdownView;
 
   constructor(viewer: PageLinkViewer) {
     super(viewer.locale);
@@ -68,23 +69,44 @@ export class PageLinkView extends View {
   }
 
   getPageDropdown() {
-    const listDropdown = createDropdown(this.locale);
-    listDropdown.on("execute", this.viewer.onSelectPage);
-    listDropdown.buttonView.set({
+    this.listDropdown = createDropdown(this.locale);
+    this.listDropdown.on("execute", this.viewer.onSelectPage);
+    this.listDropdown.buttonView.set({
       label: "Select Page",
       withText: true,
     });
-    listDropdown.id = "dropdown-element";
-    return listDropdown;
+    this.listDropdown.id = "dropdown-element";
+    return this.listDropdown;
   }
 
   insertButtonView() {
+    this.items.add(this.createLabel(""));
     this.items.add(this.addLinkButtonView!);
+  }
+
+  removeButtonView() {
+    if (this.addLinkButtonView) {
+      this.items.remove(this.addLinkButtonView);
+    }
+  }
+
+  resetPageLinkDropdown() {
+    this.listDropdown?.buttonView.set({
+      label: "Select Page",
+      withText: true,
+    });
   }
 
   selectPage(page: string) {
     this.pageLinkDropDown?.buttonView.set({
       label: page,
+      withText: true,
+    });
+  }
+
+  selectAnchor(anchor: string) {
+    this.anchorDropdown?.buttonView.set({
+      label: anchor,
       withText: true,
     });
   }
