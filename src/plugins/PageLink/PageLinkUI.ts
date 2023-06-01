@@ -1,15 +1,10 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
-import {
-  ContextualBalloon,
-  clickOutsideHandler,
-  addListToDropdown,
-  Model,
-} from "@ckeditor/ckeditor5-ui";
+import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { PageLinkView, PageLinkViewer } from "./PageLinkView";
 import check from "@ckeditor/ckeditor5-core/theme/icons/check.svg";
 import CanvasflowEditor, { PageLinkSource } from "../../BaseEditor";
-import { BaseEvent, Collection, GetCallback, Locale } from "@ckeditor/ckeditor5-utils";
+import { BaseEvent, GetCallback, Locale } from "@ckeditor/ckeditor5-utils";
 
 export class PageLinkUI extends Plugin implements PageLinkViewer {
   declare editor: CanvasflowEditor;
@@ -17,8 +12,8 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
   pageLinkView?: PageLinkView;
   selectedPage?: String;
   selectedAnchor?: String;
-  locale?: Locale
-  pageLinkSources: Array<PageLinkSource> = []
+  locale?: Locale;
+  pageLinkSources: Array<PageLinkSource> = [];
 
   static get requires() {
     return [ContextualBalloon];
@@ -42,7 +37,7 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
   createView() {
     const editor = this.editor;
     this.pageLinkView = new PageLinkView(this);
-    this.pageLinkView.createPages(this.pageLinkSources)
+    this.pageLinkView.createPages(this.pageLinkSources);
     this.pageLinkView.showView();
 
     this.listenTo(this.pageLinkView, "submit", () => {
@@ -52,10 +47,11 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
       }
       editor.execute("PageLink", url);
       this.hideUI();
-    });
-
-    this.listenTo(this.pageLinkView, "execute", (_) => {
-      console.log("called execute");
+      this.selectedAnchor = undefined;
+      this.selectedPage = undefined;
+      this.pageLinkView?.removeButtonView();
+      this.pageLinkView?.removeAnchorDropdown();
+      this.pageLinkView?.resetPageLinkDropdown();
     });
 
     clickOutsideHandler({
@@ -78,10 +74,6 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
       });
       return button;
     });
-  }
-
-  onSelectAnchorLink(evt: any) {
-    console.log(`I click the anchor`, evt);
   }
 
   showUI() {
@@ -111,52 +103,28 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
   }
 
   onSelectPage: GetCallback<BaseEvent> = (evt) => {
-    const { source } = evt;
+    const source: any = evt.source;
     const { data } = source;
-    console.log(data)
     this.selectedPage = data.pageLink.id;
     this.pageLinkView?.selectPage(data.pageLink.title);
     this.selectedAnchor = undefined;
-
     if (!this.editor.anchorFn) {
       return;
     }
     this.editor.anchorFn(data.pageLink.id).then((anchors) => {
-      console.log(anchors)
       if (anchors.length === 0) {
-        //AQUI PONEMOS EL BOTON
-        return
+        this.pageLinkView?.removeAnchorDropdown();
+        this.pageLinkView?.insertButtonView();
+        return;
       }
-      this.pageLinkView?.createAnchors(
-        anchors
-      );
-    })
-
+      this.pageLinkView?.createAnchors(anchors);
+    });
   };
   onSelectAnchor: GetCallback<BaseEvent> = (evt) => {
-    console.log("in onSelectAnchor")
+    const source: any = evt.source;
+    const { data } = source;
+    this.selectedAnchor = data.pageLink.id;
+    this.pageLinkView?.selectAnchor(data.pageLink.title);
+    this.pageLinkView?.insertButtonView();
   };
-}
-
-
-
-function reduceCollection(
-  acc: Collection<any>,
-  pageLink: PageLinkSource,
-  index: number,
-) {
-  const { title } = pageLink;
-  const model = new Model({
-    label: title,
-    withText: true,
-  });
-  model.set("data", {
-    pageLink,
-    index,
-  });
-  acc.add({
-    type: "button",
-    model,
-  });
-  return acc;
 }
