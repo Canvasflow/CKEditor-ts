@@ -2,7 +2,7 @@
   grid-template-columns: repeat(8, 0fr) !important;
 }
 
-input.ck-input-text_empty {
+#color-picker {
   border: none !important;
   min-width: 0px !important;
   padding: 0px !important;
