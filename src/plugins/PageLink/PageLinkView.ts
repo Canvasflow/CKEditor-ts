@@ -31,19 +31,15 @@ export class PageLinkView extends View {
     this.focusTracker = new FocusTracker();
     this.items = this.createCollection();
     this.items.add(this.createLabel("Insert Page Link"));
-    this.pageLinkDropDown = this.getDropdown();
+    this.pageLinkDropDown = this.getPageDropdown();
 
     const collection: Collection<any> = this.pageLinkSources.reduce(
       reduceCollection,
       new Collection(),
     );
-
-    // working on adding the button actions
     addListToDropdown(this.pageLinkDropDown, collection);
-    // listDropdown.delegate("execute").to(this); //BORRAMOS ESTO
-
-    //AGREGAMOS PAGINAS?
     this.items.add(this.pageLinkDropDown);
+
     this.items.add(this.createLabel(""));
     this.setButton = this.createButton("Insert Link", ``, "button-blue");
     this.setButton.type = "submit";
@@ -74,10 +70,7 @@ export class PageLinkView extends View {
   };
 
   createAnchors(anchors: Array<PageLinkSource>, cb: any) {
-    const collection: Collection<any> = this.pageLinkSources.reduce(
-      reduceCollection,
-      new Collection(),
-    );
+    console.log("anchors: ", anchors);
 
     const anchorDropdown = createDropdown(this.editor.locale);
     anchorDropdown.on("execute", cb);
@@ -88,9 +81,6 @@ export class PageLinkView extends View {
     });
     anchorDropdown.id = "dropdown-anchors";
     return anchorDropdown;
-
-    addListToDropdown(anchorDropdown, collection);
-    this.items.add(anchorDropdown);
   }
 
   render() {
@@ -108,7 +98,7 @@ export class PageLinkView extends View {
     this.focusTracker.destroy();
   }
 
-  getDropdown() {
+  getPageDropdown() {
     const listDropdown = createDropdown(this.editor.locale);
     listDropdown.on("execute", this.onSelectPageLink(this.editor));
 

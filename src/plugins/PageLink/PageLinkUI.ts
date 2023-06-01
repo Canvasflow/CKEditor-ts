@@ -1,9 +1,15 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
-import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
+import {
+  ContextualBalloon,
+  clickOutsideHandler,
+  addListToDropdown,
+  Model,
+} from "@ckeditor/ckeditor5-ui";
 import { PageLinkView } from "./PageLinkView";
 import check from "@ckeditor/ckeditor5-core/theme/icons/check.svg";
 import CanvasflowEditor, { PageLinkSource } from "../../BaseEditor";
+import { Collection } from "@ckeditor/ckeditor5-utils";
 
 export class PageLinkUI extends Plugin {
   declare editor: CanvasflowEditor;
@@ -89,7 +95,21 @@ export class PageLinkUI extends Plugin {
       editor.anchorFn(data.pageLink.id).then((anchors) => {
         //usar return
         if (anchors.length > 0) {
-          this.formView?.addChild(this.formView.getDropdown());
+          //this.formView?.addChild(this.formView.getDropdown());
+          const anchorDropdownList = this.formView?.createAnchors(
+            anchors,
+            this,
+          );
+          console.log("anchorDropdownList", anchorDropdownList);
+          const collection: Collection<any> = anchors.reduce(
+            reduceCollection,
+            new Collection(),
+          );
+          if (!anchorDropdownList) {
+            return;
+          }
+          addListToDropdown(anchorDropdownList, collection);
+          this.formView?.items.add(anchorDropdownList);
         } else {
           this.formView?.setButton.set({ isEnabled: true });
         }
@@ -141,4 +161,24 @@ export class PageLinkUI extends Plugin {
       target,
     };
   }
+}
+function reduceCollection(
+  acc: Collection<any>,
+  pageLink: PageLinkSource,
+  index: number,
+) {
+  const { title } = pageLink;
+  const model = new Model({
+    label: title,
+    withText: true,
+  });
+  model.set("data", {
+    pageLink,
+    index,
+  });
+  acc.add({
+    type: "button",
+    model,
+  });
+  return acc;
 }
