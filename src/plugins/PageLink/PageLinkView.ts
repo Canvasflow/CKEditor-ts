@@ -7,44 +7,46 @@ import {
   Model,
   addListToDropdown,
 } from "@ckeditor/ckeditor5-ui";
+import { FocusTracker, Collection, Locale } from "@ckeditor/ckeditor5-utils";
+import { GetCallback, BaseEvent } from "@ckeditor/ckeditor5-utils/src/emittermixin";
+import { PageLinkSource } from "../../BaseEditor";
 
-import { FocusTracker, Collection } from "@ckeditor/ckeditor5-utils";
-import CanvasflowEditor, { PageLinkSource } from "../../BaseEditor";
+/*
+  1. Renderiza todos los pages
+  2. Haz trigger del page que se seleciono 
+  3. Renderiza los anchors
+  4. Haz trigger del anchor se selecciono
+  5. Inserta el link
+
+  1. Renderiza todos los pages  - CHECK
+  2. Haz trigger del page que se seleciono 
+  3. Inserta el link
+*/
 
 export class PageLinkView extends View {
-  declare editor: CanvasflowEditor;
-  pageLinkSources: Array<PageLinkSource> = [];
-  columns: number | undefined;
-  items: any;
-  focusTracker: FocusTracker;
-  onSelectPageLink: OnSelectPageLink;
-  pageLinkDropDown: any;
-  setButton: any;
-  constructor(editor: CanvasflowEditor, onSelectPageLink: OnSelectPageLink) {
-    super(editor.locale);
-    this.onSelectPageLink = onSelectPageLink;
-    this.editor = editor;
-    this.pageLinkSources = editor.config.get(
-      "pageLinkSources",
-    ) as Array<PageLinkSource>;
-    console.log(`FROM THE VIEW`, this.pageLinkSources);
+  private items: any;
+  private focusTracker: FocusTracker;
+  private pageLinkDropDown: any;
+  private setButton: any;
+  private viewer: PageLinkViewer;
+
+  constructor(viewer: PageLinkViewer) {
+    super(viewer.locale);
+    this.viewer = viewer;
     this.focusTracker = new FocusTracker();
+    this.initItems()
+  }
+
+  initItems() {
     this.items = this.createCollection();
     this.items.add(this.createLabel("Insert Page Link"));
-    this.pageLinkDropDown = this.getPageDropdown();
+    // this.createPages()
+    //this.items.add(this.createLabel(""));
+    this.createButton()
 
-    const collection: Collection<any> = this.pageLinkSources.reduce(
-      reduceCollection,
-      new Collection(),
-    );
-    addListToDropdown(this.pageLinkDropDown, collection);
-    this.items.add(this.pageLinkDropDown);
+  }
 
-    this.items.add(this.createLabel(""));
-    this.setButton = this.createButton("Insert Link", ``, "button-blue");
-    this.setButton.type = "submit";
-    this.setButton.isEnabled = false;
-    //this.items.add(this.setButton);
+  showView() {
     this.setTemplate({
       tag: "form",
       attributes: {
@@ -53,6 +55,46 @@ export class PageLinkView extends View {
       children: this.items,
     });
   }
+
+  createButton() {
+    this.setButton = this.createButtonObject("Insert Link", ``, "button-blue");
+    this.setButton.type = "submit";
+    this.setButton.isEnabled = false;
+    //this.items.add(this.setButton);
+  }
+
+  createPages(pageLinkSources: Array<PageLinkSource>) {
+    this.pageLinkDropDown = this.getPageDropdown();
+    const collection: Collection<any> = pageLinkSources.reduce(
+      reduceCollection,
+      new Collection(),
+    );
+    addListToDropdown(this.pageLinkDropDown, collection);
+    this.items.add(this.pageLinkDropDown);
+  }
+
+  getPageDropdown() {
+    const listDropdown = createDropdown(this.locale);
+    listDropdown.on("execute", this.viewer.onSelectPage)
+    // listDropdown.on("execute", this.onSelectPageLink(this.editor));
+
+    listDropdown.buttonView.set({
+      label: "Select Page",
+      withText: true,
+    });
+    listDropdown.id = "dropdown-element";
+    return listDropdown;
+  }
+
+
+  selectPage(page: string) {
+    this.pageLinkDropDown?.buttonView.set({
+      label: page,
+      withText: true,
+    });
+  }
+
+
 
   addChild = (element: any) => {
     // console.log("element in child", element);
@@ -69,18 +111,31 @@ export class PageLinkView extends View {
     });
   };
 
-  createAnchors(anchors: Array<PageLinkSource>, cb: any) {
-    console.log("anchors: ", anchors);
+  createAnchors(anchors: Array<PageLinkSource>) {
+    //ELIMINAR LINEA SIGUIENTE DESPUES
+    this.items.add(this.createLabel(""));
+    //ELIMINAMOS ANCHORS ANTERIORES
+    //this.items.remove()
+    console.log(this.items.filter((value) => {
+      if (value)
+    }))
 
-    const anchorDropdown = createDropdown(this.editor.locale);
-    anchorDropdown.on("execute", cb);
+    const anchorDropdown = createDropdown(this.locale);
+    anchorDropdown.on("execute", this.viewer.onSelectAnchor);
 
     anchorDropdown.buttonView.set({
       label: "Select Anchor",
       withText: true,
     });
     anchorDropdown.id = "dropdown-anchors";
-    return anchorDropdown;
+
+    const collection: Collection<any> = anchors.reduce(
+      reduceCollection,
+      new Collection(),
+    );
+    addListToDropdown(anchorDropdown, collection);
+    this.items.add(anchorDropdown);
+
   }
 
   render() {
@@ -98,19 +153,8 @@ export class PageLinkView extends View {
     this.focusTracker.destroy();
   }
 
-  getPageDropdown() {
-    const listDropdown = createDropdown(this.editor.locale);
-    listDropdown.on("execute", this.onSelectPageLink(this.editor));
 
-    listDropdown.buttonView.set({
-      label: "Select Page",
-      withText: true,
-    });
-    listDropdown.id = "dropdown-element";
-    return listDropdown;
-  }
-
-  createButton(label: any, icon: any, className: any) {
+  createButtonObject(label: any, icon: any, className: any) {
     const button = new ButtonView();
     button.set({
       label,
@@ -135,6 +179,12 @@ export class PageLinkView extends View {
   }
 }
 
+export interface PageLinkViewer {
+  locale?: Locale
+  onSelectPage: GetCallback<BaseEvent>
+  onSelectAnchor: GetCallback<BaseEvent>
+}
+
 function reduceCollection(
   acc: Collection<any>,
   pageLink: PageLinkSource,
@@ -156,4 +206,3 @@ function reduceCollection(
   return acc;
 }
 
-type OnSelectPageLink = (editor: CanvasflowEditor) => any;

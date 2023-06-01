@@ -12,46 +12,6 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, {
       id: "1112",
       title: "Example 2",
     },
-    {
-      id: "1111",
-      title: "Example",
-    },
-    {
-      id: "1112",
-      title: "Example 2",
-    },
-    {
-      id: "1111",
-      title: "Example",
-    },
-    {
-      id: "1112",
-      title: "Example 2",
-    },
-    {
-      id: "1111",
-      title: "Example",
-    },
-    {
-      id: "1112",
-      title: "Example 2",
-    },
-    {
-      id: "1111",
-      title: "Example",
-    },
-    {
-      id: "1112",
-      title: "Example 2",
-    },
-    {
-      id: "1111",
-      title: "Example",
-    },
-    {
-      id: "1112",
-      title: "Example 2",
-    },
   ],
   fontColors: ["red"],
   fontFamily: {
@@ -90,12 +50,15 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, {
   },
   fetchAnchors,
 })
-  .then(() => {})
+  .then(() => { })
   .catch((error) => {
     console.error(error);
   });
 
 async function fetchAnchors(id: string): Promise<Array<PageAnchorSource>> {
+  if (id === '1111') {
+    return [];
+  }
   return [
     {
       id: "112233",
