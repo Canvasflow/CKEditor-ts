@@ -6,9 +6,14 @@ import {
   createDropdown,
   Model,
   addListToDropdown,
+  ViewCollection,
+  DropdownView,
 } from "@ckeditor/ckeditor5-ui";
 import { FocusTracker, Collection, Locale } from "@ckeditor/ckeditor5-utils";
-import { GetCallback, BaseEvent } from "@ckeditor/ckeditor5-utils/src/emittermixin";
+import {
+  GetCallback,
+  BaseEvent,
+} from "@ckeditor/ckeditor5-utils/src/emittermixin";
 import { PageLinkSource } from "../../BaseEditor";
 
 /*
@@ -24,26 +29,26 @@ import { PageLinkSource } from "../../BaseEditor";
 */
 
 export class PageLinkView extends View {
-  private items: any;
+  private items: ViewCollection;
   private focusTracker: FocusTracker;
-  private pageLinkDropDown: any;
-  private setButton: any;
+  private pageLinkDropDown?: DropdownView;
+  private addLinkButtonView?: ButtonView;
   private viewer: PageLinkViewer;
+  private anchorDropdown?: DropdownView;
 
   constructor(viewer: PageLinkViewer) {
     super(viewer.locale);
     this.viewer = viewer;
     this.focusTracker = new FocusTracker();
-    this.initItems()
+    this.items = this.createCollection();
+    this.initItems();
   }
 
   initItems() {
-    this.items = this.createCollection();
     this.items.add(this.createLabel("Insert Page Link"));
     // this.createPages()
     //this.items.add(this.createLabel(""));
-    this.createButton()
-
+    this.createButton();
   }
 
   showView() {
@@ -57,9 +62,13 @@ export class PageLinkView extends View {
   }
 
   createButton() {
-    this.setButton = this.createButtonObject("Insert Link", ``, "button-blue");
-    this.setButton.type = "submit";
-    this.setButton.isEnabled = false;
+    this.addLinkButtonView = this.createButtonObject(
+      "Insert Link",
+      ``,
+      "button-blue",
+    );
+    this.addLinkButtonView.type = "submit";
+    this.addLinkButtonView.isEnabled = false;
     //this.items.add(this.setButton);
   }
 
@@ -75,7 +84,9 @@ export class PageLinkView extends View {
 
   getPageDropdown() {
     const listDropdown = createDropdown(this.locale);
-    listDropdown.on("execute", this.viewer.onSelectPage)
+
+    // listDropdown.element.setAttribute("data-is-dropdow", "true");
+    listDropdown.on("execute", this.viewer.onSelectPage);
     // listDropdown.on("execute", this.onSelectPageLink(this.editor));
 
     listDropdown.buttonView.set({
@@ -86,15 +97,12 @@ export class PageLinkView extends View {
     return listDropdown;
   }
 
-
   selectPage(page: string) {
     this.pageLinkDropDown?.buttonView.set({
       label: page,
       withText: true,
     });
   }
-
-
 
   addChild = (element: any) => {
     // console.log("element in child", element);
@@ -115,27 +123,30 @@ export class PageLinkView extends View {
     //ELIMINAR LINEA SIGUIENTE DESPUES
     this.items.add(this.createLabel(""));
     //ELIMINAMOS ANCHORS ANTERIORES
-    //this.items.remove()
-    console.log(this.items.filter((value) => {
-      if (value)
-    }))
+    this.removeAnchorDropdown();
 
-    const anchorDropdown = createDropdown(this.locale);
-    anchorDropdown.on("execute", this.viewer.onSelectAnchor);
+    this.anchorDropdown = createDropdown(this.locale);
+    this.anchorDropdown.on("execute", this.viewer.onSelectAnchor);
 
-    anchorDropdown.buttonView.set({
+    this.anchorDropdown.buttonView.set({
       label: "Select Anchor",
       withText: true,
     });
-    anchorDropdown.id = "dropdown-anchors";
+    this.anchorDropdown.id = "dropdown-anchors";
 
     const collection: Collection<any> = anchors.reduce(
       reduceCollection,
       new Collection(),
     );
-    addListToDropdown(anchorDropdown, collection);
-    this.items.add(anchorDropdown);
+    addListToDropdown(this.anchorDropdown, collection);
+    this.items.add(this.anchorDropdown);
+  }
 
+  removeAnchorDropdown() {
+    if (this.anchorDropdown) {
+      this.items.remove(this.anchorDropdown);
+      this.anchorDropdown = undefined;
+    }
   }
 
   render() {
@@ -143,16 +154,12 @@ export class PageLinkView extends View {
     submitHandler({
       view: this,
     });
-    this.items._items.forEach((view: { element: Element }) => {
-      this.focusTracker.add(view.element);
-    });
   }
 
   destroy() {
     super.destroy();
     this.focusTracker.destroy();
   }
-
 
   createButtonObject(label: any, icon: any, className: any) {
     const button = new ButtonView();
@@ -180,9 +187,9 @@ export class PageLinkView extends View {
 }
 
 export interface PageLinkViewer {
-  locale?: Locale
-  onSelectPage: GetCallback<BaseEvent>
-  onSelectAnchor: GetCallback<BaseEvent>
+  locale?: Locale;
+  onSelectPage: GetCallback<BaseEvent>;
+  onSelectAnchor: GetCallback<BaseEvent>;
 }
 
 function reduceCollection(
@@ -205,4 +212,3 @@ function reduceCollection(
   });
   return acc;
 }
-

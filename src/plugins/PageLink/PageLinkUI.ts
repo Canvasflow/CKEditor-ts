@@ -9,7 +9,12 @@ import {
 import { PageLinkView, PageLinkViewer } from "./PageLinkView";
 import check from "@ckeditor/ckeditor5-core/theme/icons/check.svg";
 import CanvasflowEditor, { PageLinkSource } from "../../BaseEditor";
-import { BaseEvent, Collection, GetCallback, Locale } from "@ckeditor/ckeditor5-utils";
+import {
+  BaseEvent,
+  Collection,
+  GetCallback,
+  Locale,
+} from "@ckeditor/ckeditor5-utils";
 
 export class PageLinkUI extends Plugin implements PageLinkViewer {
   declare editor: CanvasflowEditor;
@@ -17,8 +22,8 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
   pageLinkView?: PageLinkView;
   selectedPage?: String;
   selectedAnchor?: String;
-  locale?: Locale
-  pageLinkSources: Array<PageLinkSource> = []
+  locale?: Locale;
+  pageLinkSources: Array<PageLinkSource> = [];
 
   static get requires() {
     return [ContextualBalloon];
@@ -42,7 +47,7 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
   createView() {
     const editor = this.editor;
     this.pageLinkView = new PageLinkView(this);
-    this.pageLinkView.createPages(this.pageLinkSources)
+    this.pageLinkView.createPages(this.pageLinkSources);
     this.pageLinkView.showView();
 
     this.listenTo(this.pageLinkView, "submit", () => {
@@ -111,9 +116,8 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
   }
 
   onSelectPage: GetCallback<BaseEvent> = (evt) => {
-    const { source } = evt;
+    const source: any = evt.source;
     const { data } = source;
-    console.log(data)
     this.selectedPage = data.pageLink.id;
     this.pageLinkView?.selectPage(data.pageLink.title);
     this.selectedAnchor = undefined;
@@ -122,41 +126,15 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
       return;
     }
     this.editor.anchorFn(data.pageLink.id).then((anchors) => {
-      console.log(anchors)
+      console.log(anchors);
       if (anchors.length === 0) {
-        //AQUI PONEMOS EL BOTON
-        return
+        this.pageLinkView?.removeAnchorDropdown();
+        return;
       }
-      this.pageLinkView?.createAnchors(
-        anchors
-      );
-    })
-
+      this.pageLinkView?.createAnchors(anchors);
+    });
   };
   onSelectAnchor: GetCallback<BaseEvent> = (evt) => {
-    console.log("in onSelectAnchor")
+    console.log("in onSelectAnchor");
   };
-}
-
-
-
-function reduceCollection(
-  acc: Collection<any>,
-  pageLink: PageLinkSource,
-  index: number,
-) {
-  const { title } = pageLink;
-  const model = new Model({
-    label: title,
-    withText: true,
-  });
-  model.set("data", {
-    pageLink,
-    index,
-  });
-  acc.add({
-    type: "button",
-    model,
-  });
-  return acc;
 }
