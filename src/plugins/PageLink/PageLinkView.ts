@@ -16,18 +16,6 @@ import {
 } from "@ckeditor/ckeditor5-utils/src/emittermixin";
 import { PageLinkSource } from "../../BaseEditor";
 
-/*
-  1. Renderiza todos los pages
-  2. Haz trigger del page que se seleciono 
-  3. Renderiza los anchors
-  4. Haz trigger del anchor se selecciono
-  5. Inserta el link
-
-  1. Renderiza todos los pages  - CHECK
-  2. Haz trigger del page que se seleciono 
-  3. Inserta el link
-*/
-
 export class PageLinkView extends View {
   private items: ViewCollection;
   private focusTracker: FocusTracker;
@@ -46,8 +34,6 @@ export class PageLinkView extends View {
 
   initItems() {
     this.items.add(this.createLabel("Insert Page Link"));
-    // this.createPages()
-    //this.items.add(this.createLabel(""));
     this.createButton();
   }
 
@@ -68,8 +54,7 @@ export class PageLinkView extends View {
       "button-blue",
     );
     this.addLinkButtonView.type = "submit";
-    this.addLinkButtonView.isEnabled = false;
-    //this.items.add(this.setButton);
+    this.addLinkButtonView.isEnabled = true;
   }
 
   createPages(pageLinkSources: Array<PageLinkSource>) {
@@ -84,17 +69,17 @@ export class PageLinkView extends View {
 
   getPageDropdown() {
     const listDropdown = createDropdown(this.locale);
-
-    // listDropdown.element.setAttribute("data-is-dropdow", "true");
     listDropdown.on("execute", this.viewer.onSelectPage);
-    // listDropdown.on("execute", this.onSelectPageLink(this.editor));
-
     listDropdown.buttonView.set({
       label: "Select Page",
       withText: true,
     });
     listDropdown.id = "dropdown-element";
     return listDropdown;
+  }
+
+  insertButtonView() {
+    this.items.add(this.addLinkButtonView!);
   }
 
   selectPage(page: string) {
@@ -104,25 +89,8 @@ export class PageLinkView extends View {
     });
   }
 
-  addChild = (element: any) => {
-    // console.log("element in child", element);
-    // console.log(`ITEMS`, this.items);
-    // this.items.push(element);
-    // this.registerChild([element]);
-    this.items.add(element);
-    this.setTemplate({
-      tag: "form",
-      attributes: {
-        class: ["ck", "ck-page"],
-      },
-      children: this.items,
-    });
-  };
-
   createAnchors(anchors: Array<PageLinkSource>) {
-    //ELIMINAR LINEA SIGUIENTE DESPUES
     this.items.add(this.createLabel(""));
-    //ELIMINAMOS ANCHORS ANTERIORES
     this.removeAnchorDropdown();
 
     this.anchorDropdown = createDropdown(this.locale);

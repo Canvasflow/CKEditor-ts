@@ -1,20 +1,10 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
-import {
-  ContextualBalloon,
-  clickOutsideHandler,
-  addListToDropdown,
-  Model,
-} from "@ckeditor/ckeditor5-ui";
+import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { PageLinkView, PageLinkViewer } from "./PageLinkView";
 import check from "@ckeditor/ckeditor5-core/theme/icons/check.svg";
 import CanvasflowEditor, { PageLinkSource } from "../../BaseEditor";
-import {
-  BaseEvent,
-  Collection,
-  GetCallback,
-  Locale,
-} from "@ckeditor/ckeditor5-utils";
+import { BaseEvent, GetCallback, Locale } from "@ckeditor/ckeditor5-utils";
 
 export class PageLinkUI extends Plugin implements PageLinkViewer {
   declare editor: CanvasflowEditor;
@@ -59,10 +49,6 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
       this.hideUI();
     });
 
-    this.listenTo(this.pageLinkView, "execute", (_) => {
-      console.log("called execute");
-    });
-
     clickOutsideHandler({
       emitter: this.pageLinkView,
       activator: () => this.balloon.visibleView === this.pageLinkView,
@@ -83,10 +69,6 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
       });
       return button;
     });
-  }
-
-  onSelectAnchorLink(evt: any) {
-    console.log(`I click the anchor`, evt);
   }
 
   showUI() {
@@ -121,20 +103,22 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
     this.selectedPage = data.pageLink.id;
     this.pageLinkView?.selectPage(data.pageLink.title);
     this.selectedAnchor = undefined;
-
     if (!this.editor.anchorFn) {
       return;
     }
     this.editor.anchorFn(data.pageLink.id).then((anchors) => {
-      console.log(anchors);
       if (anchors.length === 0) {
         this.pageLinkView?.removeAnchorDropdown();
+        this.pageLinkView?.insertButtonView();
         return;
       }
       this.pageLinkView?.createAnchors(anchors);
     });
   };
   onSelectAnchor: GetCallback<BaseEvent> = (evt) => {
-    console.log("in onSelectAnchor");
+    const source: any = evt.source;
+    const { data } = source;
+    this.selectedAnchor = data.pageLink.id;
+    this.pageLinkView?.insertButtonView();
   };
 }
