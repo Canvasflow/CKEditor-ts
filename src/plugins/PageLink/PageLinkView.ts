@@ -81,12 +81,16 @@ export class PageLinkView extends View {
 
   insertButtonView() {
     this.items.add(this.createLabel(""));
-    this.items.add(this.addLinkButtonView!);
+    //this.addLinkButtonView?.set({ isVisible: true });
+    // console.log(this.addLinkButtonView);
+    // if (!this.addLinkButtonView?.isRendered)
+    //   this.items.add(this.addLinkButtonView!);
   }
 
   removeButtonView() {
     if (this.addLinkButtonView) {
-      this.items.remove(this.addLinkButtonView);
+      // this.items.remove(this.addLinkButtonView);
+      //this.addLinkButtonView.set({ isVisible: false });
     }
   }
 
@@ -113,7 +117,7 @@ export class PageLinkView extends View {
 
   createAnchors(anchors: Array<PageLinkSource>) {
     this.items.add(this.createLabel(""));
-    this.removeAnchorDropdown();
+    //this.removeAnchorDropdown();
 
     this.anchorDropdown = createDropdown(this.locale);
     this.anchorDropdown.on("execute", this.viewer.onSelectAnchor);
@@ -134,7 +138,8 @@ export class PageLinkView extends View {
 
   removeAnchorDropdown() {
     if (this.anchorDropdown) {
-      this.items.remove(this.anchorDropdown);
+      // this.items.remove(this.anchorDropdown);
+      //this.anchorDropdown.set({ isVisible: false });
       this.anchorDropdown = undefined;
     }
   }

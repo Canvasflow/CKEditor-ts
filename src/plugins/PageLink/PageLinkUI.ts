@@ -114,10 +114,13 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
     this.editor.anchorFn(data.pageLink.id).then((anchors) => {
       if (anchors.length === 0) {
         this.pageLinkView?.removeAnchorDropdown();
+
         this.pageLinkView?.insertButtonView();
         return;
       }
+
       this.pageLinkView?.createAnchors(anchors);
+      this.pageLinkView?.removeButtonView();
     });
   };
   onSelectAnchor: GetCallback<BaseEvent> = (evt) => {
