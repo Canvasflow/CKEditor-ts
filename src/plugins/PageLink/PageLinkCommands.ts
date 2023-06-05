@@ -27,7 +27,6 @@ export class PageLinkCommand extends Command {
         return;
       }
       let value = "";
-      console.log(range);
       for (const item of range.getItems()) {
         const proxy = item as any;
         value = proxy.data;

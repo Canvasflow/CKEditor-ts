@@ -1,6 +1,19 @@
 // import { PageAnchorSource } from './BaseCanvasflowEditor';
-import { PageAnchorSource } from "./BaseEditor";
+import { /*PageAnchorSource,*/ TextEditorConfig } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
+declare global {
+  interface Window {
+    CanvasflowTextEditor: any;
+  }
+}
+if (typeof window !== "undefined") {
+  window.CanvasflowTextEditor = (
+    element: HTMLElement,
+    config: TextEditorConfig,
+  ) => {
+    return TextEditor.create(element, config);
+  };
+}
 
 TextEditor.create(document.querySelector("#editor") as HTMLElement, {
   pageLinkSources: [
@@ -50,13 +63,13 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, {
   },
   fetchAnchors,
 })
-  .then(() => { })
+  .then(() => {})
   .catch((error) => {
     console.error(error);
   });
 
 async function fetchAnchors(id: string): Promise<Array<PageAnchorSource>> {
-  if (id === '1111') {
+  if (id === "1111") {
     return [];
   }
   return [

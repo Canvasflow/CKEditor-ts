@@ -18,7 +18,6 @@ export class ColorPickerUI extends Plugin {
     const config = this.editor.config;
 
     //const pageLinkSources: Array<PageLinkSource> = config.get('pageLinkSources') as Array<PageLinkSource>;
-    console.log(`PAGE LINK SOURCER`, config.get("fontColors"));
     this.balloon = this.editor.plugins.get(ContextualBalloon);
     this.formView = this.createFormView();
 
