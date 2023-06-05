@@ -24,11 +24,9 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
     this.pageLinkSources = this.editor.config.get(
       "pageLinkSources",
     ) as Array<PageLinkSource>;
-
     if (!this.pageLinkSources.length) {
       return;
     }
-
     this.balloon = this.editor.plugins.get(ContextualBalloon);
     this.createView();
     this.createButton();
@@ -46,12 +44,7 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
         url += `#${this.selectedAnchor}`;
       }
       editor.execute("PageLink", url);
-      this.hideUI();
-      this.selectedAnchor = undefined;
-      this.selectedPage = undefined;
-      this.pageLinkView?.removeButtonView();
-      this.pageLinkView?.removeAnchorDropdown();
-      this.pageLinkView?.resetPageLinkDropdown();
+      this.clearValues();
     });
 
     clickOutsideHandler({
@@ -60,6 +53,19 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
       contextElements: [this.balloon.view.element],
       callback: () => this.hideUI(),
     });
+  }
+
+  clearValues() {
+    this.hideUI();
+    this.selectedAnchor = undefined;
+    this.selectedPage = undefined;
+    this.pageLinkView?.removeButtonView();
+    this.pageLinkView?.removeAnchorDropdown();
+    this.pageLinkView?.resetPageLinkDropdown();
+  }
+
+  hideUI() {
+    if (this.balloon) this.balloon.remove(this.pageLinkView);
   }
 
   createButton() {
@@ -81,10 +87,6 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
       view: this.pageLinkView,
       position: this.getBalloonPositionData(),
     });
-  }
-
-  hideUI() {
-    if (this.balloon) this.balloon.remove(this.pageLinkView);
   }
 
   getBalloonPositionData() {
