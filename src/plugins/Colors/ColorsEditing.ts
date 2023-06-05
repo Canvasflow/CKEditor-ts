@@ -32,7 +32,6 @@ export class ColorEditing extends Plugin {
 
   constructor(editor: any) {
     super(editor);
-
     editor.conversion.for("downcast").attributeToElement({
       model: FONT_COLOR,
       view: renderDowncastElement(defaultColors),
