@@ -31,7 +31,6 @@ import {
 
 import { defaultColors, customColorsSet } from "./plugins/Colors/ColorValues";
 import { DarkMode } from "./plugins/DarkMode/DarkMode";
-import { Timestamp } from "./plugins/custom";
 import { Colors } from "./plugins/Colors/Colors";
 import { PageLink } from "./plugins/PageLink/PageLink";
 import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
@@ -73,7 +72,6 @@ const PLUGINS = [
   Font,
   Alignment,
   Link,
-  Timestamp,
   SpecialCharacters,
   SpecialCharactersEssentials,
   SpecialCharactersEmoji as any,
@@ -85,7 +83,6 @@ const PLUGINS = [
   ImageResizeHandles,
   Colors,
   DarkMode,
-  Timestamp,
   PageLink,
 ];
 
@@ -111,11 +108,4 @@ const TOOLBAR = [
   "specialCharacters",
   "dark-mode",
   "pageLink",
-  // "timestamp",
-
-  // {
-  //   label: "More basic styles",
-  //   icon: "plus",
-  //   items: ["strikethrough", "superscript", "subscript"],
-  // },
 ];
