@@ -38,16 +38,6 @@ export class PageLinkView extends View {
     this.createButton();
   }
 
-  showView() {
-    this.setTemplate({
-      tag: "form",
-      attributes: {
-        class: ["ck", "ck-page"],
-      },
-      children: this.items,
-    });
-  }
-
   createButton() {
     this.addLinkButtonView = this.createButtonObject(
       "Insert Link",
@@ -172,6 +162,16 @@ export class PageLinkView extends View {
       },
     });
     return labelView;
+  }
+
+  showView() {
+    this.setTemplate({
+      tag: "form",
+      attributes: {
+        class: ["ck", "ck-page"],
+      },
+      children: this.items,
+    });
   }
 }
 
