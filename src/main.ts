@@ -1,4 +1,4 @@
-import BaseEditor, { TextEditorConfig, PageAnchorSource } from "./BaseEditor";
+import { TextEditorConfig, PageAnchorSource } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
 
 import { createListeners } from "./listeners";
