@@ -1,5 +1,7 @@
 import BaseEditor, { TextEditorConfig, PageAnchorSource } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
+
+import { createListeners } from "./listeners";
 declare global {
   interface Window {
     CanvasflowTextEditor: any;
@@ -63,10 +65,7 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, {
   fetchAnchors,
 })
   .then((editor) => {
-    editor.addEventListener('add-color', (evt: any) => {
-      const { color } = evt;
-      console.log(`C`)
-    })
+    createListeners(editor);
   })
   .catch((error) => {
     console.error(error);
