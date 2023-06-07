@@ -1,4 +1,4 @@
-import { TextEditorConfig } from "./BaseEditor";
+import BaseEditor, { TextEditorConfig, PageAnchorSource } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
 declare global {
   interface Window {
@@ -62,7 +62,12 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, {
   },
   fetchAnchors,
 })
-  .then(() => {})
+  .then((editor) => {
+    editor.addEventListener('add-color', (evt: any) => {
+      const { color } = evt;
+      console.log(`C`)
+    })
+  })
   .catch((error) => {
     console.error(error);
   });

@@ -3,6 +3,7 @@ import { EditorConfig } from '@ckeditor/ckeditor5-core/src/editor/editorconfig';
 
 export default abstract class BaseEditor extends BalloonEditor {
     anchorFn?: AnchorFn
+    subscribers: Map<string, Function> = new Map();
     protected constructor(sourceElementOrData: HTMLElement | string, config?: TextEditorConfig) {
         super(sourceElementOrData, config);
         if (config?.fetchAnchors) {
@@ -10,8 +11,20 @@ export default abstract class BaseEditor extends BalloonEditor {
         }
     }
 
-    static create(sourceElementOrData: HTMLElement | string, config?: TextEditorConfig): Promise<BalloonEditor> {
-        return super.create(sourceElementOrData, config);
+    static create(sourceElementOrData: HTMLElement | string, config?: TextEditorConfig): Promise<BaseEditor> {
+        return super.create(sourceElementOrData, config) as Promise<BaseEditor>;
+    }
+
+    addEventListener(key: string, cb: Function) {
+        this.subscribers.set(key, cb);
+    }
+
+    dispatch(key: string, event: any) {
+        const cb = this.subscribers.get(key);
+        if (!cb) {
+            return;
+        }
+        cb(event);
     }
 }
 
