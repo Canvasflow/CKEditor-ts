@@ -1,5 +1,4 @@
-// import { PageAnchorSource } from './BaseCanvasflowEditor';
-import { /*PageAnchorSource,*/ TextEditorConfig } from "./BaseEditor";
+import { TextEditorConfig } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
 declare global {
   interface Window {
