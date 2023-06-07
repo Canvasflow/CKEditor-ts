@@ -1,6 +1,6 @@
 {
   "name": "@canvasflow/editor",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "type": "module",
   "main": "./dist/canvasflow-editor.umd.cjs",
   "module": "./dist/canvasflow-editor.js",

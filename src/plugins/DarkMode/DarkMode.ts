@@ -33,22 +33,6 @@ export class DarkMode extends Plugin {
       });
 
       button.on("execute", () => {
-        /* this is working */
-        // editor.model.change(async (writer) => {
-        //   //  var selection = editor.model.document.selection;
-        //   // var position = selection.getFirstPosition();
-        //   const selection = editor.model.document.selection;
-        //   const range = selection.getFirstRange();
-        //   var position = selection.getFirstPosition();
-        //   if (position) {
-        //     writer.insertText(
-        //       "this is a dark text in Apple",
-        //       { "data-anf-dark-mode": "true" },
-        //       position,
-        //     );
-        //   }
-        // });
-
         editor.model.change(async (writer) => {
           const selection = editor.model.document.selection;
           if (!selection) {

@@ -34,6 +34,7 @@ import { DarkMode } from "./plugins/DarkMode/DarkMode";
 import { Colors } from "./plugins/Colors/Colors";
 import { PageLink } from "./plugins/PageLink/PageLink";
 import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
+import { Uppercase } from "./plugins/TextTransform/Uppercase";
 
 export class TextEditor extends BaseEditor {
   constructor(
@@ -84,6 +85,7 @@ const PLUGINS = [
   Colors,
   DarkMode,
   PageLink,
+  Uppercase,
 ];
 
 const TOOLBAR = [
@@ -108,4 +110,5 @@ const TOOLBAR = [
   "specialCharacters",
   "dark-mode",
   "pageLink",
+  "Uppercase",
 ];
