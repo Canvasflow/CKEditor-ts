@@ -56,7 +56,7 @@ export class ColorPickerUI extends Plugin {
       input.onchange = (e: any) => {
         const color = e.target.value;
         if (color && color !== "#000000") {
-          editor.dispatch("addCustomColor", { color });
+          editor.dispatch("colors:addCustomColor", { color });
           this.setColor(color);
         }
       };
