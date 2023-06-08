@@ -3,6 +3,7 @@ import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { ColorsView } from "./ColorsView";
 import { customColorsSet } from "./ColorValues";
+import { AddCustomColorEvent } from './ColorsEvents';
 import CanvasflowEditor from "../../BaseEditor";
 
 export class ColorPickerUI extends Plugin {
@@ -56,7 +57,10 @@ export class ColorPickerUI extends Plugin {
       input.onchange = (e: any) => {
         const color = e.target.value;
         if (color && color !== "#000000") {
-          editor.dispatch("colors:addCustomColor", { color });
+          const evt: AddCustomColorEvent = {
+            color
+          }
+          editor.dispatch("colors:addCustomColor", evt);
           this.setColor(color);
         }
       };
@@ -119,3 +123,4 @@ export class ColorPickerUI extends Plugin {
     };
   }
 }
+

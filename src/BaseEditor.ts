@@ -1,6 +1,6 @@
 import { BalloonEditor } from "@ckeditor/ckeditor5-editor-balloon";
 import { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
-import { defaultColors } from "./plugins/Colors/ColorValues";
+import { EditorEvents } from "./EditorEvents";
 
 export default abstract class BaseEditor extends BalloonEditor {
   anchorFn?: AnchorFn;
@@ -26,7 +26,7 @@ export default abstract class BaseEditor extends BalloonEditor {
     this.subscribers.set(key, cb);
   }
 
-  dispatch(key: string, event: any) {
+  dispatch(key: string, event?: EditorEvents) {
     const cb = this.subscribers.get(key);
     if (!cb) {
       return;
