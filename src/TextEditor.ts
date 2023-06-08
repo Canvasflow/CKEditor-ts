@@ -48,6 +48,18 @@ export class TextEditor extends BaseEditor {
       config.alignment = {
         options: ["left", "right", "center", "justify"],
       };
+      config.link = {
+        decorators: {
+          openInNewTab: {
+            mode: "manual",
+            label: "Open in a new tab",
+            attributes: {
+              target: "_blank",
+              rel: "noopener noreferrer",
+            },
+          },
+        },
+      };
     }
 
     localStorage.setItem("defaultColors", JSON.stringify(defaultColors));

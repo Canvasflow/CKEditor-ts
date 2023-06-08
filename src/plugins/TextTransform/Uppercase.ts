@@ -1,20 +1,24 @@
 import { ButtonView } from "@ckeditor/ckeditor5-ui";
 import { Plugin } from "ckeditor5/src/core";
-import pencil from "@ckeditor/ckeditor5-core/theme/icons/pencil.svg";
 
 export class Uppercase extends Plugin {
   init() {
     const editor = this.editor;
 
-    editor.conversion.for("downcast").attributeToElement({
-      model: "style",
-      view: (_modelElement, { writer }, data) => {
-        console.log(data);
-        return writer.createAttributeElement("span", {
-          style: "color: blue",
-        });
-      },
-    });
+    // editor.conversion.for("upcast").attributeToAttribute({
+    //   view: "span",
+    //   model: "style",
+    // });
+
+    // editor.conversion.for("downcast").attributeToElement({
+    //   model: "style",
+    //   view: (_modelElement, { writer }, data) => {
+    //     console.log("uppercase downcast");
+    //     return writer.createAttributeElement("span", {
+    //       style: "text-transform: uppercase;",
+    //     });
+    //   },
+    // });
 
     editor.ui.componentFactory.add("Uppercase", () => {
       const button = new ButtonView();
@@ -51,7 +55,11 @@ export class Uppercase extends Plugin {
             // for (const prop of props) {
             //   attributes.push({ [prop[0]]: prop[1] });
             // }
-            writer.insertText(value.toUpperCase(), position);
+            writer.insertText(
+              value,
+              { style: "text-transform: uppercase;" },
+              position,
+            );
           }
 
           //   const selection = editor.model.document.selection;

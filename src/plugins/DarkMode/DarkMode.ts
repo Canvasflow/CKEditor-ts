@@ -1,28 +1,9 @@
 import { ButtonView } from "@ckeditor/ckeditor5-ui";
 import { Plugin } from "ckeditor5/src/core";
-import pencil from "@ckeditor/ckeditor5-core/theme/icons/pencil.svg";
 
 export class DarkMode extends Plugin {
   init() {
     const editor = this.editor;
-
-    editor.model.schema.extend("$text", {
-      allowAttributes: "data-anf-dark-mode",
-    });
-
-    editor.conversion.for("upcast").attributeToAttribute({
-      view: "span",
-      model: "data-anf-dark-mode",
-    });
-
-    editor.conversion.for("downcast").attributeToElement({
-      model: "data-anf-dark-mode",
-      view: (_modelElement, { writer }) => {
-        return writer.createAttributeElement("span", {
-          "data-anf-dark-mode": "true",
-        });
-      },
-    });
 
     editor.ui.componentFactory.add("dark-mode", () => {
       const button = new ButtonView();

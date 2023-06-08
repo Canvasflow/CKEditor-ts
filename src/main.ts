@@ -17,18 +17,6 @@ if (typeof window !== "undefined") {
 }
 
 TextEditor.create(document.querySelector("#editor") as HTMLElement, {
-  link: {
-    decorators: {
-      openInNewTab: {
-        mode: "manual",
-        label: "Open in a new tab",
-        attributes: {
-          target: "_blank",
-          rel: "noopener noreferrer",
-        },
-      },
-    },
-  },
   pageLinkSources: [
     {
       id: "1111",
