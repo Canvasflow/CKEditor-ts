@@ -2,7 +2,7 @@ import { ButtonView } from "@ckeditor/ckeditor5-ui";
 import { Plugin } from "ckeditor5/src/core";
 import pencil from "@ckeditor/ckeditor5-core/theme/icons/pencil.svg";
 
-export class DarkMode extends Plugin {
+export class RemoveFormatting extends Plugin {
   init() {
     const editor = this.editor;
 
@@ -24,12 +24,12 @@ export class DarkMode extends Plugin {
       },
     });
 
-    editor.ui.componentFactory.add("dark-mode", () => {
+    editor.ui.componentFactory.add("remove-formatting", () => {
       const button = new ButtonView();
       button.set({
-        tooltip: "Apple dark mode",
+        tooltip: "Remove styling",
         withText: false,
-        icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" > <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8V16Z" fill="currentColor" /> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM12 4V8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16V20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4Z" fill="currentColor" /> </svg>`,
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 6h5m5 0h-5m0 0-2 6m-2 6 .667-2M5 5l14 14"/></svg>`,
       });
 
       button.on("execute", () => {
@@ -51,11 +51,7 @@ export class DarkMode extends Plugin {
 
           var position = selection.getFirstPosition();
           if (position) {
-            writer.insertText(
-              value,
-              { "data-anf-dark-mode": "true" },
-              position,
-            );
+            writer.insertText(value, position);
           }
         });
       });

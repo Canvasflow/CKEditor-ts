@@ -17,6 +17,18 @@ if (typeof window !== "undefined") {
 }
 
 TextEditor.create(document.querySelector("#editor") as HTMLElement, {
+  link: {
+    decorators: {
+      openInNewTab: {
+        mode: "manual",
+        label: "Open in a new tab",
+        attributes: {
+          target: "_blank",
+          rel: "noopener noreferrer",
+        },
+      },
+    },
+  },
   pageLinkSources: [
     {
       id: "1111",
@@ -27,7 +39,6 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, {
       title: "Example 2",
     },
   ],
-  fontColors: ["red"],
   fontFamily: {
     options: [
       "default",
@@ -36,7 +47,7 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, {
     ],
   },
   fontSize: {
-    options: Array.from({ length: 80 }, (_, i) => i + 1),
+    options: Array.from({ length: 60 }, (_, i) => i + 10),
   },
   fontBackgroundColor: {
     colors: [

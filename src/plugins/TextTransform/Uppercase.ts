@@ -21,7 +21,7 @@ export class Uppercase extends Plugin {
       button.set({
         tooltip: "Uppercase",
         withText: false,
-        icon: pencil,
+        icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" > <path fill-rule="evenodd" clip-rule="evenodd" d="M13 9H10V17H8V9H5V7H13V9ZM18 13H16V17H14V13H12V11H18V13Z" fill="currentColor" /> </svg>`,
       });
 
       button.on("execute", () => {
@@ -36,22 +36,22 @@ export class Uppercase extends Plugin {
             return;
           }
           let value = "";
-          let properties = undefined;
+          // let properties = undefined;
           for (const item of range.getItems()) {
             const proxy = item as any;
             value = proxy.data;
 
-            properties = item.getAttributes();
+            // properties = item.getAttributes();
             writer.remove(item);
           }
           var position = selection.getFirstPosition();
           if (position) {
-            const attributes = [];
-            var props = Array.from(properties);
-            for (const prop of props) {
-              attributes.push({ [prop[0]]: prop[1] });
-            }
-            writer.insertText(value.toUpperCase(), { style: "" }, position);
+            // const attributes = [];
+            // var props = Array.from(properties);
+            // for (const prop of props) {
+            //   attributes.push({ [prop[0]]: prop[1] });
+            // }
+            writer.insertText(value.toUpperCase(), position);
           }
 
           //   const selection = editor.model.document.selection;

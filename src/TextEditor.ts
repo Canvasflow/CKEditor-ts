@@ -35,7 +35,8 @@ import { Colors } from "./plugins/Colors/Colors";
 import { PageLink } from "./plugins/PageLink/PageLink";
 import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
 import { Uppercase } from "./plugins/TextTransform/Uppercase";
-
+import { Lowercase } from "./plugins/TextTransform/Lowercase";
+import { RemoveFormatting } from "./plugins/RemoveFormatting/RemoveFormatting";
 export class TextEditor extends BaseEditor {
   constructor(
     sourceElementOrData: HTMLElement | string,
@@ -86,6 +87,8 @@ const PLUGINS = [
   DarkMode,
   PageLink,
   Uppercase,
+  Lowercase,
+  RemoveFormatting,
 ];
 
 const TOOLBAR = [
@@ -111,4 +114,6 @@ const TOOLBAR = [
   "dark-mode",
   "pageLink",
   "Uppercase",
+  "Lowercase",
+  "remove-formatting",
 ];
