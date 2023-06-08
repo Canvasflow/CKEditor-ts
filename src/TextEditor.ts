@@ -48,6 +48,7 @@ export class TextEditor extends BaseEditor {
       config.alignment = {
         options: ["left", "right", "center", "justify"],
       };
+
       config.link = {
         decorators: {
           openInNewTab: {

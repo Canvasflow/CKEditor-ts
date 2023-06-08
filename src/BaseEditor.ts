@@ -1,5 +1,6 @@
 import { BalloonEditor } from "@ckeditor/ckeditor5-editor-balloon";
 import { EditorConfig } from "@ckeditor/ckeditor5-core/src/editor/editorconfig";
+import { defaultColors } from "./plugins/Colors/ColorValues";
 
 export default abstract class BaseEditor extends BalloonEditor {
   anchorFn?: AnchorFn;
@@ -44,6 +45,7 @@ export interface TextEditorConfig extends EditorConfig {
     fetchAnchors?: AnchorFn;
   };
   pageLinkSources?: Array<PageLinkSource>;
+  fontFamily?: { options: Array<string> };
   fetchAnchors?: AnchorFn;
 }
 
