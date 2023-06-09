@@ -21,6 +21,9 @@ import {
   AutoImage,
   ImageResizeEditing,
   ImageResizeHandles,
+  ImageStyle,
+  ImageToolbar,
+  ImageResizeButtons,
 } from "@ckeditor/ckeditor5-image";
 import { Base64UploadAdapter } from "@ckeditor/ckeditor5-upload";
 import {
@@ -61,6 +64,47 @@ export class TextEditor extends BaseEditor {
           },
         },
       };
+
+      config.image = {
+        resizeOptions: [
+          {
+            name: "resizeImage:original",
+            value: null,
+            icon: "original",
+          },
+          {
+            name: "resizeImage:50",
+            value: "50",
+            icon: "medium",
+          },
+          {
+            name: "resizeImage:75",
+            value: "75",
+            icon: "large",
+          },
+        ],
+        styles: {
+          options: [
+            "inline",
+            "alignLeft",
+            "alignRight",
+            "alignCenter",
+            "alignBlockLeft",
+            "alignBlockRight",
+            "block",
+            "side",
+          ],
+        },
+        toolbar: [
+          "imageStyle:alignLeft",
+          "imageStyle:alignRight",
+          "imageStyle:alignCenter",
+          "|",
+          "resizeImage:50",
+          "resizeImage:75",
+          "resizeImage:original",
+        ],
+      };
     }
 
     localStorage.setItem("defaultColors", JSON.stringify(defaultColors));
@@ -95,6 +139,9 @@ const PLUGINS = [
   AutoImage,
   ImageResizeEditing,
   ImageResizeHandles,
+  ImageStyle,
+  ImageToolbar,
+  ImageResizeButtons,
   Colors,
   DarkMode,
   PageLink,

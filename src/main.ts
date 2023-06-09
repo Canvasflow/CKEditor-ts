@@ -1,6 +1,5 @@
 import { TextEditorConfig, PageAnchorSource } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
-
 import { createListeners } from "./listeners";
 declare global {
   interface Window {

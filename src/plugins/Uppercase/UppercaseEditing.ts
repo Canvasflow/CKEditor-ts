@@ -27,7 +27,6 @@ function renderDowncastElement() {
     const attributes = {
       style: `text-transform:uppercase;`,
     };
-
     return viewWriter.writer.createAttributeElement("span", attributes, {
       priority: 7,
     });
