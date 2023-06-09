@@ -1,7 +1,7 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
-export const UPPERCASE = "uppercase";
-export class UppercaseCommands extends Command {
+export const LOWERCASE = "lowercase";
+export class LowercaseCommands extends Command {
   constructor(editor: CanvasflowEditor) {
     super(editor);
   }
@@ -9,10 +9,10 @@ export class UppercaseCommands extends Command {
   refresh() {
     const model = this.editor.model;
     const doc = model.document;
-    this.value = doc.selection.getAttribute("uppercase");
+    this.value = doc.selection.getAttribute(LOWERCASE);
     this.isEnabled = model.schema.checkAttributeInSelection(
       doc.selection,
-      "uppercase",
+      LOWERCASE,
     );
   }
 
@@ -23,13 +23,13 @@ export class UppercaseCommands extends Command {
     model.change((writer) => {
       const ranges = model.schema.getValidRanges(
         selection.getRanges(),
-        UPPERCASE,
+        LOWERCASE,
       );
 
       for (const range of ranges) {
         writer.setAttributes(
           {
-            uppercase: "text-transform:uppercase;",
+            lowercase: "text-transform:lowercase;",
           },
           range,
         );
