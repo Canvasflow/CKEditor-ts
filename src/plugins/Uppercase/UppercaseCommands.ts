@@ -1,6 +1,6 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
-
+export const UPPERCASE = "uppercase";
 export class UppercaseCommands extends Command {
   constructor(editor: CanvasflowEditor) {
     super(editor);
@@ -29,15 +29,12 @@ export class UppercaseCommands extends Command {
       );
 
       for (const range of ranges) {
-        if (value) {
-          console.log(value);
-          writer.setAttributes(
-            {
-              style: "text-transform:uppercase;",
-            },
-            range,
-          );
-        }
+        writer.setAttributes(
+          {
+            uppercase: "text-transform:uppercase;",
+          },
+          range,
+        );
       }
     });
   }

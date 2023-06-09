@@ -1,5 +1,5 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
-import { UppercaseCommands } from "./UppercaseCommands";
+import { UppercaseCommands, UPPERCASE } from "./UppercaseCommands";
 
 export class UppercaseEditing extends Plugin {
   static get pluginName() {
@@ -9,13 +9,13 @@ export class UppercaseEditing extends Plugin {
   constructor(editor: any) {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
-      model: "uppercase",
+      model: UPPERCASE,
       view: renderDowncastElement(),
     });
 
-    editor.commands.add("uppercase", new UppercaseCommands(editor));
-    editor.model.schema.extend("$text", { allowAttributes: "uppercase" });
-    editor.model.schema.setAttributeProperties("uppercase", {
+    editor.commands.add(UPPERCASE, new UppercaseCommands(editor));
+    editor.model.schema.extend("$text", { allowAttributes: UPPERCASE });
+    editor.model.schema.setAttributeProperties(UPPERCASE, {
       isFormatting: true,
       copyOnEnter: true,
     });
@@ -23,7 +23,7 @@ export class UppercaseEditing extends Plugin {
 }
 
 function renderDowncastElement() {
-  return (viewWriter: any) => {
+  return (_: any, viewWriter: any) => {
     const attributes = {
       style: `text-transform:uppercase;`,
     };

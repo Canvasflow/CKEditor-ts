@@ -1,29 +1,7 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
-import { FontColorCommand } from "./ColorCommands";
-const FONT_COLOR = "fontColor";
+import { FontColorCommand, FONT_COLOR } from "./ColorCommands";
 const THEME_COLOR_ATTRIBUTE = "theme-palette";
 import { defaultColors } from "./ColorValues";
-
-function renderDowncastElement(themeColors: any) {
-  return (modelAttributeValue: any, viewWriter: any) => {
-    const themeColor = themeColors.find(
-      (item: any) => item.paletteKey === modelAttributeValue,
-    );
-    const attributes = themeColor
-      ? {
-          [THEME_COLOR_ATTRIBUTE]: themeColor.paletteKey,
-          style: `color:${themeColor.color}`,
-        }
-      : modelAttributeValue
-      ? {
-          style: `color:${modelAttributeValue}`,
-        }
-      : {};
-    return viewWriter.writer.createAttributeElement("span", attributes, {
-      priority: 7,
-    });
-  };
-}
 
 export class ColorEditing extends Plugin {
   static get pluginName() {
@@ -44,4 +22,25 @@ export class ColorEditing extends Plugin {
       copyOnEnter: true,
     });
   }
+}
+
+function renderDowncastElement(themeColors: any) {
+  return (modelAttributeValue: any, viewWriter: any) => {
+    const themeColor = themeColors.find(
+      (item: any) => item.paletteKey === modelAttributeValue,
+    );
+    const attributes = themeColor
+      ? {
+          [THEME_COLOR_ATTRIBUTE]: themeColor.paletteKey,
+          style: `color:${themeColor.color}`,
+        }
+      : modelAttributeValue
+      ? {
+          style: `color:${modelAttributeValue}`,
+        }
+      : {};
+    return viewWriter.writer.createAttributeElement("span", attributes, {
+      priority: 7,
+    });
+  };
 }
