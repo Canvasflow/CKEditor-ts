@@ -68,7 +68,7 @@ export class ColorsView extends View {
     return button;
   }
 
-  createColorInput() {
+  private createColorInput() {
     const colorInput = new InputView(this.locale);
     colorInput.id = "color-picker";
     return colorInput;

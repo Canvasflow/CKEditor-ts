@@ -3,13 +3,13 @@ import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { ColorsView } from "./ColorsView";
 import { customColorsSet } from "./ColorValues";
-import { AddCustomColorEvent } from './ColorsEvents';
+import { AddCustomColorEvent } from "./ColorsEvents";
 import CanvasflowEditor from "../../BaseEditor";
 
 export class ColorPickerUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
-  formView: any;
+  colorView: any;
   static get requires() {
     return [ContextualBalloon];
   }
@@ -17,7 +17,7 @@ export class ColorPickerUI extends Plugin {
   init() {
     const editor = this.editor;
     this.balloon = this.editor.plugins.get(ContextualBalloon);
-    this.formView = this.createFormView();
+    this.colorView = this.createFormView();
     editor.ui.componentFactory.add("colorPicker", () => {
       return this.createButton();
     });
@@ -37,15 +37,15 @@ export class ColorPickerUI extends Plugin {
 
   showUI() {
     this.balloon.add({
-      view: this.formView,
+      view: this.colorView,
       position: this.getBalloonPositionData(),
     });
   }
 
   createFormView() {
     const editor = this.editor;
-    const formView = new ColorsView(editor.locale);
-    this.listenTo(formView, "submit", () => {
+    const colorView = new ColorsView(editor.locale); //cambiar a ColorView
+    this.listenTo(colorView, "submit", () => {
       const input: HTMLInputElement | null = document.getElementById(
         "color-picker",
       ) as HTMLInputElement;
@@ -58,8 +58,8 @@ export class ColorPickerUI extends Plugin {
         const color = e.target.value;
         if (color && color !== "#000000") {
           const evt: AddCustomColorEvent = {
-            color
-          }
+            color,
+          };
           editor.dispatch("colors:addCustomColor", evt);
           this.setColor(color);
         }
@@ -67,20 +67,20 @@ export class ColorPickerUI extends Plugin {
       input?.click();
     });
 
-    this.listenTo(formView, "execute", (_, data) => {
+    this.listenTo(colorView, "execute", (_, data) => {
       editor.execute("fontColor", data.label);
     });
 
     clickOutsideHandler({
-      emitter: formView,
-      activator: () => this.balloon.visibleView === formView,
+      emitter: colorView,
+      activator: () => this.balloon.visibleView === colorView,
       contextElements: [this.balloon.view.element],
       callback: () => this.hideUI(),
     });
-    return formView;
+    return colorView;
   }
   hideUI() {
-    if (this.balloon) this.balloon.remove(this.formView);
+    if (this.balloon) this.balloon.remove(this.colorView);
   }
 
   setColor(color: string) {
@@ -97,12 +97,11 @@ export class ColorPickerUI extends Plugin {
         "customColorsSet",
         JSON.stringify(JSON.stringify(Array.from(customColorsSet))),
       );
-      //this.formView.this.formView.render();
 
-      this.balloon.remove(this.formView);
+      this.balloon.remove(this.colorView);
       this.init();
       this.balloon.add({
-        view: this.formView,
+        view: this.colorView,
         position: this.getBalloonPositionData(),
       });
     }
@@ -123,4 +122,3 @@ export class ColorPickerUI extends Plugin {
     };
   }
 }
-
