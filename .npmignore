@@ -12,3 +12,4 @@ tsconfig.json
 *.yml
 vite.config.js
 vite.minify.config.js
+.npmrc
