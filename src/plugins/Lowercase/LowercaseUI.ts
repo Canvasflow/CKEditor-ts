@@ -15,7 +15,7 @@ export class LowercaseUI extends Plugin {
     });
   }
 
-  createButton() {
+  private createButton() {
     const button = new ButtonView();
     button.label = "Lowercase";
     button.tooltip = true;

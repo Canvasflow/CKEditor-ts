@@ -2,7 +2,6 @@ import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { PageLinkView, PageLinkViewer } from "./PageLinkView";
-import check from "@ckeditor/ckeditor5-core/theme/icons/check.svg";
 import CanvasflowEditor, { PageLinkSource } from "../../BaseEditor";
 import { BaseEvent, GetCallback, Locale } from "@ckeditor/ckeditor5-utils";
 
@@ -32,7 +31,7 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
     this.createButton();
   }
 
-  createView() {
+  private createView() {
     const editor = this.editor;
     this.pageLinkView = new PageLinkView(this);
     this.pageLinkView.createPages(this.pageLinkSources);
@@ -55,7 +54,7 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
     });
   }
 
-  clearValues() {
+  private clearValues() {
     this.hideUI();
     this.selectedAnchor = undefined;
     this.selectedPage = undefined;
@@ -64,11 +63,11 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
     this.pageLinkView?.resetPageLinkDropdown();
   }
 
-  hideUI() {
+  private hideUI() {
     if (this.balloon) this.balloon.remove(this.pageLinkView);
   }
 
-  createButton() {
+  private createButton() {
     this.editor.ui.componentFactory.add("pageLink", () => {
       const button = new ButtonView();
       button.label = "Go to Page";
@@ -82,14 +81,14 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
     });
   }
 
-  showUI() {
+  private showUI() {
     this.balloon.add({
       view: this.pageLinkView,
       position: this.getBalloonPositionData(),
     });
   }
 
-  getBalloonPositionData() {
+  private getBalloonPositionData() {
     const view = this.editor.editing.view;
     const viewDocument = view.document;
     let target = () => {
@@ -104,6 +103,10 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
     };
   }
 
+  /**
+   * Trigger actions when Page link is selected
+   *
+   */
   onSelectPage: GetCallback<BaseEvent> = (evt) => {
     const source: any = evt.source;
     const { data } = source;
@@ -125,6 +128,10 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
     });
   };
 
+  /**
+   * Trigger actions when Anchor component is selected
+   *
+   */
   onSelectAnchor: GetCallback<BaseEvent> = (evt) => {
     const source: any = evt.source;
     const { data } = source;

@@ -1,6 +1,5 @@
 import { ButtonView } from "@ckeditor/ckeditor5-ui";
 import { Plugin } from "ckeditor5/src/core";
-import pencil from "@ckeditor/ckeditor5-core/theme/icons/pencil.svg";
 
 export class RemoveFormatting extends Plugin {
   init() {

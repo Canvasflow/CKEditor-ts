@@ -9,13 +9,12 @@ export class UppercaseUI extends Plugin {
 
   init() {
     const editor = this.editor;
-
     editor.ui.componentFactory.add("Uppercase", () => {
       return this.createButton();
     });
   }
 
-  createButton() {
+  private createButton() {
     const button = new ButtonView();
     button.label = "Uppercase";
     button.tooltip = true;

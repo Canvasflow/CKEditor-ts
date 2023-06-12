@@ -33,12 +33,12 @@ export class PageLinkView extends View {
     this.initItems();
   }
 
-  initItems() {
+  private initItems() {
     this.items.add(this.createLabel("Insert Page Link"));
     this.createButton();
   }
 
-  createButton() {
+  private createButton() {
     this.addLinkButtonView = this.createButtonObject(
       "Insert Link",
       ``,
@@ -48,6 +48,10 @@ export class PageLinkView extends View {
     this.addLinkButtonView.isEnabled = true;
   }
 
+  /**
+   * Create pages list from data
+   *
+   */
   createPages(pageLinkSources: Array<PageLinkSource>) {
     this.pageLinkDropDown = this.getPageDropdown();
     const collection: Collection<any> = pageLinkSources.reduce(
@@ -58,7 +62,7 @@ export class PageLinkView extends View {
     this.items.add(this.pageLinkDropDown);
   }
 
-  getPageDropdown() {
+  private getPageDropdown() {
     this.listDropdown = createDropdown(this.locale);
     this.listDropdown.on("execute", this.viewer.onSelectPage);
     this.listDropdown.buttonView.set({
@@ -69,6 +73,10 @@ export class PageLinkView extends View {
     return this.listDropdown;
   }
 
+  /**
+   * Creates a div for group html elements
+   *
+   */
   insertButtonView() {
     if (!this.items.has(this.addLinkButtonView!)) {
       this.items.add(this.createLabel(""));
@@ -76,12 +84,20 @@ export class PageLinkView extends View {
     }
   }
 
+  /**
+   * Removes create page link button
+   *
+   */
   removeButtonView() {
     if (this.items.has(this.addLinkButtonView!)) {
       this.items.remove(this.addLinkButtonView!);
     }
   }
 
+  /**
+   * Clear values for page link
+   *
+   */
   resetPageLinkDropdown() {
     this.listDropdown?.buttonView.set({
       label: "Select Page",
@@ -89,6 +105,10 @@ export class PageLinkView extends View {
     });
   }
 
+  /**
+   * Page link value selected
+   *
+   */
   selectPage(page: string) {
     this.pageLinkDropDown?.buttonView.set({
       label: page,
@@ -96,6 +116,10 @@ export class PageLinkView extends View {
     });
   }
 
+  /**
+   * Anchor component value selected
+   *
+   */
   selectAnchor(anchor: string) {
     this.anchorDropdown?.buttonView.set({
       label: anchor,
@@ -103,6 +127,10 @@ export class PageLinkView extends View {
     });
   }
 
+  /**
+   * Anchor component value selected
+   *
+   */
   createAnchors(anchors: Array<PageLinkSource>) {
     this.items.add(this.createLabel(""));
     this.anchorDropdown = createDropdown(this.locale);
@@ -122,6 +150,10 @@ export class PageLinkView extends View {
     this.items.add(this.anchorDropdown);
   }
 
+  /**
+   * Removes anchor element from view
+   *
+   */
   removeAnchorDropdown() {
     if (this.anchorDropdown && this.items.has(this.anchorDropdown!)) {
       this.items.remove(this.anchorDropdown!);
@@ -140,7 +172,7 @@ export class PageLinkView extends View {
     this.focusTracker.destroy();
   }
 
-  createButtonObject(label: any, icon: any, className: any) {
+  private createButtonObject(label: any, icon: any, className: any) {
     const button = new ButtonView();
     button.set({
       label,
@@ -153,7 +185,7 @@ export class PageLinkView extends View {
     return button;
   }
 
-  createLabel(text: any) {
+  private createLabel(text: any) {
     const labelView = new LabelView(this.locale);
     labelView.text = text;
     labelView.extendTemplate({
@@ -164,6 +196,10 @@ export class PageLinkView extends View {
     return labelView;
   }
 
+  /**
+   * Insert elements into DOM
+   *
+   */
   showView() {
     this.setTemplate({
       tag: "form",
