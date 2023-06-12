@@ -23,7 +23,7 @@ export class ColorPickerUI extends Plugin {
     });
   }
 
-  createButton() {
+  private createButton() {
     const button = new ButtonView();
     button.label = "Font Color";
     button.tooltip = true;
@@ -42,7 +42,7 @@ export class ColorPickerUI extends Plugin {
     });
   }
 
-  createFormView() {
+  private createFormView() {
     const editor = this.editor;
     const colorView = new ColorsView(editor.locale); //cambiar a ColorView
     this.listenTo(colorView, "submit", () => {
@@ -79,11 +79,12 @@ export class ColorPickerUI extends Plugin {
     });
     return colorView;
   }
-  hideUI() {
+
+  private hideUI() {
     if (this.balloon) this.balloon.remove(this.colorView);
   }
 
-  setColor(color: string) {
+  private setColor(color: string) {
     const findList = Array.from(customColorsSet).find((value: any) => {
       if (value.color === color) return value;
     });
@@ -107,7 +108,7 @@ export class ColorPickerUI extends Plugin {
     }
   }
 
-  getBalloonPositionData() {
+  private getBalloonPositionData() {
     const view = this.editor.editing.view;
     const viewDocument = view.document;
     let target = () => {

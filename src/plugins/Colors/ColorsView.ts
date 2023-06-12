@@ -55,7 +55,7 @@ export class ColorsView extends View {
     });
   }
 
-  createButton(label: any, icon: any, className: any) {
+  private createButton(label: any, icon: any, className: any) {
     const button = new ButtonView();
     button.set({
       label,
@@ -74,7 +74,7 @@ export class ColorsView extends View {
     return colorInput;
   }
 
-  createColorsGrid(colors: any) {
+  private createColorsGrid(colors: any) {
     const colorGridView = new ColorGridView(this.locale, {
       colorDefinitions: colors.map((item: any) => {
         item.label = item.color;
@@ -87,7 +87,7 @@ export class ColorsView extends View {
     return colorGridView;
   }
 
-  createLabel(text: any) {
+  private createLabel(text: any) {
     const labelView = new LabelView(this.locale);
     labelView.text = text;
     labelView.extendTemplate({

@@ -1,15 +1,6 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { PageLinkCommand } from "./PageLinkCommands";
 
-function renderDowncastElement() {
-  return (viewWriter: any) => {
-    const attributes = { href: "" };
-    return viewWriter.writer.createAttributeElement("a", attributes, {
-      priority: 7,
-    });
-  };
-}
-
 export class PageLinkEditing extends Plugin {
   static get pluginName() {
     return "PageLinkEditing";
@@ -29,4 +20,13 @@ export class PageLinkEditing extends Plugin {
       copyOnEnter: true,
     });
   }
+}
+
+function renderDowncastElement() {
+  return (viewWriter: any) => {
+    const attributes = { href: "" };
+    return viewWriter.writer.createAttributeElement("a", attributes, {
+      priority: 7,
+    });
+  };
 }
