@@ -1,10 +1,9 @@
 import { ButtonView } from "@ckeditor/ckeditor5-ui";
 import { Plugin } from "ckeditor5/src/core";
-
+import icon from "./RemoveFormattingIcon.svg?raw";
 export class RemoveFormatting extends Plugin {
   init() {
     const editor = this.editor;
-
     editor.model.schema.extend("$text", {
       allowAttributes: "data-anf-dark-mode",
     });
@@ -28,7 +27,7 @@ export class RemoveFormatting extends Plugin {
       button.set({
         tooltip: "Remove styling",
         withText: false,
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 6h5m5 0h-5m0 0-2 6m-2 6 .667-2M5 5l14 14"/></svg>`,
+        icon,
       });
 
       button.on("execute", () => {
