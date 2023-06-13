@@ -204,7 +204,7 @@ export class PageLinkView extends View {
     this.setTemplate({
       tag: "form",
       attributes: {
-        class: ["ck", "ck-page"],
+        class: ["ck", "ck-page", "page-link"],
       },
       children: this.items,
     });

@@ -34,7 +34,7 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, {
     ],
   },
   fontSize: {
-    options: Array.from({ length: 60 }, (_, i) => i + 10),
+    options: Array.from({ length: 70 }, (_, i) => i + 8),
   },
   fontBackgroundColor: {
     colors: [

@@ -1,4 +1,4 @@
-.ck-page {
+.page-link {
   height: 200px !important;
   width: 300px !important;
 }
@@ -16,11 +16,6 @@
 
 .ck-dropdown {
   border: red 2px solid;
-}
-
-.ck.ck-dropdown__panel {
-  max-height: 160px !important;
-  overflow-y: auto !important;
 }
 
 #dropdown-element {

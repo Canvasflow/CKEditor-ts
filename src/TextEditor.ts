@@ -62,7 +62,15 @@ export class TextEditor extends BaseEditor {
               rel: "noopener noreferrer",
             },
           },
+          protocol: {
+            mode: "manual",
+            label: "default protocol",
+            attributes: {
+              protocol: "https://",
+            },
+          },
         },
+        // defaultProtocol: "http://",
       };
 
       config.image = {
