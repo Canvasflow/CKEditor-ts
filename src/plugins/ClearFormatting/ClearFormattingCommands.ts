@@ -24,16 +24,7 @@ export class ClearFormattingCommands extends Command {
       const ranges = model.schema.getValidRanges(selection.getRanges(), CLEAR);
       console.log("exectue called");
       for (const range of ranges) {
-        console.log(range);
-        console.log(range.getItems());
-        let value = "";
-        for (const item of range.getItems()) {
-          console.log(item);
-          const proxy = item as any;
-          value = proxy.data;
-          writer.remove(item);
-        }
-        //writer.setAttributes({ clear: "color:red" }, range);
+        writer.setAttributes({ clear: "" }, range);
       }
     });
   }

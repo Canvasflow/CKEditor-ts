@@ -25,7 +25,7 @@ export class ColorsView extends View {
     this.setItems(this.colors);
   }
 
-  setItems(colors: any) {
+  private setItems(colors: any) {
     this.items.add(this.createLabel("Default Colors"));
     const defaultColorList = colors.defaultColor;
     if (defaultColorList.length > 0) {

@@ -3,7 +3,7 @@ import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { ColorsView } from "./ColorsView";
 import { AddCustomColorEvent } from "./ColorsEvents";
-import CanvasflowEditor, { Colors } from "../../BaseEditor";
+import CanvasflowEditor, { Colors, TextEditorConfig } from "../../BaseEditor";
 import icon from "./ColorIcon.svg?raw";
 
 export class ColorPickerUI extends Plugin {
@@ -91,16 +91,18 @@ export class ColorPickerUI extends Plugin {
       if (value.color === color) return value;
     });
 
-    if (!findList) {
-      colors.customColor.push({ label: color, color: color });
-      this.editor.config.set({ colors });
-      this.balloon.remove(this.colorView);
-      this.init();
-      this.balloon.add({
-        view: this.colorView,
-        position: this.getBalloonPositionData(),
-      });
+    if (findList) {
+      return;
     }
+    colors.customColor.push({ label: color, color: color });
+    const editorConfig: TextEditorConfig = this.editor.config;
+    editorConfig.set({ colors });
+    this.balloon.remove(this.colorView);
+    this.init();
+    this.balloon.add({
+      view: this.colorView,
+      position: this.getBalloonPositionData(),
+    });
   }
 
   private getBalloonPositionData() {

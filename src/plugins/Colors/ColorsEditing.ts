@@ -1,6 +1,5 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { FontColorCommand, FONT_COLOR } from "./ColorCommands";
-const THEME_COLOR_ATTRIBUTE = "theme-palette";
 
 export class ColorEditing extends Plugin {
   static get pluginName() {
@@ -11,7 +10,7 @@ export class ColorEditing extends Plugin {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
       model: FONT_COLOR,
-      view: renderDowncastElement(""),
+      view: this.renderDowncastElement(),
     });
 
     editor.commands.add(FONT_COLOR, new FontColorCommand(editor));
@@ -21,15 +20,15 @@ export class ColorEditing extends Plugin {
       copyOnEnter: true,
     });
   }
-}
 
-function renderDowncastElement(themeColors: any) {
-  return (modelAttributeValue: any, viewWriter: any) => {
-    const attributes = {
-      style: `color:${modelAttributeValue}`,
+  private renderDowncastElement() {
+    return (modelAttributeValue: any, viewWriter: any) => {
+      const attributes = {
+        style: `color:${modelAttributeValue}`,
+      };
+      return viewWriter.writer.createAttributeElement("span", attributes, {
+        priority: 7,
+      });
     };
-    return viewWriter.writer.createAttributeElement("span", attributes, {
-      priority: 7,
-    });
-  };
+  }
 }
