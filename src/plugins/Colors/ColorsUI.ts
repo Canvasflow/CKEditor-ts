@@ -5,6 +5,7 @@ import { ColorsView } from "./ColorsView";
 import { AddCustomColorEvent } from "./ColorsEvents";
 import CanvasflowEditor, { Colors, TextEditorConfig } from "../../BaseEditor";
 import icon from "./ColorIcon.svg?raw";
+import Config from "@ckeditor/ckeditor5-utils/src/config";
 
 export class ColorPickerUI extends Plugin {
   declare editor: CanvasflowEditor;
@@ -95,7 +96,8 @@ export class ColorPickerUI extends Plugin {
       return;
     }
     colors.customColor.push({ label: color, color: color });
-    const editorConfig: TextEditorConfig = this.editor.config;
+    const editorConfig: Config<TextEditorConfig> = this.editor
+      .config as Config<TextEditorConfig>;
     editorConfig.set({ colors });
     this.balloon.remove(this.colorView);
     this.init();

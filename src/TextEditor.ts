@@ -40,6 +40,8 @@ import { RemoveFormatting } from "./plugins/RemoveFormatting/RemoveFormatting";
 
 import { ClearFormatting } from "./plugins/ClearFormatting/ClearFormatting";
 
+import { Capitalize } from "./plugins/Capitalize/Capitalize";
+
 export class TextEditor extends BaseEditor {
   constructor(
     sourceElementOrData: HTMLElement | string,
@@ -151,6 +153,7 @@ const PLUGINS = [
   Lowercase,
   RemoveFormatting,
   ClearFormatting,
+  Capitalize,
 ];
 
 const TOOLBAR = [
@@ -187,4 +190,5 @@ const TOOLBAR = [
   },
   "remove-formatting",
   "ClearFormatting",
+  "Capitalize",
 ];
