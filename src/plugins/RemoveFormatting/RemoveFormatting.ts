@@ -1,4 +1,4 @@
-import { ButtonVietwo asdasdasd asd asd ad w } from "@ckeditor/ckeditor5-ui";
+import { ButtonView } from "@ckeditor/ckeditor5-ui";
 import { Plugin } from "ckeditor5/src/core";
 import icon from "./RemoveFormattingIcon.svg?raw";
 export class RemoveFormatting extends Plugin {
