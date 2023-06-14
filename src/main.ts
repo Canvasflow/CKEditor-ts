@@ -61,6 +61,10 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, {
     ],
   },
   fetchAnchors,
+  colors: {
+    defaultColor: [{ color: "red", label: "red" }],
+    customColor: [{ color: "blue", label: "blue" }],
+  },
 })
   .then((editor) => {
     createListeners(editor);

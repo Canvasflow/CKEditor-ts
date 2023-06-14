@@ -2,9 +2,8 @@ import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { ColorsView } from "./ColorsView";
-import { customColorsSet } from "./ColorValues";
 import { AddCustomColorEvent } from "./ColorsEvents";
-import CanvasflowEditor from "../../BaseEditor";
+import CanvasflowEditor, { Colors } from "../../BaseEditor";
 import icon from "./ColorIcon.svg?raw";
 
 export class ColorPickerUI extends Plugin {
@@ -45,7 +44,7 @@ export class ColorPickerUI extends Plugin {
 
   private createFormView() {
     const editor = this.editor;
-    const colorView = new ColorsView(editor.locale); //cambiar a ColorView
+    const colorView = new ColorsView(editor.locale, editor);
     this.listenTo(colorView, "submit", () => {
       const input: HTMLInputElement | null = document.getElementById(
         "color-picker",
@@ -86,20 +85,15 @@ export class ColorPickerUI extends Plugin {
   }
 
   private setColor(color: string) {
-    const findList = Array.from(customColorsSet).find((value: any) => {
+    const colors = this.editor.config.get("colors") as Colors;
+
+    const findList = colors.customColor.find((value: any) => {
       if (value.color === color) return value;
     });
 
     if (!findList) {
-      customColorsSet.add({
-        label: color,
-        color: color,
-      });
-      localStorage.setItem(
-        "customColorsSet",
-        JSON.stringify(JSON.stringify(Array.from(customColorsSet))),
-      );
-
+      colors.customColor.push({ label: color, color: color });
+      this.editor.config.set({ colors });
       this.balloon.remove(this.colorView);
       this.init();
       this.balloon.add({

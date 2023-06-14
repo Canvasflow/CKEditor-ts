@@ -30,7 +30,6 @@ import {
   SpecialCharacters,
   SpecialCharactersEssentials,
 } from "@ckeditor/ckeditor5-special-characters";
-import { defaultColors, customColorsSet } from "./plugins/Colors/ColorValues";
 import { DarkMode } from "./plugins/DarkMode/DarkMode";
 import { Colors } from "./plugins/Colors/Colors";
 import { PageLink } from "./plugins/PageLink/PageLink";
@@ -114,13 +113,6 @@ export class TextEditor extends BaseEditor {
         ],
       };
     }
-
-    localStorage.setItem("defaultColors", JSON.stringify(defaultColors));
-    localStorage.setItem(
-      "customColorsSet",
-      JSON.stringify(JSON.stringify(Array.from(customColorsSet))),
-    );
-
     super(sourceElementOrData, config);
   }
 }

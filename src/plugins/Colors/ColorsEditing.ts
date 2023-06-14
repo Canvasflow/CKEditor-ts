@@ -1,7 +1,6 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { FontColorCommand, FONT_COLOR } from "./ColorCommands";
 const THEME_COLOR_ATTRIBUTE = "theme-palette";
-import { defaultColors } from "./ColorValues";
 
 export class ColorEditing extends Plugin {
   static get pluginName() {
@@ -12,7 +11,7 @@ export class ColorEditing extends Plugin {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
       model: FONT_COLOR,
-      view: renderDowncastElement(defaultColors),
+      view: renderDowncastElement(""),
     });
 
     editor.commands.add(FONT_COLOR, new FontColorCommand(editor));

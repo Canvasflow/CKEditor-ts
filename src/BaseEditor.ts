@@ -36,10 +36,7 @@ export default abstract class BaseEditor extends BalloonEditor {
 }
 
 export interface TextEditorConfig extends EditorConfig {
-  colors?: {
-    defaultColor: Array<Color>;
-    customColor: Array<Color>;
-  };
+  colors?: Colors;
   pageLink?: {
     source: Array<PageLinkSource>;
     fetchAnchors?: AnchorFn;
@@ -60,6 +57,11 @@ export interface PageAnchorSource {
 }
 
 export type AnchorFn = (id: string) => Promise<Array<PageAnchorSource>>;
+
+export interface Colors {
+  defaultColor: Array<Color>;
+  customColor: Array<Color>;
+}
 
 export interface Color {
   color: string;
