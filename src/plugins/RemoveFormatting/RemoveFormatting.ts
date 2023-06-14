@@ -1,26 +1,9 @@
-import { ButtonView } from "@ckeditor/ckeditor5-ui";
+import { ButtonVietwo asdasdasd asd asd ad w } from "@ckeditor/ckeditor5-ui";
 import { Plugin } from "ckeditor5/src/core";
 import icon from "./RemoveFormattingIcon.svg?raw";
 export class RemoveFormatting extends Plugin {
   init() {
     const editor = this.editor;
-    editor.model.schema.extend("$text", {
-      allowAttributes: "data-anf-dark-mode",
-    });
-
-    editor.conversion.for("upcast").attributeToAttribute({
-      view: "span",
-      model: "data-anf-dark-mode",
-    });
-
-    editor.conversion.for("downcast").attributeToElement({
-      model: "data-anf-dark-mode",
-      view: (_modelElement, { writer }) => {
-        return writer.createAttributeElement("span", {
-          "data-anf-dark-mode": "true",
-        });
-      },
-    });
 
     editor.ui.componentFactory.add("remove-formatting", () => {
       const button = new ButtonView();
@@ -41,7 +24,9 @@ export class RemoveFormatting extends Plugin {
             return;
           }
           let value = "";
+          console.log(range.getItems());
           for (const item of range.getItems()) {
+            console.log(item);
             const proxy = item as any;
             value = proxy.data;
             writer.remove(item);

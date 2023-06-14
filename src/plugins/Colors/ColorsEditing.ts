@@ -25,19 +25,9 @@ export class ColorEditing extends Plugin {
 
 function renderDowncastElement(themeColors: any) {
   return (modelAttributeValue: any, viewWriter: any) => {
-    const themeColor = themeColors.find(
-      (item: any) => item.paletteKey === modelAttributeValue,
-    );
-    const attributes = themeColor
-      ? {
-          [THEME_COLOR_ATTRIBUTE]: themeColor.paletteKey,
-          style: `color:${themeColor.color}`,
-        }
-      : modelAttributeValue
-      ? {
-          style: `color:${modelAttributeValue}`,
-        }
-      : {};
+    const attributes = {
+      style: `color:${modelAttributeValue}`,
+    };
     return viewWriter.writer.createAttributeElement("span", attributes, {
       priority: 7,
     });

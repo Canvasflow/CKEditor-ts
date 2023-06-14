@@ -38,6 +38,8 @@ import { Uppercase } from "./plugins/Uppercase/Uppercase";
 import { Lowercase } from "./plugins/Lowercase/Lowercase";
 import { RemoveFormatting } from "./plugins/RemoveFormatting/RemoveFormatting";
 
+import { ClearFormatting } from "./plugins/ClearFormatting/ClearFormatting";
+
 export class TextEditor extends BaseEditor {
   constructor(
     sourceElementOrData: HTMLElement | string,
@@ -148,6 +150,7 @@ const PLUGINS = [
   Uppercase,
   Lowercase,
   RemoveFormatting,
+  ClearFormatting,
 ];
 
 const TOOLBAR = [
@@ -183,4 +186,5 @@ const TOOLBAR = [
     items: ["dark-mode", "Uppercase", "Lowercase"],
   },
   "remove-formatting",
+  "ClearFormatting",
 ];
