@@ -10,7 +10,8 @@ export class ClearFormattingEditing extends Plugin {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
       model: CLEAR,
-      view: renderDowncastElement(),
+      view: this.renderDowncastElement(),
+      converterPriority: "high",
     });
 
     editor.commands.add(CLEAR, new ClearFormattingCommands(editor));
@@ -20,13 +21,13 @@ export class ClearFormattingEditing extends Plugin {
       copyOnEnter: true,
     });
   }
-}
 
-function renderDowncastElement() {
-  return (_: any, viewWriter: any) => {
-    const attributes = { style: "color:red" };
-    return viewWriter.writer.createAttributeElement("span", attributes, {
-      priority: 7,
-    });
-  };
+  private renderDowncastElement() {
+    return (_: any, viewWriter: any) => {
+      const attributes = { style: "" };
+      return viewWriter.writer.createAttributeElement("span", attributes, {
+        priority: 7,
+      });
+    };
+  }
 }

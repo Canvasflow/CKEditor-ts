@@ -44,6 +44,7 @@ export interface TextEditorConfig extends EditorConfig {
   pageLinkSources?: Array<PageLinkSource>;
   fontFamily?: { options: Array<string> };
   fetchAnchors?: AnchorFn;
+  fontBackground?: Colors;
 }
 
 export interface PageLinkSource {

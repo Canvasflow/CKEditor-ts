@@ -1,7 +1,7 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
-export const CLEAR = "clear";
-export class ClearFormattingCommands extends Command {
+export const BACKGROUND_COLOR = "backgroundColor";
+export class FontBackgroundCommand extends Command {
   constructor(editor: CanvasflowEditor) {
     super(editor);
   }
@@ -9,21 +9,33 @@ export class ClearFormattingCommands extends Command {
   refresh() {
     const model = this.editor.model;
     const doc = model.document;
-    this.value = doc.selection.getAttribute(CLEAR);
+    this.value = doc.selection.getAttribute(BACKGROUND_COLOR);
     this.isEnabled = model.schema.checkAttributeInSelection(
       doc.selection,
-      CLEAR,
+      BACKGROUND_COLOR,
     );
   }
 
-  execute() {
+  execute(paletteKey: any, color: any) {
     const model = this.editor.model;
     const document = model.document;
     const selection = document.selection;
+    const value = paletteKey || color;
     model.change((writer) => {
-      const ranges = model.schema.getValidRanges(selection.getRanges(), CLEAR);
+      const ranges = model.schema.getValidRanges(
+        selection.getRanges(),
+        BACKGROUND_COLOR,
+      );
+
       for (const range of ranges) {
-        writer.setAttributes({ clear: "" }, range);
+        if (value) {
+          writer.setAttributes(
+            {
+              backgroundColor: value,
+            },
+            range,
+          );
+        }
       }
     });
   }
