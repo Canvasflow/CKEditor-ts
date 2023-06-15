@@ -36,14 +36,15 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, {
   fontSize: {
     options: Array.from({ length: 70 }, (_, i) => i + 8),
   },
-  fontBackground: {
-    defaultColor: [{ color: "orange", label: "orange" }],
-    customColor: [{ color: "teal", label: "teal" }],
-  },
+
   fetchAnchors,
   colors: {
     defaultColor: [{ color: "red", label: "red" }],
     customColor: [{ color: "blue", label: "blue" }],
+  },
+  fontBackground: {
+    defaultColor: [{ color: "orange", label: "orange" }],
+    customColor: [{ color: "teal", label: "teal" }],
   },
 })
   .then((editor) => {

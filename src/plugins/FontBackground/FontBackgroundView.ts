@@ -10,6 +10,7 @@ import {
 import { FocusTracker } from "@ckeditor/ckeditor5-utils";
 import CanvasflowEditor, { Colors } from "../../BaseEditor";
 import icon from "./ColorPickIcon.svg?raw";
+import remove from "./FontBackgroundRemove.svg?raw";
 
 export class FontBackgroundView extends View {
   columns: number | undefined;
@@ -26,19 +27,19 @@ export class FontBackgroundView extends View {
   }
 
   private setItems(colors: any) {
+    this.items.add(this.createClearColorLabel());
     this.items.add(this.createLabel("Default Colors"));
     const defaultColorList = colors.defaultColor;
     if (defaultColorList.length > 0) {
       this.items.add(this.createColorsGrid(defaultColorList));
     }
-    let pickerButton = this.createButton("Select color", icon, "");
-    pickerButton.type = "submit";
+
     this.items.add(this.createLabel("Custom colors"));
     if (colors.customColor.length > 0) {
       const colorList = colors.customColor;
       this.items.add(this.createColorsGrid(colorList));
     }
-    this.items.add(pickerButton);
+    this.items.add(this.createColorLabel());
     this.items.add(this.createColorInput());
     this.setTemplate({
       tag: "form",
@@ -47,6 +48,23 @@ export class FontBackgroundView extends View {
       },
       children: this.items,
     });
+  }
+
+  private createClearColorLabel() {
+    let clearButton = this.createButton("Remove Background", remove, "");
+    clearButton.type = "button";
+    clearButton.class = "clear-color-button";
+    clearButton.on("execute", () => {
+      console.log("clear background was called");
+    });
+    return clearButton;
+  }
+
+  private createColorLabel() {
+    let pickerButton = this.createButton("Select color", icon, "");
+    pickerButton.type = "submit";
+    pickerButton.class = "submit-color-button";
+    return pickerButton;
   }
 
   private createButton(label: any, icon: any, className: any) {

@@ -10,7 +10,7 @@ import Config from "@ckeditor/ckeditor5-utils/src/config";
 export class FontBackgroundUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
-  colorView: any;
+  BackgroundView: any;
   static get requires() {
     return [ContextualBalloon];
   }
@@ -18,7 +18,7 @@ export class FontBackgroundUI extends Plugin {
   init() {
     const editor = this.editor;
     this.balloon = this.editor.plugins.get(ContextualBalloon);
-    this.colorView = this.createFormView();
+    this.BackgroundView = this.createFormView();
     editor.ui.componentFactory.add("backgroundColor", () => {
       return this.createButton();
     });
@@ -38,15 +38,15 @@ export class FontBackgroundUI extends Plugin {
 
   showUI() {
     this.balloon.add({
-      view: this.colorView,
+      view: this.BackgroundView,
       position: this.getBalloonPositionData(),
     });
   }
 
   private createFormView() {
     const editor = this.editor;
-    const colorView = new FontBackgroundView(editor.locale, editor);
-    this.listenTo(colorView, "submit", () => {
+    const BackgroundView = new FontBackgroundView(editor.locale, editor);
+    this.listenTo(BackgroundView, "submit", () => {
       const input: HTMLInputElement | null = document.getElementById(
         "color-picker",
       ) as HTMLInputElement;
@@ -67,22 +67,26 @@ export class FontBackgroundUI extends Plugin {
       };
       input?.click();
     });
+    this.listenTo(BackgroundView, "button", () => {
+      console.log("remove called");
+    });
 
-    this.listenTo(colorView, "execute", (_, data) => {
+    this.listenTo(BackgroundView, "execute", (_, data) => {
+      console.log(BackgroundView);
       editor.execute("backgroundColor", data.label);
     });
 
     clickOutsideHandler({
-      emitter: colorView,
-      activator: () => this.balloon.visibleView === colorView,
+      emitter: BackgroundView,
+      activator: () => this.balloon.visibleView === BackgroundView,
       contextElements: [this.balloon.view.element],
       callback: () => this.hideUI(),
     });
-    return colorView;
+    return BackgroundView;
   }
 
   private hideUI() {
-    if (this.balloon) this.balloon.remove(this.colorView);
+    if (this.balloon) this.balloon.remove(this.BackgroundView);
   }
 
   private setColor(color: string) {
@@ -99,10 +103,10 @@ export class FontBackgroundUI extends Plugin {
     const editorConfig: Config<TextEditorConfig> = this.editor
       .config as Config<TextEditorConfig>;
     editorConfig.set({ fontBackground });
-    this.balloon.remove(this.colorView);
+    this.balloon.remove(this.BackgroundView);
     this.init();
     this.balloon.add({
-      view: this.colorView,
+      view: this.BackgroundView,
       position: this.getBalloonPositionData(),
     });
   }

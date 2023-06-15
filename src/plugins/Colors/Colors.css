@@ -2,6 +2,18 @@
   grid-template-columns: repeat(8, 0fr) !important;
 }
 
+.ck.ck-colors {
+  min-width: 200px !important;
+}
+
+.clear-color-button {
+  width: 100% !important;
+}
+
+.submit-color-button {
+  width: 100% !important;
+}
+
 #color-picker {
   border: none !important;
   min-width: 0px !important;

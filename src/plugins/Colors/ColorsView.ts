@@ -33,6 +33,7 @@ export class ColorsView extends View {
     }
     let pickerButton = this.createButton("Select color", icon, "");
     pickerButton.type = "submit";
+    pickerButton.class = "submit-color-button";
     this.items.add(this.createLabel("Custom colors"));
     if (colors.customColor.length > 0) {
       const colorList = colors.customColor;
