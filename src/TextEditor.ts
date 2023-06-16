@@ -13,8 +13,8 @@ import {
 import { List } from "@ckeditor/ckeditor5-list";
 import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
 import { Font } from "@ckeditor/ckeditor5-font";
-import { Alignment } from "@ckeditor/ckeditor5-alignment";
-import { Link } from "@ckeditor/ckeditor5-link";
+import { Alignment, AlignmentConfig } from "@ckeditor/ckeditor5-alignment";
+import { Link, LinkConfig } from "@ckeditor/ckeditor5-link";
 
 import { Base64UploadAdapter } from "@ckeditor/ckeditor5-upload";
 import {
@@ -54,74 +54,9 @@ export class TextEditor extends BaseEditor {
     if (config) {
       config.plugins = PLUGINS;
       config.toolbar = TOOLBAR;
-
-      config.removePlugins = [""];
-
-      config.alignment = {
-        options: ["left", "right", "center", "justify"],
-      };
-
-      config.link = {
-        decorators: {
-          openInNewTab: {
-            mode: "manual",
-            label: "Open in a new tab",
-            attributes: {
-              target: "_blank",
-              rel: "noopener noreferrer",
-            },
-          },
-          protocol: {
-            mode: "manual",
-            label: "default protocol",
-            attributes: {
-              protocol: "https://",
-            },
-          },
-        },
-        // defaultProtocol: "http://",
-      };
-
-      config.image = {
-        resizeOptions: [
-          {
-            name: "resizeImage:original",
-            value: null,
-            icon: "original",
-          },
-          {
-            name: "resizeImage:50",
-            value: "50",
-            icon: "medium",
-          },
-          {
-            name: "resizeImage:75",
-            value: "75",
-            icon: "large",
-          },
-        ],
-        styles: {
-          options: [
-            "inline",
-            "alignLeft",
-            "alignRight",
-            "alignCenter",
-            "alignBlockLeft",
-            "alignBlockRight",
-            "block",
-            "side",
-          ],
-        },
-        toolbar: [
-          "imageStyle:alignLeft",
-          "imageStyle:alignRight",
-          "imageStyle:alignCenter",
-          "|",
-          "resizeImage:50",
-          "resizeImage:75",
-          "resizeImage:original",
-        ],
-      };
+      config.alignment = ALIGNMENT as AlignmentConfig;
+      config.link = LINK as LinkConfig;
+      config.image = IMAGE;
     }
     super(sourceElementOrData, config);
   }
@@ -198,3 +133,69 @@ const TOOLBAR = [
   "remove-formatting",
   "ClearFormatting",
 ];
+
+const IMAGE = {
+  resizeOptions: [
+    {
+      name: "resizeImage:original",
+      value: null,
+      icon: "original",
+    },
+    {
+      name: "resizeImage:50",
+      value: "50",
+      icon: "medium",
+    },
+    {
+      name: "resizeImage:75",
+      value: "75",
+      icon: "large",
+    },
+  ],
+  styles: {
+    options: [
+      "inline",
+      "alignLeft",
+      "alignRight",
+      "alignCenter",
+      "alignBlockLeft",
+      "alignBlockRight",
+      "block",
+      "side",
+    ],
+  },
+  toolbar: [
+    "imageStyle:alignLeft",
+    "imageStyle:alignRight",
+    "imageStyle:alignCenter",
+    "|",
+    "resizeImage:50",
+    "resizeImage:75",
+    "resizeImage:original",
+  ],
+};
+
+const LINK = {
+  decorators: {
+    openInNewTab: {
+      mode: "manual",
+      label: "Open in a new tab",
+      defaultValue: true,
+      attributes: {
+        target: "_blank",
+        rel: "noopener noreferrer",
+      },
+    },
+    // protocol: {
+    //   mode: "manual",
+    //   label: "default protocol",
+    //   attributes: {
+    //     href: "https://",
+    //   },
+    // },
+  },
+};
+
+const ALIGNMENT = {
+  options: ["left", "right", "center", "justify"],
+};
