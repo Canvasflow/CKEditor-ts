@@ -15,16 +15,7 @@ import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
 import { Font } from "@ckeditor/ckeditor5-font";
 import { Alignment } from "@ckeditor/ckeditor5-alignment";
 import { Link } from "@ckeditor/ckeditor5-link";
-import {
-  Image,
-  ImageInsert,
-  AutoImage,
-  ImageResizeEditing,
-  ImageResizeHandles,
-  ImageStyle,
-  ImageToolbar,
-  ImageResizeButtons,
-} from "@ckeditor/ckeditor5-image";
+
 import { Base64UploadAdapter } from "@ckeditor/ckeditor5-upload";
 import {
   SpecialCharacters,
@@ -43,6 +34,17 @@ import { ClearFormatting } from "./plugins/ClearFormatting/ClearFormatting";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
 import { FontBackground } from "./plugins/FontBackground/FontBackground";
 
+import {
+  Image,
+  ImageInsert,
+  AutoImage,
+  ImageResizeEditing,
+  ImageResizeHandles,
+  ImageStyle,
+  ImageToolbar,
+  ImageResizeButtons,
+} from "@ckeditor/ckeditor5-image";
+
 export class TextEditor extends BaseEditor {
   constructor(
     sourceElementOrData: HTMLElement | string,
@@ -52,6 +54,9 @@ export class TextEditor extends BaseEditor {
     if (config) {
       config.plugins = PLUGINS;
       config.toolbar = TOOLBAR;
+
+      config.removePlugins = [""];
+
       config.alignment = {
         options: ["left", "right", "center", "justify"],
       };
@@ -183,7 +188,7 @@ const TOOLBAR = [
   "|",
   "link",
   "pageLink",
-  "insertImage",
+  "imageUpload",
   "specialCharacters",
   {
     label: "Text Formatting",
