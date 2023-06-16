@@ -72,7 +72,6 @@ export class FontBackgroundUI extends Plugin {
     });
 
     this.listenTo(BackgroundView, "execute", (_, data) => {
-      console.log(BackgroundView);
       editor.execute("backgroundColor", data.label);
     });
 
