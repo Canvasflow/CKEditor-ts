@@ -6,6 +6,24 @@ export class DarkMode extends Plugin {
   init() {
     const editor = this.editor;
 
+    editor.model.schema.extend("$text", {
+      allowAttributes: "data-anf-dark-mode",
+    });
+
+    editor.conversion.for("upcast").attributeToAttribute({
+      view: "span",
+      model: "data-anf-dark-mode",
+    });
+
+    editor.conversion.for("downcast").attributeToElement({
+      model: "data-anf-dark-mode",
+      view: (_modelElement, { writer }) => {
+        return writer.createAttributeElement("span", {
+          "data-anf-dark-mode": "true",
+        });
+      },
+    });
+
     editor.ui.componentFactory.add("dark-mode", () => {
       const button = new ButtonView();
       button.set({
@@ -33,6 +51,7 @@ export class DarkMode extends Plugin {
 
           var position = selection.getFirstPosition();
           if (position) {
+            console.log("HERE");
             writer.insertText(
               value,
               { "data-anf-dark-mode": "true" },

@@ -20,6 +20,7 @@ export class ClearFormattingCommands extends Command {
     const model = this.editor.model;
     const document = model.document;
     const selection = document.selection;
+    console.log(model);
     model.change((writer) => {
       const ranges = model.schema.getValidRanges(selection.getRanges(), CLEAR);
       for (const range of ranges) {

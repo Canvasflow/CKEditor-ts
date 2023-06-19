@@ -186,13 +186,13 @@ const LINK = {
         rel: "noopener noreferrer",
       },
     },
-    // protocol: {
-    //   mode: "manual",
-    //   label: "default protocol",
-    //   attributes: {
-    //     href: "https://",
-    //   },
-    // },
+    protocol: {
+      mode: "manual",
+      label: "default protocol",
+      attributes: {
+        href: "https://",
+      },
+    },
   },
 };
 
