@@ -14,7 +14,7 @@ import { List } from "@ckeditor/ckeditor5-list";
 import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
 import { Font } from "@ckeditor/ckeditor5-font";
 import { Alignment, AlignmentConfig } from "@ckeditor/ckeditor5-alignment";
-import { Link, LinkConfig } from "@ckeditor/ckeditor5-link";
+// import { Link, LinkConfig } from "@ckeditor/ckeditor5-link";
 
 import { Base64UploadAdapter } from "@ckeditor/ckeditor5-upload";
 import {
@@ -44,6 +44,8 @@ import {
   ImageToolbar,
   ImageResizeButtons,
 } from "@ckeditor/ckeditor5-image";
+
+import { Link } from "./plugins/Link/Link";
 
 export class TextEditor extends BaseEditor {
   constructor(
@@ -121,7 +123,7 @@ const TOOLBAR = [
     items: ["strikethrough", "subscript", "superscript"],
   },
   "|",
-  "link",
+  "Link",
   "pageLink",
   "imageUpload",
   "specialCharacters",

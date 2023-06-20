@@ -47,6 +47,16 @@ export interface TextEditorConfig extends EditorConfig {
   fontBackground?: Colors;
 }
 
+export interface Colors {
+  defaultColor: Array<Color>;
+  customColor: Array<Color>;
+}
+
+export interface Color {
+  color: string;
+  label: string;
+}
+
 export interface PageLinkSource {
   id: string;
   title: string;
@@ -58,13 +68,3 @@ export interface PageAnchorSource {
 }
 
 export type AnchorFn = (id: string) => Promise<Array<PageAnchorSource>>;
-
-export interface Colors {
-  defaultColor: Array<Color>;
-  customColor: Array<Color>;
-}
-
-export interface Color {
-  color: string;
-  label: string;
-}

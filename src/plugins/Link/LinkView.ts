@@ -16,8 +16,31 @@ import {
 } from "@ckeditor/ckeditor5-utils/src/emittermixin";
 
 export class LinkView extends View {
-  constructor() {
-    super();
+  private focusTracker: FocusTracker;
+  private items: ViewCollection;
+  private viewer: LinkViewer;
+
+  constructor(viewer: LinkViewer) {
+    super(viewer.locale);
+    this.viewer = viewer;
+    this.focusTracker = new FocusTracker();
+    this.items = this.createCollection();
+    this.initItems();
+  }
+
+  private initItems() {
+    this.items.add(this.createLabel("Link URL"));
+  }
+
+  private createLabel(text: any) {
+    const labelView = new LabelView(this.locale);
+    labelView.text = text;
+    labelView.extendTemplate({
+      attributes: {
+        class: ["ck", "ck-color-grid__label"],
+      },
+    });
+    return labelView;
   }
 
   render() {
@@ -29,6 +52,10 @@ export class LinkView extends View {
 
   destroy() {
     super.destroy();
-    //   this.focusTracker.destroy();
+    this.focusTracker.destroy();
   }
+}
+
+export interface LinkViewer {
+  locale?: Locale;
 }
