@@ -1,12 +1,12 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
-import { ExternalLinkView } from "./ExternalLinkView";
+import { ExternalLinkView, ExternalLinkViewer } from "./ExternalLinkView";
 import CanvasflowEditor from "../../BaseEditor";
 import icon from "./ExternalLinkIcon.svg?raw";
 import { Locale } from "@ckeditor/ckeditor5-utils";
 
-export class ExternalLinkUI extends Plugin {
+export class ExternalLinkUI extends Plugin implements ExternalLinkViewer {
   declare editor: CanvasflowEditor;
   balloon: any;
   linkView?: ExternalLinkView;
@@ -26,6 +26,7 @@ export class ExternalLinkUI extends Plugin {
   private createView() {
     const editor = this.editor;
     this.linkView = new ExternalLinkView(this);
+    this.linkView.showView();
     this.listenTo(this.linkView, "submit", () => {
       console.log("submit called");
     });
