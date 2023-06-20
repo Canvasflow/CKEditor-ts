@@ -1,9 +1,9 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
-import { LinkCommand } from "./LinkCommands";
+import { ExternalLinkCommand } from "./ExternalLinkCommands";
 
-export class LinkEditing extends Plugin {
+export class ExternalLinkEditing extends Plugin {
   static get pluginName() {
-    return "LinkEditing";
+    return "ExternalLinkEditing";
   }
 
   constructor(editor: any) {
@@ -13,7 +13,7 @@ export class LinkEditing extends Plugin {
       view: renderDowncastElement(),
     });
 
-    editor.commands.add("Link", new LinkCommand(editor));
+    editor.commands.add("Link", new ExternalLinkCommand(editor));
     editor.model.schema.extend("$text", { allowAttributes: "Link" });
     editor.model.schema.setAttributeProperties("Link", {
       isFormatting: true,

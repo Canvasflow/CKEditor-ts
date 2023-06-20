@@ -1,7 +1,7 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
 
-export class LinkCommand extends Command {
+export class ExternalLinkCommand extends Command {
   constructor(editor: CanvasflowEditor) {
     super(editor);
   }

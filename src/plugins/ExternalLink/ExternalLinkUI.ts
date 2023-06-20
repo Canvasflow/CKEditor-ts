@@ -1,15 +1,15 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
-import { LinkView } from "./LinkView";
+import { ExternalLinkView } from "./ExternalLinkView";
 import CanvasflowEditor from "../../BaseEditor";
-import icon from "./LinkIcon.svg?raw";
+import icon from "./ExternalLinkIcon.svg?raw";
 import { Locale } from "@ckeditor/ckeditor5-utils";
 
-export class LinkUI extends Plugin {
+export class ExternalLinkUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
-  linkView?: LinkView;
+  linkView?: ExternalLinkView;
   locale?: Locale;
 
   static get requires() {
@@ -25,8 +25,7 @@ export class LinkUI extends Plugin {
 
   private createView() {
     const editor = this.editor;
-    this.linkView = new LinkView(this);
-
+    this.linkView = new ExternalLinkView(this);
     this.listenTo(this.linkView, "submit", () => {
       console.log("submit called");
     });
@@ -44,7 +43,7 @@ export class LinkUI extends Plugin {
   }
 
   private createButton() {
-    this.editor.ui.componentFactory.add("Link", () => {
+    this.editor.ui.componentFactory.add("ExternalLink", () => {
       const button = new ButtonView();
       button.label = "Link URL";
       button.tooltip = true;

@@ -15,7 +15,7 @@ import {
   BaseEvent,
 } from "@ckeditor/ckeditor5-utils/src/emittermixin";
 
-export class LinkView extends View {
+export class ExternalLinkView extends View {
   private focusTracker: FocusTracker;
   private items: ViewCollection;
   private viewer: LinkViewer;
