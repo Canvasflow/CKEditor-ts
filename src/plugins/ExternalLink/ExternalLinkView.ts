@@ -38,11 +38,18 @@ export class ExternalLinkView extends View {
       withText: true,
       isOn: false,
     });
+    this.newTab.on("execute", () => {
+      if (this.newTab) this.newTab.isOn = !this.newTab.isOn;
+    });
     this.protocol = new SwitchButtonView();
     this.protocol.set({
       label: "Default Protocol",
       withText: true,
       isOn: false,
+    });
+
+    this.protocol.on("execute", () => {
+      if (this.protocol) this.protocol.isOn = !this.protocol.isOn;
     });
     this.items.add(this.newTab);
     this.items.add(this.createLabel(""));

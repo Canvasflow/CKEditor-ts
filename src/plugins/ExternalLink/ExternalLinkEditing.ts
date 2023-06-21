@@ -10,7 +10,7 @@ export class ExternalLinkEditing extends Plugin {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
       model: "ExternalLink",
-      view: renderDowncastElement(),
+      view: renderDowncastElement,
     });
 
     editor.commands.add("ExternalLink", new ExternalLinkCommand(editor));
@@ -24,7 +24,7 @@ export class ExternalLinkEditing extends Plugin {
 
 function renderDowncastElement() {
   return (viewWriter: any) => {
-    const attributes = { href: "" };
+    const attributes = { href: "", target: "" };
     return viewWriter.writer.createAttributeElement("a", attributes, {
       priority: 7,
     });
