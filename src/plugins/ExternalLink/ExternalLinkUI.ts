@@ -36,14 +36,17 @@ export class ExternalLinkUI extends Plugin implements ExternalLinkViewer {
       if (input === null) {
         return;
       }
-      console.log(input.value);
-      console.log(this.linkView?.protocol);
+
       editor.execute(
         "ExternalLink",
         input.value,
         this.linkView?.protocol?.isOn,
         this.linkView?.newTab?.isOn,
       );
+    });
+
+    this.listenTo(this.linkView, "cancel", () => {
+      this.hideUI();
     });
 
     clickOutsideHandler({

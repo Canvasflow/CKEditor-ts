@@ -14,7 +14,7 @@ import { List } from "@ckeditor/ckeditor5-list";
 import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
 import { Font } from "@ckeditor/ckeditor5-font";
 import { Alignment, AlignmentConfig } from "@ckeditor/ckeditor5-alignment";
-import { Link, LinkConfig } from "@ckeditor/ckeditor5-link";
+import { Link } from "@ckeditor/ckeditor5-link";
 
 import { Base64UploadAdapter } from "@ckeditor/ckeditor5-upload";
 import {
