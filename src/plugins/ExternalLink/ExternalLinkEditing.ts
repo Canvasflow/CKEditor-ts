@@ -9,13 +9,13 @@ export class ExternalLinkEditing extends Plugin {
   constructor(editor: any) {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
-      model: "Link",
+      model: "ExternalLink",
       view: renderDowncastElement(),
     });
 
-    editor.commands.add("Link", new ExternalLinkCommand(editor));
-    editor.model.schema.extend("$text", { allowAttributes: "Link" });
-    editor.model.schema.setAttributeProperties("Link", {
+    editor.commands.add("ExternalLink", new ExternalLinkCommand(editor));
+    editor.model.schema.extend("$text", { allowAttributes: "ExternalLink" });
+    editor.model.schema.setAttributeProperties("ExternalLink", {
       isFormatting: true,
       copyOnEnter: true,
     });

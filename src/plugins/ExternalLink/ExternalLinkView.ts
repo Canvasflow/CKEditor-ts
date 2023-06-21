@@ -3,49 +3,42 @@ import {
   ButtonView,
   submitHandler,
   LabelView,
-  createDropdown,
-  Model,
-  addListToDropdown,
   ViewCollection,
-  DropdownView,
   LabeledFieldView,
-  createLabeledInputText,
+  InputView,
 } from "@ckeditor/ckeditor5-ui";
-import { FocusTracker, Collection, Locale } from "@ckeditor/ckeditor5-utils";
+import { FocusTracker, Locale } from "@ckeditor/ckeditor5-utils";
 import { icons } from "@ckeditor/ckeditor5-core";
 import { SwitchButtonView } from "@ckeditor/ckeditor5-ui";
 
 export class ExternalLinkView extends View {
   private focusTracker: FocusTracker;
   private items: ViewCollection;
-  private viewer: ExternalLinkViewer;
   saveButtonView: any;
   cancelButtonView: any;
   newTab?: SwitchButtonView;
   protocol?: SwitchButtonView;
+  input?: LabeledFieldView;
 
   constructor(viewer: ExternalLinkViewer) {
     super(viewer.locale);
-    this.viewer = viewer;
     this.focusTracker = new FocusTracker();
     this.items = this.createCollection();
     this.initItems();
   }
 
   private initItems() {
-    this.items.add(this.createInput("url"));
+    this.items.add(this.createInput());
+    this.items.add(this.createLabel(""));
     //toggles
 
     this.newTab = new SwitchButtonView();
-
     this.newTab.set({
       label: "Open in New tab",
       withText: true,
       isOn: false,
     });
-
     this.protocol = new SwitchButtonView();
-
     this.protocol.set({
       label: "Default Protocol",
       withText: true,
@@ -55,6 +48,7 @@ export class ExternalLinkView extends View {
     this.items.add(this.createLabel(""));
     this.items.add(this.protocol);
     this.items.add(this.createLabel(""));
+
     //footer buttons
     this.saveButtonView = this.createButton(
       "Save",
@@ -83,13 +77,10 @@ export class ExternalLinkView extends View {
     return labelView;
   }
 
-  private createInput(label: string) {
-    const labeledInput = new LabeledFieldView(
-      this.locale,
-      createLabeledInputText,
-    );
-    labeledInput.label = label;
-    return labeledInput;
+  private createInput() {
+    const input = new InputView(this.locale);
+    input.id = "url-input";
+    return input;
   }
 
   private createButton(label: string, icon: string, className: string) {
@@ -122,6 +113,10 @@ export class ExternalLinkView extends View {
       },
       children: this.items,
     });
+  }
+
+  getInput() {
+    return this.input;
   }
 }
 

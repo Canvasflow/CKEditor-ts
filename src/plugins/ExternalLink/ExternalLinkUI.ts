@@ -25,10 +25,19 @@ export class ExternalLinkUI extends Plugin implements ExternalLinkViewer {
 
   private createView() {
     const editor = this.editor;
+
     this.linkView = new ExternalLinkView(this);
     this.linkView.showView();
     this.listenTo(this.linkView, "submit", () => {
-      console.log("submit called");
+      //const title = this.linkView.titleInputView.fieldView.element.value;
+      const input: HTMLInputElement | null = document.getElementById(
+        "url-input",
+      ) as HTMLInputElement;
+      if (input === null) {
+        return;
+      }
+      console.log(input.value);
+      editor.execute("ExternalLink", input.value);
     });
 
     clickOutsideHandler({

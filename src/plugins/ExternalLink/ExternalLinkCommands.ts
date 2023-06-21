@@ -9,10 +9,10 @@ export class ExternalLinkCommand extends Command {
   refresh() {
     const model = this.editor.model;
     const doc = model.document;
-    this.value = doc.selection.getAttribute("Link");
+    this.value = doc.selection.getAttribute("ExternalLink");
     this.isEnabled = model.schema.checkAttributeInSelection(
       doc.selection,
-      "Link",
+      "ExternalLink",
     );
   }
 
@@ -25,6 +25,17 @@ export class ExternalLinkCommand extends Command {
       const range = selection.getFirstRange();
       if (!range) {
         return;
+      }
+      let value = "";
+      for (const item of range.getItems()) {
+        const proxy = item as any;
+        value = proxy.data;
+        writer.remove(item);
+      }
+
+      var position = selection.getFirstPosition();
+      if (position) {
+        writer.insertText(value, { linkHref: url }, position);
       }
     });
   }
