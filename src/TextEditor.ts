@@ -57,7 +57,6 @@ export class TextEditor extends BaseEditor {
       config.plugins = PLUGINS;
       config.toolbar = TOOLBAR;
       config.alignment = ALIGNMENT as AlignmentConfig;
-      config.link = LINK as LinkConfig;
       config.image = IMAGE;
     }
     super(sourceElementOrData, config);
@@ -177,27 +176,6 @@ const IMAGE = {
     "resizeImage:75",
     "resizeImage:original",
   ],
-};
-
-const LINK = {
-  decorators: {
-    openInNewTab: {
-      mode: "manual",
-      label: "Open in a new tab",
-      defaultValue: true,
-      attributes: {
-        target: "_blank",
-        rel: "noopener noreferrer",
-      },
-    },
-    protocol: {
-      mode: "manual",
-      label: "default protocol",
-      attributes: {
-        href: "https://",
-      },
-    },
-  },
 };
 
 const ALIGNMENT = {

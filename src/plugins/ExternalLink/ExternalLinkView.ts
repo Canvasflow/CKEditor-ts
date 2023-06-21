@@ -28,6 +28,7 @@ export class ExternalLinkView extends View {
   }
 
   private initItems() {
+    this.items.add(this.createLabel("Create External Link"));
     this.items.add(this.createInput());
     this.items.add(this.createLabel(""));
     //toggles
