@@ -70,7 +70,7 @@ export class ColorPickerUI extends Plugin {
     });
 
     this.listenTo(colorView, "execute", (_, data) => {
-      editor.execute("fontColor", data.label);
+      editor.execute("FontColor", data.label);
     });
 
     clickOutsideHandler({
