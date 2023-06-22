@@ -3,13 +3,13 @@ import {
   FontBackgroundCommand,
   BACKGROUND_COLOR,
 } from "./FontBackgroundCommands";
-
+import CanvasflowEditor from "../../BaseEditor";
 export class FontBackgroundEditing extends Plugin {
   static get pluginName() {
     return "FontBackgroundEditing";
   }
 
-  constructor(editor: any) {
+  constructor(editor: CanvasflowEditor) {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
       model: BACKGROUND_COLOR,
@@ -25,7 +25,7 @@ export class FontBackgroundEditing extends Plugin {
   }
 
   private renderDowncastElement() {
-    return (modelAttributeValue: any, viewWriter: any) => {
+    return (modelAttributeValue: string, viewWriter: any) => {
       const attributes = {
         style: `background-color:${modelAttributeValue}`,
       };

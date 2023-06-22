@@ -5,6 +5,7 @@ import {
   InputView,
   ColorGridView,
   LabelView,
+  ViewCollection,
 } from "@ckeditor/ckeditor5-ui";
 
 import { FocusTracker } from "@ckeditor/ckeditor5-utils";
@@ -14,7 +15,7 @@ import remove from "./FontBackgroundRemove.svg?raw";
 
 export class FontBackgroundView extends View {
   columns: number | undefined;
-  items: any;
+  items: ViewCollection;
   focusTracker: FocusTracker;
   colors: Colors;
 
@@ -26,20 +27,12 @@ export class FontBackgroundView extends View {
     this.setItems(this.colors);
   }
 
-  private setItems(colors: any) {
+  private setItems(colors: Colors) {
     this.items.add(this.createClearColorLabel());
     this.items.add(this.createLabel("Default Colors"));
-    const defaultColorList = colors.defaultColor;
-    if (defaultColorList.length > 0) {
-      this.items.add(this.createColorsGrid(defaultColorList));
-    }
-
-    this.items.add(this.createLabel("Custom colors"));
-    if (colors.customColor.length > 0) {
-      const colorList = colors.customColor;
-      this.items.add(this.createColorsGrid(colorList));
-    }
-    this.items.add(this.createColorLabel());
+    this.setDefaultColors(colors);
+    this.setCustomColors(colors);
+    this.addPickerButton();
     this.items.add(this.createColorInput());
     this.setTemplate({
       tag: "form",
@@ -48,6 +41,28 @@ export class FontBackgroundView extends View {
       },
       children: this.items,
     });
+  }
+
+  private setDefaultColors(colors: Colors) {
+    const defaultColorList = colors.defaultColor;
+    if (defaultColorList.length > 0) {
+      this.items.add(this.createColorsGrid(defaultColorList));
+    }
+  }
+
+  private setCustomColors(colors: Colors) {
+    this.items.add(this.createLabel("Custom colors"));
+    if (colors.customColor.length > 0) {
+      const colorList = colors.customColor;
+      this.items.add(this.createColorsGrid(colorList));
+    }
+  }
+
+  private addPickerButton() {
+    let pickerButton = this.createButton("Select color", icon, "");
+    pickerButton.type = "submit";
+    pickerButton.class = "submit-color-button";
+    this.items.add(pickerButton);
   }
 
   private createClearColorLabel() {
@@ -60,14 +75,7 @@ export class FontBackgroundView extends View {
     return clearButton;
   }
 
-  private createColorLabel() {
-    let pickerButton = this.createButton("Select color", icon, "");
-    pickerButton.type = "submit";
-    pickerButton.class = "submit-color-button";
-    return pickerButton;
-  }
-
-  private createButton(label: any, icon: any, className: any) {
+  private createButton(label: string, icon: string, className: string) {
     const button = new ButtonView();
     button.set({
       label,
@@ -86,7 +94,7 @@ export class FontBackgroundView extends View {
     return colorInput;
   }
 
-  private createColorsGrid(colors: any) {
+  private createColorsGrid(colors: Array<any>) {
     const colorGridView = new ColorGridView(this.locale, {
       colorDefinitions: colors.map((item: any) => {
         item.label = item.color;
@@ -99,7 +107,7 @@ export class FontBackgroundView extends View {
     return colorGridView;
   }
 
-  private createLabel(text: any) {
+  private createLabel(text: string) {
     const labelView = new LabelView(this.locale);
     labelView.text = text;
     labelView.extendTemplate({
@@ -114,9 +122,6 @@ export class FontBackgroundView extends View {
     super.render();
     submitHandler({
       view: this,
-    });
-    this.items._items.forEach((view: { element: Element }) => {
-      this.focusTracker.add(view.element);
     });
   }
 

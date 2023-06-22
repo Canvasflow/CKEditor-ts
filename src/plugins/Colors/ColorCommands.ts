@@ -1,6 +1,7 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
 export const FONT_COLOR = "fontColor";
+
 export class FontColorCommand extends Command {
   constructor(editor: CanvasflowEditor) {
     super(editor);
@@ -16,11 +17,11 @@ export class FontColorCommand extends Command {
     );
   }
 
-  execute(paletteKey: any, color: any) {
+  execute(color: any) {
     const model = this.editor.model;
     const document = model.document;
     const selection = document.selection;
-    const value = paletteKey || color;
+    const value = color;
     model.change((writer) => {
       const ranges = model.schema.getValidRanges(
         selection.getRanges(),

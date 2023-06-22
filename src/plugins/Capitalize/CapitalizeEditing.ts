@@ -1,12 +1,12 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { CapitalizeCommands, CAPITALIZE } from "./CapitalizeCommands";
-
+import CanvasflowEditor from "../../BaseEditor";
 export class CapitalizeEditing extends Plugin {
   static get pluginName() {
     return "CapitalizeEditing";
   }
 
-  constructor(editor: any) {
+  constructor(editor: CanvasflowEditor) {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
       model: CAPITALIZE,

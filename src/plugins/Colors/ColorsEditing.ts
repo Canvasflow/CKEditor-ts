@@ -1,18 +1,19 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { FontColorCommand, FONT_COLOR } from "./ColorCommands";
-
+import CanvasflowEditor from "../../BaseEditor";
 export class ColorEditing extends Plugin {
   static get pluginName() {
     return "ColorEditing";
   }
 
-  constructor(editor: any) {
+  constructor(editor: CanvasflowEditor) {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
       model: FONT_COLOR,
       view: this.renderDowncastElement(),
     });
     editor.commands.add(FONT_COLOR, new FontColorCommand(editor));
+    // PREGUNTAR A CHUCK
     editor.model.schema.extend("$text", { allowAttributes: FONT_COLOR });
     editor.model.schema.setAttributeProperties(FONT_COLOR, {
       isFormatting: true,
