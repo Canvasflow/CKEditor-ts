@@ -14,8 +14,8 @@ import { SwitchButtonView } from "@ckeditor/ckeditor5-ui";
 export class ExternalLinkView extends View {
   private focusTracker: FocusTracker;
   private items: ViewCollection;
-  saveButtonView: any;
-  cancelButtonView: any;
+  saveButtonView?: ButtonView;
+  cancelButtonView?: ButtonView;
   newTab?: SwitchButtonView;
   protocol?: SwitchButtonView;
   input?: LabeledFieldView;
@@ -28,11 +28,20 @@ export class ExternalLinkView extends View {
   }
 
   private initItems() {
-    this.items.add(this.createLabel("Create External Link"));
+    this.createInputItems();
+    this.createNewTabToggle();
+    this.createProtocolToggle();
+    this.createButtonFooter();
+  }
+
+  private createInputItems() {
+    this.items.add(this.createLabel("Link URL"));
     this.items.add(this.createInput());
     this.items.add(this.createLabel(""));
-    //toggles
+  }
 
+  private createNewTabToggle() {
+    this.items.add(this.createLabel(""));
     this.newTab = new SwitchButtonView();
     this.newTab.set({
       label: "Open in New tab",
@@ -42,6 +51,11 @@ export class ExternalLinkView extends View {
     this.newTab.on("execute", () => {
       if (this.newTab) this.newTab.isOn = !this.newTab.isOn;
     });
+    this.items.add(this.newTab);
+  }
+
+  private createProtocolToggle() {
+    this.items.add(this.createLabel(""));
     this.protocol = new SwitchButtonView();
     this.protocol.set({
       label: "Default Protocol",
@@ -52,12 +66,12 @@ export class ExternalLinkView extends View {
     this.protocol.on("execute", () => {
       if (this.protocol) this.protocol.isOn = !this.protocol.isOn;
     });
-    this.items.add(this.newTab);
-    this.items.add(this.createLabel(""));
     this.items.add(this.protocol);
+  }
+
+  private createButtonFooter() {
     this.items.add(this.createLabel(""));
 
-    //footer buttons
     this.saveButtonView = this.createButton(
       "Save",
       icons.check,
@@ -74,7 +88,7 @@ export class ExternalLinkView extends View {
     this.items.add(this.cancelButtonView);
   }
 
-  private createLabel(text: any) {
+  private createLabel(text: string) {
     const labelView = new LabelView(this.locale);
     labelView.text = text;
     labelView.extendTemplate({
@@ -121,10 +135,6 @@ export class ExternalLinkView extends View {
       },
       children: this.items,
     });
-  }
-
-  getInput() {
-    return this.input;
   }
 }
 
