@@ -4,7 +4,6 @@ import icon from "./RemoveFormattingIcon.svg?raw";
 export class RemoveFormatting extends Plugin {
   init() {
     const editor = this.editor;
-
     editor.ui.componentFactory.add("remove-formatting", () => {
       const button = new ButtonView();
       button.set({
