@@ -5,7 +5,6 @@ import icon from "./UppercaseIcon.svg?raw";
 export class UppercaseUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
-  formView: any;
 
   init() {
     const editor = this.editor;

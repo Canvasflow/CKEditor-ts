@@ -1,12 +1,12 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { UppercaseCommands, UPPERCASE } from "./UppercaseCommands";
-
+import CanvasflowEditor from "../../BaseEditor";
 export class UppercaseEditing extends Plugin {
   static get pluginName() {
     return "UppercaseEditing";
   }
 
-  constructor(editor: any) {
+  constructor(editor: CanvasflowEditor) {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
       model: UPPERCASE,
