@@ -5,7 +5,6 @@ import icon from "./ClearFormattingIcon.svg?raw";
 export class ClearFormattingUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
-  formView: any;
 
   init() {
     const editor = this.editor;

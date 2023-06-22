@@ -12,7 +12,6 @@ export class ColorEditing extends Plugin {
       model: FONT_COLOR,
       view: this.renderDowncastElement(),
     });
-
     editor.commands.add(FONT_COLOR, new FontColorCommand(editor));
     editor.model.schema.extend("$text", { allowAttributes: FONT_COLOR });
     editor.model.schema.setAttributeProperties(FONT_COLOR, {

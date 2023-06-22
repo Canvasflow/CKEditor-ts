@@ -5,6 +5,7 @@ import {
   InputView,
   ColorGridView,
   LabelView,
+  ViewCollection,
 } from "@ckeditor/ckeditor5-ui";
 
 import { FocusTracker } from "@ckeditor/ckeditor5-utils";
@@ -12,8 +13,7 @@ import CanvasflowEditor, { Colors } from "../../BaseEditor";
 import icon from "./ColorPickIcon.svg?raw";
 
 export class ColorsView extends View {
-  columns: number | undefined;
-  items: any;
+  items: ViewCollection;
   focusTracker: FocusTracker;
   colors: Colors;
 
@@ -25,23 +25,12 @@ export class ColorsView extends View {
     this.setItems(this.colors);
   }
 
-  private setItems(colors: any) {
+  private setItems(colors: Colors) {
     this.items.add(this.createLabel("Default Colors"));
-    const defaultColorList = colors.defaultColor;
-    if (defaultColorList.length > 0) {
-      this.items.add(this.createColorsGrid(defaultColorList));
-    }
-    let pickerButton = this.createButton("Select color", icon, "");
-    pickerButton.type = "submit";
-    pickerButton.class = "submit-color-button";
-    this.items.add(this.createLabel("Custom colors"));
-    if (colors.customColor.length > 0) {
-      const colorList = colors.customColor;
-      this.items.add(this.createColorsGrid(colorList));
-    }
-    this.items.add(pickerButton);
+    this.setDefaultColors(colors);
+    this.setCustomColors(colors);
+    this.addPickerButton();
     this.items.add(this.createColorInput());
-
     this.setTemplate({
       tag: "form",
       attributes: {
@@ -49,6 +38,28 @@ export class ColorsView extends View {
       },
       children: this.items,
     });
+  }
+
+  private setDefaultColors(colors: Colors) {
+    const defaultColorList = colors.defaultColor;
+    if (defaultColorList.length > 0) {
+      this.items.add(this.createColorsGrid(defaultColorList));
+    }
+  }
+
+  private setCustomColors(colors: Colors) {
+    this.items.add(this.createLabel("Custom colors"));
+    if (colors.customColor.length > 0) {
+      const colorList = colors.customColor;
+      this.items.add(this.createColorsGrid(colorList));
+    }
+  }
+
+  private addPickerButton() {
+    let pickerButton = this.createButton("Select color", icon, "");
+    pickerButton.type = "submit";
+    pickerButton.class = "submit-color-button";
+    this.items.add(pickerButton);
   }
 
   private createButton(label: any, icon: any, className: any) {
@@ -98,9 +109,6 @@ export class ColorsView extends View {
     super.render();
     submitHandler({
       view: this,
-    });
-    this.items._items.forEach((view: { element: Element }) => {
-      this.focusTracker.add(view.element);
     });
   }
 

@@ -10,7 +10,7 @@ import Config from "@ckeditor/ckeditor5-utils/src/config";
 export class ColorPickerUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
-  colorView: any;
+  colorView?: ColorsView;
   static get requires() {
     return [ContextualBalloon];
   }
@@ -36,7 +36,7 @@ export class ColorPickerUI extends Plugin {
     return button;
   }
 
-  showUI() {
+  private showUI() {
     this.balloon.add({
       view: this.colorView,
       position: this.getBalloonPositionData(),
