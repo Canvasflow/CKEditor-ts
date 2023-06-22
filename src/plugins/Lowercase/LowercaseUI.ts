@@ -6,7 +6,6 @@ import icon from "./LowercaseIcon.svg?raw";
 export class LowercaseUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
-  formView: any;
 
   init() {
     const editor = this.editor;

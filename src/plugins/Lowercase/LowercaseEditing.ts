@@ -1,12 +1,12 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { LowercaseCommands, LOWERCASE } from "./LowercaseCommands";
-
+import CanvasflowEditor from "../../BaseEditor";
 export class LowercaseEditing extends Plugin {
   static get pluginName() {
     return "LowercaseEditing";
   }
 
-  constructor(editor: any) {
+  constructor(editor: CanvasflowEditor) {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
       model: LOWERCASE,
