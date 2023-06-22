@@ -31,6 +31,7 @@ export class ColorPickerUI extends Plugin {
     button.withText = false;
     button.icon = icon;
     this.listenTo(button, "execute", () => {
+      this.init();
       this.showUI();
     });
     return button;
@@ -87,6 +88,7 @@ export class ColorPickerUI extends Plugin {
 
   private setColor(color: string) {
     const colors = this.editor.config.get("colors") as Colors;
+    console.log(colors);
 
     const findList = colors.customColor.find((value: any) => {
       if (value.color === color) return value;

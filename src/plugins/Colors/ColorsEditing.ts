@@ -1,6 +1,7 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { FontColorCommand, FONT_COLOR } from "./ColorCommands";
 import CanvasflowEditor from "../../BaseEditor";
+
 export class ColorEditing extends Plugin {
   static get pluginName() {
     return "ColorEditing";

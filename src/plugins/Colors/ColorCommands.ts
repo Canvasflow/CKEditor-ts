@@ -1,5 +1,5 @@
-import Command from "@ckeditor/ckeditor5-core/src/command";
 import CanvasflowEditor from "../../BaseEditor";
+import Command from "@ckeditor/ckeditor5-core/src/command";
 export const FONT_COLOR = "fontColor";
 
 export class FontColorCommand extends Command {

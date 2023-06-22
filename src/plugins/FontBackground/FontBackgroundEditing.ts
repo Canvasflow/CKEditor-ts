@@ -4,6 +4,7 @@ import {
   BACKGROUND_COLOR,
 } from "./FontBackgroundCommands";
 import CanvasflowEditor from "../../BaseEditor";
+
 export class FontBackgroundEditing extends Plugin {
   static get pluginName() {
     return "FontBackgroundEditing";

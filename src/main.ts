@@ -15,7 +15,10 @@ if (typeof window !== "undefined") {
   };
 }
 
-TextEditor.create(document.querySelector("#editor") as HTMLElement, {
+
+const customColor = [{ color: "teal", label: "teal" }];
+
+const config = {
   pageLinkSources: [
     {
       id: "1111",
@@ -40,19 +43,39 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, {
   fetchAnchors,
   colors: {
     defaultColor: [{ color: "red", label: "red" }],
-    customColor: [{ color: "blue", label: "blue" }],
+    customColor,
   },
   fontBackground: {
     defaultColor: [{ color: "orange", label: "orange" }],
-    customColor: [{ color: "teal", label: "teal" }],
+    customColor,
   },
-})
+}
+
+
+TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
   .then((editor) => {
-    createListeners(editor);
+    setTimeout(() => {
+      console.log(`I add the color`);
+      customColor.push({ color: '#000000', label: 'black' });
+    }, 10000)
   })
   .catch((error) => {
     console.error(error);
   });
+
+
+TextEditor.create(document.querySelector("#editor2") as HTMLElement, config)
+  .then((editor) => {
+    editor.addEventListener("colors:addCustomColor", (evt: any) => {
+      const { color } = evt;
+      console.log(`addCustomColor:`, color);
+      customColor.push({ color, label: '' });
+    });
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
 
 async function fetchAnchors(id: string): Promise<Array<PageAnchorSource>> {
   if (id === "1111") {
