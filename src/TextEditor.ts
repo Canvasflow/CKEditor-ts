@@ -34,6 +34,8 @@ import { ClearFormatting } from "./plugins/ClearFormatting/ClearFormatting";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
 import { FontBackground } from "./plugins/FontBackground/FontBackground";
 
+import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
+
 import {
   Image,
   ImageInsert,
@@ -44,8 +46,6 @@ import {
   ImageToolbar,
   ImageResizeButtons,
 } from "@ckeditor/ckeditor5-image";
-
-import { ExternalLink } from "./plugins/ExternalLink/ExternalLink";
 
 export class TextEditor extends BaseEditor {
   constructor(
@@ -109,13 +109,14 @@ const PLUGINS = [
   ClearFormatting,
   Capitalize,
   FontBackground,
-  //ExternalLink,
+  TextFontColor,
 ];
 
 const TOOLBAR = [
   "fontFamily",
   "fontSize",
-  "colorPicker",
+  // "colorPicker",
+  "textFontColor",
   "backgroundColor",
   "|",
   {
@@ -136,7 +137,6 @@ const TOOLBAR = [
   },
   "|",
   "Link",
-  //"ExternalLink",
   "pageLink",
   "imageUpload",
   "specialCharacters",

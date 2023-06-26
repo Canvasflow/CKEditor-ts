@@ -62,17 +62,17 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
     console.error(error);
   });
 
-TextEditor.create(document.querySelector("#editor2") as HTMLElement, config)
-  .then((editor) => {
-    editor.addEventListener("colors:addCustomColor", (evt: any) => {
-      const { color } = evt;
-      console.log(`addCustomColor:`, color);
-      customColor.push({ color, label: "" });
-    });
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+// TextEditor.create(document.querySelector("#editor2") as HTMLElement, config)
+//   .then((editor) => {
+//     editor.addEventListener("colors:addCustomColor", (evt: any) => {
+//       const { color } = evt;
+//       console.log(`addCustomColor:`, color);
+//       customColor.push({ color, label: "" });
+//     });
+//   })
+//   .catch((error) => {
+//     console.error(error);
+//   });
 
 async function fetchAnchors(id: string): Promise<Array<PageAnchorSource>> {
   if (id === "1111") {
