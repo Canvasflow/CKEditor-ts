@@ -36,6 +36,8 @@ import { FontBackground } from "./plugins/FontBackground/FontBackground";
 
 import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
 
+import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
+
 import {
   Image,
   ImageInsert,
@@ -110,6 +112,7 @@ const PLUGINS = [
   Capitalize,
   FontBackground,
   TextFontColor,
+  RemoveFormat,
 ];
 
 const TOOLBAR = [

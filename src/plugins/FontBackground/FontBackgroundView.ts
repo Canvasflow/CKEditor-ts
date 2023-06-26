@@ -12,15 +12,18 @@ import { FocusTracker } from "@ckeditor/ckeditor5-utils";
 import CanvasflowEditor, { Colors } from "../../BaseEditor";
 import icon from "./ColorPickIcon.svg?raw";
 import remove from "./FontBackgroundRemove.svg?raw";
+import { CLEAR_BACKGROUND_COLOR_COMMAND } from "./FontBackgroundCommands";
 
 export class FontBackgroundView extends View {
   columns: number | undefined;
   items: ViewCollection;
   focusTracker: FocusTracker;
   colors: Colors;
+  editor: CanvasflowEditor;
 
   constructor(locale: any, editor: CanvasflowEditor) {
     super(locale);
+    this.editor = editor;
     this.focusTracker = new FocusTracker();
     this.items = this.createCollection();
     this.colors = editor.config.get("fontBackground") as Colors;
@@ -70,7 +73,8 @@ export class FontBackgroundView extends View {
     clearButton.type = "button";
     clearButton.class = "clear-color-button";
     clearButton.on("execute", () => {
-      console.log("clear background was called");
+      //this.editor.execute("fontFamily"); // THIS IS IMPORTANT
+      this.editor.execute(CLEAR_BACKGROUND_COLOR_COMMAND);
     });
     return clearButton;
   }

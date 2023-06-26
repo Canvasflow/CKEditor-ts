@@ -2,8 +2,8 @@ import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { TextFontColorView, TextFontColorViewer } from "./TextFontColorView";
-import CanvasflowEditor, { PageLinkSource } from "../../BaseEditor";
-import { BaseEvent, GetCallback, Locale } from "@ckeditor/ckeditor5-utils";
+import CanvasflowEditor, { Colors } from "../../BaseEditor";
+import { Locale } from "@ckeditor/ckeditor5-utils";
 import icon from "./TextFontColorIcon.svg?raw";
 
 export class TextFontColorUI extends Plugin implements TextFontColorViewer {
@@ -13,7 +13,6 @@ export class TextFontColorUI extends Plugin implements TextFontColorViewer {
   selectedPage?: String;
   selectedAnchor?: String;
   locale?: Locale;
-  pageLinkSources: Array<PageLinkSource> = [];
 
   static get requires() {
     return [ContextualBalloon];
@@ -24,15 +23,34 @@ export class TextFontColorUI extends Plugin implements TextFontColorViewer {
     this.balloon = this.editor.plugins.get(ContextualBalloon);
     this.createView();
     this.createButton();
-    //here
   }
 
   private createView() {
-    this.textFontColorView = new TextFontColorView(this);
+    const editor = this.editor;
+    this.textFontColorView = new TextFontColorView(editor.locale, editor);
     this.textFontColorView.showView();
 
     this.listenTo(this.textFontColorView, "submit", () => {
-      console.log("submit called");
+      const input: HTMLInputElement | null = document.getElementById(
+        "color-picker",
+      ) as HTMLInputElement;
+      if (input === null) {
+        return;
+      }
+      input.type = "color";
+      input.setAttribute("style", "visibility: hidden");
+      input.onchange = (e: any) => {
+        const color = e.target.value;
+        if (color && color !== "#000000") {
+          // const evt: AddCustomColorEvent = {
+          //   color,
+          // };
+          //editor.dispatch("colors:addCustomColor", evt);
+          this.setColor(color);
+          this.balloon.remove(this.textFontColorView);
+        }
+      };
+      input?.click();
     });
 
     clickOutsideHandler({
@@ -41,6 +59,30 @@ export class TextFontColorUI extends Plugin implements TextFontColorViewer {
       contextElements: [this.balloon.view.element],
       callback: () => this.hideUI(),
     });
+  }
+
+  private setColor(color: string) {
+    const colors = this.editor.config.get("colors") as Colors;
+    console.log(colors);
+
+    const findList = colors.customColor.find((value: any) => {
+      if (value.color === color) return value;
+    });
+
+    if (findList) {
+      return;
+    }
+
+    colors.customColor.push({ label: color, color: color });
+    // const editorConfig: Config<TextEditorConfig> = this.editor
+    //   .config as Config<TextEditorConfig>;
+    // editorConfig.set({ colors });
+    // this.balloon.remove(this.colorView);
+    // this.init();
+    // this.balloon.add({
+    //   view: this.colorView,
+    //   position: this.getBalloonPositionData(),
+    // });
   }
 
   private clearValues() {

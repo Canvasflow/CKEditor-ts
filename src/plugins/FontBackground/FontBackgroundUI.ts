@@ -7,6 +7,8 @@ import CanvasflowEditor, { Colors, TextEditorConfig } from "../../BaseEditor";
 import icon from "./FontBackgroundIcon.svg?raw";
 import Config from "@ckeditor/ckeditor5-utils/src/config";
 
+import { SET_BACKGROUND_COLOR_COMMAND } from "./FontBackgroundCommands";
+
 export class FontBackgroundUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
@@ -72,7 +74,7 @@ export class FontBackgroundUI extends Plugin {
     });
 
     this.listenTo(BackgroundView, "execute", (_, data) => {
-      editor.execute("backgroundColor", data.label);
+      editor.execute(SET_BACKGROUND_COLOR_COMMAND, data.label);
     });
 
     clickOutsideHandler({
