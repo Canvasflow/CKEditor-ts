@@ -22,7 +22,6 @@ import {
   SpecialCharactersEssentials,
 } from "@ckeditor/ckeditor5-special-characters";
 import { DarkMode } from "./plugins/DarkMode/DarkMode";
-import { Colors } from "./plugins/Colors/Colors";
 import { PageLink } from "./plugins/PageLink/PageLink";
 import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
 import { Uppercase } from "./plugins/Uppercase/Uppercase";
@@ -101,7 +100,6 @@ const PLUGINS = [
   ImageStyle,
   ImageToolbar,
   ImageResizeButtons,
-  Colors,
   DarkMode,
   PageLink,
   Uppercase,

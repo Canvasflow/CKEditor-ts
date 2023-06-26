@@ -1,7 +1,7 @@
 export interface AddCustomColorEvent {
-    color: string;
+  color: string;
 }
 
 export interface RemoveCustomColorEvent {
-    color: string;
+  color: string;
 }

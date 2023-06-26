@@ -11,15 +11,18 @@ import {
 import { FocusTracker, Locale } from "@ckeditor/ckeditor5-utils";
 import CanvasflowEditor, { Colors } from "../../BaseEditor";
 import icon from "./PickColorIcon.svg?raw";
+import remove from "./TextFontColorRemoveIcon.svg?raw";
 
 export class TextFontColorView extends View {
   private items: ViewCollection;
   private focusTracker: FocusTracker;
   private colors: Colors;
   private customColors?: ColorGridView;
+  private editor: CanvasflowEditor;
 
   constructor(locale: any, editor: CanvasflowEditor) {
     super(locale);
+    this.editor = editor;
     this.focusTracker = new FocusTracker();
     this.items = this.createCollection();
     this.colors = editor.config.get("colors") as Colors;
@@ -27,6 +30,7 @@ export class TextFontColorView extends View {
   }
 
   private setItems(colors: Colors) {
+    this.items.add(this.createClearColorLabel());
     this.items.add(this.createLabel("Default Colors"));
     this.setDefaultColors(colors);
     this.setCustomColors(colors);
@@ -40,6 +44,17 @@ export class TextFontColorView extends View {
       children: this.items,
     });
   }
+
+  private createClearColorLabel() {
+    let clearButton = this.createButton("Remove color", remove, "");
+    clearButton.type = "button";
+    clearButton.class = "clear-color-button";
+    clearButton.on("execute", () => {
+      this.editor.execute("CLEAR_BACKGROUND_COLOR_COMMAND");
+    });
+    return clearButton;
+  }
+
   private setDefaultColors(colors: Colors) {
     const defaultColorList = colors.defaultColor;
     if (defaultColorList.length > 0) {
