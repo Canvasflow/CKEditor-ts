@@ -24,6 +24,7 @@ export class TextFontColorUI extends Plugin implements TextFontColorViewer {
     this.balloon = this.editor.plugins.get(ContextualBalloon);
     this.createView();
     this.createButton();
+    //here
   }
 
   private createView() {
