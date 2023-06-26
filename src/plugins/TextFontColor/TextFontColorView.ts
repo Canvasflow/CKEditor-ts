@@ -15,13 +15,11 @@ import icon from "./PickColorIcon.svg?raw";
 export class TextFontColorView extends View {
   private items: ViewCollection;
   private focusTracker: FocusTracker;
-  //private viewer: TextFontColorViewer;
-  colors: Colors;
+  private colors: Colors;
   private customColors?: ColorGridView;
 
   constructor(locale: any, editor: CanvasflowEditor) {
     super(locale);
-    //this.viewer = viewer;
     this.focusTracker = new FocusTracker();
     this.items = this.createCollection();
     this.colors = editor.config.get("colors") as Colors;
@@ -49,7 +47,7 @@ export class TextFontColorView extends View {
     }
   }
 
-  setCustomColors(colors: Colors) {
+  private setCustomColors(colors: Colors) {
     this.items.add(this.createLabel("Custom colors"));
     const colorList = colors.customColor;
     this.customColors = this.createColorsGrid(colorList);
@@ -139,8 +137,4 @@ export class TextFontColorView extends View {
       children: this.items,
     });
   }
-}
-
-export interface TextFontColorViewer {
-  locale?: Locale;
 }

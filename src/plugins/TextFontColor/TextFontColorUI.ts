@@ -1,13 +1,13 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
-import { TextFontColorView, TextFontColorViewer } from "./TextFontColorView";
+import { TextFontColorView } from "./TextFontColorView";
 import CanvasflowEditor, { Colors, TextEditorConfig } from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
 import icon from "./TextFontColorIcon.svg?raw";
 import Config from "@ckeditor/ckeditor5-utils/src/config";
 
-export class TextFontColorUI extends Plugin implements TextFontColorViewer {
+export class TextFontColorUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
   textFontColorView?: TextFontColorView;
@@ -43,12 +43,7 @@ export class TextFontColorUI extends Plugin implements TextFontColorViewer {
       input.onchange = (e: any) => {
         const color = e.target.value;
         if (color && color !== "#000000") {
-          // const evt: AddCustomColorEvent = {
-          //   color,
-          // };
-          //editor.dispatch("colors:addCustomColor", evt);
           this.setColor(color);
-          this.balloon.remove(this.textFontColorView);
         }
       };
       input?.click();
@@ -77,20 +72,18 @@ export class TextFontColorUI extends Plugin implements TextFontColorViewer {
       .config as Config<TextEditorConfig>;
     editorConfig.set({ colors });
     this.textFontColorView?.addCustomColor(color);
-    // this.balloon.remove(this.colorView);
-    // this.init();
-    // this.balloon.add({
-    //   view: this.colorView,
-    //   position: this.getBalloonPositionData(),
-    // });
-  }
-
-  private clearValues() {
-    this.hideUI();
   }
 
   private hideUI() {
-    if (this.balloon) this.balloon.remove(this.textFontColorView);
+    const input: HTMLInputElement | null = document.getElementById(
+      "color-picker",
+    ) as HTMLInputElement;
+    const visibility = input.getAttribute("style");
+    if (visibility !== "visibility: hidden") {
+      this.balloon.remove(this.textFontColorView);
+    } else {
+      input.setAttribute("style", "");
+    }
   }
 
   private createButton() {
