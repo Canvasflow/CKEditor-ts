@@ -49,6 +49,10 @@ export class TextFontColorUI extends Plugin {
       input?.click();
     });
 
+    this.listenTo(this.textFontColorView, "execute", (_, data) => {
+      editor.execute("FontColor", data.label);
+    });
+
     clickOutsideHandler({
       emitter: this.textFontColorView,
       activator: () => this.balloon.visibleView === this.textFontColorView,
@@ -71,7 +75,7 @@ export class TextFontColorUI extends Plugin {
     const editorConfig: Config<TextEditorConfig> = this.editor
       .config as Config<TextEditorConfig>;
     editorConfig.set({ colors });
-    this.textFontColorView?.addCustomColor(color);
+    this.textFontColorView?.addCustomColor(color, color);
   }
 
   private hideUI() {

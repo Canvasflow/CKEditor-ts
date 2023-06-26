@@ -1,5 +1,6 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
+export const FONT_COLOR = "FontColor";
 
 export class TextFontColorCommand extends Command {
   constructor(editor: CanvasflowEditor) {
@@ -9,33 +10,33 @@ export class TextFontColorCommand extends Command {
   refresh() {
     const model = this.editor.model;
     const doc = model.document;
-    this.value = doc.selection.getAttribute("PageLink");
+    this.value = doc.selection.getAttribute(FONT_COLOR);
     this.isEnabled = model.schema.checkAttributeInSelection(
       doc.selection,
-      "PageLink",
+      FONT_COLOR,
     );
   }
 
-  execute(url: string) {
-    this.editor.model.change(async (writer) => {
-      const selection = this.editor.model.document.selection;
-      if (!selection) {
-        return;
-      }
-      const range = selection.getFirstRange();
-      if (!range) {
-        return;
-      }
-      let value = "";
-      for (const item of range.getItems()) {
-        const proxy = item as any;
-        value = proxy.data;
-        writer.remove(item);
-      }
+  execute(color: any) {
+    const model = this.editor.model;
+    const document = model.document;
+    const selection = document.selection;
+    const value = color;
+    model.change((writer) => {
+      const ranges = model.schema.getValidRanges(
+        selection.getRanges(),
+        FONT_COLOR,
+      );
 
-      var position = selection.getFirstPosition();
-      if (position) {
-        writer.insertText(value, { linkHref: url }, position);
+      for (const range of ranges) {
+        if (value) {
+          writer.setAttributes(
+            {
+              fontColor: value,
+            },
+            range,
+          );
+        }
       }
     });
   }

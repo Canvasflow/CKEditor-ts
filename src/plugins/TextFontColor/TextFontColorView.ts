@@ -94,11 +94,12 @@ export class TextFontColorView extends View {
     return colorGridView;
   }
 
-  addCustomColor(color: string) {
-    const newcolor = new ColorTileView(this.locale);
-    newcolor.label = color;
-    newcolor.color = color;
-    this.customColors?.items.add(newcolor);
+  addCustomColor(color: string, label: string) {
+    const newColor = new ColorTileView(this.locale);
+    newColor.label = label;
+    newColor.color = color;
+    newColor.delegate("execute").to(this); //issue
+    this.customColors?.items.add(newColor);
   }
 
   private createLabel(text: any) {
