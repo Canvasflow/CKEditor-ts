@@ -15,7 +15,6 @@ if (typeof window !== "undefined") {
   };
 }
 
-
 const customColor = [{ color: "teal", label: "teal" }];
 
 const config = {
@@ -49,33 +48,31 @@ const config = {
     defaultColor: [{ color: "orange", label: "orange" }],
     customColor,
   },
-}
-
+};
 
 TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
-  .then((editor) => {
-    setTimeout(() => {
-      console.log(`I add the color`);
-      customColor.push({ color: '#000000', label: 'black' });
-    }, 10000)
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-
-
-TextEditor.create(document.querySelector("#editor2") as HTMLElement, config)
   .then((editor) => {
     editor.addEventListener("colors:addCustomColor", (evt: any) => {
       const { color } = evt;
       console.log(`addCustomColor:`, color);
-      customColor.push({ color, label: '' });
+      customColor.push({ color, label: "" });
     });
   })
   .catch((error) => {
     console.error(error);
   });
 
+TextEditor.create(document.querySelector("#editor2") as HTMLElement, config)
+  .then((editor) => {
+    editor.addEventListener("colors:addCustomColor", (evt: any) => {
+      const { color } = evt;
+      console.log(`addCustomColor:`, color);
+      customColor.push({ color, label: "" });
+    });
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
 async function fetchAnchors(id: string): Promise<Array<PageAnchorSource>> {
   if (id === "1111") {

@@ -64,6 +64,12 @@ export class ColorPickerUI extends Plugin {
           };
           editor.dispatch("colors:addCustomColor", evt);
           this.setColor(color);
+          this.balloon.remove(this.colorView);
+          this.init();
+          this.balloon.add({
+            view: this.colorView,
+            position: this.getBalloonPositionData(),
+          });
         }
       };
       input?.click();

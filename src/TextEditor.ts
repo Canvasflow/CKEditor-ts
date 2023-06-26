@@ -58,6 +58,18 @@ export class TextEditor extends BaseEditor {
       config.toolbar = TOOLBAR;
       config.alignment = ALIGNMENT as AlignmentConfig;
       config.image = IMAGE;
+      config.link = {
+        decorators: {
+          openInNewTab: {
+            mode: "manual",
+            label: "Open in a new tab",
+            attributes: {
+              target: "_blank",
+              rel: "noopener noreferrer",
+            },
+          },
+        },
+      };
     }
     super(sourceElementOrData, config);
   }
@@ -97,7 +109,7 @@ const PLUGINS = [
   ClearFormatting,
   Capitalize,
   FontBackground,
-  ExternalLink,
+  //ExternalLink,
 ];
 
 const TOOLBAR = [
@@ -123,8 +135,8 @@ const TOOLBAR = [
     items: ["strikethrough", "subscript", "superscript"],
   },
   "|",
-  //"Link",
-  "ExternalLink",
+  "Link",
+  //"ExternalLink",
   "pageLink",
   "imageUpload",
   "specialCharacters",
