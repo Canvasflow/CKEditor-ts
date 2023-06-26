@@ -69,12 +69,16 @@ export class FontBackgroundUI extends Plugin {
       };
       input?.click();
     });
-    this.listenTo(BackgroundView, "button", () => {
-      console.log("remove called");
-    });
 
-    this.listenTo(BackgroundView, "execute", (_, data) => {
-      editor.execute(SET_BACKGROUND_COLOR_COMMAND, data.label);
+    this.listenTo(BackgroundView, "execute", (evt: any, data) => {
+      if (data && data.label) {
+        editor.execute(SET_BACKGROUND_COLOR_COMMAND, data.label);
+        return;
+      }
+      if (!evt.source.color) {
+        return;
+      }
+      editor.execute(SET_BACKGROUND_COLOR_COMMAND, evt.source.color);
     });
 
     clickOutsideHandler({
@@ -87,7 +91,15 @@ export class FontBackgroundUI extends Plugin {
   }
 
   private hideUI() {
-    if (this.balloon) this.balloon.remove(this.BackgroundView);
+    const input: HTMLInputElement | null = document.getElementById(
+      "color-picker",
+    ) as HTMLInputElement;
+    const visibility = input.getAttribute("style");
+    if (visibility !== "visibility: hidden") {
+      this.balloon.remove(this.BackgroundView);
+    } else {
+      input.setAttribute("style", "");
+    }
   }
 
   private setColor(color: string) {
@@ -104,12 +116,7 @@ export class FontBackgroundUI extends Plugin {
     const editorConfig: Config<TextEditorConfig> = this.editor
       .config as Config<TextEditorConfig>;
     editorConfig.set({ fontBackground });
-    this.balloon.remove(this.BackgroundView);
-    this.init();
-    this.balloon.add({
-      view: this.BackgroundView,
-      position: this.getBalloonPositionData(),
-    });
+    this.BackgroundView?.addCustomColor(color, color);
   }
 
   private getBalloonPositionData() {
