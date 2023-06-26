@@ -50,8 +50,15 @@ export class TextFontColorUI extends Plugin {
       input?.click();
     });
 
-    this.listenTo(this.textFontColorView, "execute", (_, data) => {
-      editor.execute(SET_FONT_COLOR_COMMAND, data.label);
+    this.listenTo(this.textFontColorView, "execute", (evt: any, data) => {
+      if (data && data.label) {
+        editor.execute(SET_FONT_COLOR_COMMAND, data.label);
+        return;
+      }
+      if (!evt.source.color) {
+        return;
+      }
+      editor.execute(SET_FONT_COLOR_COMMAND, evt.source.color);
     });
 
     clickOutsideHandler({

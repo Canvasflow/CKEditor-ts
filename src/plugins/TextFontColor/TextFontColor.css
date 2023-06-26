@@ -1,5 +1,5 @@
 .ck-color-grid {
-  grid-template-columns: repeat(8, 0fr) !important;
+  grid-template-columns: repeat(6, 0fr) !important;
 }
 
 .ck.ck-colors {

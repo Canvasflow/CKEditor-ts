@@ -51,7 +51,6 @@ export class TextFontColorView extends View {
     clearButton.type = "button";
     clearButton.class = "clear-color-button";
     clearButton.on("execute", () => {
-      console.log("execute clear was called");
       this.editor.execute(CLEAR_FONT_COLOR_COMMAND);
     });
     return clearButton;
@@ -142,7 +141,7 @@ export class TextFontColorView extends View {
     const newColor = new ColorTileView(this.locale);
     newColor.label = label;
     newColor.color = color;
-    newColor.delegate("execute").to(this); //issue
+    newColor.delegate("execute").to(this);
     this.customColors?.items.add(newColor);
   }
 
@@ -154,7 +153,7 @@ export class TextFontColorView extends View {
     this.setTemplate({
       tag: "form",
       attributes: {
-        class: ["ck", "ck-page", "page-link"],
+        class: ["ck", "ck-page", "ck-colors"],
       },
       children: this.items,
     });
