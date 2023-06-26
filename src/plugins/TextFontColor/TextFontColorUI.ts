@@ -6,6 +6,7 @@ import CanvasflowEditor, { Colors, TextEditorConfig } from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
 import icon from "./TextFontColorIcon.svg?raw";
 import Config from "@ckeditor/ckeditor5-utils/src/config";
+import { SET_FONT_COLOR_COMMAND } from "./TextFontColorCommands";
 
 export class TextFontColorUI extends Plugin {
   declare editor: CanvasflowEditor;
@@ -50,7 +51,7 @@ export class TextFontColorUI extends Plugin {
     });
 
     this.listenTo(this.textFontColorView, "execute", (_, data) => {
-      editor.execute("FontColor", data.label);
+      editor.execute(SET_FONT_COLOR_COMMAND, data.label);
     });
 
     clickOutsideHandler({

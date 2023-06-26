@@ -12,6 +12,7 @@ import { FocusTracker, Locale } from "@ckeditor/ckeditor5-utils";
 import CanvasflowEditor, { Colors } from "../../BaseEditor";
 import icon from "./PickColorIcon.svg?raw";
 import remove from "./TextFontColorRemoveIcon.svg?raw";
+import { CLEAR_FONT_COLOR_COMMAND } from "./TextFontColorCommands";
 
 export class TextFontColorView extends View {
   private items: ViewCollection;
@@ -20,7 +21,7 @@ export class TextFontColorView extends View {
   private customColors?: ColorGridView;
   private editor: CanvasflowEditor;
 
-  constructor(locale: any, editor: CanvasflowEditor) {
+  constructor(locale: Locale, editor: CanvasflowEditor) {
     super(locale);
     this.editor = editor;
     this.focusTracker = new FocusTracker();
@@ -50,7 +51,8 @@ export class TextFontColorView extends View {
     clearButton.type = "button";
     clearButton.class = "clear-color-button";
     clearButton.on("execute", () => {
-      this.editor.execute("CLEAR_BACKGROUND_COLOR_COMMAND");
+      console.log("execute clear was called");
+      this.editor.execute(CLEAR_FONT_COLOR_COMMAND);
     });
     return clearButton;
   }
@@ -109,14 +111,6 @@ export class TextFontColorView extends View {
     return colorGridView;
   }
 
-  addCustomColor(color: string, label: string) {
-    const newColor = new ColorTileView(this.locale);
-    newColor.label = label;
-    newColor.color = color;
-    newColor.delegate("execute").to(this); //issue
-    this.customColors?.items.add(newColor);
-  }
-
   private createLabel(text: any) {
     const labelView = new LabelView(this.locale);
     labelView.text = text;
@@ -138,6 +132,18 @@ export class TextFontColorView extends View {
   destroy() {
     super.destroy();
     this.focusTracker.destroy();
+  }
+
+  /**
+   * Insert new color into list
+   *
+   */
+  addCustomColor(color: string, label: string) {
+    const newColor = new ColorTileView(this.locale);
+    newColor.label = label;
+    newColor.color = color;
+    newColor.delegate("execute").to(this); //issue
+    this.customColors?.items.add(newColor);
   }
 
   /**

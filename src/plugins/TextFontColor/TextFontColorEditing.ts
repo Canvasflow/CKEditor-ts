@@ -1,5 +1,11 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
-import { TextFontColorCommand, FONT_COLOR } from "./TextFontColorCommands";
+import {
+  TextFontColorCommand,
+  ClearFontColorCommand,
+  FONT_COLOR_ATTR,
+  SET_FONT_COLOR_COMMAND,
+  CLEAR_FONT_COLOR_COMMAND,
+} from "./TextFontColorCommands";
 import CanvasflowEditor from "../../BaseEditor";
 export class TextFontColorEditing extends Plugin {
   static get pluginName() {
@@ -8,13 +14,19 @@ export class TextFontColorEditing extends Plugin {
   constructor(editor: CanvasflowEditor) {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
-      model: FONT_COLOR,
+      model: FONT_COLOR_ATTR,
       view: renderDowncastElement(),
     });
-    editor.commands.add(FONT_COLOR, new TextFontColorCommand(editor));
-    // PREGUNTAR A CHUCK
-    editor.model.schema.extend("$text", { allowAttributes: FONT_COLOR });
-    editor.model.schema.setAttributeProperties(FONT_COLOR, {
+    editor.commands.add(
+      SET_FONT_COLOR_COMMAND,
+      new TextFontColorCommand(editor),
+    );
+    editor.commands.add(
+      CLEAR_FONT_COLOR_COMMAND,
+      new ClearFontColorCommand(editor),
+    );
+    editor.model.schema.extend("$text", { allowAttributes: FONT_COLOR_ATTR });
+    editor.model.schema.setAttributeProperties(FONT_COLOR_ATTR, {
       isFormatting: true,
       copyOnEnter: true,
     });
