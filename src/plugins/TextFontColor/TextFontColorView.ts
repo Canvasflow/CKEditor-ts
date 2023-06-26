@@ -6,6 +6,7 @@ import {
   ButtonView,
   InputView,
   ColorGridView,
+  ColorTileView,
 } from "@ckeditor/ckeditor5-ui";
 import { FocusTracker, Locale } from "@ckeditor/ckeditor5-utils";
 import CanvasflowEditor, { Colors } from "../../BaseEditor";
@@ -16,6 +17,7 @@ export class TextFontColorView extends View {
   private focusTracker: FocusTracker;
   //private viewer: TextFontColorViewer;
   colors: Colors;
+  private customColors?: ColorGridView;
 
   constructor(locale: any, editor: CanvasflowEditor) {
     super(locale);
@@ -47,12 +49,11 @@ export class TextFontColorView extends View {
     }
   }
 
-  private setCustomColors(colors: Colors) {
+  setCustomColors(colors: Colors) {
     this.items.add(this.createLabel("Custom colors"));
-    if (colors.customColor.length > 0) {
-      const colorList = colors.customColor;
-      this.items.add(this.createColorsGrid(colorList));
-    }
+    const colorList = colors.customColor;
+    this.customColors = this.createColorsGrid(colorList);
+    this.items.add(this.customColors);
   }
 
   private addPickerButton() {
@@ -90,8 +91,16 @@ export class TextFontColorView extends View {
       }),
       columns: 4,
     });
+
     colorGridView.delegate("execute").to(this);
     return colorGridView;
+  }
+
+  addCustomColor(color: string) {
+    const newcolor = new ColorTileView(this.locale);
+    newcolor.label = color;
+    newcolor.color = color;
+    this.customColors?.items.add(newcolor);
   }
 
   private createLabel(text: any) {

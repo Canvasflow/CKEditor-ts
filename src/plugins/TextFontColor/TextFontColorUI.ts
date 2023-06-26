@@ -2,9 +2,10 @@ import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { TextFontColorView, TextFontColorViewer } from "./TextFontColorView";
-import CanvasflowEditor, { Colors } from "../../BaseEditor";
+import CanvasflowEditor, { Colors, TextEditorConfig } from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
 import icon from "./TextFontColorIcon.svg?raw";
+import Config from "@ckeditor/ckeditor5-utils/src/config";
 
 export class TextFontColorUI extends Plugin implements TextFontColorViewer {
   declare editor: CanvasflowEditor;
@@ -63,8 +64,6 @@ export class TextFontColorUI extends Plugin implements TextFontColorViewer {
 
   private setColor(color: string) {
     const colors = this.editor.config.get("colors") as Colors;
-    console.log(colors);
-
     const findList = colors.customColor.find((value: any) => {
       if (value.color === color) return value;
     });
@@ -74,9 +73,10 @@ export class TextFontColorUI extends Plugin implements TextFontColorViewer {
     }
 
     colors.customColor.push({ label: color, color: color });
-    // const editorConfig: Config<TextEditorConfig> = this.editor
-    //   .config as Config<TextEditorConfig>;
-    // editorConfig.set({ colors });
+    const editorConfig: Config<TextEditorConfig> = this.editor
+      .config as Config<TextEditorConfig>;
+    editorConfig.set({ colors });
+    this.textFontColorView?.addCustomColor(color);
     // this.balloon.remove(this.colorView);
     // this.init();
     // this.balloon.add({
