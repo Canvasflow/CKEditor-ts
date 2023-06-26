@@ -1,5 +1,7 @@
-import { AddCustomColorEvent, RemoveCustomColorEvent } from './plugins/Colors/ColorsEvents'
+import {
+  AddCustomColorEvent,
+  RemoveCustomColorEvent,
+} from "./plugins/TextFontColor/TextFontColorEvents";
 export type EditorEvents =
-    // Colors
-    AddCustomColorEvent |
-    RemoveCustomColorEvent;
+  // Colors
+  AddCustomColorEvent | RemoveCustomColorEvent;

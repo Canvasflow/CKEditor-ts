@@ -18,13 +18,8 @@ export class ClearFormattingCommands extends Command {
 
   execute() {
     const model = this.editor.model;
-    const document = model.document;
-    const selection = document.selection;
-    model.change((writer) => {
-      const ranges = model.schema.getValidRanges(selection.getRanges(), CLEAR);
-      for (const range of ranges) {
-        this.editor.execute("removeFormat");
-      }
+    model.change(() => {
+      this.editor.execute("removeFormat");
     });
   }
 }
