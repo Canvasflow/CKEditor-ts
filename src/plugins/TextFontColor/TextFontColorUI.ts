@@ -4,9 +4,13 @@ import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { TextFontColorView } from "./TextFontColorView";
 import CanvasflowEditor, { Colors, TextEditorConfig } from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
-import icon from "./TextFontColorIcon.svg?raw";
+
 import Config from "@ckeditor/ckeditor5-utils/src/config";
 import { SET_FONT_COLOR_COMMAND } from "./TextFontColorCommands";
+
+import icon from "./TextFontColorIcon.svg?raw";
+import icon2 from "../DarkMode/DarkModeIcon.svg?raw";
+
 
 export class TextFontColorUI extends Plugin {
   declare editor: CanvasflowEditor;
@@ -106,10 +110,24 @@ export class TextFontColorUI extends Plugin {
       button.withText = false;
       button.icon = icon;
       this.listenTo(button, "execute", () => {
+        // ESTO ES SOLAMENE PARA CAMBIAR EL ICONO
+        // this.changeIcon(button);
         this.showUI();
       });
       return button;
     });
+  }
+
+  private changeIcon(button: ButtonView) {
+    const newIcon = getIcon('black');
+    try {
+      button.set({
+        icon: newIcon,
+      });
+      button.render();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   private showUI() {
@@ -133,4 +151,9 @@ export class TextFontColorUI extends Plugin {
       target,
     };
   }
+}
+
+
+function getIcon(color?: string) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M200-200v-60h560v60H200Zm76-160 175-440h58l175 440h-55l-45-119H376l-45 119h-55Zm117-164h174l-85-222h-4l-85 222Z" style="fill:${color};"/></svg>`
 }
