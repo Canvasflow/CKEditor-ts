@@ -4,7 +4,7 @@ import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { TextSizeView, TextSizeViewer } from "./TextSizeView";
 import CanvasflowEditor from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
-import icon from "./TextSizeIcon.svg?raw";
+import icon from "../../assets/icons/fontSize.svg?raw";
 export class TextSizeUI extends Plugin implements TextSizeViewer {
   declare editor: CanvasflowEditor;
   balloon: any;

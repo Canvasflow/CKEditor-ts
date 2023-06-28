@@ -10,8 +10,8 @@ import {
 } from "@ckeditor/ckeditor5-ui";
 import { FocusTracker, Locale } from "@ckeditor/ckeditor5-utils";
 import CanvasflowEditor, { Colors } from "../../BaseEditor";
-import icon from "./PickColorIcon.svg?raw";
-import remove from "./TextFontColorRemoveIcon.svg?raw";
+import picker from "../../assets/icons/colorPicker.svg?raw";
+import remove from "../../assets/icons/removeColor.svg?raw";
 import { CLEAR_FONT_COLOR_COMMAND } from "./TextFontColorCommands";
 
 export class TextFontColorView extends View {
@@ -71,7 +71,7 @@ export class TextFontColorView extends View {
   }
 
   private addPickerButton() {
-    let pickerButton = this.createButton("Select color", icon, "");
+    let pickerButton = this.createButton("Select color", picker, "");
     pickerButton.type = "submit";
     pickerButton.class = "submit-color-button";
     this.items.add(pickerButton);

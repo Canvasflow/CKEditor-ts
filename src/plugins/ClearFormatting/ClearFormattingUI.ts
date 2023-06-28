@@ -1,7 +1,7 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import CanvasflowEditor from "../../BaseEditor";
-import icon from "./ClearFormattingIcon.svg?raw";
+import icon from "../../assets/icons/clearFormatting.svg?raw";
 export class ClearFormattingUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;

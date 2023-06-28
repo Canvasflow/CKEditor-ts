@@ -4,7 +4,7 @@ import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { PageLinkView, PageLinkViewer } from "./PageLinkView";
 import CanvasflowEditor, { PageLinkSource } from "../../BaseEditor";
 import { BaseEvent, GetCallback, Locale } from "@ckeditor/ckeditor5-utils";
-import icon from "./PageLinkIcon.svg?raw";
+import icon from "../../assets/icons/goToPage.svg?raw";
 
 export class PageLinkUI extends Plugin implements PageLinkViewer {
   declare editor: CanvasflowEditor;

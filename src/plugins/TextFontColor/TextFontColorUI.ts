@@ -7,9 +7,7 @@ import { Locale } from "@ckeditor/ckeditor5-utils";
 
 import Config from "@ckeditor/ckeditor5-utils/src/config";
 import { SET_FONT_COLOR_COMMAND } from "./TextFontColorCommands";
-
-import icon from "./TextFontColorIcon.svg?raw";
-import icon2 from "../DarkMode/DarkModeIcon.svg?raw";
+import icon from "../../assets/icons/fontColor.svg?raw";
 
 export class TextFontColorUI extends Plugin {
   declare editor: CanvasflowEditor;
