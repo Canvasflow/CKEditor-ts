@@ -1,7 +1,6 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import CanvasflowEditor from "../../BaseEditor";
-import icon from "./UppercaseIcon.svg?raw";
 export class UppercaseUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
@@ -16,9 +15,8 @@ export class UppercaseUI extends Plugin {
   private createButton() {
     const button = new ButtonView();
     button.label = "Uppercase";
-    button.tooltip = true;
-    button.withText = false;
-    button.icon = icon;
+    button.tooltip = false;
+    button.withText = true;
     this.listenTo(button, "execute", () => {
       this.editor.execute("uppercase");
     });
