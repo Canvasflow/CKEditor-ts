@@ -27,7 +27,7 @@ export class TextSizeView extends View {
 
   private createButton(label: string, icon: any) {
     this.iconButton = this.createButtonObject(label, icon, "");
-    this.iconButton.type = "submit";
+    // this.iconButton.type = "submit";
     this.iconButton.isEnabled = true;
     return this.iconButton;
   }
@@ -48,6 +48,7 @@ export class TextSizeView extends View {
   private createInput() {
     const input = new InputView(this.locale);
     input.id = "text-size-input";
+    input.value = "12";
     return input;
   }
 

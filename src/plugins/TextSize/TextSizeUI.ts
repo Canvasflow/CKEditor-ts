@@ -5,9 +5,6 @@ import { TextSizeView, TextSizeViewer } from "./TextSizeView";
 import CanvasflowEditor from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
 import icon from "./TextSizeIcon.svg?raw";
-
-import { Bold } from "@ckeditor/ckeditor5-basic-styles";
-
 export class TextSizeUI extends Plugin implements TextSizeViewer {
   declare editor: CanvasflowEditor;
   balloon: any;
@@ -19,8 +16,6 @@ export class TextSizeUI extends Plugin implements TextSizeViewer {
   }
 
   init() {
-    console.log(Bold);
-
     this.locale = this.editor.locale;
     this.balloon = this.editor.plugins.get(ContextualBalloon);
     this.createView();
@@ -33,6 +28,7 @@ export class TextSizeUI extends Plugin implements TextSizeViewer {
     this.fontSizeView.showView();
 
     this.listenTo(this.fontSizeView, "submit", () => {
+      console.log("submit called");
       //editor.execute("", null);
     });
 

@@ -4,7 +4,7 @@ import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { FontBackgroundView } from "./FontBackgroundView";
 //import { AddCustomColorEvent } from "./FontBackgroundEvents";
 import CanvasflowEditor, { Colors, TextEditorConfig } from "../../BaseEditor";
-import icon from "./FontBackgroundIcon.svg?raw";
+import icon from "../../assets/icons/fontBackground.svg?raw";
 import Config from "@ckeditor/ckeditor5-utils/src/config";
 
 import { SET_BACKGROUND_COLOR_COMMAND } from "./FontBackgroundCommands";

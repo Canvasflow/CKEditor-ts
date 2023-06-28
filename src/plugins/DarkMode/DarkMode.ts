@@ -1,6 +1,6 @@
 import { ButtonView } from "@ckeditor/ckeditor5-ui";
 import { Plugin } from "ckeditor5/src/core";
-import icon from "./DarkModeIcon.svg?raw";
+import icon from "../../assets/icons/darkMode.svg?raw";
 
 export class DarkMode extends Plugin {
   init() {
