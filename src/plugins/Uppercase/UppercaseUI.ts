@@ -17,6 +17,7 @@ export class UppercaseUI extends Plugin {
     button.label = "Uppercase";
     button.tooltip = false;
     button.withText = true;
+    button.class = "alignment-list";
     this.listenTo(button, "execute", () => {
       this.editor.execute("uppercase");
     });

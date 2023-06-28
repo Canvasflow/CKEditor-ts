@@ -11,7 +11,7 @@ import {
 import { List } from "@ckeditor/ckeditor5-list";
 import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
 import { Font } from "@ckeditor/ckeditor5-font";
-import { AlignmentConfig } from "@ckeditor/ckeditor5-alignment";
+import { Alignment, AlignmentConfig } from "@ckeditor/ckeditor5-alignment";
 import { Link } from "@ckeditor/ckeditor5-link";
 import { Base64UploadAdapter } from "@ckeditor/ckeditor5-upload";
 import {
@@ -41,11 +41,11 @@ import {
   ImageResizeButtons,
 } from "@ckeditor/ckeditor5-image";
 
-import Alignment from "./plugins/Icons/Alignment";
 import fontStyles from "./assets/icons/fontStyles.svg?raw";
 import lists from "./assets/icons/lists.svg?raw";
 import textTransform from "./assets/icons/textFormatting.svg?raw";
 import other from "./assets/icons/other.svg?raw";
+import AlignmentIcon from "./plugins/Icons/Alignment";
 
 export class TextEditor extends BaseEditor {
   constructor(
@@ -110,6 +110,8 @@ const PLUGINS = [
   TextFontColor,
   RemoveFormat,
   TextSize,
+
+  AlignmentIcon,
 ];
 
 const TOOLBAR = [
@@ -148,6 +150,7 @@ const TOOLBAR = [
   },
   "|",
   "Link",
+
   "pageLink",
   {
     label: "More",

@@ -1,29 +1,22 @@
 import { Plugin } from "ckeditor5/src/core";
-import icon from "../../assets/icons/alignment.svg?raw";
-import { ButtonView } from "@ckeditor/ckeditor5-ui";
+import icon from "../../assets/icons/image.svg?raw";
 import CanvasflowEditor from "../../BaseEditor";
+import { DropdownView } from "@ckeditor/ckeditor5-ui";
 
-import AlignmentEditing from "@ckeditor/ckeditor5-alignment/src/alignmentediting";
-import AlignmentUI from "@ckeditor/ckeditor5-alignment/src/alignmentui";
-
-export default class Alignment extends Plugin {
+export default class AlignmentIcon extends Plugin {
   declare editor: CanvasflowEditor;
 
-  //static get requires(){ return readonly [typeof AlignmentEditing, typeof AlignmentUI]}
-  static get pluginName() {
-    return "Alignment";
-  }
-
   init() {
-    const editor = this.editor;
-    editor.ui.componentFactory.add("alignment", () => {
-      return this.createButton();
-    });
-  }
+    setTimeout(() => {
+      const editor = this.editor;
 
-  private createButton() {
-    const button = new ButtonView();
-    button.icon = icon;
-    return button;
+      const view = editor.ui.componentFactory.create(
+        "alignment",
+      ) as DropdownView;
+      view.buttonView.icon = icon;
+      view.buttonView.set({ tooltip: "tooltip", icon });
+      view.buttonView.render();
+      view.render();
+    }, 1000);
   }
 }

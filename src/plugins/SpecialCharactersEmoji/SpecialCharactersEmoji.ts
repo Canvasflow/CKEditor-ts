@@ -1,4 +1,5 @@
 import CanvasflowEditor from "../../BaseEditor";
+
 export function SpecialCharactersEmoji(editor: CanvasflowEditor) {
   editor.plugins.get("SpecialCharacters").addItems(
     "Custom",
