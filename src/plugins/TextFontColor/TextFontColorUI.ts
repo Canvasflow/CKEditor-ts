@@ -109,8 +109,7 @@ export class TextFontColorUI extends Plugin {
       this.listenTo(button, "execute", () => {
         // ESTO ES SOLAMENE PARA CAMBIAR EL ICONO
         // this.changeIcon(button);
-        // this.showUI();
-        console.log("click");
+        this.showUI();
       });
       return button;
     });

@@ -1,6 +1,7 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import CanvasflowEditor from "../../BaseEditor";
+import { TEXT_TRANSFORM_COMMAND } from "../TextTransform/TextTransformCommand";
 export class UppercaseUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
@@ -19,7 +20,7 @@ export class UppercaseUI extends Plugin {
     button.withText = true;
     button.class = "alignment-list";
     this.listenTo(button, "execute", () => {
-      this.editor.execute("uppercase");
+      this.editor.execute(TEXT_TRANSFORM_COMMAND, "uppercase");
     });
     return button;
   }
