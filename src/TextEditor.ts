@@ -120,7 +120,6 @@ const TOOLBAR = [
   "fontSize",
   "|",
   // "colorPicker",
-
   {
     label: "Font Styles",
     icon: fontStyles,

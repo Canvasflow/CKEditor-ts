@@ -9,7 +9,7 @@ export default class AlignmentIcon extends Plugin {
   init() {
     setTimeout(() => {
       const editor = this.editor;
-
+      console.log(editor.ui.view);
       const view = editor.ui.componentFactory.create(
         "alignment",
       ) as DropdownView;
