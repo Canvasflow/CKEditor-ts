@@ -1,0 +1,15 @@
+node_modules/
+src/
+test/
+index.html
+public/
+vite.config.ts 
+tsconfig.json
+*.svg
+
+.nova
+.hintrc
+*.yml
+vite.config.js
+vite.minify.config.js
+.npmrc

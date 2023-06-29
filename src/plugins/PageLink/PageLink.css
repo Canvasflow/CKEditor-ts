@@ -1,0 +1,29 @@
+.page-link {
+  height: 200px !important;
+  width: 300px !important;
+}
+
+.button-blue {
+  background-color: #168cf3 !important;
+  border: none !important;
+  color: white !important;
+
+  text-decoration: none !important;
+  margin-left: 30% !important;
+  cursor: pointer !important;
+  margin-top: 20px !important;
+}
+
+.ck-dropdown {
+  border: red 2px solid;
+}
+
+#dropdown-element {
+  margin-left: 25% !important;
+  margin-top: 20px !important;
+}
+
+#dropdown-anchors {
+  margin-left: 25% !important;
+  margin-top: 20px !important;
+}

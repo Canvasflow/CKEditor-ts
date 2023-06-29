@@ -1,0 +1,12 @@
+.font-size {
+  height: 40px !important;
+  width: 105px !important;
+}
+
+.ck.ck-page.font-size {
+  margin-top: 6%;
+}
+
+#text-size-input {
+  width: 30%;
+}
