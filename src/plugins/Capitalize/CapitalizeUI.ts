@@ -1,6 +1,7 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import CanvasflowEditor from "../../BaseEditor";
+import { TEXT_TRANSFORM_COMMAND } from "../TextTransform/TextTransformCommand";
 export class CapitalizeUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
@@ -20,7 +21,7 @@ export class CapitalizeUI extends Plugin {
     button.withText = true;
 
     this.listenTo(button, "execute", () => {
-      this.editor.execute("capitalize");
+      this.editor.execute(TEXT_TRANSFORM_COMMAND, "capitalize");
     });
     return button;
   }

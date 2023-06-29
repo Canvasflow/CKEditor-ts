@@ -1,5 +1,9 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
-import { UppercaseCommands, UPPERCASE } from "./UppercaseCommands";
+import {
+  TextTransformCommand,
+  TEXT_TRANSFORM_ATTR,
+  TEXT_TRANSFORM_COMMAND,
+} from "../TextTransform/TextTransformCommand";
 import CanvasflowEditor from "../../BaseEditor";
 export class UppercaseEditing extends Plugin {
   static get pluginName() {
@@ -9,13 +13,18 @@ export class UppercaseEditing extends Plugin {
   constructor(editor: CanvasflowEditor) {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
-      model: UPPERCASE,
+      model: TEXT_TRANSFORM_ATTR,
       view: renderDowncastElement(),
     });
 
-    editor.commands.add(UPPERCASE, new UppercaseCommands(editor));
-    editor.model.schema.extend("$text", { allowAttributes: UPPERCASE });
-    editor.model.schema.setAttributeProperties(UPPERCASE, {
+    editor.commands.add(
+      TEXT_TRANSFORM_COMMAND,
+      new TextTransformCommand(editor),
+    );
+    editor.model.schema.extend("$text", {
+      allowAttributes: TEXT_TRANSFORM_ATTR,
+    });
+    editor.model.schema.setAttributeProperties(TEXT_TRANSFORM_ATTR, {
       isFormatting: true,
       copyOnEnter: true,
     });
@@ -23,9 +32,9 @@ export class UppercaseEditing extends Plugin {
 }
 
 function renderDowncastElement() {
-  return (_: any, viewWriter: any) => {
+  return (modelAttributeValue: string, viewWriter: any) => {
     const attributes = {
-      style: `text-transform:uppercase;`,
+      style: `text-transform:${modelAttributeValue};`,
     };
     return viewWriter.writer.createAttributeElement("span", attributes, {
       priority: 7,

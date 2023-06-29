@@ -6,7 +6,6 @@ declare global {
     CanvasflowTextEditor: any;
   }
 }
-import { Alignment } from "@ckeditor/ckeditor5-alignment";
 import CanvasflowEditor from "../src/BaseEditor";
 
 if (typeof window !== "undefined") {
@@ -73,9 +72,6 @@ const config = {
 
 TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
   .then((editor) => {
-    setTimeout(() => {
-      console.log("here");
-    }, 5000);
     createListeners(editor);
     editor.addEventListener("colors:addCustomColor", (evt: any) => {
       const { color } = evt;

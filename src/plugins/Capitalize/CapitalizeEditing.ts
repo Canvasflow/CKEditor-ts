@@ -1,6 +1,10 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
-import { CapitalizeCommands, CAPITALIZE } from "./CapitalizeCommands";
 import CanvasflowEditor from "../../BaseEditor";
+import {
+  TextTransformCommand,
+  TEXT_TRANSFORM_ATTR,
+  TEXT_TRANSFORM_COMMAND,
+} from "../TextTransform/TextTransformCommand";
 export class CapitalizeEditing extends Plugin {
   static get pluginName() {
     return "CapitalizeEditing";
@@ -9,13 +13,18 @@ export class CapitalizeEditing extends Plugin {
   constructor(editor: CanvasflowEditor) {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
-      model: CAPITALIZE,
+      model: TEXT_TRANSFORM_ATTR,
       view: renderDowncastElement(),
     });
 
-    editor.commands.add(CAPITALIZE, new CapitalizeCommands(editor));
-    editor.model.schema.extend("$text", { allowAttributes: CAPITALIZE });
-    editor.model.schema.setAttributeProperties(CAPITALIZE, {
+    editor.commands.add(
+      TEXT_TRANSFORM_COMMAND,
+      new TextTransformCommand(editor),
+    );
+    editor.model.schema.extend("$text", {
+      allowAttributes: TEXT_TRANSFORM_ATTR,
+    });
+    editor.model.schema.setAttributeProperties(TEXT_TRANSFORM_ATTR, {
       isFormatting: true,
       copyOnEnter: true,
     });
@@ -23,9 +32,10 @@ export class CapitalizeEditing extends Plugin {
 }
 
 function renderDowncastElement() {
-  return (_: any, viewWriter: any) => {
+  return (modelAttributeValue: string, viewWriter: any) => {
+    console.log("capitalize");
     const attributes = {
-      style: `text-transform:capitalize;`,
+      style: `text-transform:${modelAttributeValue};`,
     };
     return viewWriter.writer.createAttributeElement("span", attributes, {
       priority: 7,

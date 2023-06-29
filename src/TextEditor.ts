@@ -111,7 +111,7 @@ const PLUGINS = [
   RemoveFormat,
   TextSize,
 
-  AlignmentIcon,
+  // AlignmentIcon,
 ];
 
 const TOOLBAR = [
