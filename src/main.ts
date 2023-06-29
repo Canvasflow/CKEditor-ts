@@ -6,8 +6,6 @@ declare global {
     CanvasflowTextEditor: any;
   }
 }
-import { Alignment } from "@ckeditor/ckeditor5-alignment";
-import CanvasflowEditor from "../src/BaseEditor";
 
 if (typeof window !== "undefined") {
   window.CanvasflowTextEditor = (
@@ -39,7 +37,7 @@ const config = {
     ],
   },
   fontSize: {
-    options: Array.from({ length: 40 }, (_, i) => i + 8),
+    options: Array.from({ length: 70 }, (_, i) => i + 8),
   },
 
   fetchAnchors,
@@ -73,16 +71,12 @@ const config = {
 
 TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
   .then((editor) => {
-    setTimeout(() => {
-      console.log("here");
-    }, 5000);
     createListeners(editor);
     editor.addEventListener("colors:addCustomColor", (evt: any) => {
       const { color } = evt;
       console.log(`addCustomColor:`, color);
       customColor.push({ color, label: "" });
     });
-    setIcons(editor);
   })
   .catch((error) => {
     console.error(error);
@@ -98,9 +92,4 @@ async function fetchAnchors(id: string): Promise<Array<PageAnchorSource>> {
       title: "asdasdasdasd",
     },
   ];
-}
-
-function setIcons(editor: CanvasflowEditor) {
-  //console.log(editor);
-  // console.log(Array.from(editor.ui.componentFactory.names()));
 }
