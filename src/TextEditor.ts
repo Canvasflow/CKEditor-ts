@@ -45,7 +45,6 @@ import fontStyles from "./assets/icons/fontStyles.svg?raw";
 import lists from "./assets/icons/lists.svg?raw";
 import textTransform from "./assets/icons/textFormatting.svg?raw";
 import other from "./assets/icons/other.svg?raw";
-import AlignmentIcon from "./plugins/Icons/Alignment";
 
 export class TextEditor extends BaseEditor {
   constructor(
@@ -110,8 +109,6 @@ const PLUGINS = [
   TextFontColor,
   RemoveFormat,
   TextSize,
-
-  // AlignmentIcon,
 ];
 
 const TOOLBAR = [
