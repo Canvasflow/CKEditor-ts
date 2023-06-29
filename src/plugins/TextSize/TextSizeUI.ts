@@ -23,7 +23,6 @@ export class TextSizeUI extends Plugin implements TextSizeViewer {
   }
 
   private createView() {
-    const editor = this.editor;
     this.fontSizeView = new TextSizeView(this);
     this.fontSizeView.showView();
 
