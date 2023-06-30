@@ -52,25 +52,32 @@ export class TextEditor extends BaseEditor {
     config?: TextEditorConfig,
   ) {
     console.log(`Custom canvaflow editor loaded`);
-    if (config) {
-      config.plugins = PLUGINS;
-      config.toolbar = TOOLBAR;
-      config.alignment = ALIGNMENT as AlignmentConfig;
-      config.image = IMAGE;
-      config.link = {
-        decorators: {
-          openInNewTab: {
-            mode: "manual",
-            label: "Open in a new tab",
-            attributes: {
-              target: "_blank",
-              rel: "noopener noreferrer",
-            },
+    if (!config) {
+      super(sourceElementOrData, config);
+      return;
+    }
+
+    config.plugins = PLUGINS;
+    config.toolbar = TOOLBAR;
+    config.alignment = ALIGNMENT as AlignmentConfig;
+    config.image = IMAGE;
+
+    config.link = {
+      decorators: {
+        openInNewTab: {
+          mode: "manual",
+          label: "Open in a new tab",
+          attributes: {
+            target: "_blank",
+            rel: "noopener noreferrer",
           },
         },
-      };
-    }
+      },
+    };
     super(sourceElementOrData, config);
+    if (config.colors) {
+      this.colors = config.colors;
+    }
   }
 }
 

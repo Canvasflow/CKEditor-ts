@@ -71,7 +71,10 @@ export class TextFontColorUI extends Plugin {
   }
 
   private setColor(color: string) {
-    const colors = this.editor.config.get("colors") as Colors;
+    const colors = this.editor.colors;
+    if (!colors) {
+      return;
+    }
     const findList = colors.customColor.find((value: any) => {
       if (value.color === color) return value;
     });
@@ -100,6 +103,7 @@ export class TextFontColorUI extends Plugin {
   }
 
   private createButton() {
+
     this.editor.ui.componentFactory.add("textFontColor", () => {
       const button = new ButtonView();
       button.label = "Font Color";
@@ -107,6 +111,14 @@ export class TextFontColorUI extends Plugin {
       button.withText = false;
       button.icon = icon;
       this.listenTo(button, "execute", () => {
+        if (this.textFontColorView) {
+          if (!this.editor.colors) {
+            return;
+          }
+          const colors: Colors = this.editor.colors;
+          this.textFontColorView.colors = colors;
+        }
+
         this.showUI();
       });
       return button;

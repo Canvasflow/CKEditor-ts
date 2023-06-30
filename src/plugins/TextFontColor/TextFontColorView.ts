@@ -17,17 +17,34 @@ import { CLEAR_FONT_COLOR_COMMAND } from "./TextFontColorCommands";
 export class TextFontColorView extends View {
   private items: ViewCollection;
   private focusTracker: FocusTracker;
-  private colors: Colors;
+  colors?: Colors;
   private customColors?: ColorGridView;
   private editor: CanvasflowEditor;
+
+  // Remove Color
+  private removeColorView: RemoveColorView;
 
   constructor(locale: Locale, editor: CanvasflowEditor) {
     super(locale);
     this.editor = editor;
     this.focusTracker = new FocusTracker();
     this.items = this.createCollection();
-    this.colors = editor.config.get("colors") as Colors;
+
+    this.removeColorView = new RemoveColorView(editor.locale);
+    this.removeColorView.onClick = this.onRemoveColorClick;
+
+    // Add view to the component
+    // this.items.add(this.removeColorView)
+    if (!editor.colors) {
+      return;
+    }
+    this.colors = editor.colors;
+
     this.setItems(this.colors);
+  }
+
+  onRemoveColorClick = (): void => {
+    this.editor.execute(CLEAR_FONT_COLOR_COMMAND);
   }
 
   private setItems(colors: Colors) {
@@ -157,5 +174,20 @@ export class TextFontColorView extends View {
       },
       children: this.items,
     });
+  }
+}
+
+class RemoveColorView extends ButtonView {
+  onClick: () => void = () => { };
+  constructor(locale: Locale) {
+    super(locale);
+    this.label = 'Remove Button';
+    this.icon = remove;
+    this.tooltip = true;
+    this.class = "clear-color-button"
+    this.withText = true;
+    this.on('execute', () => {
+      this.onClick();
+    })
   }
 }

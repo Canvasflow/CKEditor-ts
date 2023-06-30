@@ -4,6 +4,7 @@ import { EditorEvents } from "./EditorEvents";
 
 export default abstract class BaseEditor extends BalloonEditor {
   anchorFn?: AnchorFn;
+  colors?: Colors;
   subscribers: Map<string, Function> = new Map();
   protected constructor(
     sourceElementOrData: HTMLElement | string,
