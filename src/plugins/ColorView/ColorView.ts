@@ -13,7 +13,7 @@ import CanvasflowEditor, { Colors, Color } from "../../BaseEditor";
 import picker from "../../assets/icons/colorPicker.svg?raw";
 import remove from "../../assets/icons/removeColor.svg?raw";
 
-export class TextFontColorView extends View {
+export class ColorView extends View {
   private items: ViewCollection;
   private removeColorButton?: ButtonView;
   private selectColorButton?: ButtonView;
@@ -23,7 +23,7 @@ export class TextFontColorView extends View {
   defaultColorsGridView?: ColorsGridView;
   customColorsGridView?: ColorsGridView;
 
-  onClearColor: () => void = () => { }
+  onClearColor: (editor: any) => void = () => {};
 
   constructor(locale: Locale, editor: CanvasflowEditor) {
     super(locale);
@@ -34,7 +34,7 @@ export class TextFontColorView extends View {
     }
     this.colors = editor.colors;
 
-    this.removeColorButton = this.getRemoveColorView();
+    this.removeColorButton = this.getRemoveColorView(editor);
     this.defaultColorsGridView = this.getDefaultColorView();
     this.customColorsGridView = this.getCustomColorView();
     this.selectColorButton = this.getSelectColorView();
@@ -56,13 +56,12 @@ export class TextFontColorView extends View {
     });
   }
 
-  private getRemoveColorView(): ButtonView {
+  private getRemoveColorView(editor: CanvasflowEditor): ButtonView {
     let clearButton = this.createButton("Remove color", remove, "");
     clearButton.type = "button";
     clearButton.class = "clear-color-button";
     clearButton.on("execute", () => {
-      console.log(`BORRE EL COLOR`)
-      this.onClearColor();
+      this.onClearColor(editor);
     });
     return clearButton;
   }
@@ -186,19 +185,21 @@ class ColorsGridView extends View {
       },
       children: items,
     });
-
   }
 
   getGridView(): ColorGridView {
     const colorsSet = new Set();
-    const colors: Array<Color> = this.colors.reduce((acc: Array<Color>, color: Color) => {
-      if (colorsSet.has(color.color)) {
+    const colors: Array<Color> = this.colors.reduce(
+      (acc: Array<Color>, color: Color) => {
+        if (colorsSet.has(color.color)) {
+          return acc;
+        }
+        colorsSet.add(color.color);
+        acc.push(color);
         return acc;
-      }
-      colorsSet.add(color.color)
-      acc.push(color);
-      return acc;
-    }, [])
+      },
+      [],
+    );
     const colorGridView = new ColorGridView(this.locale, {
       colorDefinitions: colors.map((item: any) => {
         item.label = item.color;

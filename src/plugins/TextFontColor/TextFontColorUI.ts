@@ -1,24 +1,21 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
-import { TextFontColorView } from "./TextFontColorView";
-import CanvasflowEditor, {
-  Colors,
-  TextEditorConfig,
-  Color,
-} from "../../BaseEditor";
+//import { TextFontColorView } from "./TextFontColorView";
+import { ColorView } from "../ColorView/ColorView";
+import CanvasflowEditor, { Color } from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
-
-import Config from "@ckeditor/ckeditor5-utils/src/config";
-import { SET_FONT_COLOR_COMMAND } from "./TextFontColorCommands";
+import {
+  SET_FONT_COLOR_COMMAND,
+  CLEAR_FONT_COLOR_COMMAND,
+} from "./TextFontColorCommands";
 import icon from "../../assets/icons/fontColor.svg?raw";
 import { AddCustomColorEvent } from "./TextFontColorEvents";
-import { CLEAR_FONT_COLOR_COMMAND } from "./TextFontColorCommands";
 
 export class TextFontColorUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
-  textFontColorView?: TextFontColorView;
+  textFontColorView?: ColorView;
   selectedPage?: String;
   selectedAnchor?: String;
   locale?: Locale;
@@ -35,7 +32,7 @@ export class TextFontColorUI extends Plugin {
 
   private createView() {
     const editor = this.editor;
-    this.textFontColorView = new TextFontColorView(editor.locale, editor);
+    this.textFontColorView = new ColorView(editor.locale, editor);
     this.textFontColorView.onClearColor = this.onClearColor;
 
     this.listenTo(this.textFontColorView, "submit", () => {
@@ -83,8 +80,8 @@ export class TextFontColorUI extends Plugin {
     });
   }
 
-  private onClearColor() {
-    this.editor.execute(CLEAR_FONT_COLOR_COMMAND);
+  private onClearColor(editor: CanvasflowEditor) {
+    editor.execute(CLEAR_FONT_COLOR_COMMAND);
   }
 
   private onCustomSetColor = (color: Color) => {
