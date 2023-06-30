@@ -9,7 +9,7 @@ import {
   ColorTileView,
 } from "@ckeditor/ckeditor5-ui";
 import { FocusTracker, Locale } from "@ckeditor/ckeditor5-utils";
-import CanvasflowEditor, { Colors } from "../../BaseEditor";
+import CanvasflowEditor, { Colors, Color } from "../../BaseEditor";
 import picker from "../../assets/icons/colorPicker.svg?raw";
 import remove from "../../assets/icons/removeColor.svg?raw";
 import { CLEAR_FONT_COLOR_COMMAND } from "./TextFontColorCommands";
@@ -22,16 +22,24 @@ export class TextFontColorView extends View {
   private editor: CanvasflowEditor;
 
   // Remove Color
-  private removeColorView: RemoveColorView;
+  private removeColorButton?: ButtonView;
+  private selectColorButton?: ButtonView;
+  private defaultColorsGridView?: View;
+  private customColorsGridView?: View
+  private colorInput?: InputView;
+  /*
+  1. Remove Color (button)
+  2. Default Color (Collection View)
+  3. Custom Color (Collection View)
+  4. Select Color (button view)
+  5. Input
+  */
 
   constructor(locale: Locale, editor: CanvasflowEditor) {
     super(locale);
     this.editor = editor;
     this.focusTracker = new FocusTracker();
     this.items = this.createCollection();
-
-    this.removeColorView = new RemoveColorView(editor.locale);
-    this.removeColorView.onClick = this.onRemoveColorClick;
 
     // Add view to the component
     // this.items.add(this.removeColorView)
@@ -40,11 +48,61 @@ export class TextFontColorView extends View {
     }
     this.colors = editor.colors;
 
-    this.setItems(this.colors);
+    this.removeColorButton = this.getRemoveColorView();
+    this.defaultColorsGridView = this.getDefaultColorView();
+    this.customColorsGridView = this.getCustomColorView();
+    this.selectColorButton = this.getSelectColorView();
+    this.colorInput = this.getInputColorView();
+
+    this.items.addMany([
+      this.removeColorButton,
+      this.defaultColorsGridView,
+      this.customColorsGridView,
+      this.selectColorButton,
+      this.colorInput
+    ])
+    this.setTemplate({
+      tag: "form",
+      attributes: {
+        class: ["ck", "ck-colors"],
+      },
+      children: this.items,
+    });
+
+    // this.setItems(this.colors);
   }
 
-  onRemoveColorClick = (): void => {
-    this.editor.execute(CLEAR_FONT_COLOR_COMMAND);
+  private getRemoveColorView(): ButtonView {
+    let clearButton = this.createButton("Remove color", remove, "");
+    clearButton.type = "button";
+    clearButton.class = "clear-color-button";
+    clearButton.on("execute", () => {
+      this.editor.execute(CLEAR_FONT_COLOR_COMMAND);
+    });
+    return clearButton;
+  }
+
+  private getSelectColorView(): ButtonView {
+    let pickerButton = this.createButton("Select color", picker, "");
+    pickerButton.type = "submit";
+    pickerButton.class = "submit-color-button";
+    return pickerButton;
+  }
+
+  private getDefaultColorView(): View {
+    const view = new ColorsGridView(this.editor.locale, "Default Color", this.colors!.defaultColor);
+    return view;
+  }
+
+  private getCustomColorView(): View {
+    const view = new ColorsGridView(this.editor.locale, "Custom Color", this.colors!.customColor);
+    return view;
+  }
+
+  private getInputColorView(): InputView {
+    const colorInputView = new InputView(this.locale);
+    colorInputView.id = "color-picker";
+    return colorInputView;
   }
 
   private setItems(colors: Colors) {
@@ -177,17 +235,49 @@ export class TextFontColorView extends View {
   }
 }
 
-class RemoveColorView extends ButtonView {
-  onClick: () => void = () => { };
-  constructor(locale: Locale) {
+class ColorsGridView extends View {
+  private label: string;
+  private colors: Array<Color>;
+  constructor(locale: Locale, label: string, colors: Array<Color>) {
     super(locale);
-    this.label = 'Remove Button';
-    this.icon = remove;
-    this.tooltip = true;
-    this.class = "clear-color-button"
-    this.withText = true;
-    this.on('execute', () => {
-      this.onClick();
-    })
+    this.label = label;
+    this.colors = colors;
+    const items = this.createCollection();
+    items.addMany([
+      this.getLabel(),
+      this.getGridView()
+    ])
+    this.setTemplate({
+      tag: "div",
+      attributes: {
+        class: ["ck", "ck-colors-grid", "ck-colors"],
+      },
+      children: items,
+    });
+  }
+
+  getLabel(): LabelView {
+    const labelView = new LabelView(this.locale);
+    labelView.text = this.label;
+    labelView.extendTemplate({
+      attributes: {
+        class: ["ck", "ck-color-grid__label"],
+      },
+    });
+    return labelView;
+  }
+
+  getGridView(): ColorGridView {
+    const colorGridView = new ColorGridView(this.locale, {
+      colorDefinitions: this.colors.map((item: any) => {
+        item.label = item.color;
+        item.options = { hasBorder: true };
+        return item;
+      }),
+      columns: 4,
+    });
+
+    colorGridView.delegate("execute").to(this);
+    return colorGridView;
   }
 }
