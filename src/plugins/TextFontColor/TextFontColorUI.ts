@@ -1,20 +1,21 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
-import { TextFontColorView } from "./TextFontColorView";
-import CanvasflowEditor, { Colors, TextEditorConfig } from "../../BaseEditor";
+//import { TextFontColorView } from "./TextFontColorView";
+import { ColorView } from "../ColorView/ColorView";
+import CanvasflowEditor, { Color } from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
-
-import Config from "@ckeditor/ckeditor5-utils/src/config";
-import { SET_FONT_COLOR_COMMAND } from "./TextFontColorCommands";
+import {
+  SET_FONT_COLOR_COMMAND,
+  CLEAR_FONT_COLOR_COMMAND,
+} from "./TextFontColorCommands";
 import icon from "../../assets/icons/fontColor.svg?raw";
+import { AddCustomColorEvent } from "./TextFontColorEvents";
 
 export class TextFontColorUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
-  textFontColorView?: TextFontColorView;
-  selectedPage?: String;
-  selectedAnchor?: String;
+  textFontColorView?: ColorView;
   locale?: Locale;
 
   static get requires() {
@@ -24,14 +25,18 @@ export class TextFontColorUI extends Plugin {
   init() {
     this.locale = this.editor.locale;
     this.balloon = this.editor.plugins.get(ContextualBalloon);
-    this.createView();
     this.createButton();
   }
 
   private createView() {
     const editor = this.editor;
-    this.textFontColorView = new TextFontColorView(editor.locale, editor);
-    this.textFontColorView.showView();
+    this.textFontColorView = new ColorView(
+      editor.locale,
+      editor,
+      editor.colors!,
+      "Remove Font Color",
+    );
+    this.textFontColorView.onClearColor = this.onClearColor;
 
     this.listenTo(this.textFontColorView, "submit", () => {
       const input: HTMLInputElement | null = document.getElementById(
@@ -46,21 +51,29 @@ export class TextFontColorUI extends Plugin {
         const color = e.target.value;
         if (color && color !== "#000000") {
           this.setColor(color);
+          const evt: AddCustomColorEvent = {
+            color,
+          };
+          editor.dispatch("colors:addCustomColor", evt);
         }
       };
       input?.click();
     });
 
-    this.listenTo(this.textFontColorView, "execute", (evt: any, data) => {
-      if (data && data.label) {
-        editor.execute(SET_FONT_COLOR_COMMAND, data.label);
-        return;
-      }
-      if (!evt.source.color) {
-        return;
-      }
-      editor.execute(SET_FONT_COLOR_COMMAND, evt.source.color);
-    });
+    this.listenTo(
+      this.textFontColorView.defaultColorsGridView!.gridView,
+      "execute",
+      this.onSetColor,
+    );
+
+    this.textFontColorView.customColorsGridView!.onSelectColor =
+      this.onCustomSetColor;
+
+    this.listenTo(
+      this.textFontColorView.customColorsGridView!.gridView,
+      "execute",
+      this.onSetColor,
+    );
 
     clickOutsideHandler({
       emitter: this.textFontColorView,
@@ -70,8 +83,30 @@ export class TextFontColorUI extends Plugin {
     });
   }
 
+  private onClearColor(editor: CanvasflowEditor) {
+    editor.execute(CLEAR_FONT_COLOR_COMMAND);
+  }
+
+  private onCustomSetColor = (color: Color) => {
+    this.editor.execute(SET_FONT_COLOR_COMMAND, color.color);
+  };
+
+  private onSetColor = (evt: any, data: Color) => {
+    if (data && data.label) {
+      this.editor.execute(SET_FONT_COLOR_COMMAND, data.label);
+      return;
+    }
+    if (!evt.source.color) {
+      return;
+    }
+    this.editor.execute(SET_FONT_COLOR_COMMAND, evt.source.color);
+  };
+
   private setColor(color: string) {
-    const colors = this.editor.config.get("colors") as Colors;
+    const colors = this.editor.colors;
+    if (!colors) {
+      return;
+    }
     const findList = colors.customColor.find((value: any) => {
       if (value.color === color) return value;
     });
@@ -81,10 +116,8 @@ export class TextFontColorUI extends Plugin {
     }
 
     colors.customColor.push({ label: color, color: color });
-    const editorConfig: Config<TextEditorConfig> = this.editor
-      .config as Config<TextEditorConfig>;
-    editorConfig.set({ colors });
-    this.textFontColorView?.addCustomColor(color, color);
+    this.textFontColorView?.customColorsGridView?.addColor(color, color);
+    //this.textFontColorView?.addCustomColor(color, color);
   }
 
   private hideUI() {
@@ -107,6 +140,7 @@ export class TextFontColorUI extends Plugin {
       button.withText = false;
       button.icon = icon;
       this.listenTo(button, "execute", () => {
+        this.createView();
         this.showUI();
       });
       return button;

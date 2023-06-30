@@ -55,21 +55,25 @@ const config = {
     customColor,
   },
   fontBackground: {
-    defaultColor: [
-      { color: "red", label: "red" },
-      { color: "blue", label: "blue" },
-      { color: "orange", label: "orange" },
-      { color: "teal", label: "teal" },
-      { color: "magenta", label: "magenta" },
-      { color: "grey", label: "grey" },
-      { color: "green", label: "green" },
-      { color: "silver", label: "silver" },
-    ],
+    defaultColor: [{ color: "red", label: "red" }],
     customColor,
   },
 };
 
 TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
+  .then((editor) => {
+    createListeners(editor);
+    editor.addEventListener("colors:addCustomColor", (evt: any) => {
+      const { color } = evt;
+      console.log(`addCustomColor:`, color);
+      customColor.push({ color, label: "" });
+    });
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+TextEditor.create(document.querySelector("#editor2") as HTMLElement, config)
   .then((editor) => {
     createListeners(editor);
     editor.addEventListener("colors:addCustomColor", (evt: any) => {

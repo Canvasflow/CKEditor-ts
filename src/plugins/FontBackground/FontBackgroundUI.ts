@@ -1,54 +1,43 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
-import { FontBackgroundView } from "./FontBackgroundView";
-//import { AddCustomColorEvent } from "./FontBackgroundEvents";
-import CanvasflowEditor, { Colors, TextEditorConfig } from "../../BaseEditor";
+import { ColorView } from "../ColorView/ColorView";
+import CanvasflowEditor, { Color } from "../../BaseEditor";
+import { Locale } from "@ckeditor/ckeditor5-utils";
+import {
+  SET_BACKGROUND_COLOR_COMMAND,
+  CLEAR_BACKGROUND_COLOR_COMMAND,
+} from "./FontBackgroundCommands";
 import icon from "../../assets/icons/fontBackground.svg?raw";
-import Config from "@ckeditor/ckeditor5-utils/src/config";
-
-import { SET_BACKGROUND_COLOR_COMMAND } from "./FontBackgroundCommands";
+import { AddCustomFontBackgroundEvent } from "./FontBackgroundEvents";
 
 export class FontBackgroundUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
-  BackgroundView: any;
+  textFontColorView?: ColorView;
+  locale?: Locale;
+
   static get requires() {
     return [ContextualBalloon];
   }
 
   init() {
-    const editor = this.editor;
+    this.locale = this.editor.locale;
     this.balloon = this.editor.plugins.get(ContextualBalloon);
-    this.BackgroundView = this.createFormView();
-    editor.ui.componentFactory.add("backgroundColor", () => {
-      return this.createButton();
-    });
+    this.createButton();
   }
 
-  private createButton() {
-    const button = new ButtonView();
-    button.label = "Font Background Color";
-    button.tooltip = true;
-    button.withText = false;
-    button.icon = icon;
-    this.listenTo(button, "execute", () => {
-      this.showUI();
-    });
-    return button;
-  }
-
-  showUI() {
-    this.balloon.add({
-      view: this.BackgroundView,
-      position: this.getBalloonPositionData(),
-    });
-  }
-
-  private createFormView() {
+  private createView() {
     const editor = this.editor;
-    const BackgroundView = new FontBackgroundView(editor.locale, editor);
-    this.listenTo(BackgroundView, "submit", () => {
+    this.textFontColorView = new ColorView(
+      editor.locale,
+      editor,
+      editor.fontBackground!,
+      "Remove Background",
+    );
+    this.textFontColorView.onClearColor = this.onClearColor;
+
+    this.listenTo(this.textFontColorView, "submit", () => {
       const input: HTMLInputElement | null = document.getElementById(
         "color-picker",
       ) as HTMLInputElement;
@@ -60,34 +49,74 @@ export class FontBackgroundUI extends Plugin {
       input.onchange = (e: any) => {
         const color = e.target.value;
         if (color && color !== "#000000") {
-          // const evt: AddCustomColorEvent = {
-          //   color,
-          // };
-          //editor.dispatch("colors:addCustomColor", evt);
           this.setColor(color);
+          const evt: AddCustomFontBackgroundEvent = {
+            color,
+          };
+          editor.dispatch("colors:addCustomBackgroundColor", evt);
         }
       };
       input?.click();
     });
 
-    this.listenTo(BackgroundView, "execute", (evt: any, data) => {
-      if (data && data.label) {
-        editor.execute(SET_BACKGROUND_COLOR_COMMAND, data.label);
-        return;
-      }
-      if (!evt.source.color) {
-        return;
-      }
-      editor.execute(SET_BACKGROUND_COLOR_COMMAND, evt.source.color);
-    });
+    this.listenTo(
+      this.textFontColorView.defaultColorsGridView!.gridView,
+      "execute",
+      this.onSetColor,
+    );
+
+    this.textFontColorView.customColorsGridView!.onSelectColor =
+      this.onCustomSetColor;
+
+    this.listenTo(
+      this.textFontColorView.customColorsGridView!.gridView,
+      "execute",
+      this.onSetColor,
+    );
 
     clickOutsideHandler({
-      emitter: BackgroundView,
-      activator: () => this.balloon.visibleView === BackgroundView,
+      emitter: this.textFontColorView,
+      activator: () => this.balloon.visibleView === this.textFontColorView,
       contextElements: [this.balloon.view.element],
       callback: () => this.hideUI(),
     });
-    return BackgroundView;
+  }
+
+  private onClearColor(editor: CanvasflowEditor) {
+    editor.execute(CLEAR_BACKGROUND_COLOR_COMMAND);
+  }
+
+  private onCustomSetColor = (color: Color) => {
+    this.editor.execute(SET_BACKGROUND_COLOR_COMMAND, color.color);
+  };
+
+  private onSetColor = (evt: any, data: Color) => {
+    if (data && data.label) {
+      this.editor.execute(SET_BACKGROUND_COLOR_COMMAND, data.label);
+      return;
+    }
+    if (!evt.source.color) {
+      return;
+    }
+    this.editor.execute(SET_BACKGROUND_COLOR_COMMAND, evt.source.color);
+  };
+
+  private setColor(color: string) {
+    const colors = this.editor.colors;
+    if (!colors) {
+      return;
+    }
+    const findList = colors.customColor.find((value: any) => {
+      if (value.color === color) return value;
+    });
+
+    if (findList) {
+      return;
+    }
+
+    colors.customColor.push({ label: color, color: color });
+    this.textFontColorView?.customColorsGridView?.addColor(color, color);
+    //this.textFontColorView?.addCustomColor(color, color);
   }
 
   private hideUI() {
@@ -96,27 +125,32 @@ export class FontBackgroundUI extends Plugin {
     ) as HTMLInputElement;
     const visibility = input.getAttribute("style");
     if (visibility !== "visibility: hidden") {
-      this.balloon.remove(this.BackgroundView);
+      this.balloon.remove(this.textFontColorView);
     } else {
       input.setAttribute("style", "");
     }
   }
 
-  private setColor(color: string) {
-    const fontBackground = this.editor.config.get("fontBackground") as Colors;
-
-    const findList = fontBackground.customColor.find((value: any) => {
-      if (value.color === color) return value;
+  private createButton() {
+    this.editor.ui.componentFactory.add("backgroundColor", () => {
+      const button = new ButtonView();
+      button.label = "Font Background Color";
+      button.tooltip = true;
+      button.withText = false;
+      button.icon = icon;
+      this.listenTo(button, "execute", () => {
+        this.createView();
+        this.showUI();
+      });
+      return button;
     });
+  }
 
-    if (findList) {
-      return;
-    }
-    fontBackground.customColor.push({ label: color, color: color });
-    const editorConfig: Config<TextEditorConfig> = this.editor
-      .config as Config<TextEditorConfig>;
-    editorConfig.set({ fontBackground });
-    this.BackgroundView?.addCustomColor(color, color);
+  private showUI() {
+    this.balloon.add({
+      view: this.textFontColorView,
+      position: this.getBalloonPositionData(),
+    });
   }
 
   private getBalloonPositionData() {
