@@ -8,7 +8,7 @@ import {
   ColorGridView,
   ColorTileView,
 } from "@ckeditor/ckeditor5-ui";
-import { FocusTracker, Locale } from "@ckeditor/ckeditor5-utils";
+import { Locale } from "@ckeditor/ckeditor5-utils";
 import CanvasflowEditor, { Colors, Color } from "../../BaseEditor";
 import picker from "../../assets/icons/colorPicker.svg?raw";
 import remove from "../../assets/icons/removeColor.svg?raw";
@@ -16,7 +16,6 @@ import { CLEAR_FONT_COLOR_COMMAND } from "./TextFontColorCommands";
 
 export class TextFontColorView extends View {
   private items: ViewCollection;
-  private focusTracker: FocusTracker;
   private editor: CanvasflowEditor;
   private removeColorButton?: ButtonView;
   private selectColorButton?: ButtonView;
@@ -29,7 +28,6 @@ export class TextFontColorView extends View {
   constructor(locale: Locale, editor: CanvasflowEditor) {
     super(locale);
     this.editor = editor;
-    this.focusTracker = new FocusTracker();
     this.items = this.createCollection();
 
     if (!editor.colors) {
@@ -78,7 +76,7 @@ export class TextFontColorView extends View {
 
   private getDefaultColorView(): ColorsGridView {
     const view = new ColorsGridView(
-      this.editor.locale,
+      this.locale!,
       "Default Color",
       this.colors!.defaultColor,
     );
@@ -88,7 +86,7 @@ export class TextFontColorView extends View {
 
   private getCustomColorView(): ColorsGridView {
     const view = new ColorsGridView(
-      this.editor.locale,
+      this.locale!,
       "Custom Color",
       this.colors!.customColor,
     );
@@ -120,11 +118,6 @@ export class TextFontColorView extends View {
     submitHandler({
       view: this,
     });
-  }
-
-  destroy() {
-    super.destroy();
-    this.focusTracker.destroy();
   }
 
   /**
