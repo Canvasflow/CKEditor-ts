@@ -21,19 +21,11 @@ export class TextFontColorView extends View {
   private customColors?: ColorGridView;
   private editor: CanvasflowEditor;
 
-  // Remove Color
   private removeColorButton?: ButtonView;
   private selectColorButton?: ButtonView;
-  private defaultColorsGridView?: View;
-  private customColorsGridView?: View
+  defaultColorsGridView?: ColorsGridView;
+  customColorsGridView?: ColorsGridView;
   private colorInput?: InputView;
-  /*
-  1. Remove Color (button)
-  2. Default Color (Collection View)
-  3. Custom Color (Collection View)
-  4. Select Color (button view)
-  5. Input
-  */
 
   constructor(locale: Locale, editor: CanvasflowEditor) {
     super(locale);
@@ -59,8 +51,8 @@ export class TextFontColorView extends View {
       this.defaultColorsGridView,
       this.customColorsGridView,
       this.selectColorButton,
-      this.colorInput
-    ])
+      this.colorInput,
+    ]);
     this.setTemplate({
       tag: "form",
       attributes: {
@@ -89,13 +81,23 @@ export class TextFontColorView extends View {
     return pickerButton;
   }
 
-  private getDefaultColorView(): View {
-    const view = new ColorsGridView(this.editor.locale, "Default Color", this.colors!.defaultColor);
+  private getDefaultColorView(): ColorsGridView {
+    const view = new ColorsGridView(
+      this.editor.locale,
+      "Default Color",
+      this.colors!.defaultColor,
+    );
+    view.delegate("execute").to(this);
     return view;
   }
 
-  private getCustomColorView(): View {
-    const view = new ColorsGridView(this.editor.locale, "Custom Color", this.colors!.customColor);
+  private getCustomColorView(): ColorsGridView {
+    const view = new ColorsGridView(
+      this.editor.locale,
+      "Custom Color",
+      this.colors!.customColor,
+    );
+    view.delegate("execute").to(this);
     return view;
   }
 
@@ -217,7 +219,8 @@ export class TextFontColorView extends View {
     newColor.label = label;
     newColor.color = color;
     newColor.delegate("execute").to(this);
-    this.customColors?.items.add(newColor);
+    //this.customColors?.items.add(newColor);
+    this.customColorsGridView!.gridView.items.add(newColor);
   }
 
   /**
@@ -238,15 +241,17 @@ export class TextFontColorView extends View {
 class ColorsGridView extends View {
   private label: string;
   private colors: Array<Color>;
+  public gridView: ColorGridView;
+  public onSelectColor: (color: Color) => void = (color: Color) => {
+    console.log(color);
+  };
   constructor(locale: Locale, label: string, colors: Array<Color>) {
     super(locale);
     this.label = label;
     this.colors = colors;
+    this.gridView = this.getGridView();
     const items = this.createCollection();
-    items.addMany([
-      this.getLabel(),
-      this.getGridView()
-    ])
+    items.addMany([this.getLabel(), this.gridView]);
     this.setTemplate({
       tag: "div",
       attributes: {
@@ -277,7 +282,21 @@ class ColorsGridView extends View {
       columns: 4,
     });
 
-    colorGridView.delegate("execute").to(this);
     return colorGridView;
+  }
+
+  addColor(color: string, label: string) {
+    const newColor = new ColorTileView(this.locale);
+    newColor.label = label;
+    newColor.color = color;
+    this.listenTo(newColor, "execute", (evt: any) => {
+      const { source } = evt;
+      const { color, label } = source;
+      this.onSelectColor({
+        color,
+        label,
+      });
+    });
+    this.gridView.items.add(newColor);
   }
 }
