@@ -13,6 +13,7 @@ import Config from "@ckeditor/ckeditor5-utils/src/config";
 import { SET_FONT_COLOR_COMMAND } from "./TextFontColorCommands";
 import icon from "../../assets/icons/fontColor.svg?raw";
 import { AddCustomColorEvent } from "./TextFontColorEvents";
+import { CLEAR_FONT_COLOR_COMMAND } from "./TextFontColorCommands";
 
 export class TextFontColorUI extends Plugin {
   declare editor: CanvasflowEditor;
@@ -29,14 +30,13 @@ export class TextFontColorUI extends Plugin {
   init() {
     this.locale = this.editor.locale;
     this.balloon = this.editor.plugins.get(ContextualBalloon);
-    this.createView();
     this.createButton();
   }
 
   private createView() {
     const editor = this.editor;
     this.textFontColorView = new TextFontColorView(editor.locale, editor);
-    this.textFontColorView.showView();
+    this.textFontColorView.onClearColor = this.onClearColor;
 
     this.listenTo(this.textFontColorView, "submit", () => {
       const input: HTMLInputElement | null = document.getElementById(
@@ -81,6 +81,10 @@ export class TextFontColorUI extends Plugin {
       contextElements: [this.balloon.view.element],
       callback: () => this.hideUI(),
     });
+  }
+
+  private onClearColor() {
+    this.editor.execute(CLEAR_FONT_COLOR_COMMAND);
   }
 
   private onCustomSetColor = (color: Color) => {
@@ -136,15 +140,7 @@ export class TextFontColorUI extends Plugin {
       button.withText = false;
       button.icon = icon;
       this.listenTo(button, "execute", () => {
-        if (this.textFontColorView) {
-          if (!this.editor.colors) {
-            return;
-          }
-          const colors: Colors = this.editor.colors;
-          this.textFontColorView.colors = colors;
-          // this.textFontColorView.redraw();
-        }
-        console.log("here we show the UI");
+        this.createView();
         this.showUI();
       });
       return button;

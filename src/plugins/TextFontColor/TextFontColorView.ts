@@ -12,11 +12,9 @@ import { Locale } from "@ckeditor/ckeditor5-utils";
 import CanvasflowEditor, { Colors, Color } from "../../BaseEditor";
 import picker from "../../assets/icons/colorPicker.svg?raw";
 import remove from "../../assets/icons/removeColor.svg?raw";
-import { CLEAR_FONT_COLOR_COMMAND } from "./TextFontColorCommands";
 
 export class TextFontColorView extends View {
   private items: ViewCollection;
-  private editor: CanvasflowEditor;
   private removeColorButton?: ButtonView;
   private selectColorButton?: ButtonView;
   private colorInput?: InputView;
@@ -25,9 +23,10 @@ export class TextFontColorView extends View {
   defaultColorsGridView?: ColorsGridView;
   customColorsGridView?: ColorsGridView;
 
+  onClearColor: () => void = () => { }
+
   constructor(locale: Locale, editor: CanvasflowEditor) {
     super(locale);
-    this.editor = editor;
     this.items = this.createCollection();
 
     if (!editor.colors) {
@@ -62,7 +61,8 @@ export class TextFontColorView extends View {
     clearButton.type = "button";
     clearButton.class = "clear-color-button";
     clearButton.on("execute", () => {
-      this.editor.execute(CLEAR_FONT_COLOR_COMMAND);
+      console.log(`BORRE EL COLOR`)
+      this.onClearColor();
     });
     return clearButton;
   }
@@ -122,27 +122,13 @@ export class TextFontColorView extends View {
       console.log(e);
     }*/
 
-    this.customColorsGridView?.resetColors(colors);
+    this.customColorsGridView?.setColors(colors);
   }
 
   render() {
     super.render();
     submitHandler({
       view: this,
-    });
-  }
-
-  /**
-   * Insert elements into DOM
-   *
-   */
-  showView() {
-    this.setTemplate({
-      tag: "form",
-      attributes: {
-        class: ["ck", "ck-page", "ck-colors"],
-      },
-      children: this.items,
     });
   }
 }
@@ -181,7 +167,7 @@ class ColorsGridView extends View {
     return labelView;
   }
 
-  resetColors(colors: Array<Color>) {
+  setColors(colors: Array<Color>) {
     const colorGridView = new ColorGridView(this.locale, {
       colorDefinitions: colors.map((item: any) => {
         item.label = item.color;
@@ -190,13 +176,31 @@ class ColorsGridView extends View {
       }),
       columns: 4,
     });
-    this.gridView.destroy();
     this.gridView = colorGridView;
+    const items = this.createCollection();
+    items.addMany([this.getLabel(), this.gridView]);
+    this.setTemplate({
+      tag: "div",
+      attributes: {
+        class: ["ck", "ck-colors-grid", "ck-colors"],
+      },
+      children: items,
+    });
+
   }
 
   getGridView(): ColorGridView {
+    const colorsSet = new Set();
+    const colors: Array<Color> = this.colors.reduce((acc: Array<Color>, color: Color) => {
+      if (colorsSet.has(color.color)) {
+        return acc;
+      }
+      colorsSet.add(color.color)
+      acc.push(color);
+      return acc;
+    }, [])
     const colorGridView = new ColorGridView(this.locale, {
-      colorDefinitions: this.colors.map((item: any) => {
+      colorDefinitions: colors.map((item: any) => {
         item.label = item.color;
         item.options = { hasBorder: true };
         return item;
