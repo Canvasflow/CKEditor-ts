@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 🏷️ 1.0.2
+
+_June 30, 2023_
+
+♻️ Refactor
+
+- Changed the way colors are rendered
+- The view serves both plugins (font color & font background)
+- Font background refactor
+
 ## 🏷️ 1.0.1
 
 _June 29, 2023_
