@@ -113,6 +113,18 @@ export class TextFontColorView extends View {
     return button;
   }
 
+  public redraw() {
+    const colors = this.colors?.customColor!;
+    console.log(colors);
+    /*try {
+      this.customColorsGridView?.gridView.render();
+    } catch (e) {
+      console.log(e);
+    }*/
+
+    this.customColorsGridView?.resetColors(colors);
+  }
+
   render() {
     super.render();
     submitHandler({
@@ -167,6 +179,19 @@ class ColorsGridView extends View {
       },
     });
     return labelView;
+  }
+
+  resetColors(colors: Array<Color>) {
+    const colorGridView = new ColorGridView(this.locale, {
+      colorDefinitions: colors.map((item: any) => {
+        item.label = item.color;
+        item.options = { hasBorder: true };
+        return item;
+      }),
+      columns: 4,
+    });
+    this.gridView.destroy();
+    this.gridView = colorGridView;
   }
 
   getGridView(): ColorGridView {

@@ -112,9 +112,6 @@ export class TextFontColorUI extends Plugin {
     }
 
     colors.customColor.push({ label: color, color: color });
-    const editorConfig: Config<TextEditorConfig> = this.editor
-      .config as Config<TextEditorConfig>;
-    editorConfig.set({ colors });
     this.textFontColorView?.customColorsGridView?.addColor(color, color);
     //this.textFontColorView?.addCustomColor(color, color);
   }
@@ -145,8 +142,9 @@ export class TextFontColorUI extends Plugin {
           }
           const colors: Colors = this.editor.colors;
           this.textFontColorView.colors = colors;
+          // this.textFontColorView.redraw();
         }
-
+        console.log("here we show the UI");
         this.showUI();
       });
       return button;
