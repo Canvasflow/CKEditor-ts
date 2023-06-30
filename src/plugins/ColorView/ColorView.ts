@@ -20,21 +20,23 @@ export class ColorView extends View {
   private colorInput?: InputView;
 
   colors?: Colors;
+  fontBackground?: Colors;
   defaultColorsGridView?: ColorsGridView;
   customColorsGridView?: ColorsGridView;
 
   onClearColor: (editor: any) => void = () => {};
 
-  constructor(locale: Locale, editor: CanvasflowEditor) {
+  constructor(
+    locale: Locale,
+    editor: CanvasflowEditor,
+    colors: Colors,
+    label: string,
+  ) {
     super(locale);
     this.items = this.createCollection();
-
-    if (!editor.colors) {
-      return;
-    }
-    this.colors = editor.colors;
-
-    this.removeColorButton = this.getRemoveColorView(editor);
+    this.colors = colors;
+    // this.fontBackground = editor.fontBackground;
+    this.removeColorButton = this.getRemoveColorView(editor, label);
     this.defaultColorsGridView = this.getDefaultColorView();
     this.customColorsGridView = this.getCustomColorView();
     this.selectColorButton = this.getSelectColorView();
@@ -56,8 +58,11 @@ export class ColorView extends View {
     });
   }
 
-  private getRemoveColorView(editor: CanvasflowEditor): ButtonView {
-    let clearButton = this.createButton("Remove color", remove, "");
+  private getRemoveColorView(
+    editor: CanvasflowEditor,
+    label: string,
+  ): ButtonView {
+    let clearButton = this.createButton(label, remove, "");
     clearButton.type = "button";
     clearButton.class = "clear-color-button";
     clearButton.on("execute", () => {
@@ -110,18 +115,6 @@ export class ColorView extends View {
     });
 
     return button;
-  }
-
-  public redraw() {
-    const colors = this.colors?.customColor!;
-    console.log(colors);
-    /*try {
-      this.customColorsGridView?.gridView.render();
-    } catch (e) {
-      console.log(e);
-    }*/
-
-    this.customColorsGridView?.setColors(colors);
   }
 
   render() {

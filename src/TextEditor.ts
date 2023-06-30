@@ -78,6 +78,9 @@ export class TextEditor extends BaseEditor {
     if (config.colors) {
       this.colors = config.colors;
     }
+    if (config.fontBackground) {
+      this.fontBackground = config.fontBackground;
+    }
   }
 }
 

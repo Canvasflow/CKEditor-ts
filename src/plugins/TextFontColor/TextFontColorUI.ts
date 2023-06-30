@@ -16,8 +16,6 @@ export class TextFontColorUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;
   textFontColorView?: ColorView;
-  selectedPage?: String;
-  selectedAnchor?: String;
   locale?: Locale;
 
   static get requires() {
@@ -32,7 +30,12 @@ export class TextFontColorUI extends Plugin {
 
   private createView() {
     const editor = this.editor;
-    this.textFontColorView = new ColorView(editor.locale, editor);
+    this.textFontColorView = new ColorView(
+      editor.locale,
+      editor,
+      editor.colors!,
+      "Remove Font Color",
+    );
     this.textFontColorView.onClearColor = this.onClearColor;
 
     this.listenTo(this.textFontColorView, "submit", () => {

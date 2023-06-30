@@ -55,16 +55,7 @@ const config = {
     customColor,
   },
   fontBackground: {
-    defaultColor: [
-      { color: "red", label: "red" },
-      { color: "blue", label: "blue" },
-      { color: "orange", label: "orange" },
-      { color: "teal", label: "teal" },
-      { color: "magenta", label: "magenta" },
-      { color: "grey", label: "grey" },
-      { color: "green", label: "green" },
-      { color: "silver", label: "silver" },
-    ],
+    defaultColor: [{ color: "red", label: "red" }],
     customColor,
   },
 };
