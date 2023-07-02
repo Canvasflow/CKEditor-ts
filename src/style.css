@@ -1,8 +1,12 @@
 .alignment-list {
-  width: 100px !important;
+	width: 100px !important;
 }
 
 .ck.ck-reset.ck-list {
-  max-height: 500px;
-  overflow: scroll;
+	max-height: 500px;
+	overflow: scroll;
+}
+
+.ck-powered-by {
+	display: none;
 }

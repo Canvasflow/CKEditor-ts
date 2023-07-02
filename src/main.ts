@@ -31,9 +31,10 @@ const config = {
   ],
   fontFamily: {
     options: [
-      "default",
+
+      "Georgia",
       "Ubuntu, Arial, sans-serif",
-      "Ubuntu Mono, Courier New, Courier, monospace",
+      "Times New Roman",
     ],
   },
   fontSize: {
