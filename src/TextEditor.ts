@@ -29,6 +29,7 @@ import { FontBackground } from "./plugins/FontBackground/FontBackground";
 import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 import { TextSize } from "./plugins/TextSize/TextSize";
+import { FontFamily } from "./plugins/FontFamily/FontFamily";
 
 import {
   Image,
@@ -78,6 +79,9 @@ export class TextEditor extends BaseEditor {
     if (config.colors) {
       this.colors = config.colors;
     }
+    if (config.fontFamily?.options) {
+      this.fonts = config.fontFamily?.options;
+    }
     if (config.fontBackground) {
       this.fontBackground = config.fontBackground;
     }
@@ -119,9 +123,12 @@ const PLUGINS = [
   TextFontColor,
   RemoveFormat,
   TextSize,
+  FontFamily
 ];
 
 const TOOLBAR = [
+  "fontFamilyCF",
+  "|",
   // "textSize",
   "fontFamily",
   "fontSize",
