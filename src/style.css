@@ -10,3 +10,20 @@
 .ck-powered-by {
 	display: none;
 }
+
+// HACK I dont know how to scope the css
+/*CF FONT*/
+
+.cf-font-family button.cf-button:hover {
+	background: var(--ck-color-list-button-on-background-focus);
+	color: #fff !important;
+}
+
+.cf-font-family button.cf-button.selected {
+	background: var(--ck-color-list-button-on-background-focus);
+	color: #fff !important;
+}
+
+.cf-font-family button.cf-button.selected:hover {
+	color: #000 !important;
+}

@@ -1,9 +1,11 @@
+// import classes from './FontFamily.module.css';
 import {
     Model,
     addListToDropdown,
     DropdownView,
     DropdownButtonView,
     DropdownPanelView,
+    ListDropdownButtonDefinition
 } from '@ckeditor/ckeditor5-ui';
 import CanvasflowEditor from "../../BaseEditor";
 import { Collection } from '@ckeditor/ckeditor5-utils';
@@ -13,6 +15,7 @@ const EMPTY_LABEL = '-';
 export class FontFamilyView extends DropdownView {
     private viewer: FontFamilyViewer;
     private editor: CanvasflowEditor;
+    private collection?: Collection<ListDropdownButtonDefinition>
     constructor(viewer: FontFamilyViewer) {
         const { editor } = viewer;
         const { locale } = editor;
@@ -20,7 +23,7 @@ export class FontFamilyView extends DropdownView {
         const panel = new DropdownPanelView(locale);
         super(locale, button, panel);
         this.editor = editor;
-        this.class = ['ck', 'ck-plugin', 'cf-font-family'].join(' ');
+        this.class = ['cf-font-family'].join(' ');
         this.viewer = viewer;
         this.init();
     }
@@ -93,29 +96,54 @@ export class FontFamilyView extends DropdownView {
         });
     }
 
-    private initPanel() {
+    initPanel = () => {
         const { fonts, onSelectFont } = this.viewer;
-        const collection: Collection<any> = fonts.reduce(
+        this.collection = fonts.reduce(
             reduceCollection,
             new Collection()
         );
-        addListToDropdown(this, collection);
+        addListToDropdown(this, this.collection);
         this.on('execute', (evt) => {
             const source: any = evt.source;
             const { data } = source;
             const { index } = data;
             const font = fonts[index];
-            this.set({
-                isOpen: false
-            })
+            this.applyClassToSelectedFont(index);
+            console.log(`Selected font "${font}"`);
+            /*Close the panel without closing the toolbar*/
+            this.isOpen = false;
+            this.focus()
+            this.buttonView.set({
+                label: font
+            });
+
             onSelectFont(font);
         });
     }
+
+    applyClassToSelectedFont = (index: number) => {
+        const { fonts } = this.viewer;
+        for (let i = 0; i < fonts.length; i++) {
+            const item = this.collection?.get(i);
+            const classNames = ['cf-button'];
+            if (!item) {
+                continue;
+            }
+            if (i === index) {
+                classNames.push('selected');
+            }
+
+            item.model.class = classNames.join(' ');
+        }
+
+    }
 }
 
-function reduceCollection(acc: Collection<any>, font: string, index: number) {
+
+function reduceCollection(acc: Collection<ListDropdownButtonDefinition>, font: string, index: number) {
     const model = new Model({
         label: font,
+        class: 'cf-button',
         withText: true,
     });
     model.set('data', {
@@ -128,6 +156,7 @@ function reduceCollection(acc: Collection<any>, font: string, index: number) {
     });
     return acc;
 }
+
 
 export interface FontFamilyViewer {
     editor: CanvasflowEditor;
