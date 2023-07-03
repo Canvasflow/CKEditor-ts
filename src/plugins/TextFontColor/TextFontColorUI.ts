@@ -55,16 +55,16 @@ export class TextFontColorUI extends Plugin {
     const filteredEmpty = colors.filter((i) => !!i);
 
     if (!filteredEmpty.length) {
-      return "";
+      return null;
     }
 
     if (filteredEmpty.length !== colors.length - 1) {
-      return "";
+      return null;
     }
 
     const colorSet = new Set([...filteredEmpty]);
     if (colorSet.size > 1) {
-      return "";
+      return null;
     }
     const [first] = colorSet;
     return first;
