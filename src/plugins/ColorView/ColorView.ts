@@ -162,7 +162,7 @@ class ColorsGridView extends View {
   setColors(colors: Array<Color>) {
     const colorGridView = new ColorGridView(this.locale, {
       colorDefinitions: colors.map((item: any) => {
-        item.label = item.color;
+        item.label = item.label;
         item.options = { hasBorder: true };
         return item;
       }),
@@ -195,7 +195,7 @@ class ColorsGridView extends View {
     );
     const colorGridView = new ColorGridView(this.locale, {
       colorDefinitions: colors.map((item: any) => {
-        item.label = item.color;
+        item.label = item.label.length > 0 ? item.label : item.color;
         item.options = { hasBorder: true };
         return item;
       }),

@@ -18,6 +18,8 @@ import {
   SpecialCharacters,
   SpecialCharactersEssentials,
 } from "@ckeditor/ckeditor5-special-characters";
+
+/*CUSTOM PLUGINS*/
 import { DarkMode } from "./plugins/DarkMode/DarkMode";
 import { PageLink } from "./plugins/PageLink/PageLink";
 import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
@@ -30,9 +32,16 @@ import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 import { TextSize } from "./plugins/TextSize/TextSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
+import { FontStyles } from "./plugins/FontStyles/FontStyles";
 
 // Views
 import { FontFamilyView } from "./plugins/FontFamily/FontFamilyView";
+import { BoldView } from "./plugins/FontStyles/BoldView";
+import { ItalicView } from "./plugins/FontStyles/ItalicView";
+import { StrikethroughView } from "./plugins/FontStyles/StrikethroughView";
+import { SubscriptView } from "./plugins/FontStyles/SubscriptView";
+import { SuperscriptView } from "./plugins/FontStyles/SuperscriptView";
+import { UnderlineView } from "./plugins/FontStyles/UnderlineView";
 
 import {
   Image,
@@ -126,14 +135,12 @@ const PLUGINS = [
   TextFontColor,
   RemoveFormat,
   TextSize,
-  FontFamily
+  FontFamily,
+  FontStyles,
 ];
 
 const TOOLBAR = [
   FontFamilyView.viewName,
-  "|",
-  // "textSize",
-  "fontFamily",
   "fontSize",
   "|",
   // "colorPicker",
@@ -141,12 +148,12 @@ const TOOLBAR = [
     label: "Font Styles",
     icon: fontStyles,
     items: [
-      "bold",
-      "italic",
-      "underline",
-      "strikethrough",
-      "subscript",
-      "superscript",
+      BoldView.viewName,
+      ItalicView.viewName,
+      UnderlineView.viewName,
+      StrikethroughView.viewName,
+      SubscriptView.viewName,
+      SuperscriptView.viewName,
     ],
   },
   "textFontColor",
