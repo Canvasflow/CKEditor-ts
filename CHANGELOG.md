@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.0.3
+
+_June 29, 2023_
+
+🚧 Page Link
+
+- Removed duplicated anchor DropdownView
+
 ## 🏷️ 1.0.2
 
 _June 30, 2023_
