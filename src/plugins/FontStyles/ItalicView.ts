@@ -16,6 +16,7 @@ export class ItalicView extends ButtonView {
     this.class = "";
     this.editor = editor;
     this.listenTo(this, "execute", () => {
+      this.class = "ck-on";
       viewer.onClickItalic();
     });
     this.init();
@@ -28,10 +29,12 @@ export class ItalicView extends ButtonView {
   }
 
   private onSelectionChange = () => {
-    if (hasAttribute({
-      editor: this.editor,
-      attribute: 'italic'
-    })) {
+    if (
+      hasAttribute({
+        editor: this.editor,
+        attribute: "italic",
+      })
+    ) {
       this.class = "ck-on";
       return;
     }
