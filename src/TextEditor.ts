@@ -37,6 +37,7 @@ import { FontStyles } from "./plugins/FontStyles/FontStyles";
 // Views
 import { FontFamilyView } from "./plugins/FontFamily/FontFamilyView";
 import { BoldView } from "./plugins/FontStyles/BoldView";
+import { ItalicView } from "./plugins/FontStyles/ItalicView";
 
 import {
   Image,
@@ -131,14 +132,11 @@ const PLUGINS = [
   RemoveFormat,
   TextSize,
   FontFamily,
-  FontStyles
+  FontStyles,
 ];
 
 const TOOLBAR = [
   FontFamilyView.viewName,
-  "|",
-  // "textSize",
-  "fontFamily",
   "fontSize",
   "|",
   // "colorPicker",
@@ -146,9 +144,8 @@ const TOOLBAR = [
     label: "Font Styles",
     icon: fontStyles,
     items: [
-      "bold",
       BoldView.viewName,
-      "italic",
+      ItalicView.viewName,
       "underline",
       "strikethrough",
       "subscript",
