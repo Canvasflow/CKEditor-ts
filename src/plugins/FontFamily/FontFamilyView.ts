@@ -16,6 +16,7 @@ export class FontFamilyView extends DropdownView {
     private viewer: FontFamilyViewer;
     private editor: CanvasflowEditor;
     private collection?: Collection<ListDropdownButtonDefinition>
+    static viewName: string = 'fontFamilyCF';
     constructor(viewer: FontFamilyViewer) {
         const { editor } = viewer;
         const { locale } = editor;

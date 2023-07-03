@@ -31,6 +31,9 @@ import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 import { TextSize } from "./plugins/TextSize/TextSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
 
+// Views
+import { FontFamilyView } from "./plugins/FontFamily/FontFamilyView";
+
 import {
   Image,
   ImageInsert,
@@ -127,7 +130,7 @@ const PLUGINS = [
 ];
 
 const TOOLBAR = [
-  "fontFamilyCF",
+  FontFamilyView.viewName,
   "|",
   // "textSize",
   "fontFamily",

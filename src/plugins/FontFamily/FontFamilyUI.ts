@@ -17,7 +17,8 @@ export class FontFamilyUI extends Plugin implements FontFamilyViewer {
 
     private createView() {
         const fontFamilyView = new FontFamilyView(this);
-        this.editor.ui.componentFactory.add('fontFamilyCF', () => {
+
+        this.editor.ui.componentFactory.add(FontFamilyView.viewName, () => {
             return fontFamilyView;
         });
     }
