@@ -30,12 +30,7 @@ const config = {
     },
   ],
   fontFamily: {
-    options: [
-
-      "Georgia",
-      "Ubuntu, Arial, sans-serif",
-      "Times New Roman",
-    ],
+    options: ["Georgia", "Ubuntu, Arial, sans-serif", "Times New Roman"],
   },
   fontSize: {
     options: Array.from({ length: 70 }, (_, i) => i + 8),
@@ -51,7 +46,7 @@ const config = {
       { color: "magenta", label: "magenta" },
       { color: "grey", label: "grey" },
       { color: "green", label: "green" },
-      { color: "silver", label: "silver" },
+      { color: "#c3c3c3", label: "silver" },
     ],
     customColor,
   },

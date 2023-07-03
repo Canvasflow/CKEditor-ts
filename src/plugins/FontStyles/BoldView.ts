@@ -1,5 +1,4 @@
 import { ButtonView } from "@ckeditor/ckeditor5-ui";
-
 import icon from "./../../assets/icons/bold.svg?raw";
 import { FontStylesViewer } from "./FontStylesViewer";
 import CanvasflowEditor from "../../BaseEditor";
@@ -18,7 +17,6 @@ export class BoldView extends ButtonView {
     this.editor = editor;
     this.listenTo(this, "execute", () => {
       viewer.onClickBold();
-      this.focus();
     });
 
     this.init();
@@ -42,7 +40,6 @@ export class BoldView extends ButtonView {
 
     for (const item of range.getItems()) {
       if (item.hasAttribute("bold")) {
-        console.log("bold found");
         this.class = "ck-on";
         return;
       }
