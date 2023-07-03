@@ -1,6 +1,6 @@
 import { ButtonView } from "@ckeditor/ckeditor5-ui";
 import icon from "./../../assets/icons/italic.svg?raw";
-import { FontStylesViewer } from "./FontStylesViewer";
+import { FontStylesViewer, hasAttribute } from "./FontStylesViewer";
 import CanvasflowEditor from "../../BaseEditor";
 
 export class ItalicView extends ButtonView {
@@ -28,21 +28,13 @@ export class ItalicView extends ButtonView {
   }
 
   private onSelectionChange = () => {
-    const { selection } = this.editor.model.document;
-    if (!selection) {
+    if (hasAttribute({
+      editor: this.editor,
+      attribute: 'italic'
+    })) {
+      this.class = "ck-on";
       return;
     }
-    const range = selection.getFirstRange();
-    if (!range) {
-      return;
-    }
-
-    for (const item of range.getItems()) {
-      if (item.hasAttribute("italic")) {
-        this.class = "ck-on";
-        return;
-      }
-      this.class = "";
-    }
+    this.class = "";
   };
 }
