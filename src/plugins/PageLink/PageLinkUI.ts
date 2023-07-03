@@ -123,6 +123,7 @@ export class PageLinkUI extends Plugin implements PageLinkViewer {
         this.pageLinkView?.insertButtonView();
         return;
       }
+      this.pageLinkView?.removeAnchorDropdown();
       this.pageLinkView?.removeButtonView();
       this.pageLinkView?.createAnchors(anchors);
       this.pageLinkView?.insertButtonView();
