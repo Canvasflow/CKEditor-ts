@@ -23,6 +23,7 @@ export class ColorView extends View {
   fontBackground?: Colors;
   defaultColorsGridView?: ColorsGridView;
   customColorsGridView?: ColorsGridView;
+  selectedColor?: string;
 
   onClearColor: (editor: any) => void = () => {};
 
@@ -31,13 +32,14 @@ export class ColorView extends View {
     editor: CanvasflowEditor,
     colors: Colors,
     label: string,
+    selectedColor: string,
   ) {
     super(locale);
     this.items = this.createCollection();
     this.colors = colors;
-    // this.fontBackground = editor.fontBackground;
+    this.selectedColor = selectedColor;
     this.removeColorButton = this.getRemoveColorView(editor, label);
-    this.defaultColorsGridView = this.getDefaultColorView();
+    this.defaultColorsGridView = this.getDefaultColorView(this.selectedColor);
     this.customColorsGridView = this.getCustomColorView();
     this.selectColorButton = this.getSelectColorView();
     this.colorInput = this.getInputColorView();
@@ -78,11 +80,12 @@ export class ColorView extends View {
     return pickerButton;
   }
 
-  private getDefaultColorView(): ColorsGridView {
+  private getDefaultColorView(selectedColor: string): ColorsGridView {
     const view = new ColorsGridView(
       this.locale!,
       "Default Color",
       this.colors!.defaultColor,
+      selectedColor,
     );
     view.delegate("execute").to(this);
     return view;
@@ -93,6 +96,7 @@ export class ColorView extends View {
       this.locale!,
       "Custom Color",
       this.colors!.customColor,
+      "",
     );
     view.delegate("execute").to(this);
     return view;
@@ -128,15 +132,24 @@ export class ColorView extends View {
 class ColorsGridView extends View {
   private label: string;
   private colors: Array<Color>;
+  private selectedColor: string;
   public gridView: ColorGridView;
   public onSelectColor: (color: Color) => void = (color: Color) => {
     console.log(color);
   };
-  constructor(locale: Locale, label: string, colors: Array<Color>) {
+
+  constructor(
+    locale: Locale,
+    label: string,
+    colors: Array<Color>,
+    selectedColor: string,
+  ) {
     super(locale);
     this.label = label;
     this.colors = colors;
-    this.gridView = this.getGridView();
+    this.selectedColor = selectedColor;
+    this.gridView = this.getGridView(this.selectedColor);
+    console.log(this.selectedColor);
     const items = this.createCollection();
     items.addMany([this.getLabel(), this.gridView]);
     this.setTemplate({
@@ -180,7 +193,7 @@ class ColorsGridView extends View {
     });
   }
 
-  getGridView(): ColorGridView {
+  getGridView(selectedColor: string | null): ColorGridView {
     const colorsSet = new Set();
     const colors: Array<Color> = this.colors.reduce(
       (acc: Array<Color>, color: Color) => {
@@ -193,22 +206,38 @@ class ColorsGridView extends View {
       },
       [],
     );
+    const tiles = colors.map((value) => {
+      const selected = value.color === selectedColor ? true : false;
+      return this.createColorTile(value.color, value.label, selected);
+    });
     const colorGridView = new ColorGridView(this.locale, {
-      colorDefinitions: colors.map((item: any) => {
-        item.label = item.label.length > 0 ? item.label : item.color;
-        item.options = { hasBorder: true };
-        return item;
-      }),
       columns: 4,
     });
-
+    colorGridView.items.addMany(tiles);
     return colorGridView;
+  }
+
+  createColorTile(color: string, label: string, selected: boolean) {
+    const newColor = new ColorTileView(this.locale);
+    newColor.label = label;
+    newColor.color = color;
+    newColor.class = selected ? "selected-color" : "";
+    this.listenTo(newColor, "execute", (evt: any) => {
+      const { source } = evt;
+      const { color, label } = source;
+      this.onSelectColor({
+        color,
+        label,
+      });
+    });
+    return newColor;
   }
 
   addColor(color: string, label: string) {
     const newColor = new ColorTileView(this.locale);
     newColor.label = label;
     newColor.color = color;
+    //newColor.class = "selected-color";
     this.listenTo(newColor, "execute", (evt: any) => {
       const { source } = evt;
       const { color, label } = source;

@@ -17,6 +17,7 @@ export class TextFontColorUI extends Plugin {
   balloon: any;
   textFontColorView?: ColorView;
   locale?: Locale;
+  selectedColor?: null;
 
   static get requires() {
     return [ContextualBalloon];
@@ -25,7 +26,37 @@ export class TextFontColorUI extends Plugin {
   init() {
     this.locale = this.editor.locale;
     this.balloon = this.editor.plugins.get(ContextualBalloon);
+    const { model } = this.editor;
+    const { document } = model;
+    document.selection.on("change:range", this.onSelectionChange);
     this.createButton();
+  }
+
+  private onSelectionChange = () => {
+    if (!this.hasColor(this.editor)) {
+      return;
+    }
+    this.selectedColor = this.hasColor(this.editor);
+  };
+
+  private hasColor(editor: CanvasflowEditor): any {
+    let selected = null;
+    const { selection } = editor.model.document;
+    if (!selection) {
+      return;
+    }
+    const range = selection.getFirstRange();
+    if (!range) {
+      return;
+    }
+
+    for (const item of range!.getItems()) {
+      if (!item.hasAttribute("fontColor")) {
+        return;
+      }
+      selected = item.getAttribute("fontColor");
+    }
+    return selected;
   }
 
   private createView() {
@@ -35,6 +66,7 @@ export class TextFontColorUI extends Plugin {
       editor,
       editor.colors!,
       "Remove Font Color",
+      this.selectedColor!,
     );
     this.textFontColorView.onClearColor = this.onClearColor;
 
@@ -60,20 +92,11 @@ export class TextFontColorUI extends Plugin {
       input?.click();
     });
 
-    this.listenTo(
-      this.textFontColorView.defaultColorsGridView!.gridView,
-      "execute",
-      this.onSetColor,
-    );
+    this.textFontColorView.defaultColorsGridView!.onSelectColor =
+      this.onSetColor;
 
     this.textFontColorView.customColorsGridView!.onSelectColor =
       this.onCustomSetColor;
-
-    this.listenTo(
-      this.textFontColorView.customColorsGridView!.gridView,
-      "execute",
-      this.onSetColor,
-    );
 
     clickOutsideHandler({
       emitter: this.textFontColorView,
@@ -91,15 +114,8 @@ export class TextFontColorUI extends Plugin {
     this.editor.execute(SET_FONT_COLOR_COMMAND, color.color);
   };
 
-  private onSetColor = (evt: any, data: Color) => {
-    if (data && data.label) {
-      this.editor.execute(SET_FONT_COLOR_COMMAND, data.label);
-      return;
-    }
-    if (!evt.source.color) {
-      return;
-    }
-    this.editor.execute(SET_FONT_COLOR_COMMAND, evt.source.color);
+  private onSetColor = (color: Color) => {
+    this.editor.execute(SET_FONT_COLOR_COMMAND, color.color);
   };
 
   private setColor(color: string) {
