@@ -40,7 +40,7 @@ export class ColorView extends View {
     this.selectedColor = selectedColor;
     this.removeColorButton = this.getRemoveColorView(editor, label);
     this.defaultColorsGridView = this.getDefaultColorView(this.selectedColor);
-    this.customColorsGridView = this.getCustomColorView();
+    this.customColorsGridView = this.getCustomColorView(this.selectedColor);
     this.selectColorButton = this.getSelectColorView();
     this.colorInput = this.getInputColorView();
 
@@ -69,6 +69,7 @@ export class ColorView extends View {
     clearButton.class = "clear-color-button";
     clearButton.on("execute", () => {
       this.onClearColor(editor);
+      this.clearAllColors();
     });
     return clearButton;
   }
@@ -91,12 +92,12 @@ export class ColorView extends View {
     return view;
   }
 
-  private getCustomColorView(): ColorsGridView {
+  private getCustomColorView(selectedColor: string): ColorsGridView {
     const view = new ColorsGridView(
       this.locale!,
       "Custom Color",
       this.colors!.customColor,
-      "",
+      selectedColor,
     );
     view.delegate("execute").to(this);
     return view;
@@ -119,6 +120,46 @@ export class ColorView extends View {
     });
 
     return button;
+  }
+
+  clearSelectedColor(color: string) {
+    let found = false;
+    this.defaultColorsGridView?.gridView.items.map((value) => {
+      if (value.class === "selected-color" && value.color !== color) {
+        found = true;
+        value.class = "";
+        return;
+      }
+    });
+    if (!found) {
+      this.customColorsGridView?.gridView.items.map((value) => {
+        if (value.class === "selected-color" && value.color !== color) {
+          found = true;
+          value.class = "";
+          return;
+        }
+      });
+    }
+  }
+
+  clearAllColors() {
+    let found = false;
+    this.defaultColorsGridView?.gridView.items.map((value) => {
+      if (value.class === "selected-color") {
+        found = true;
+        value.class = "";
+        return;
+      }
+    });
+    if (!found) {
+      this.customColorsGridView?.gridView.items.map((value) => {
+        if (value.class === "selected-color") {
+          found = true;
+          value.class = "";
+          return;
+        }
+      });
+    }
   }
 
   render() {
@@ -149,7 +190,6 @@ class ColorsGridView extends View {
     this.colors = colors;
     this.selectedColor = selectedColor;
     this.gridView = this.getGridView(this.selectedColor);
-    console.log(this.selectedColor);
     const items = this.createCollection();
     items.addMany([this.getLabel(), this.gridView]);
     this.setTemplate({

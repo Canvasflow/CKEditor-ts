@@ -1,7 +1,6 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
-//import { TextFontColorView } from "./TextFontColorView";
 import { ColorView } from "../ColorView/ColorView";
 import CanvasflowEditor, { Color } from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
@@ -17,7 +16,7 @@ export class TextFontColorUI extends Plugin {
   balloon: any;
   textFontColorView?: ColorView;
   locale?: Locale;
-  selectedColor?: null;
+  selectedColor?: "";
 
   static get requires() {
     return [ContextualBalloon];
@@ -33,14 +32,10 @@ export class TextFontColorUI extends Plugin {
   }
 
   private onSelectionChange = () => {
-    if (!this.hasColor(this.editor)) {
-      return;
-    }
     this.selectedColor = this.hasColor(this.editor);
   };
 
   private hasColor(editor: CanvasflowEditor): any {
-    let selected = null;
     const { selection } = editor.model.document;
     if (!selection) {
       return;
@@ -49,14 +44,21 @@ export class TextFontColorUI extends Plugin {
     if (!range) {
       return;
     }
-
+    const colors = [];
     for (const item of range!.getItems()) {
       if (!item.hasAttribute("fontColor")) {
-        return;
+        continue;
       }
-      selected = item.getAttribute("fontColor");
+      colors.push(item.getAttribute("fontColor"));
+      // selected = item.getAttribute("fontColor");
     }
-    return selected;
+
+    const colorSet = new Set([...colors]);
+    if (colorSet.size > 1) {
+      return "";
+    }
+    const [first] = colorSet;
+    return first;
   }
 
   private createView() {
@@ -112,11 +114,17 @@ export class TextFontColorUI extends Plugin {
 
   private onCustomSetColor = (color: Color) => {
     this.editor.execute(SET_FONT_COLOR_COMMAND, color.color);
+    this.clearSelected(color.color);
   };
 
   private onSetColor = (color: Color) => {
     this.editor.execute(SET_FONT_COLOR_COMMAND, color.color);
+    this.clearSelected(color.color);
   };
+
+  private clearSelected(color: any) {
+    this.textFontColorView?.clearSelectedColor(color);
+  }
 
   private setColor(color: string) {
     const colors = this.editor.colors;
