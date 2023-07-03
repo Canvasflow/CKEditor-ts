@@ -4,6 +4,11 @@ import CanvasflowEditor from "../../BaseEditor";
 import { FontStylesViewer } from "./FontStylesViewer";
 import { BoldView } from "./BoldView";
 import { ItalicView } from "./ItalicView";
+import { UnderlineView } from "./UnderlineView";
+import { StrikethroughView } from "./StrikethroughView";
+import { SubscriptView } from "./SubscriptView";
+import { SuperscriptView } from "./SuperscriptView";
+
 export class FontStyles extends Plugin implements FontStylesViewer {
   declare editor: CanvasflowEditor;
   fonts: string[] = [];
@@ -16,6 +21,10 @@ export class FontStyles extends Plugin implements FontStylesViewer {
 
     this.createBoldView();
     this.createItalicView();
+    this.createUnderlineView();
+    this.createStrikethroughView();
+    this.createSubscriptView();
+    this.createSuperscriptView();
   }
 
   private createBoldView() {
@@ -30,11 +39,51 @@ export class FontStyles extends Plugin implements FontStylesViewer {
     });
   }
 
+  private createUnderlineView() {
+    this.editor.ui.componentFactory.add(UnderlineView.viewName, () => {
+      return new UnderlineView(this);
+    });
+  }
+
+  private createStrikethroughView() {
+    this.editor.ui.componentFactory.add(StrikethroughView.viewName, () => {
+      return new StrikethroughView(this);
+    });
+  }
+
+  private createSubscriptView() {
+    this.editor.ui.componentFactory.add(SubscriptView.viewName, () => {
+      return new SubscriptView(this);
+    });
+  }
+
+  private createSuperscriptView() {
+    this.editor.ui.componentFactory.add(SuperscriptView.viewName, () => {
+      return new SuperscriptView(this);
+    });
+  }
+
   onClickBold = () => {
     this.editor.execute("bold");
   };
 
   onClickItalic = () => {
     this.editor.execute("italic");
+  };
+
+  onClickUnderline = () => {
+    this.editor.execute("underline");
+  };
+
+  onClickStrikethroug = () => {
+    this.editor.execute("strikethrough");
+  };
+
+  onClickSubscript = () => {
+    this.editor.execute("subscript");
+  };
+
+  onClickSuperscript = () => {
+    this.editor.execute("superscript");
   };
 }

@@ -38,6 +38,10 @@ import { FontStyles } from "./plugins/FontStyles/FontStyles";
 import { FontFamilyView } from "./plugins/FontFamily/FontFamilyView";
 import { BoldView } from "./plugins/FontStyles/BoldView";
 import { ItalicView } from "./plugins/FontStyles/ItalicView";
+import { StrikethroughView } from "./plugins/FontStyles/StrikethroughView";
+import { SubscriptView } from "./plugins/FontStyles/SubscriptView";
+import { SuperscriptView } from "./plugins/FontStyles/SuperscriptView";
+import { UnderlineView } from "./plugins/FontStyles/UnderlineView";
 
 import {
   Image,
@@ -146,10 +150,10 @@ const TOOLBAR = [
     items: [
       BoldView.viewName,
       ItalicView.viewName,
-      "underline",
-      "strikethrough",
-      "subscript",
-      "superscript",
+      UnderlineView.viewName,
+      StrikethroughView.viewName,
+      SubscriptView.viewName,
+      SuperscriptView.viewName,
     ],
   },
   "textFontColor",
