@@ -46,14 +46,23 @@ export class TextFontColorUI extends Plugin {
     }
     const colors = [];
     for (const item of range!.getItems()) {
-      if (!item.hasAttribute("fontColor")) {
-        continue;
+      if (item.hasAttribute("fontColor")) {
+        colors.push(item.getAttribute("fontColor"));
       }
-      colors.push(item.getAttribute("fontColor"));
-      // selected = item.getAttribute("fontColor");
+      colors.push("");
     }
 
-    const colorSet = new Set([...colors]);
+    const filteredEmpty = colors.filter((i) => !!i);
+
+    if (!filteredEmpty.length) {
+      return "";
+    }
+
+    if (filteredEmpty.length !== colors.length - 1) {
+      return "";
+    }
+
+    const colorSet = new Set([...filteredEmpty]);
     if (colorSet.size > 1) {
       return "";
     }
