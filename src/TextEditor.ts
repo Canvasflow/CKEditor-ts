@@ -18,6 +18,8 @@ import {
   SpecialCharacters,
   SpecialCharactersEssentials,
 } from "@ckeditor/ckeditor5-special-characters";
+
+/*CUSTOM PLUGINS*/
 import { DarkMode } from "./plugins/DarkMode/DarkMode";
 import { PageLink } from "./plugins/PageLink/PageLink";
 import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
@@ -30,9 +32,11 @@ import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 import { TextSize } from "./plugins/TextSize/TextSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
+import { FontStyles } from "./plugins/FontStyles/FontStyles";
 
 // Views
 import { FontFamilyView } from "./plugins/FontFamily/FontFamilyView";
+import { BoldView } from "./plugins/FontStyles/BoldView";
 
 import {
   Image,
@@ -126,7 +130,8 @@ const PLUGINS = [
   TextFontColor,
   RemoveFormat,
   TextSize,
-  FontFamily
+  FontFamily,
+  FontStyles
 ];
 
 const TOOLBAR = [
@@ -142,6 +147,7 @@ const TOOLBAR = [
     icon: fontStyles,
     items: [
       "bold",
+      BoldView.viewName,
       "italic",
       "underline",
       "strikethrough",
