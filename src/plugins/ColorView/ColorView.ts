@@ -8,12 +8,13 @@ import {
   ColorGridView,
   ColorTileView,
 } from "@ckeditor/ckeditor5-ui";
-import { Locale } from "@ckeditor/ckeditor5-utils";
+import { BaseEvent, GetCallback, } from "@ckeditor/ckeditor5-utils";
 import CanvasflowEditor, { Colors, Color } from "../../BaseEditor";
 import picker from "../../assets/icons/colorPicker.svg?raw";
 import remove from "../../assets/icons/removeColor.svg?raw";
 
 export class ColorView extends View {
+  private viewer: ColorViewer;
   private items: ViewCollection;
   private removeColorButton?: ButtonView;
   private selectColorButton?: ButtonView;
@@ -24,19 +25,15 @@ export class ColorView extends View {
   defaultColorsGridView?: ColorsGridView;
   customColorsGridView?: ColorsGridView;
 
-  onClearColor: (editor: any) => void = () => {};
-
-  constructor(
-    locale: Locale,
-    editor: CanvasflowEditor,
-    colors: Colors,
-    label: string,
-  ) {
+  constructor(viewer: ColorViewer) {
+    const { editor, colors } = viewer;
+    const { locale } = editor;
     super(locale);
+    this.viewer = viewer;
     this.items = this.createCollection();
     this.colors = colors;
-    // this.fontBackground = editor.fontBackground;
-    this.removeColorButton = this.getRemoveColorView(editor, label);
+
+    this.removeColorButton = this.getRemoveColorView();
     this.defaultColorsGridView = this.getDefaultColorView();
     this.customColorsGridView = this.getCustomColorView();
     this.selectColorButton = this.getSelectColorView();
@@ -58,15 +55,13 @@ export class ColorView extends View {
     });
   }
 
-  private getRemoveColorView(
-    editor: CanvasflowEditor,
-    label: string,
-  ): ButtonView {
+  private getRemoveColorView(): ButtonView {
+    const label = this.viewer.attribute === 'fontColor' ? 'Remove color' : 'Remove background'
     let clearButton = this.createButton(label, remove, "");
     clearButton.type = "button";
     clearButton.class = "clear-color-button";
     clearButton.on("execute", () => {
-      this.onClearColor(editor);
+      this.viewer.onClearColor();
     });
     return clearButton;
   }
@@ -79,23 +74,19 @@ export class ColorView extends View {
   }
 
   private getDefaultColorView(): ColorsGridView {
-    const view = new ColorsGridView(
-      this.locale!,
+    return new ColorsGridView(
+      this.viewer,
       "Default Color",
       this.colors!.defaultColor,
-    );
-    view.delegate("execute").to(this);
-    return view;
+    );;
   }
 
   private getCustomColorView(): ColorsGridView {
-    const view = new ColorsGridView(
-      this.locale!,
+    return new ColorsGridView(
+      this.viewer,
       "Custom Color",
       this.colors!.customColor,
     );
-    view.delegate("execute").to(this);
-    return view;
   }
 
   private getInputColorView(): InputView {
@@ -125,15 +116,26 @@ export class ColorView extends View {
   }
 }
 
+export interface ColorViewer {
+  editor: CanvasflowEditor,
+  colors: Colors,
+  attribute: ColorViewerType;
+  onClearColor: () => void;
+  onSetColor: (color: string) => void;
+}
+
+export type ColorViewerType = 'fontColor' | 'backgroundColor'
+
+
 class ColorsGridView extends View {
+  private viewer: ColorViewer;
   private label: string;
   private colors: Array<Color>;
   public gridView: ColorGridView;
-  public onSelectColor: (color: Color) => void = (color: Color) => {
-    console.log(color);
-  };
-  constructor(locale: Locale, label: string, colors: Array<Color>) {
+  constructor(viewer: ColorViewer, label: string, colors: Array<Color>) {
+    const { locale } = viewer.editor;
     super(locale);
+    this.viewer = viewer;
     this.label = label;
     this.colors = colors;
     this.gridView = this.getGridView();
@@ -159,28 +161,25 @@ class ColorsGridView extends View {
     return labelView;
   }
 
-  setColors(colors: Array<Color>) {
+  getGridView(): ColorGridView {
+    const colors = this.getUniqueColors();
     const colorGridView = new ColorGridView(this.locale, {
       colorDefinitions: colors.map((item: any) => {
-        item.label = item.label;
+        item.label = item.label.length > 0 ? item.label : item.color;
         item.options = { hasBorder: true };
         return item;
       }),
       columns: 4,
     });
-    this.gridView = colorGridView;
-    const items = this.createCollection();
-    items.addMany([this.getLabel(), this.gridView]);
-    this.setTemplate({
-      tag: "div",
-      attributes: {
-        class: ["ck", "ck-colors-grid", "ck-colors"],
-      },
-      children: items,
-    });
+
+    for (const item of colorGridView.items) {
+      item.on('execute', this.onClickColor)
+    }
+
+    return colorGridView;
   }
 
-  getGridView(): ColorGridView {
+  getUniqueColors(): Array<Color> {
     const colorsSet = new Set();
     const colors: Array<Color> = this.colors.reduce(
       (acc: Array<Color>, color: Color) => {
@@ -193,30 +192,24 @@ class ColorsGridView extends View {
       },
       [],
     );
-    const colorGridView = new ColorGridView(this.locale, {
-      colorDefinitions: colors.map((item: any) => {
-        item.label = item.label.length > 0 ? item.label : item.color;
-        item.options = { hasBorder: true };
-        return item;
-      }),
-      columns: 4,
-    });
-
-    return colorGridView;
+    return colors
   }
 
   addColor(color: string, label: string) {
-    const newColor = new ColorTileView(this.locale);
-    newColor.label = label;
-    newColor.color = color;
-    this.listenTo(newColor, "execute", (evt: any) => {
-      const { source } = evt;
-      const { color, label } = source;
-      this.onSelectColor({
-        color,
-        label,
-      });
-    });
-    this.gridView.items.add(newColor);
+    const colorTileView = new ColorTileView(this.locale);
+    colorTileView.label = label;
+    colorTileView.color = color;
+    colorTileView.on('execute', this.onClickColor)
+    this.gridView.items.add(colorTileView);
+  }
+
+  onClickColor: GetCallback<BaseEvent> = (evt) => {
+    const { onSetColor } = this.viewer;
+    const view: ColorTileView = evt.source as any;
+    const { color } = view;
+    onSetColor(color!)
   }
 }
+
+
+

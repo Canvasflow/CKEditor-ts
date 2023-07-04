@@ -27,7 +27,7 @@ import { Uppercase } from "./plugins/Uppercase/Uppercase";
 import { Lowercase } from "./plugins/Lowercase/Lowercase";
 import { ClearFormatting } from "./plugins/ClearFormatting/ClearFormatting";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
-import { FontBackground } from "./plugins/FontBackground/FontBackground";
+// import { FontBackground } from "./plugins/FontBackground/FontBackground";
 import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 import { TextSize } from "./plugins/TextSize/TextSize";
@@ -131,7 +131,7 @@ const PLUGINS = [
   Lowercase,
   ClearFormatting,
   Capitalize,
-  FontBackground,
+  // FontBackground,
   TextFontColor,
   RemoveFormat,
   TextSize,
@@ -157,7 +157,7 @@ const TOOLBAR = [
     ],
   },
   "textFontColor",
-  "backgroundColor",
+  // "backgroundColor",
   "ClearFormatting",
   "|",
   {
