@@ -8,7 +8,7 @@ import {
   ColorGridView,
   ColorTileView,
 } from "@ckeditor/ckeditor5-ui";
-import { BaseEvent, GetCallback, } from "@ckeditor/ckeditor5-utils";
+import { BaseEvent, GetCallback } from "@ckeditor/ckeditor5-utils";
 import CanvasflowEditor, { Colors, Color } from "../../BaseEditor";
 import picker from "../../assets/icons/colorPicker.svg?raw";
 import remove from "../../assets/icons/removeColor.svg?raw";
@@ -54,7 +54,7 @@ export class ColorView extends View {
       },
       children: this.items,
     });
-    document.selection.on('change:range', this.onSelectionChange);
+    document.selection.on("change:range", this.onSelectionChange);
   }
 
   private onSelectionChange = () => {
@@ -75,10 +75,10 @@ export class ColorView extends View {
         colors.push(color);
         continue;
       }
-      colors.push('');
+      colors.push("");
     }
 
-    const filteredEmpty = colors.filter(i => !!i);
+    const filteredEmpty = colors.filter((i) => !!i);
 
     /*
         - If all selection are empty set the label as empty
@@ -86,8 +86,8 @@ export class ColorView extends View {
             the other doesnt returns empty
     */
 
-    if (!filteredEmpty.length || (filteredEmpty.length !== colors.length)) {
-      this.setGridsSelectedColor('')
+    if (!filteredEmpty.length || filteredEmpty.length !== colors.length) {
+      this.setGridsSelectedColor("");
       return;
     }
 
@@ -95,7 +95,7 @@ export class ColorView extends View {
 
     // If there is more then one return empty
     if (colorsSet.size > 1) {
-      this.setGridsSelectedColor('')
+      this.setGridsSelectedColor("");
 
       return;
     }
@@ -103,7 +103,7 @@ export class ColorView extends View {
     const color = [...colorsSet][0];
 
     this.setGridsSelectedColor(color);
-  }
+  };
 
   setGridsSelectedColor(color: string) {
     this.defaultColorsGridView?.selectColor(color);
@@ -111,7 +111,10 @@ export class ColorView extends View {
   }
 
   private getRemoveColorView(): ButtonView {
-    const label = this.viewer.attribute === 'fontColor' ? 'Remove color' : 'Remove background'
+    const label =
+      this.viewer.attribute === "fontColor"
+        ? "Remove color"
+        : "Remove background";
     let clearButton = this.createButton(label, remove, "");
     clearButton.type = "button";
     clearButton.class = "clear-color-button";
@@ -133,7 +136,7 @@ export class ColorView extends View {
       this.viewer,
       "Default Color",
       this.colors!.defaultColor,
-    );;
+    );
   }
 
   private getCustomColorView(): ColorsGridView {
@@ -172,16 +175,15 @@ export class ColorView extends View {
 }
 
 export interface ColorViewer {
-  editor: CanvasflowEditor,
-  colors: Colors,
+  editor: CanvasflowEditor;
+  colors: Colors;
   attribute: ColorViewerType;
   onClearColor: () => void;
   onSetColor: (color: string) => void;
   selectedColor: string;
 }
 
-export type ColorViewerType = 'fontColor' | 'backgroundColor'
-
+export type ColorViewerType = "fontColor" | "backgroundColor";
 
 class ColorsGridView extends View {
   private viewer: ColorViewer;
@@ -230,8 +232,8 @@ class ColorsGridView extends View {
     });
 
     for (const item of colorGridView.items) {
-      item.class = selectedColor === item.color ? 'selected-color' : '';
-      item.on('execute', this.onClickColor)
+      item.class = selectedColor === item.color ? "selected-color" : "";
+      item.on("execute", this.onClickColor);
     }
 
     return colorGridView;
@@ -250,17 +252,21 @@ class ColorsGridView extends View {
       },
       [],
     );
-    return colors
+    return colors;
   }
 
-  mapColorTileView(color: string, label: string, className?: string): ColorTileView {
+  mapColorTileView(
+    color: string,
+    label: string,
+    className?: string,
+  ): ColorTileView {
     const colorTileView = new ColorTileView(this.locale);
     colorTileView.label = label;
     colorTileView.color = color;
     if (className) {
       colorTileView.class = className;
     }
-    colorTileView.on('execute', this.onClickColor)
+    colorTileView.on("execute", this.onClickColor);
     return colorTileView;
   }
 
@@ -268,17 +274,18 @@ class ColorsGridView extends View {
     const { onSetColor } = this.viewer;
     const view: ColorTileView = evt.source as any;
     const { color } = view;
-    console.log(`In the button`, color)
-    onSetColor(color!)
-  }
+    onSetColor(color!);
+  };
 
   selectColor = (color: string) => {
     this.viewer.selectedColor = color;
-    console.log(`The color should be: `, color)
-    // this.gridView.destroy();
-    // this.gridView = this.getGridView();
-  }
+    this.clearColor();
+  };
+
+  clearColor = () => {
+    this.gridView.items.map((value) => {
+      value.class = "";
+      return value;
+    });
+  };
 }
-
-
-
