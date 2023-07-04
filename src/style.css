@@ -11,7 +11,12 @@
 	display: none;
 }
 
-// HACK I dont know how to scope the css
+.selected-color {
+	box-shadow: inset 0 0 0 1px white, 0 0 0 2px blue !important;
+  }
+  
+
+/*HACK I dont know how to scope the css*/
 /*CF FONT*/
 
 .cf-font-family button.cf-button:hover {

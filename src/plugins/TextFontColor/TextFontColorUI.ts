@@ -13,6 +13,8 @@ import icon from "../../assets/icons/fontColor.svg?raw";
 import { AddCustomColorEvent } from "./TextFontColorEvents";
 
 export class TextFontColorUI extends Plugin implements ColorViewer {
+  selectedColor: string = '';
+
   declare editor: CanvasflowEditor;
   static viewName = "textFontColor";
   balloon: any;
@@ -72,10 +74,12 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
 
   onSetColor = (color: string) => {
     this.editor.execute(SET_FONT_COLOR_COMMAND, color);
+    this.textFontColorView!.setGridsSelectedColor(color)
   };
 
   onClearColor() {
-    this.editor.execute(CLEAR_FONT_COLOR_COMMAND)
+    this.editor.execute(CLEAR_FONT_COLOR_COMMAND);
+    // this.textFontColorView!.setGridsSelectedColor('')
   }
 
   // TODO Move this to the view
@@ -93,7 +97,9 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
     }
 
     colors.customColor.push({ label: color, color: color });
-    this.textFontColorView?.customColorsGridView?.addColor(color, color);
+
+    const tileView = this.textFontColorView?.customColorsGridView?.mapColorTileView(color, color);
+    this.textFontColorView?.customColorsGridView?.gridView.items.add(tileView!)
   }
 
   private hideUI() {

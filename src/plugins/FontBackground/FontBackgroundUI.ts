@@ -115,7 +115,7 @@ export class FontBackgroundUI extends Plugin {
     }
 
     colors.customColor.push({ label: color, color: color });
-    this.textFontColorView?.customColorsGridView?.addColor(color, color);
+    this.textFontColorView?.customColorsGridView?.mapColorTileView(color, color);
     //this.textFontColorView?.addCustomColor(color, color);
   }
 

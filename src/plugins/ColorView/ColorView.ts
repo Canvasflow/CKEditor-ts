@@ -27,7 +27,8 @@ export class ColorView extends View {
 
   constructor(viewer: ColorViewer) {
     const { editor, colors } = viewer;
-    const { locale } = editor;
+    const { locale, model } = editor;
+    const { document } = model;
     super(locale);
     this.viewer = viewer;
     this.items = this.createCollection();
@@ -53,6 +54,60 @@ export class ColorView extends View {
       },
       children: this.items,
     });
+    document.selection.on('change:range', this.onSelectionChange);
+  }
+
+  private onSelectionChange = () => {
+    const { editor, attribute } = this.viewer;
+    const { selection } = editor.model.document;
+    if (!selection) {
+      return;
+    }
+    const range = selection.getFirstRange();
+    if (!range) {
+      return;
+    }
+
+    const colors: Array<string> = [];
+    for (const item of range.getItems()) {
+      if (item.hasAttribute(attribute)) {
+        const color = item.getAttribute(attribute) as string;
+        colors.push(color);
+        continue;
+      }
+      colors.push('');
+    }
+
+    const filteredEmpty = colors.filter(i => !!i);
+
+    /*
+        - If all selection are empty set the label as empty
+        - If one range has a font and at least one of 
+            the other doesnt returns empty
+    */
+
+    if (!filteredEmpty.length || (filteredEmpty.length !== colors.length)) {
+      this.setGridsSelectedColor('')
+      return;
+    }
+
+    const colorsSet = new Set([...filteredEmpty]);
+
+    // If there is more then one return empty
+    if (colorsSet.size > 1) {
+      this.setGridsSelectedColor('')
+
+      return;
+    }
+
+    const color = [...colorsSet][0];
+
+    this.setGridsSelectedColor(color);
+  }
+
+  setGridsSelectedColor(color: string) {
+    this.defaultColorsGridView?.selectColor(color);
+    this.customColorsGridView?.selectColor(color);
   }
 
   private getRemoveColorView(): ButtonView {
@@ -122,6 +177,7 @@ export interface ColorViewer {
   attribute: ColorViewerType;
   onClearColor: () => void;
   onSetColor: (color: string) => void;
+  selectedColor: string;
 }
 
 export type ColorViewerType = 'fontColor' | 'backgroundColor'
@@ -162,6 +218,7 @@ class ColorsGridView extends View {
   }
 
   getGridView(): ColorGridView {
+    const { selectedColor } = this.viewer;
     const colors = this.getUniqueColors();
     const colorGridView = new ColorGridView(this.locale, {
       colorDefinitions: colors.map((item: any) => {
@@ -173,6 +230,7 @@ class ColorsGridView extends View {
     });
 
     for (const item of colorGridView.items) {
+      item.class = selectedColor === item.color ? 'selected-color' : '';
       item.on('execute', this.onClickColor)
     }
 
@@ -195,19 +253,30 @@ class ColorsGridView extends View {
     return colors
   }
 
-  addColor(color: string, label: string) {
+  mapColorTileView(color: string, label: string, className?: string): ColorTileView {
     const colorTileView = new ColorTileView(this.locale);
     colorTileView.label = label;
     colorTileView.color = color;
+    if (className) {
+      colorTileView.class = className;
+    }
     colorTileView.on('execute', this.onClickColor)
-    this.gridView.items.add(colorTileView);
+    return colorTileView;
   }
 
   onClickColor: GetCallback<BaseEvent> = (evt) => {
     const { onSetColor } = this.viewer;
     const view: ColorTileView = evt.source as any;
     const { color } = view;
+    console.log(`In the button`, color)
     onSetColor(color!)
+  }
+
+  selectColor = (color: string) => {
+    this.viewer.selectedColor = color;
+    console.log(`The color should be: `, color)
+    // this.gridView.destroy();
+    // this.gridView = this.getGridView();
   }
 }
 
