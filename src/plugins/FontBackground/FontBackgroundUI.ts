@@ -1,21 +1,36 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
-import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
-import { ColorView } from "../ColorView/ColorView";
-import CanvasflowEditor, { Color } from "../../BaseEditor";
+
+import {
+  ColorView,
+  ColorViewer,
+  ColorViewerType,
+} from "../ColorView/ColorView";
+import CanvasflowEditor, { Colors } from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
 import {
   SET_BACKGROUND_COLOR_COMMAND,
   CLEAR_BACKGROUND_COLOR_COMMAND,
 } from "./FontBackgroundCommands";
-import icon from "../../assets/icons/fontBackground.svg?raw";
 import { AddCustomFontBackgroundEvent } from "./FontBackgroundEvents";
 
-export class FontBackgroundUI extends Plugin {
+export class FontBackgroundUI extends Plugin implements ColorViewer {
+  selectedColor: string = "";
+
   declare editor: CanvasflowEditor;
+  static viewName = "backgroundColor";
   balloon: any;
   textFontColorView?: ColorView;
   locale?: Locale;
+  attribute: ColorViewerType = "backgroundColor";
+  colors: Colors = {
+    defaultColor: [],
+    customColor: [],
+  };
+  fontBackground: Colors = {
+    defaultColor: [],
+    customColor: [],
+  };
 
   static get requires() {
     return [ContextualBalloon];
@@ -24,19 +39,16 @@ export class FontBackgroundUI extends Plugin {
   init() {
     this.locale = this.editor.locale;
     this.balloon = this.editor.plugins.get(ContextualBalloon);
+    this.createView();
     this.createButton();
   }
 
-  private createView() {
+  createView = () => {
     const editor = this.editor;
-    this.textFontColorView = new ColorView(
-      editor.locale,
-      editor,
-      editor.fontBackground!,
-      "Remove Background",
-    );
-    this.textFontColorView.onClearColor = this.onClearColor;
-
+    this.colors = editor.fontBackground!;
+    this.fontBackground = editor.fontBackground!;
+    console.log("colors en background (create view) ", this.colors);
+    this.textFontColorView = new ColorView(this);
     this.listenTo(this.textFontColorView, "submit", () => {
       const input: HTMLInputElement | null = document.getElementById(
         "color-picker",
@@ -49,30 +61,16 @@ export class FontBackgroundUI extends Plugin {
       input.onchange = (e: any) => {
         const color = e.target.value;
         if (color && color !== "#000000") {
+          console.log("IN BAACKGROUND");
           this.setColor(color);
           const evt: AddCustomFontBackgroundEvent = {
             color,
           };
-          editor.dispatch("colors:addCustomBackgroundColor", evt);
+          editor.dispatch("colors:addCustomColor", evt);
         }
       };
       input?.click();
     });
-
-    this.listenTo(
-      this.textFontColorView.defaultColorsGridView!.gridView,
-      "execute",
-      this.onSetColor,
-    );
-
-    this.textFontColorView.customColorsGridView!.onSelectColor =
-      this.onCustomSetColor;
-
-    this.listenTo(
-      this.textFontColorView.customColorsGridView!.gridView,
-      "execute",
-      this.onSetColor,
-    );
 
     clickOutsideHandler({
       emitter: this.textFontColorView,
@@ -80,29 +78,42 @@ export class FontBackgroundUI extends Plugin {
       contextElements: [this.balloon.view.element],
       callback: () => this.hideUI(),
     });
-  }
-
-  private onClearColor(editor: CanvasflowEditor) {
-    editor.execute(CLEAR_BACKGROUND_COLOR_COMMAND);
-  }
-
-  private onCustomSetColor = (color: Color) => {
-    this.editor.execute(SET_BACKGROUND_COLOR_COMMAND, color.color);
   };
 
-  private onSetColor = (evt: any, data: Color) => {
-    if (data && data.label) {
-      this.editor.execute(SET_BACKGROUND_COLOR_COMMAND, data.label);
-      return;
-    }
-    if (!evt.source.color) {
-      return;
-    }
-    this.editor.execute(SET_BACKGROUND_COLOR_COMMAND, evt.source.color);
+  onSetColor = (color: string) => {
+    this.editor.execute(SET_BACKGROUND_COLOR_COMMAND, color);
+    this.textFontColorView!.setGridsSelectedColor(color);
   };
+
+  onClearColor() {
+    this.editor.execute(CLEAR_BACKGROUND_COLOR_COMMAND);
+  }
+
+  onPickColor() {
+    const input: HTMLInputElement | null = document.getElementById(
+      "color-picker",
+    ) as HTMLInputElement;
+    if (input === null) {
+      return;
+    }
+    input.type = "color";
+    input.setAttribute("style", "visibility: hidden");
+    input.onchange = (e: any) => {
+      const color = e.target.value;
+      if (color && color !== "#000000") {
+        this.setColor(color);
+        const evt: AddCustomFontBackgroundEvent = {
+          color,
+        };
+        this.editor.dispatch("colors:addCustomBackgroundColor", evt);
+      }
+    };
+    input?.click();
+  }
 
   private setColor(color: string) {
-    const colors = this.editor.colors;
+    const colors = this.editor.fontBackground;
+
     if (!colors) {
       return;
     }
@@ -115,8 +126,13 @@ export class FontBackgroundUI extends Plugin {
     }
 
     colors.customColor.push({ label: color, color: color });
-    this.textFontColorView?.customColorsGridView?.mapColorTileView(color, color);
-    //this.textFontColorView?.addCustomColor(color, color);
+    const tileView =
+      this.textFontColorView?.customColorsGridView?.mapColorTileView(
+        color,
+        color,
+      );
+    console.log(tileView);
+    this.textFontColorView?.customColorsGridView?.gridView.items.add(tileView!);
   }
 
   private hideUI() {
@@ -132,39 +148,8 @@ export class FontBackgroundUI extends Plugin {
   }
 
   private createButton() {
-    this.editor.ui.componentFactory.add("backgroundColor", () => {
-      const button = new ButtonView();
-      button.label = "Font Background Color";
-      button.tooltip = true;
-      button.withText = false;
-      button.icon = icon;
-      this.listenTo(button, "execute", () => {
-        this.createView();
-        this.showUI();
-      });
-      return button;
+    this.editor.ui.componentFactory.add(FontBackgroundUI.viewName, () => {
+      return new ColorView(this);
     });
-  }
-
-  private showUI() {
-    this.balloon.add({
-      view: this.textFontColorView,
-      position: this.getBalloonPositionData(),
-    });
-  }
-
-  private getBalloonPositionData() {
-    const view = this.editor.editing.view;
-    const viewDocument = view.document;
-    let target = () => {
-      const firstRange = viewDocument.selection.getFirstRange();
-      if (!firstRange) {
-        return;
-      }
-      return view.domConverter.viewRangeToDom(firstRange);
-    };
-    return {
-      target,
-    };
   }
 }

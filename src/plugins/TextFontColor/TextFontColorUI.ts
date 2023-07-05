@@ -43,27 +43,6 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
     const editor = this.editor;
     this.colors = editor.colors!;
     this.textFontColorView = new ColorView(this);
-    this.listenTo(this.textFontColorView, "submit", () => {
-      const input: HTMLInputElement | null = document.getElementById(
-        "color-picker",
-      ) as HTMLInputElement;
-      if (input === null) {
-        return;
-      }
-      input.type = "color";
-      input.setAttribute("style", "visibility: hidden");
-      input.onchange = (e: any) => {
-        const color = e.target.value;
-        if (color && color !== "#000000") {
-          this.setColor(color);
-          const evt: AddCustomColorEvent = {
-            color,
-          };
-          editor.dispatch("colors:addCustomColor", evt);
-        }
-      };
-      input?.click();
-    });
 
     clickOutsideHandler({
       emitter: this.textFontColorView,
@@ -82,6 +61,31 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
     this.editor.execute(CLEAR_FONT_COLOR_COMMAND);
   }
 
+  onPickColor() {
+    const colors = this.editor.colors;
+    console.log(colors);
+    const input: HTMLInputElement | null = document.getElementById(
+      "color-picker",
+    ) as HTMLInputElement;
+    if (input === null) {
+      return;
+    }
+    input.type = "color";
+    input.setAttribute("style", "visibility: hidden");
+    input.onchange = (e: any) => {
+      const color = e.target.value;
+      if (color && color !== "#000000") {
+        console.log("IN FONT COLOR");
+        this.setColor(color);
+        const evt: AddCustomColorEvent = {
+          color,
+        };
+        this.editor.dispatch("colors:addCustomColor", evt);
+      }
+    };
+    input?.click();
+  }
+
   private setColor(color: string) {
     const colors = this.editor.colors;
     if (!colors) {
@@ -96,7 +100,7 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
     }
 
     colors.customColor.push({ label: color, color: color });
-
+    console.log("FONT COLORS:", colors);
     const tileView =
       this.textFontColorView?.customColorsGridView?.mapColorTileView(
         color,

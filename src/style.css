@@ -35,3 +35,11 @@
 .ck.ck-toolbar__items :nth-child(5) button :nth-child(3) {
   display: none !important;
 }
+
+.ck.ck-toolbar__items :nth-child(6) button :nth-child(3) {
+  display: none !important;
+}
+
+.ck.ck-toolbar__items :nth-child(15) button :nth-child(3) {
+  display: none !important;
+}

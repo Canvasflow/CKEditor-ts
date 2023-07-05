@@ -26,13 +26,16 @@ export class ColorView extends View {
   customColorsGridView?: ColorsGridView;
 
   constructor(viewer: ColorViewer) {
-    const { editor, colors } = viewer;
+    const { editor, colors, fontBackground } = viewer;
     const { locale, model } = editor;
     const { document } = model;
     super(locale);
     this.viewer = viewer;
     this.items = this.createCollection();
-    this.colors = colors;
+    console.log(this.viewer.attribute);
+
+    this.colors =
+      this.viewer.attribute === "fontColor" ? colors : fontBackground;
 
     this.removeColorButton = this.getRemoveColorView();
     this.defaultColorsGridView = this.getDefaultColorView();
@@ -126,8 +129,11 @@ export class ColorView extends View {
 
   private getSelectColorView(): ButtonView {
     let pickerButton = this.createButton("Select color", picker, "");
-    pickerButton.type = "submit";
+    pickerButton.type = "button";
     pickerButton.class = "submit-color-button";
+    pickerButton.on("execute", () => {
+      this.viewer.onPickColor();
+    });
     return pickerButton;
   }
 
@@ -177,10 +183,12 @@ export class ColorView extends View {
 export interface ColorViewer {
   editor: CanvasflowEditor;
   colors: Colors;
+  fontBackground: Colors;
   attribute: ColorViewerType;
   onClearColor: () => void;
   onSetColor: (color: string) => void;
   selectedColor: string;
+  onPickColor: () => void;
 }
 
 export type ColorViewerType = "fontColor" | "backgroundColor";
@@ -196,6 +204,7 @@ class ColorsGridView extends View {
     this.viewer = viewer;
     this.label = label;
     this.colors = colors;
+    console.log(colors);
     this.gridView = this.getGridView();
     const items = this.createCollection();
     items.addMany([this.getLabel(), this.gridView]);

@@ -27,7 +27,7 @@ import { Uppercase } from "./plugins/Uppercase/Uppercase";
 import { Lowercase } from "./plugins/Lowercase/Lowercase";
 import { ClearFormatting } from "./plugins/ClearFormatting/ClearFormatting";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
-// import { FontBackground } from "./plugins/FontBackground/FontBackground";
+import { FontBackground } from "./plugins/FontBackground/FontBackground";
 import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 import { TextSize } from "./plugins/TextSize/TextSize";
@@ -59,6 +59,7 @@ import lists from "./assets/icons/lists.svg?raw";
 import textTransform from "./assets/icons/textFormatting.svg?raw";
 import other from "./assets/icons/other.svg?raw";
 import fontColor from "./assets/icons/fontColor.svg?raw";
+import backgroundColor from "./assets/icons/fontBackground.svg?raw";
 
 export class TextEditor extends BaseEditor {
   constructor(
@@ -132,7 +133,7 @@ const PLUGINS = [
   Lowercase,
   ClearFormatting,
   Capitalize,
-  // FontBackground,
+  FontBackground,
   TextFontColor,
   RemoveFormat,
   TextSize,
@@ -144,7 +145,6 @@ const TOOLBAR = [
   FontFamilyView.viewName,
   "fontSize",
   "|",
-  // "colorPicker",
   {
     label: "Font Styles",
     icon: fontStyles,
@@ -162,8 +162,11 @@ const TOOLBAR = [
     icon: fontColor,
     items: ["textFontColor"],
   },
-  //"textFontColor",
-  // "backgroundColor",
+  {
+    label: "Background Color",
+    icon: backgroundColor,
+    items: ["backgroundColor"],
+  },
   "ClearFormatting",
   "|",
   {
