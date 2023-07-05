@@ -1,19 +1,21 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
-import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
-//import { TextFontColorView } from "./TextFontColorView";
-import { ColorView, ColorViewer, ColorViewerType } from "../ColorView/ColorView";
-import CanvasflowEditor, { Color, Colors } from "../../BaseEditor";
+
+import {
+  ColorView,
+  ColorViewer,
+  ColorViewerType,
+} from "../ColorView/ColorView";
+import CanvasflowEditor, { Colors } from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
 import {
   SET_FONT_COLOR_COMMAND,
   CLEAR_FONT_COLOR_COMMAND,
 } from "./TextFontColorCommands";
-import icon from "../../assets/icons/fontColor.svg?raw";
 import { AddCustomColorEvent } from "./TextFontColorEvents";
 
 export class TextFontColorUI extends Plugin implements ColorViewer {
-  selectedColor: string = '';
+  selectedColor: string = "";
 
   declare editor: CanvasflowEditor;
   static viewName = "textFontColor";
@@ -23,7 +25,7 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
   attribute: ColorViewerType = "fontColor";
   colors: Colors = {
     defaultColor: [],
-    customColor: []
+    customColor: [],
   };
 
   static get requires() {
@@ -33,6 +35,7 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
   init() {
     this.locale = this.editor.locale;
     this.balloon = this.editor.plugins.get(ContextualBalloon);
+    this.createView();
     this.createButton();
   }
 
@@ -40,8 +43,6 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
     const editor = this.editor;
     this.colors = editor.colors!;
     this.textFontColorView = new ColorView(this);
-
-    // TODO Move this to the view
     this.listenTo(this.textFontColorView, "submit", () => {
       const input: HTMLInputElement | null = document.getElementById(
         "color-picker",
@@ -70,19 +71,17 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
       contextElements: [this.balloon.view.element],
       callback: () => this.hideUI(),
     });
-  }
+  };
 
   onSetColor = (color: string) => {
     this.editor.execute(SET_FONT_COLOR_COMMAND, color);
-    this.textFontColorView!.setGridsSelectedColor(color)
+    this.textFontColorView!.setGridsSelectedColor(color);
   };
 
   onClearColor() {
     this.editor.execute(CLEAR_FONT_COLOR_COMMAND);
-    // this.textFontColorView!.setGridsSelectedColor('')
   }
 
-  // TODO Move this to the view
   private setColor(color: string) {
     const colors = this.editor.colors;
     if (!colors) {
@@ -98,8 +97,12 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
 
     colors.customColor.push({ label: color, color: color });
 
-    const tileView = this.textFontColorView?.customColorsGridView?.mapColorTileView(color, color);
-    this.textFontColorView?.customColorsGridView?.gridView.items.add(tileView!)
+    const tileView =
+      this.textFontColorView?.customColorsGridView?.mapColorTileView(
+        color,
+        color,
+      );
+    this.textFontColorView?.customColorsGridView?.gridView.items.add(tileView!);
   }
 
   private hideUI() {
@@ -116,38 +119,7 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
 
   private createButton() {
     this.editor.ui.componentFactory.add(TextFontColorUI.viewName, () => {
-      const button = new ButtonView();
-      button.label = "Font Color";
-      button.tooltip = true;
-      button.withText = false;
-      button.icon = icon;
-      this.listenTo(button, "execute", () => {
-        this.createView();
-        this.showUI();
-      });
-      return button;
+      return new ColorView(this);
     });
-  }
-
-  private showUI() {
-    this.balloon.add({
-      view: this.textFontColorView,
-      position: this.getBalloonPositionData(),
-    });
-  }
-
-  private getBalloonPositionData() {
-    const view = this.editor.editing.view;
-    const viewDocument = view.document;
-    let target = () => {
-      const firstRange = viewDocument.selection.getFirstRange();
-      if (!firstRange) {
-        return;
-      }
-      return view.domConverter.viewRangeToDom(firstRange);
-    };
-    return {
-      target,
-    };
   }
 }

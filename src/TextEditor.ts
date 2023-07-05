@@ -58,6 +58,7 @@ import fontStyles from "./assets/icons/fontStyles.svg?raw";
 import lists from "./assets/icons/lists.svg?raw";
 import textTransform from "./assets/icons/textFormatting.svg?raw";
 import other from "./assets/icons/other.svg?raw";
+import fontColor from "./assets/icons/fontColor.svg?raw";
 
 export class TextEditor extends BaseEditor {
   constructor(
@@ -156,7 +157,12 @@ const TOOLBAR = [
       SuperscriptView.viewName,
     ],
   },
-  "textFontColor",
+  {
+    label: "Font Color",
+    icon: fontColor,
+    items: ["textFontColor"],
+  },
+  //"textFontColor",
   // "backgroundColor",
   "ClearFormatting",
   "|",
