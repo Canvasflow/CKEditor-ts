@@ -78,6 +78,11 @@ export class TextSizeComponent extends View {
       children: this.items,
     });
   }
+
+  updateInputElement(value: string) {
+    const element: any = this.input.element;
+    element.value = value;
+  }
 }
 
 export interface TextSizeViewer {

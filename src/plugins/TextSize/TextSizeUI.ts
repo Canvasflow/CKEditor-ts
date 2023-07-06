@@ -20,6 +20,7 @@ export class TextSizeUI extends Plugin implements TextSizeViewer {
   init() {
     const { model } = this.editor;
     const { document } = model;
+
     this.fontSizeView.showView();
     this.editor.ui.componentFactory.add(TextSizeComponent.viewName, () => {
       return this.fontSizeView!;
@@ -39,6 +40,7 @@ export class TextSizeUI extends Plugin implements TextSizeViewer {
   }
 
   private onSelectionChange = () => {
+    const element: any = this.fontSizeView.input.element;
     const { selection } = this.editor.model.document;
     if (!selection) {
       return;
@@ -56,48 +58,58 @@ export class TextSizeUI extends Plugin implements TextSizeViewer {
       }
       sizes.push("");
     }
-    console.log(sizes);
     const filteredEmpty = sizes.filter((i) => !!i);
     if (!filteredEmpty.length || filteredEmpty.length !== sizes.length) {
-      this.fontSizeView.input.element.value = "";
+      element.value = "";
       this.currentValue = "";
       return;
     }
     const sizeSet = new Set([...filteredEmpty]);
     if (sizeSet.size > 1) {
-      this.fontSizeView.input.element.value = "";
+      element.value = "";
       this.currentValue = "";
       return;
     }
-
     const selected = [...sizeSet][0];
     if (selected) {
-      this.currentValue = selected.substring(0, selected.length - 2);
-      this.fontSizeView.input.element.value = this.currentValue;
+      let value = selected.toString();
+      this.currentValue = value.substring(0, value.length - 2);
+      element.value = this.currentValue;
     }
-    // this.currentValue = selected.substring(0, 2);
-    // this.selectedFontSize = selected.substring(0, 2);
   };
 
   onChange = (size: string) => {
-    console.log("On Change: ", size);
     this.currentValue = size;
     const value = `${size}px`;
     this.editor.execute(`fontSize`, { value });
   };
 
   onIncreaseSize() {
+    if (!this.currentValue) {
+      return;
+    }
+
     let current = parseInt(this.currentValue);
+    if (current >= this.max) {
+      return;
+    }
     current++;
     this.currentValue = current.toString();
     this.fontSizeView.input.set("value", this.currentValue);
-    //  this.fontSizeView.input.element.value = current;
+    this.fontSizeView.updateInputElement(this.currentValue);
   }
   onDecreaseSize() {
+    if (!this.currentValue) {
+      return;
+    }
+
     let current = parseInt(this.currentValue);
+    if (current <= this.min) {
+      return;
+    }
     current--;
     this.currentValue = current.toString();
     this.fontSizeView.input.set("value", this.currentValue);
-    //  this.fontSizeView.input.element.value = current;
+    this.fontSizeView.updateInputElement(this.currentValue);
   }
 }
