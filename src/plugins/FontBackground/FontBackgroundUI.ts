@@ -27,10 +27,6 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
     defaultColor: [],
     customColor: [],
   };
-  fontBackground: Colors = {
-    defaultColor: [],
-    customColor: [],
-  };
 
   static get requires() {
     return [ContextualBalloon];
@@ -46,7 +42,6 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
   createView = () => {
     const editor = this.editor;
     this.colors = editor.fontBackground!;
-    this.fontBackground = editor.fontBackground!;
     console.log("colors en background (create view) ", this.colors);
     this.textFontColorView = new ColorView(this);
     this.listenTo(this.textFontColorView, "submit", () => {
@@ -131,7 +126,7 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
         color,
         color,
       );
-    console.log(tileView);
+
     this.textFontColorView?.customColorsGridView?.gridView.items.add(tileView!);
   }
 

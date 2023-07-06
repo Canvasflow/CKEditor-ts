@@ -8,7 +8,7 @@ import {
   ColorGridView,
   ColorTileView,
 } from "@ckeditor/ckeditor5-ui";
-import { BaseEvent, GetCallback } from "@ckeditor/ckeditor5-utils";
+import { BaseEvent, GetCallback, Collection } from "@ckeditor/ckeditor5-utils";
 import CanvasflowEditor, { Colors, Color } from "../../BaseEditor";
 import picker from "../../assets/icons/colorPicker.svg?raw";
 import remove from "../../assets/icons/removeColor.svg?raw";
@@ -21,22 +21,19 @@ export class ColorView extends View {
   private colorInput?: InputView;
 
   colors?: Colors;
-  fontBackground?: Colors;
   defaultColorsGridView?: ColorsGridView;
   customColorsGridView?: ColorsGridView;
 
   constructor(viewer: ColorViewer) {
-    const { editor, colors, fontBackground } = viewer;
+    const { editor, colors } = viewer;
     const { locale, model } = editor;
     const { document } = model;
     super(locale);
     this.viewer = viewer;
     this.items = this.createCollection();
-    console.log(this.viewer.attribute);
+    console.log("THIS VIEW IS CREATED BY: ", this.viewer.attribute);
 
-    this.colors =
-      this.viewer.attribute === "fontColor" ? colors : fontBackground;
-
+    this.colors = colors;
     this.removeColorButton = this.getRemoveColorView();
     this.defaultColorsGridView = this.getDefaultColorView();
     this.customColorsGridView = this.getCustomColorView();
@@ -113,6 +110,16 @@ export class ColorView extends View {
     this.customColorsGridView?.selectColor(color);
   }
 
+  addColor(color: string, label: string) {
+    console.log("adding color: ", color);
+    const tile = this.customColorsGridView?.mapColorTileView(color, label);
+    if (!tile) {
+      return;
+    }
+    this.customColorsGridView?.gridView.items.add(tile);
+    console.log(this.customColorsGridView?.gridView.items);
+  }
+
   private getRemoveColorView(): ButtonView {
     const label =
       this.viewer.attribute === "fontColor"
@@ -183,7 +190,6 @@ export class ColorView extends View {
 export interface ColorViewer {
   editor: CanvasflowEditor;
   colors: Colors;
-  fontBackground: Colors;
   attribute: ColorViewerType;
   onClearColor: () => void;
   onSetColor: (color: string) => void;
@@ -198,13 +204,15 @@ class ColorsGridView extends View {
   private label: string;
   private colors: Array<Color>;
   public gridView: ColorGridView;
+
+  colorList?: Collection<ColorTileView>;
+
   constructor(viewer: ColorViewer, label: string, colors: Array<Color>) {
     const { locale } = viewer.editor;
     super(locale);
     this.viewer = viewer;
     this.label = label;
-    this.colors = colors;
-    console.log(colors);
+    this.colors = this.getUniqueColors(colors);
     this.gridView = this.getGridView();
     const items = this.createCollection();
     items.addMany([this.getLabel(), this.gridView]);
@@ -230,14 +238,23 @@ class ColorsGridView extends View {
 
   getGridView(): ColorGridView {
     const { selectedColor } = this.viewer;
-    const colors = this.getUniqueColors();
+    this.colorList = new Collection();
+
     const colorGridView = new ColorGridView(this.locale, {
-      colorDefinitions: colors.map((item: any) => {
+      colorDefinitions: this.colors.map((item: any) => {
         item.label = item.label.length > 0 ? item.label : item.color;
         item.options = { hasBorder: true };
         return item;
       }),
       columns: 4,
+    });
+
+    colorGridView.items.bindTo(this.colorList).using(({ label, color }) => {
+      const colorTileView = new ColorTileView(this.locale);
+      colorTileView.label = label;
+      colorTileView.color = color;
+      colorTileView.on("execute", this.onClickColor);
+      return colorTileView;
     });
 
     for (const item of colorGridView.items) {
@@ -248,9 +265,9 @@ class ColorsGridView extends View {
     return colorGridView;
   }
 
-  getUniqueColors(): Array<Color> {
+  getUniqueColors(colorList: Array<Color>): Array<Color> {
     const colorsSet = new Set();
-    const colors: Array<Color> = this.colors.reduce(
+    const colors: Array<Color> = colorList.reduce(
       (acc: Array<Color>, color: Color) => {
         if (colorsSet.has(color.color)) {
           return acc;

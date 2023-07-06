@@ -43,7 +43,6 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
     const editor = this.editor;
     this.colors = editor.colors!;
     this.textFontColorView = new ColorView(this);
-
     clickOutsideHandler({
       emitter: this.textFontColorView,
       activator: () => this.balloon.visibleView === this.textFontColorView,
@@ -63,7 +62,6 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
 
   onPickColor() {
     const colors = this.editor.colors;
-    console.log(colors);
     const input: HTMLInputElement | null = document.getElementById(
       "color-picker",
     ) as HTMLInputElement;
@@ -75,7 +73,6 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
     input.onchange = (e: any) => {
       const color = e.target.value;
       if (color && color !== "#000000") {
-        console.log("IN FONT COLOR");
         this.setColor(color);
         const evt: AddCustomColorEvent = {
           color,
@@ -100,13 +97,15 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
     }
 
     colors.customColor.push({ label: color, color: color });
-    console.log("FONT COLORS:", colors);
     const tileView =
       this.textFontColorView?.customColorsGridView?.mapColorTileView(
         color,
         color,
       );
-    this.textFontColorView?.customColorsGridView?.gridView.items.add(tileView!);
+    if (!tileView) {
+      return;
+    }
+    this.textFontColorView?.customColorsGridView?.colorList?.add(tileView);
   }
 
   private hideUI() {
