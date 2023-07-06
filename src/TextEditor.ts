@@ -34,6 +34,9 @@ import { TextSize } from "./plugins/TextSize/TextSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
 import { FontStyles } from "./plugins/FontStyles/FontStyles";
 
+import { FontSizeView } from "./plugins/FontSize/FontSizeView"
+import { FontSize } from "./plugins/FontSize/FontSize"
+
 // Views
 import { FontFamilyView } from "./plugins/FontFamily/FontFamilyView";
 import { BoldView } from "./plugins/FontStyles/BoldView";
@@ -139,11 +142,14 @@ const PLUGINS = [
   TextSize,
   FontFamily,
   FontStyles,
+  FontSize
 ];
 
 const TOOLBAR = [
   FontFamilyView.viewName,
   "fontSize",
+  "|",
+  FontSizeView.viewName,
   "|",
   {
     label: "Font Styles",
