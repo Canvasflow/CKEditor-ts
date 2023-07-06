@@ -60,6 +60,7 @@ import textTransform from "./assets/icons/textFormatting.svg?raw";
 import other from "./assets/icons/other.svg?raw";
 import fontColor from "./assets/icons/fontColor.svg?raw";
 import backgroundColor from "./assets/icons/fontBackground.svg?raw";
+import { TextSizeComponent } from "./plugins/TextSize/TextSizeComponent";
 
 export class TextEditor extends BaseEditor {
   constructor(
@@ -143,7 +144,9 @@ const PLUGINS = [
 
 const TOOLBAR = [
   FontFamilyView.viewName,
-  "fontSize",
+  //"fontSize",
+  "|",
+  TextSizeComponent.viewName,
   "|",
   {
     label: "Font Styles",
