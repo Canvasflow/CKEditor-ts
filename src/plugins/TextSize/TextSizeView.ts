@@ -25,8 +25,8 @@ export class TextSizeView extends View {
           width: "35px",
           border: "1px solid #c3c3c3",
           borderRadius: "4px",
-          margin: "0px 10px",
-          paddingLeft: "2px",
+          margin: "0px 0px",
+          paddingLeft: "10px",
         },
       },
     });

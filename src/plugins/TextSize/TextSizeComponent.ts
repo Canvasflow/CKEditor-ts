@@ -29,6 +29,7 @@ export class TextSizeComponent extends View {
   private sizeUp(label: string, icon: any) {
     this.iconButton = this.createButtonObject(label, icon, "");
     this.iconButton.isEnabled = true;
+    this.iconButton.class = "text-size-icon";
     this.iconButton.on("execute", () => {
       this.viewer.onIncreaseSize();
     });
@@ -41,13 +42,6 @@ export class TextSizeComponent extends View {
     this.iconButton.class = "text-size-icon";
     this.iconButton.on("execute", () => {
       this.viewer.onDecreaseSize();
-      // if (this.selectedFontSize) {
-      //   this.editor.execute("fontSize", {
-      //     value: this.selectedFontSize + "px",
-      //   });
-      //   this.selectedFontSize--;
-      //   this.input.value = this.selectedFontSize;
-      // }
     });
     return this.iconButton;
   }

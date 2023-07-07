@@ -1,7 +1,11 @@
 .font-size {
-  width: 130px !important;
+  width: 85px !important;
 }
 
 #text-size-input {
   width: 30%;
+}
+
+.text-size-icon {
+  font-size: 9px !important;
 }
