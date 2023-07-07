@@ -20,9 +20,9 @@ export class ColorView extends View {
   private selectColorButton?: ButtonView;
   private colorInput?: InputView;
 
-  colors?: Colors;
-  defaultColorsGridView?: ColorsGridView;
-  customColorsGridView?: ColorsGridView;
+  colors: Colors;
+  defaultColorsGridView: ColorsGridView;
+  customColorsGridView: ColorsGridView;
 
   constructor(viewer: ColorViewer) {
     const { editor, colors } = viewer;
@@ -54,6 +54,12 @@ export class ColorView extends View {
       },
       children: this.items,
     });
+
+    setTimeout(() => {
+      this.customColorsGridView.add({ color: '#fa0000', label: 'birght red' });
+      console.log(`I ADDED THE RED`, this.customColorsGridView.colors.length);
+    }, 10000)
+    this.addColor = this.addColor.bind(this);
     document.selection.on("change:range", this.onSelectionChange);
   }
 
@@ -110,14 +116,12 @@ export class ColorView extends View {
     this.customColorsGridView?.selectColor(color);
   }
 
-  addColor(color: string, label: string) {
-    console.log("adding color: ", color);
-    const tile = this.customColorsGridView?.mapColorTileView(color, label);
-    if (!tile) {
-      return;
-    }
-    this.customColorsGridView?.gridView.items.add(tile);
-    console.log(this.customColorsGridView?.gridView.items);
+  addColor = (color: string, label: string) => {
+    console.log("adding color: ", color)
+    this.customColorsGridView.add({ color, label });
+    console.log(`LENGTH: `, this.customColorsGridView.colors.length);
+    /*console.log("adding color: ", color);
+    this.customColorsGridView.add({ color, label });*/
   }
 
   private getRemoveColorView(): ButtonView {
@@ -202,27 +206,35 @@ export type ColorViewerType = "fontColor" | "backgroundColor";
 class ColorsGridView extends View {
   private viewer: ColorViewer;
   private label: string;
-  private colors: Array<Color>;
   public gridView: ColorGridView;
 
-  colorList?: Collection<ColorTileView>;
+  colors: Collection<Color>;
 
   constructor(viewer: ColorViewer, label: string, colors: Array<Color>) {
     const { locale } = viewer.editor;
     super(locale);
     this.viewer = viewer;
     this.label = label;
-    this.colors = this.getUniqueColors(colors);
+    this.colors = new Collection(this.getUniqueColors(colors))
     this.gridView = this.getGridView();
-    const items = this.createCollection();
-    items.addMany([this.getLabel(), this.gridView]);
     this.setTemplate({
       tag: "div",
       attributes: {
         class: ["ck", "ck-colors-grid", "ck-colors"],
       },
-      children: items,
+      children: [this.getLabel(), this.gridView],
     });
+
+    this.gridView.items.bindTo(this.colors).using(this.mapColor());
+
+    // FIXME THIS WORKS AND I DONT KNOW WHY
+    /*setTimeout(() => {
+      this.add({ color: '#3d3d3d', label: 'grey' });
+    }, 5000);*/
+  }
+
+  add = (color: Color) => {
+    this.colors.add({ ...color });
   }
 
   getLabel(): LabelView {
@@ -237,30 +249,10 @@ class ColorsGridView extends View {
   }
 
   getGridView(): ColorGridView {
-    const { selectedColor } = this.viewer;
-    this.colorList = new Collection();
-
     const colorGridView = new ColorGridView(this.locale, {
-      colorDefinitions: this.colors.map((item: any) => {
-        item.label = item.label.length > 0 ? item.label : item.color;
-        item.options = { hasBorder: true };
-        return item;
-      }),
+      colorDefinitions: [],
       columns: 4,
     });
-
-    colorGridView.items.bindTo(this.colorList).using(({ label, color }) => {
-      const colorTileView = new ColorTileView(this.locale);
-      colorTileView.label = label;
-      colorTileView.color = color;
-      colorTileView.on("execute", this.onClickColor);
-      return colorTileView;
-    });
-
-    for (const item of colorGridView.items) {
-      item.class = selectedColor === item.color ? "selected-color" : "";
-      item.on("execute", this.onClickColor);
-    }
 
     return colorGridView;
   }
@@ -281,19 +273,17 @@ class ColorsGridView extends View {
     return colors;
   }
 
-  mapColorTileView(
-    color: string,
-    label: string,
-    className?: string,
-  ): ColorTileView {
-    const colorTileView = new ColorTileView(this.locale);
-    colorTileView.label = label;
-    colorTileView.color = color;
-    if (className) {
-      colorTileView.class = className;
+  mapColor() {
+    const { onClickColor, locale, viewer } = this;
+    const { selectedColor } = viewer;
+    return (color: Color): ColorTileView => {
+      const colorTileView = new ColorTileView(locale);
+      colorTileView.label = color.label;
+      colorTileView.color = color.color;
+      colorTileView.class = selectedColor === color.color ? "selected-color" : "";
+      colorTileView.on("execute", onClickColor);
+      return colorTileView;
     }
-    colorTileView.on("execute", this.onClickColor);
-    return colorTileView;
   }
 
   onClickColor: GetCallback<BaseEvent> = (evt) => {

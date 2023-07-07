@@ -16,11 +16,10 @@ import { AddCustomColorEvent } from "./TextFontColorEvents";
 
 export class TextFontColorUI extends Plugin implements ColorViewer {
   selectedColor: string = "";
-
-  declare editor: CanvasflowEditor;
+  editor: CanvasflowEditor;
   static viewName = "textFontColor";
   balloon: any;
-  textFontColorView?: ColorView;
+  textFontColorView: ColorView;
   locale?: Locale;
   attribute: ColorViewerType = "fontColor";
   colors: Colors = {
@@ -28,20 +27,13 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
     customColor: [],
   };
 
-  static get requires() {
-    return [ContextualBalloon];
-  }
-
-  init() {
+  constructor(editor: CanvasflowEditor) {
+    super(editor);
+    this.editor = editor;
+    this.colors = editor.colors!;
     this.locale = this.editor.locale;
     this.balloon = this.editor.plugins.get(ContextualBalloon);
-    this.createView();
-    this.createButton();
-  }
 
-  createView = () => {
-    const editor = this.editor;
-    this.colors = editor.colors!;
     this.textFontColorView = new ColorView(this);
     clickOutsideHandler({
       emitter: this.textFontColorView,
@@ -49,7 +41,14 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
       contextElements: [this.balloon.view.element],
       callback: () => this.hideUI(),
     });
-  };
+    this.editor.ui.componentFactory.add(TextFontColorUI.viewName, () => {
+      return new ColorView(this);
+    });
+  }
+
+  static get requires() {
+    return [ContextualBalloon];
+  }
 
   onSetColor = (color: string) => {
     this.editor.execute(SET_FONT_COLOR_COMMAND, color);
@@ -62,6 +61,7 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
 
   onPickColor() {
     const colors = this.editor.colors;
+    const { setColor } = this;
     const input: HTMLInputElement | null = document.getElementById(
       "color-picker",
     ) as HTMLInputElement;
@@ -73,7 +73,7 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
     input.onchange = (e: any) => {
       const color = e.target.value;
       if (color && color !== "#000000") {
-        this.setColor(color);
+        setColor(color);
         const evt: AddCustomColorEvent = {
           color,
         };
@@ -83,8 +83,9 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
     input?.click();
   }
 
-  private setColor(color: string) {
-    const colors = this.editor.colors;
+  private setColor = (color: string) => {
+    this.textFontColorView.addColor(color, color);
+    /*const colors = this.editor.colors;
     if (!colors) {
       return;
     }
@@ -96,16 +97,18 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
       return;
     }
 
+
     colors.customColor.push({ label: color, color: color });
-    const tileView =
+    this.textFontColorView?.addColor(color, color);*/
+    /*const tileView =
       this.textFontColorView?.customColorsGridView?.mapColorTileView(
         color,
         color,
       );
     if (!tileView) {
       return;
-    }
-    this.textFontColorView?.customColorsGridView?.colorList?.add(tileView);
+    }*/
+    // this.textFontColorView?.customColorsGridView?.colorList?.add(tileView);
   }
 
   private hideUI() {
@@ -121,8 +124,6 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
   }
 
   private createButton() {
-    this.editor.ui.componentFactory.add(TextFontColorUI.viewName, () => {
-      return new ColorView(this);
-    });
+
   }
 }
