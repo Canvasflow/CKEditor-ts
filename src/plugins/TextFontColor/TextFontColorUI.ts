@@ -60,7 +60,6 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
   }
 
   onPickColor() {
-    const colors = this.editor.colors;
     const { setColor } = this;
     const input: HTMLInputElement | null = document.getElementById(
       "color-picker",
@@ -84,8 +83,7 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
   }
 
   private setColor = (color: string) => {
-    this.textFontColorView.addColor(color, color);
-    /*const colors = this.editor.colors;
+    const colors = this.editor.colors;
     if (!colors) {
       return;
     }
@@ -97,19 +95,9 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
       return;
     }
 
-
     colors.customColor.push({ label: color, color: color });
-    this.textFontColorView?.addColor(color, color);*/
-    /*const tileView =
-      this.textFontColorView?.customColorsGridView?.mapColorTileView(
-        color,
-        color,
-      );
-    if (!tileView) {
-      return;
-    }*/
-    // this.textFontColorView?.customColorsGridView?.colorList?.add(tileView);
-  }
+    this.textFontColorView.addColor(color, color);
+  };
 
   private hideUI() {
     const input: HTMLInputElement | null = document.getElementById(
@@ -121,9 +109,5 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
     } else {
       input.setAttribute("style", "");
     }
-  }
-
-  private createButton() {
-
   }
 }
