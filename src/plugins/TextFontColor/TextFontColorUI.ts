@@ -94,9 +94,7 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
     if (findList) {
       return;
     }
-
     colors.customColor.push({ label: color, color: color });
-    this.textFontColorView.addColor(color, color);
   };
 
   private hideUI() {

@@ -111,17 +111,6 @@ export class ColorView extends View {
     this.customColorsGridView?.selectColor(color);
   }
 
-  addColor = (color: string, label: string) => {
-    console.log("adding color: ", color);
-
-    this.customColorsGridView.add({ color, label });
-
-
-    console.log(`LENGTH: `, this.customColorsGridView.colors.length);
-    /*console.log("adding color: ", color);
-    this.customColorsGridView.add({ color, label });*/
-  }
-
   private getRemoveColorView(): ButtonView {
     const label =
       this.viewer.attribute === "fontColor"
@@ -213,7 +202,7 @@ class ColorsGridView extends View {
     super(locale);
     this.viewer = viewer;
     this.label = label;
-    const colors = new Collection(this.getUniqueColors(input))
+    const colors = new Collection(this.getUniqueColors(input));
     this.gridView = this.getGridView();
     this.setTemplate({
       tag: "div",
@@ -223,29 +212,21 @@ class ColorsGridView extends View {
       children: [this.getLabel(), this.gridView],
     });
 
-    this.viewer.editor.addEventListener('colors:addCustomColor', (color: any) => {
-      console.log(`THIS IS A CUSTOM COLOR`, color);
-
-      setTimeout(() => {
-        const response = { color: color.color, label: color.color };
-        console.log(`Add a color with timeout`, response);
-        this.colors.add(response);
-      }, 1);
-
-      // colors.add({ color: color, label: color });
-    })
+    this.viewer.editor.addEventListener(
+      "colors:addCustomColor",
+      (color: any) => {
+        setTimeout(() => {
+          const response = { color: color.color, label: color.color };
+          this.colors.add(response);
+        }, 1);
+      },
+    );
     this.colors = colors;
   }
 
   render() {
     super.render();
     this.gridView.items.bindTo(this.colors).using(this.mapColor());
-  }
-
-  add = (color: Color) => {
-    /*setTimeout(() => {
-      this.colors.add(color);
-    }, 500)*/
   }
 
   getLabel(): LabelView {
@@ -291,10 +272,11 @@ class ColorsGridView extends View {
       const colorTileView = new ColorTileView(locale);
       colorTileView.label = color.label;
       colorTileView.color = color.color;
-      colorTileView.class = selectedColor === color.color ? "selected-color" : "";
+      colorTileView.class =
+        selectedColor === color.color ? "selected-color" : "";
       colorTileView.on("execute", onClickColor);
       return colorTileView;
-    }
+    };
   }
 
   onClickColor: GetCallback<BaseEvent> = (evt) => {
