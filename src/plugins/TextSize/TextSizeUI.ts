@@ -80,9 +80,12 @@ export class TextSizeUI extends Plugin implements TextSizeViewer {
 
   onChange = (size: string) => {
     const parsedSize = parseInt(size);
-    if (parsedSize < this.min || parsedSize > this.max) {
-      this.fontSizeView.input.set("value", "");
-      this.fontSizeView.updateInputElement("");
+    if (parsedSize < this.min) {
+      this.setValue(this.min.toString());
+      return;
+    }
+    if (parsedSize > this.max) {
+      this.setValue(this.max.toString());
       return;
     }
 
@@ -93,6 +96,7 @@ export class TextSizeUI extends Plugin implements TextSizeViewer {
 
   onIncreaseSize() {
     if (!this.currentValue) {
+      this.setValue(this.min.toString());
       return;
     }
 
@@ -101,12 +105,11 @@ export class TextSizeUI extends Plugin implements TextSizeViewer {
       return;
     }
     current++;
-    this.currentValue = current.toString();
-    this.fontSizeView.input.set("value", this.currentValue);
-    this.fontSizeView.updateInputElement(this.currentValue);
+    this.setValue(current.toString());
   }
   onDecreaseSize() {
     if (!this.currentValue) {
+      this.setValue(this.min.toString());
       return;
     }
 
@@ -115,7 +118,11 @@ export class TextSizeUI extends Plugin implements TextSizeViewer {
       return;
     }
     current--;
-    this.currentValue = current.toString();
+    this.setValue(current.toString());
+  }
+
+  private setValue(value: string) {
+    this.currentValue = value;
     this.fontSizeView.input.set("value", this.currentValue);
     this.fontSizeView.updateInputElement(this.currentValue);
   }
