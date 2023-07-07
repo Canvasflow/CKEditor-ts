@@ -79,6 +79,13 @@ export class TextSizeUI extends Plugin implements TextSizeViewer {
   };
 
   onChange = (size: string) => {
+    const parsedSize = parseInt(size);
+    if (parsedSize < this.min || parsedSize > this.max) {
+      this.fontSizeView.input.set("value", "");
+      this.fontSizeView.updateInputElement("");
+      return;
+    }
+
     this.currentValue = size;
     const value = `${size}px`;
     this.editor.execute(`fontSize`, { value });
