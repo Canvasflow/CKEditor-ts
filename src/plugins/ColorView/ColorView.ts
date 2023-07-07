@@ -153,7 +153,10 @@ export class ColorView extends View {
 
   private getInputColorView(): InputView {
     const colorInputView = new InputView(this.locale);
-    colorInputView.id = "color-picker";
+    colorInputView.id =
+      this.viewer.attribute === "fontColor"
+        ? "font-color-picker"
+        : "background-color-picker";
     return colorInputView;
   }
 
@@ -268,6 +271,7 @@ class ColorsGridView extends View {
   mapColor() {
     const { onClickColor, locale, viewer } = this;
     const { selectedColor } = viewer;
+    console.log("selected color: ", selectedColor);
     return (color: Color): ColorTileView => {
       const colorTileView = new ColorTileView(locale);
       colorTileView.label = color.label;
@@ -287,8 +291,10 @@ class ColorsGridView extends View {
   };
 
   selectColor = (color: string) => {
+    console.log("selected color: ", color);
     this.viewer.selectedColor = color;
-    this.clearColor();
+    // this.mapColor();
+    //  this.clearColor();
   };
 
   clearColor = () => {

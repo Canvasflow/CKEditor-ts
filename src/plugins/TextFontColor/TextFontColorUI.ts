@@ -62,7 +62,7 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
   onPickColor() {
     const { setColor } = this;
     const input: HTMLInputElement | null = document.getElementById(
-      "color-picker",
+      "font-color-picker",
     ) as HTMLInputElement;
     if (input === null) {
       return;
@@ -99,7 +99,7 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
 
   private hideUI() {
     const input: HTMLInputElement | null = document.getElementById(
-      "color-picker",
+      "font-color-picker",
     ) as HTMLInputElement;
     const visibility = input.getAttribute("style");
     if (visibility !== "visibility: hidden") {

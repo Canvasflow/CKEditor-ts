@@ -14,7 +14,15 @@
   width: 100% !important;
 }
 
-#color-picker {
+#font-color-picker {
+  border: none !important;
+  min-width: 0px !important;
+  padding: 0px !important;
+  width: 0px !important;
+  max-width: 0px !important;
+}
+
+#background-color-picker {
   border: none !important;
   min-width: 0px !important;
   padding: 0px !important;

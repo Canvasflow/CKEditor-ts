@@ -15,12 +15,11 @@ import {
 import { AddCustomFontBackgroundEvent } from "./FontBackgroundEvents";
 
 export class FontBackgroundUI extends Plugin implements ColorViewer {
-  selectedColor: string = "";
-
-  declare editor: CanvasflowEditor;
   static viewName = "backgroundColor";
+  selectedColor: string = "";
+  editor: CanvasflowEditor;
   balloon: any;
-  textFontColorView?: ColorView;
+  textFontColorView: ColorView;
   locale?: Locale;
   attribute: ColorViewerType = "backgroundColor";
   colors: Colors = {
@@ -28,52 +27,28 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
     customColor: [],
   };
 
-  static get requires() {
-    return [ContextualBalloon];
-  }
-
-  init() {
+  constructor(editor: CanvasflowEditor) {
+    super(editor);
+    this.editor = editor;
+    this.colors = editor.fontBackground!;
     this.locale = this.editor.locale;
     this.balloon = this.editor.plugins.get(ContextualBalloon);
-    this.createView();
-    this.createButton();
-  }
 
-  createView = () => {
-    const editor = this.editor;
-    this.colors = editor.fontBackground!;
-    console.log("colors en background (create view) ", this.colors);
     this.textFontColorView = new ColorView(this);
-    this.listenTo(this.textFontColorView, "submit", () => {
-      const input: HTMLInputElement | null = document.getElementById(
-        "color-picker",
-      ) as HTMLInputElement;
-      if (input === null) {
-        return;
-      }
-      input.type = "color";
-      input.setAttribute("style", "visibility: hidden");
-      input.onchange = (e: any) => {
-        const color = e.target.value;
-        if (color && color !== "#000000") {
-          console.log("IN BAACKGROUND");
-          this.setColor(color);
-          const evt: AddCustomFontBackgroundEvent = {
-            color,
-          };
-          editor.dispatch("colors:addCustomColor", evt);
-        }
-      };
-      input?.click();
-    });
-
     clickOutsideHandler({
       emitter: this.textFontColorView,
       activator: () => this.balloon.visibleView === this.textFontColorView,
       contextElements: [this.balloon.view.element],
       callback: () => this.hideUI(),
     });
-  };
+    this.editor.ui.componentFactory.add(FontBackgroundUI.viewName, () => {
+      return new ColorView(this);
+    });
+  }
+
+  static get requires() {
+    return [ContextualBalloon];
+  }
 
   onSetColor = (color: string) => {
     this.editor.execute(SET_BACKGROUND_COLOR_COMMAND, color);
@@ -85,8 +60,9 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
   }
 
   onPickColor() {
+    const { setColor } = this;
     const input: HTMLInputElement | null = document.getElementById(
-      "color-picker",
+      "background-color-picker",
     ) as HTMLInputElement;
     if (input === null) {
       return;
@@ -96,7 +72,7 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
     input.onchange = (e: any) => {
       const color = e.target.value;
       if (color && color !== "#000000") {
-        this.setColor(color);
+        setColor(color);
         const evt: AddCustomFontBackgroundEvent = {
           color,
         };
@@ -106,9 +82,8 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
     input?.click();
   }
 
-  private setColor(color: string) {
-    const colors = this.editor.fontBackground;
-
+  private setColor = (color: string) => {
+    const colors = this.editor.colors;
     if (!colors) {
       return;
     }
@@ -119,20 +94,13 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
     if (findList) {
       return;
     }
-
     colors.customColor.push({ label: color, color: color });
-    const tileView =
-      this.textFontColorView?.customColorsGridView?.mapColorTileView(
-        color,
-        color,
-      );
-
-    this.textFontColorView?.customColorsGridView?.gridView.items.add(tileView!);
-  }
+    console.log(this.editor.fontBackground);
+  };
 
   private hideUI() {
     const input: HTMLInputElement | null = document.getElementById(
-      "color-picker",
+      "background-color-picker",
     ) as HTMLInputElement;
     const visibility = input.getAttribute("style");
     if (visibility !== "visibility: hidden") {
@@ -140,11 +108,5 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
     } else {
       input.setAttribute("style", "");
     }
-  }
-
-  private createButton() {
-    this.editor.ui.componentFactory.add(FontBackgroundUI.viewName, () => {
-      return new ColorView(this);
-    });
   }
 }
