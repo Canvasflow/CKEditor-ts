@@ -55,11 +55,6 @@ export class ColorView extends View {
       children: this.items,
     });
 
-    setTimeout(() => {
-      this.customColorsGridView.add({ color: '#fa0000', label: 'birght red' });
-      console.log(`I ADDED THE RED`, this.customColorsGridView.colors.length);
-    }, 10000)
-    this.addColor = this.addColor.bind(this);
     document.selection.on("change:range", this.onSelectionChange);
   }
 
@@ -117,8 +112,11 @@ export class ColorView extends View {
   }
 
   addColor = (color: string, label: string) => {
-    console.log("adding color: ", color)
+    console.log("adding color: ", color);
+
     this.customColorsGridView.add({ color, label });
+
+
     console.log(`LENGTH: `, this.customColorsGridView.colors.length);
     /*console.log("adding color: ", color);
     this.customColorsGridView.add({ color, label });*/
@@ -210,12 +208,12 @@ class ColorsGridView extends View {
 
   colors: Collection<Color>;
 
-  constructor(viewer: ColorViewer, label: string, colors: Array<Color>) {
+  constructor(viewer: ColorViewer, label: string, input: Array<Color>) {
     const { locale } = viewer.editor;
     super(locale);
     this.viewer = viewer;
     this.label = label;
-    this.colors = new Collection(this.getUniqueColors(colors))
+    const colors = new Collection(this.getUniqueColors(input))
     this.gridView = this.getGridView();
     this.setTemplate({
       tag: "div",
@@ -225,16 +223,29 @@ class ColorsGridView extends View {
       children: [this.getLabel(), this.gridView],
     });
 
-    this.gridView.items.bindTo(this.colors).using(this.mapColor());
+    this.viewer.editor.addEventListener('colors:addCustomColor', (color: any) => {
+      console.log(`THIS IS A CUSTOM COLOR`, color);
 
-    // FIXME THIS WORKS AND I DONT KNOW WHY
-    /*setTimeout(() => {
-      this.add({ color: '#3d3d3d', label: 'grey' });
-    }, 5000);*/
+      setTimeout(() => {
+        const response = { color: color.color, label: color.color };
+        console.log(`Add a color with timeout`, response);
+        this.colors.add(response);
+      }, 1);
+
+      // colors.add({ color: color, label: color });
+    })
+    this.colors = colors;
+  }
+
+  render() {
+    super.render();
+    this.gridView.items.bindTo(this.colors).using(this.mapColor());
   }
 
   add = (color: Color) => {
-    this.colors.add({ ...color });
+    /*setTimeout(() => {
+      this.colors.add(color);
+    }, 500)*/
   }
 
   getLabel(): LabelView {
