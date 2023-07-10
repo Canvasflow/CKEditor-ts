@@ -169,7 +169,6 @@ export class ColorView extends View {
       class: className,
       withText: true,
     });
-
     return button;
   }
 
@@ -197,7 +196,6 @@ class ColorsGridView extends View {
   private viewer: ColorViewer;
   private label: string;
   public gridView: ColorGridView;
-
   colors: Collection<Color>;
 
   constructor(viewer: ColorViewer, label: string, input: Array<Color>) {
@@ -271,7 +269,6 @@ class ColorsGridView extends View {
   mapColor() {
     const { onClickColor, locale, viewer } = this;
     const { selectedColor } = viewer;
-    console.log("selected color: ", selectedColor);
     return (color: Color): ColorTileView => {
       const colorTileView = new ColorTileView(locale);
       colorTileView.label = color.label;
@@ -288,13 +285,17 @@ class ColorsGridView extends View {
     const view: ColorTileView = evt.source as any;
     const { color } = view;
     onSetColor(color!);
+    this.selectColor(color!);
   };
 
   selectColor = (color: string) => {
-    console.log("selected color: ", color);
     this.viewer.selectedColor = color;
-    // this.mapColor();
-    //  this.clearColor();
+    this.gridView.items.map((value) => {
+      value.class = "";
+      if (value.color === color) {
+        value.class = "selected-color";
+      }
+    });
   };
 
   clearColor = () => {
