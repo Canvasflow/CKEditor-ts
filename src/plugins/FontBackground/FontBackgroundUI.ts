@@ -18,7 +18,6 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
   static viewName = "backgroundColor";
   selectedColor: string = "";
   editor: CanvasflowEditor;
-  balloon: any;
   textFontColorView: ColorView;
   locale?: Locale;
   attribute: ColorViewerType = "backgroundColor";
@@ -32,15 +31,7 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
     this.editor = editor;
     this.colors = editor.fontBackground!;
     this.locale = this.editor.locale;
-    this.balloon = this.editor.plugins.get(ContextualBalloon);
-
     this.textFontColorView = new ColorView(this);
-    clickOutsideHandler({
-      emitter: this.textFontColorView,
-      activator: () => this.balloon.visibleView === this.textFontColorView,
-      contextElements: [this.balloon.view.element],
-      callback: () => this.hideUI(),
-    });
     this.editor.ui.componentFactory.add(FontBackgroundUI.viewName, () => {
       return new ColorView(this);
     });
@@ -96,16 +87,4 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
     }
     colors.customColor.push({ label: color, color: color });
   };
-
-  private hideUI() {
-    const input: HTMLInputElement | null = document.getElementById(
-      "background-color-picker",
-    ) as HTMLInputElement;
-    const visibility = input.getAttribute("style");
-    if (visibility !== "visibility: hidden") {
-      this.balloon.remove(this.textFontColorView);
-    } else {
-      input.setAttribute("style", "");
-    }
-  }
 }

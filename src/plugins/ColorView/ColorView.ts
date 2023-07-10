@@ -38,6 +38,10 @@ export class ColorView extends View {
       colors,
     );
 
+    this.on("change:isRendered", (evt) => {
+      console.log("here in change:isRendered", evt);
+    });
+
     this.colors = colors;
     this.removeColorButton = this.getRemoveColorView();
     this.defaultColorsGridView = this.getDefaultColorView();
