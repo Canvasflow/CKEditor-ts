@@ -83,7 +83,7 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
   }
 
   private setColor = (color: string) => {
-    const colors = this.editor.colors;
+    const colors = this.editor.fontBackground;
     if (!colors) {
       return;
     }
@@ -95,7 +95,6 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
       return;
     }
     colors.customColor.push({ label: color, color: color });
-    console.log(this.editor.fontBackground);
   };
 
   private hideUI() {

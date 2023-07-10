@@ -31,7 +31,12 @@ export class ColorView extends View {
     super(locale);
     this.viewer = viewer;
     this.items = this.createCollection();
-    console.log("THIS VIEW IS CREATED BY: ", this.viewer.attribute);
+    console.log(
+      "THIS VIEW IS CREATED BY: ",
+      this.viewer.attribute,
+      " with: ",
+      colors,
+    );
 
     this.colors = colors;
     this.removeColorButton = this.getRemoveColorView();
@@ -213,16 +218,18 @@ class ColorsGridView extends View {
       children: [this.getLabel(), this.gridView],
     });
 
-    /* DESCOMENTAR */
-    // this.viewer.editor.addEventListener(
-    //   "colors:addCustomColor",
-    //   (color: any) => {
-    //     setTimeout(() => {
-    //       const response = { color: color.color, label: color.color };
-    //       this.colors.add(response);
-    //     }, 1);
-    //   },
-    // );
+    this.viewer.editor.addEventListener(
+      this.viewer.attribute === "fontColor"
+        ? "colors:addCustomColor"
+        : "colors:addCustomBackgroundColor",
+      (color: any) => {
+        setTimeout(() => {
+          const response = { color: color.color, label: color.color };
+          this.colors.add(response);
+        }, 1);
+      },
+    );
+
     this.colors = colors;
   }
 
