@@ -69,8 +69,10 @@ export class ColorView extends View {
 
   resetCustomColorCollection() {
     this.customColorsGridView.colors.clear();
-    const customColors = this.customColorsGridView.getUniqueColors(this.colors.customColor)
-    this.customColorsGridView.colors.addMany(customColors)
+    const customColors = this.customColorsGridView.getUniqueColors(
+      this.colors.customColor,
+    );
+    this.customColorsGridView.colors.addMany(customColors);
   }
 
   private onSelectionChange = () => {
@@ -136,7 +138,9 @@ export class ColorView extends View {
     clearButton.class = "clear-color-button";
     clearButton.on("execute", () => {
       this.viewer.onClearColor();
+      this.setGridsSelectedColor("");
     });
+
     return clearButton;
   }
 
