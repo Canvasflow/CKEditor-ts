@@ -213,15 +213,16 @@ class ColorsGridView extends View {
       children: [this.getLabel(), this.gridView],
     });
 
-    this.viewer.editor.addEventListener(
-      "colors:addCustomColor",
-      (color: any) => {
-        setTimeout(() => {
-          const response = { color: color.color, label: color.color };
-          this.colors.add(response);
-        }, 1);
-      },
-    );
+    /* DESCOMENTAR */
+    // this.viewer.editor.addEventListener(
+    //   "colors:addCustomColor",
+    //   (color: any) => {
+    //     setTimeout(() => {
+    //       const response = { color: color.color, label: color.color };
+    //       this.colors.add(response);
+    //     }, 1);
+    //   },
+    // );
     this.colors = colors;
   }
 
@@ -267,14 +268,11 @@ class ColorsGridView extends View {
   }
 
   mapColor() {
-    const { onClickColor, locale, viewer } = this;
-    const { selectedColor } = viewer;
+    const { onClickColor, locale } = this;
     return (color: Color): ColorTileView => {
       const colorTileView = new ColorTileView(locale);
       colorTileView.label = color.label;
       colorTileView.color = color.color;
-      colorTileView.class =
-        selectedColor === color.color ? "selected-color" : "";
       colorTileView.on("execute", onClickColor);
       return colorTileView;
     };
@@ -295,13 +293,6 @@ class ColorsGridView extends View {
       if (value.color === color) {
         value.class = "selected-color";
       }
-    });
-  };
-
-  clearColor = () => {
-    this.gridView.items.map((value) => {
-      value.class = "";
-      return value;
     });
   };
 }
