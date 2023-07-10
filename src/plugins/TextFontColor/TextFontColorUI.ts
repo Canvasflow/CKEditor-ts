@@ -34,7 +34,16 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
 
     this.textFontColorView = new ColorView(this);
     this.editor.ui.componentFactory.add(TextFontColorUI.viewName, () => {
-      return new ColorView(this);
+      const view = new ColorView(this);
+      const querySelector = `[data-cke-tooltip-text="Font Color"]`;
+      const node: HTMLButtonElement | null = document.querySelector(querySelector);
+      if (node) {
+        node.onclick = () => {
+          console.log(`Listener font color`)
+          view.resetCustomColorCollection();
+        }
+      }
+      return view;
     });
   }
 

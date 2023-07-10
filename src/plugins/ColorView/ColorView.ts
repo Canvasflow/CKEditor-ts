@@ -2,7 +2,6 @@ import {
   View,
   submitHandler,
   LabelView,
-  ViewCollection,
   ButtonView,
   InputView,
   ColorGridView,
@@ -15,7 +14,6 @@ import remove from "../../assets/icons/removeColor.svg?raw";
 
 export class ColorView extends View {
   private viewer: ColorViewer;
-  private items: ViewCollection;
   private removeColorButton?: ButtonView;
   private selectColorButton?: ButtonView;
   private colorInput?: InputView;
@@ -30,7 +28,7 @@ export class ColorView extends View {
     const { document } = model;
     super(locale);
     this.viewer = viewer;
-    this.items = this.createCollection();
+    const items = this.createCollection();
     console.log(
       "THIS VIEW IS CREATED BY: ",
       this.viewer.attribute,
@@ -38,7 +36,9 @@ export class ColorView extends View {
       colors,
     );
 
-    this.on("change:isRendered", (evt) => {
+    this.on("render", (evt) => {
+      console.log(`ITEMS`, items);
+      console.log(`ELEMENT`, this.element?.parentNode);
       console.log("here in change:isRendered", evt);
     });
 
@@ -49,7 +49,7 @@ export class ColorView extends View {
     this.selectColorButton = this.getSelectColorView();
     this.colorInput = this.getInputColorView();
 
-    this.items.addMany([
+    items.addMany([
       this.removeColorButton,
       this.defaultColorsGridView,
       this.customColorsGridView,
@@ -61,10 +61,16 @@ export class ColorView extends View {
       attributes: {
         class: ["ck", "ck-colors"],
       },
-      children: this.items,
+      children: items,
     });
 
     document.selection.on("change:range", this.onSelectionChange);
+  }
+
+  resetCustomColorCollection() {
+    this.customColorsGridView.colors.clear();
+    const customColors = this.customColorsGridView.getUniqueColors(this.colors.customColor)
+    this.customColorsGridView.colors.addMany(customColors)
   }
 
   private onSelectionChange = () => {

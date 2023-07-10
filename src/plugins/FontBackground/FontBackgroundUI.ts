@@ -33,7 +33,16 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
     this.locale = this.editor.locale;
     this.textFontColorView = new ColorView(this);
     this.editor.ui.componentFactory.add(FontBackgroundUI.viewName, () => {
-      return new ColorView(this);
+      const view = new ColorView(this);
+      const querySelector = `[data-cke-tooltip-text="Background Color"]`;
+      const node: HTMLButtonElement | null = document.querySelector(querySelector);
+      if (node) {
+        node.onclick = () => {
+          console.log(`Listener background color`)
+          view.resetCustomColorCollection();
+        }
+      }
+      return view;
     });
   }
 
