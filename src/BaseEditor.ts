@@ -58,6 +58,7 @@ export interface Colors {
 export interface Color {
   color: string;
   label: string;
+  selected?: boolean;
 }
 
 export interface PageLinkSource {

@@ -16,7 +16,10 @@ if (typeof window !== "undefined") {
   };
 }
 
-const customColor = [{ color: "teal", label: "teal" }];
+const customColor = [
+  { color: "yellow", label: "bright yellow" },
+  { color: "grey", label: "dark grey" },
+];
 const customBackgroundColor = [{ color: "orange", label: "orange" }];
 
 const config = {
