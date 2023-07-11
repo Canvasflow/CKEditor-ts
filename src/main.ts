@@ -16,7 +16,11 @@ if (typeof window !== "undefined") {
   };
 }
 
-const customColor = [{ color: "teal", label: "teal" }];
+const customColor = [
+  { color: "yellow", label: "bright yellow" },
+  { color: "grey", label: "dark grey" },
+];
+const customBackgroundColor = [{ color: "orange", label: "orange" }];
 
 const config = {
   pageLinkSources: [
@@ -30,11 +34,7 @@ const config = {
     },
   ],
   fontFamily: {
-    options: [
-      "default",
-      "Ubuntu, Arial, sans-serif",
-      "Ubuntu Mono, Courier New, Courier, monospace",
-    ],
+    options: ["Georgia", "Ubuntu, Arial, sans-serif", "Times New Roman"],
   },
   fontSize: {
     options: Array.from({ length: 70 }, (_, i) => i + 8),
@@ -50,41 +50,41 @@ const config = {
       { color: "magenta", label: "magenta" },
       { color: "grey", label: "grey" },
       { color: "green", label: "green" },
-      { color: "silver", label: "silver" },
+      { color: "#c3c3c3", label: "silver" },
     ],
     customColor,
   },
   fontBackground: {
     defaultColor: [{ color: "red", label: "red" }],
-    customColor,
+    customColor: customBackgroundColor,
   },
 };
 
 TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
   .then((editor) => {
     createListeners(editor);
-    editor.addEventListener("colors:addCustomColor", (evt: any) => {
-      const { color } = evt;
-      console.log(`addCustomColor:`, color);
-      customColor.push({ color, label: "" });
-    });
+    // editor.addEventListener("colors:addCustomColor", (evt: any) => {
+    //   const { color } = evt;
+    //   console.log(`addCustomColor:`, color);
+    //   customColor.push({ color, label: "" });
+    // });
   })
   .catch((error) => {
     console.error(error);
   });
 
-TextEditor.create(document.querySelector("#editor2") as HTMLElement, config)
-  .then((editor) => {
-    createListeners(editor);
-    editor.addEventListener("colors:addCustomColor", (evt: any) => {
-      const { color } = evt;
-      console.log(`addCustomColor:`, color);
-      customColor.push({ color, label: "" });
-    });
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+// TextEditor.create(document.querySelector("#editor2") as HTMLElement, config)
+//   .then((editor) => {
+//     //  createListeners(editor);
+//     // editor.addEventListener("colors:addCustomColor", (evt: any) => {
+//     //   const { color } = evt;
+//     //   console.log(`addCustomColor:`, color);
+//     //   customColor.push({ color, label: "" });
+//     // });
+//   })
+//   .catch((error) => {
+//     console.error(error);
+//   });
 
 async function fetchAnchors(id: string): Promise<Array<PageAnchorSource>> {
   if (id === "1111") {

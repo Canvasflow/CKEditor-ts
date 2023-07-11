@@ -18,6 +18,8 @@ import {
   SpecialCharacters,
   SpecialCharactersEssentials,
 } from "@ckeditor/ckeditor5-special-characters";
+
+/*CUSTOM PLUGINS*/
 import { DarkMode } from "./plugins/DarkMode/DarkMode";
 import { PageLink } from "./plugins/PageLink/PageLink";
 import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
@@ -29,6 +31,17 @@ import { FontBackground } from "./plugins/FontBackground/FontBackground";
 import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 import { TextSize } from "./plugins/TextSize/TextSize";
+import { FontFamily } from "./plugins/FontFamily/FontFamily";
+import { FontStyles } from "./plugins/FontStyles/FontStyles";
+
+// Views
+import { FontFamilyView } from "./plugins/FontFamily/FontFamilyView";
+import { BoldView } from "./plugins/FontStyles/BoldView";
+import { ItalicView } from "./plugins/FontStyles/ItalicView";
+import { StrikethroughView } from "./plugins/FontStyles/StrikethroughView";
+import { SubscriptView } from "./plugins/FontStyles/SubscriptView";
+import { SuperscriptView } from "./plugins/FontStyles/SuperscriptView";
+import { UnderlineView } from "./plugins/FontStyles/UnderlineView";
 
 import {
   Image,
@@ -45,6 +58,9 @@ import fontStyles from "./assets/icons/fontStyles.svg?raw";
 import lists from "./assets/icons/lists.svg?raw";
 import textTransform from "./assets/icons/textFormatting.svg?raw";
 import other from "./assets/icons/other.svg?raw";
+import fontColor from "./assets/icons/fontColor.svg?raw";
+import backgroundColor from "./assets/icons/fontBackground.svg?raw";
+import { TextSizeComponent } from "./plugins/TextSize/TextSizeComponent";
 
 export class TextEditor extends BaseEditor {
   constructor(
@@ -77,6 +93,9 @@ export class TextEditor extends BaseEditor {
     super(sourceElementOrData, config);
     if (config.colors) {
       this.colors = config.colors;
+    }
+    if (config.fontFamily?.options) {
+      this.fonts = config.fontFamily?.options;
     }
     if (config.fontBackground) {
       this.fontBackground = config.fontBackground;
@@ -119,28 +138,38 @@ const PLUGINS = [
   TextFontColor,
   RemoveFormat,
   TextSize,
+  FontFamily,
+  FontStyles,
 ];
 
 const TOOLBAR = [
-  // "textSize",
-  "fontFamily",
-  "fontSize",
+  FontFamilyView.viewName,
+  //"fontSize",
   "|",
-  // "colorPicker",
+  TextSizeComponent.viewName,
+  "|",
   {
     label: "Font Styles",
     icon: fontStyles,
     items: [
-      "bold",
-      "italic",
-      "underline",
-      "strikethrough",
-      "subscript",
-      "superscript",
+      BoldView.viewName,
+      ItalicView.viewName,
+      UnderlineView.viewName,
+      StrikethroughView.viewName,
+      SubscriptView.viewName,
+      SuperscriptView.viewName,
     ],
   },
-  "textFontColor",
-  "backgroundColor",
+  {
+    label: "Font Color",
+    icon: fontColor,
+    items: ["textFontColor"],
+  },
+  {
+    label: "Background Color",
+    icon: backgroundColor,
+    items: ["backgroundColor"],
+  },
   "ClearFormatting",
   "|",
   {

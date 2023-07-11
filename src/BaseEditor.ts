@@ -7,6 +7,7 @@ export default abstract class BaseEditor extends BalloonEditor {
   colors?: Colors;
   fontBackground?: Colors;
   subscribers: Map<string, Function> = new Map();
+  fonts: Array<string> = [];
   protected constructor(
     sourceElementOrData: HTMLElement | string,
     config?: TextEditorConfig,
@@ -57,6 +58,7 @@ export interface Colors {
 export interface Color {
   color: string;
   label: string;
+  selected?: boolean;
 }
 
 export interface PageLinkSource {

@@ -1,72 +1,50 @@
-import {
-  View,
-  ViewCollection,
-  ButtonView,
-  InputView,
-} from "@ckeditor/ckeditor5-ui";
-
-import { Locale } from "@ckeditor/ckeditor5-utils";
-import minus from "./minusIcon.svg?raw";
-import plus from "./plusIcon.svg?raw";
+import { View } from "@ckeditor/ckeditor5-ui";
+import { TextSizeViewer } from "./TextSizeComponent";
 
 export class TextSizeView extends View {
-  private items: ViewCollection;
-  private iconButton?: ButtonView;
-
+  static viewName = "fontSizeInputCF";
+  declare value: string;
   constructor(viewer: TextSizeViewer) {
-    super(viewer.locale);
-    this.items = this.createCollection();
-    this.initItems();
-  }
+    const { min, max, step, editor, onChange } = viewer;
+    const { locale } = editor;
+    super(locale);
 
-  private initItems() {
-    this.items.add(this.createButton("", minus));
-    this.items.add(this.createInput());
-    this.items.add(this.createButton("", plus));
-  }
+    const bind = this.bindTemplate;
+    this.set("value", "");
 
-  private createButton(label: string, icon: any) {
-    this.iconButton = this.createButtonObject(label, icon, "");
-    // this.iconButton.type = "submit";
-    this.iconButton.isEnabled = true;
-    return this.iconButton;
-  }
-
-  private createButtonObject(label: any, icon: any, className: any) {
-    const button = new ButtonView();
-    button.set({
-      label,
-      icon,
-      tooltip: true,
-      class: className,
-      withText: true,
-    });
-
-    return button;
-  }
-
-  private createInput() {
-    const input = new InputView(this.locale);
-    input.id = "text-size-input";
-    input.value = "12";
-    return input;
-  }
-
-  /**
-   * Insert elements into DOM
-   *
-   */
-  showView() {
     this.setTemplate({
-      tag: "form",
+      tag: "input",
       attributes: {
-        class: ["ck", "ck-page", "font-size"],
+        type: "number",
+        value: bind.to("value"),
+        tabindex: 0,
+        min,
+        max,
+        step,
+        style: {
+          width: "35px",
+          border: "1px solid #c3c3c3",
+          borderRadius: "4px",
+          margin: "0px 0px",
+          paddingLeft: "10px",
+        },
       },
-      children: this.items,
+    });
+
+    this.on("change:value", (evt) => {
+      if (!evt.source) {
+        return;
+      }
+      const source: any = evt.source;
+      const value = `${source.value}`;
+      onChange(`${value}`);
+    });
+
+    this.on("render", () => {
+      this.element!.addEventListener("change", (evt: any) => {
+        const { target } = evt;
+        this.set("value", `${target.value}`);
+      });
     });
   }
-}
-
-export interface TextSizeViewer {
-  locale?: Locale;
 }
