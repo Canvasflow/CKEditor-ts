@@ -1,10 +1,10 @@
 # CHANGELOG
 
-## 🏷️ 1.0.4
+## 🏷️ 1.1.3
 
 _July 11, 2023_
 
-🚧 Overall performance
+♻️ Overall performance
 
 - Improved a lot of the functionalities
 - Code clean up
