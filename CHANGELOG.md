@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 🏷️ 1.0.4
+
+_July 11, 2023_
+
+🚧 Overall performance
+
+- Improved a lot of the functionalities
+- Code clean up
+
 ## 🏷️ 1.0.3
 
 _June 29, 2023_

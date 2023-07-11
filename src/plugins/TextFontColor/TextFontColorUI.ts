@@ -1,5 +1,5 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
-import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
+import { ContextualBalloon } from "@ckeditor/ckeditor5-ui";
 
 import {
   ColorView,

@@ -1,5 +1,5 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
-import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
+import { ContextualBalloon } from "@ckeditor/ckeditor5-ui";
 
 import {
   ColorView,
@@ -35,12 +35,13 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
     this.editor.ui.componentFactory.add(FontBackgroundUI.viewName, () => {
       const view = new ColorView(this);
       const querySelector = `[data-cke-tooltip-text="Background Color"]`;
-      const node: HTMLButtonElement | null = document.querySelector(querySelector);
+      const node: HTMLButtonElement | null =
+        document.querySelector(querySelector);
       if (node) {
         node.onclick = () => {
-          console.log(`Listener background color`)
+          console.log(`Listener background color`);
           view.resetCustomColorCollection();
-        }
+        };
       }
       return view;
     });
