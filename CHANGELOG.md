@@ -1,13 +1,31 @@
 # CHANGELOG
 
+## 🏷️ 1.1.4
+
+_July 11, 2023_
+
+📝 Docs
+
+- Updated documentation
+
 ## 🏷️ 1.1.3
 
 _July 11, 2023_
 
-♻️ Overall performance
+♻️ Refactor
 
-- Improved a lot of the functionalities
-- Code clean up
+- Font Color
+- Font Background
+
+✨ Features
+
+- Italic replaces attribute instead of adding
+- Bold replaces attribute instead of adding
+- Striketrough replaces attribute instead of adding
+- Underline replaces attribute instead of adding
+- Superscript replaces attribute instead of adding
+- Subscript replaces attribute instead of adding
+- Custom Font size plugin
 
 ## 🏷️ 1.0.3
 
