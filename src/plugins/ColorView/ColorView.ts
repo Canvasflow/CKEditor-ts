@@ -30,18 +30,18 @@ export class ColorView extends View {
     super(locale);
     this.viewer = viewer;
     const items = this.createCollection();
-    console.log(
-      "THIS VIEW IS CREATED BY: ",
-      this.viewer.attribute,
-      " with: ",
-      colors,
-    );
+    // console.log(
+    //   "THIS VIEW IS CREATED BY: ",
+    //   this.viewer.attribute,
+    //   " with: ",
+    //   colors,
+    // );
 
-    this.on("render", (evt) => {
-      console.log(`ITEMS`, items);
-      console.log(`ELEMENT`, this.element?.parentNode);
-      console.log("here in change:isRendered", evt);
-    });
+    // this.on("render", (evt) => {
+    //   console.log(`ITEMS`, items);
+    //   console.log(`ELEMENT`, this.element?.parentNode);
+    //   console.log("here in change:isRendered", evt);
+    // });
 
     this.colors = colors;
     this.removeColorButton = this.getRemoveColorView();
@@ -129,7 +129,7 @@ export class ColorView extends View {
 
   setGridsSelectedColor(color: string) {
     this.selectedColor = color;
-    console.log("selected color: ", color);
+    //  console.log("selected color: ", color);
 
     this.defaultColorsGridView?.selectColor(color);
     this.customColorsGridView?.selectColor(color);
@@ -242,8 +242,8 @@ class ColorsGridView extends View {
 
     this.viewer.editor.addEventListener(
       this.viewer.attribute === "fontColor"
-        ? "colors:addCustomColor"
-        : "colors:addCustomBackgroundColor",
+        ? "colors:addCustomColorToView"
+        : "colors:addCustomBackgroundColorToView",
       (color: any) => {
         setTimeout(() => {
           const response = { color: color.color, label: color.color };
