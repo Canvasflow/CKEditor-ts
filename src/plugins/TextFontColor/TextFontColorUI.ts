@@ -79,6 +79,7 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
           color,
         };
         this.editor.dispatch("colors:addCustomColor", evt);
+        this.editor.dispatch("colors:addCustomColorToView", evt);
       }
     };
     input?.click();
