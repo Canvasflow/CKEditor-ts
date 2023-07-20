@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 🏷️ 1.1.5
+
+_July 11, 2023_
+
+🐛 events name conflict
+
+- Updated event names
+- Added Background color events
+
 ## 🏷️ 1.1.4
 
 _July 11, 2023_
