@@ -78,6 +78,7 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
           color,
         };
         this.editor.dispatch("colors:addCustomBackgroundColor", evt);
+        this.editor.dispatch("colors:addCustomBackgroundColorToView", evt);
       }
     };
     input?.click();

@@ -6,6 +6,10 @@ export function createListeners(editor: TextEditor) {
     const { color } = evt;
     console.log(`addCustomColor:`, color);
   });
+  editor.addEventListener("colors:addCustomColorToView", (evt: any) => {
+    const { color } = evt;
+    console.log(`addCustomColorToView:`, color);
+  });
   editor.addEventListener("colors:removeCustomColor", (evt: any) => {
     const { color } = evt;
     console.log(`removeCustomColor:`, color);
@@ -14,6 +18,19 @@ export function createListeners(editor: TextEditor) {
     const { color } = evt;
     console.log(`selectedDefaultColor:`, color);
   });
+
+  //BACKGROUND COLOR
+  editor.addEventListener("colors:addCustomBackgroundColor", (evt: any) => {
+    const { color } = evt;
+    console.log(`addCustomBackgroundColor:`, color);
+  });
+  editor.addEventListener(
+    "colors:addCustomBackgroundColorToView",
+    (evt: any) => {
+      const { color } = evt;
+      console.log(`addCustomBackgroundColorToView:`, color);
+    },
+  );
 
   //PAGE LINKS
   editor.addEventListener("pageLink:selectedPage", (evt: any) => {
