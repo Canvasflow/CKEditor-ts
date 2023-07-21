@@ -129,7 +129,6 @@ export class ColorView extends View {
 
   setGridsSelectedColor(color: string) {
     this.selectedColor = color;
-    //  console.log("selected color: ", color);
 
     this.defaultColorsGridView?.selectColor(color);
     this.customColorsGridView?.selectColor(color);
@@ -166,6 +165,7 @@ export class ColorView extends View {
       this.viewer,
       "Default Color",
       this.colors!.defaultColor,
+      false,
     );
   }
 
@@ -174,6 +174,7 @@ export class ColorView extends View {
       this.viewer,
       "Custom Color",
       this.colors!.customColor,
+      true,
     );
   }
 
@@ -225,7 +226,12 @@ class ColorsGridView extends View {
   colors: Collection<Color>;
   selectedColor?: string;
 
-  constructor(viewer: ColorViewer, label: string, input: Array<Color>) {
+  constructor(
+    viewer: ColorViewer,
+    label: string,
+    input: Array<Color>,
+    isCustom: boolean = false,
+  ) {
     const { locale } = viewer.editor;
     super(locale);
     this.viewer = viewer;
@@ -240,17 +246,19 @@ class ColorsGridView extends View {
       children: [this.getLabel(), this.gridView],
     });
 
-    this.viewer.editor.addEventListener(
-      this.viewer.attribute === "fontColor"
-        ? "colors:addCustomColorToView"
-        : "colors:addCustomBackgroundColorToView",
-      (color: any) => {
-        setTimeout(() => {
-          const response = { color: color.color, label: color.color };
-          this.colors.add(response);
-        }, 1);
-      },
-    );
+    if (isCustom) {
+      this.viewer.editor.addEventListener(
+        this.viewer.attribute === "fontColor"
+          ? "colors:addCustomColor"
+          : "colors:addCustomBackgroundColor",
+        (color: any) => {
+          setTimeout(() => {
+            const response = { color: color.color, label: color.color };
+            this.colors.add(response);
+          }, 1);
+        },
+      );
+    }
 
     this.colors = colors;
   }
@@ -321,12 +329,5 @@ class ColorsGridView extends View {
     for (const c of this.colors) {
       c.selected = c.color === color;
     }
-
-    // this.gridView.items.map((value) => {
-    //   value.class = "";
-    //   if (value.color === color) {
-    //     value.class = "selected-color";
-    //   }
-    // });
   };
 }

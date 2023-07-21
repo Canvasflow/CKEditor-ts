@@ -63,11 +63,6 @@ const config = {
 TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
   .then((editor) => {
     createListeners(editor);
-    editor.addEventListener("colors:addCustomColor", (evt: any) => {
-      const { color } = evt;
-      console.log(`addCustomColor:`, color);
-      customColor.push({ color, label: "" });
-    });
   })
   .catch((error) => {
     console.error(error);
@@ -76,11 +71,6 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
 TextEditor.create(document.querySelector("#editor2") as HTMLElement, config)
   .then((editor) => {
     createListeners(editor);
-    editor.addEventListener("colors:addCustomColor", (evt: any) => {
-      const { color } = evt;
-      console.log(`addCustomColor:`, color);
-      customColor.push({ color, label: "" });
-    });
   })
   .catch((error) => {
     console.error(error);
