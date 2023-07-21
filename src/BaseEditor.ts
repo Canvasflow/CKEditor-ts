@@ -6,7 +6,7 @@ export default abstract class BaseEditor extends BalloonEditor {
   anchorFn?: AnchorFn;
   colors?: Colors;
   fontBackground?: Colors;
-  subscribers: Map<string, Function> = new Map();
+  subscribers: Map<string, Array<Function>> = new Map();
   fonts: Array<string> = [];
   protected constructor(
     sourceElementOrData: HTMLElement | string,
@@ -26,15 +26,21 @@ export default abstract class BaseEditor extends BalloonEditor {
   }
 
   addEventListener(key: string, cb: Function) {
-    this.subscribers.set(key, cb);
+    if (!this.subscribers.has(key)) {
+      this.subscribers.set(key, []);
+    }
+    const suscribers = this.subscribers.get(key);
+    suscribers?.push(cb);
   }
 
   dispatch(key: string, event?: EditorEvents) {
-    const cb = this.subscribers.get(key);
-    if (!cb) {
+    const cbs = this.subscribers.get(key);
+    if (!cbs) {
       return;
     }
-    cb(event);
+    for (const cb of cbs) {
+      cb(event);
+    }
   }
 }
 

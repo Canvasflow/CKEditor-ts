@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 🏷️ 1.2.0
+
+_July 21, 2023_
+
+♻️ Refactor
+
+- Support for array of functions in Event Listeners
+- Removed unused events
+- Default color wont listen to the add color event
+
 ## 🏷️ 1.1.5
 
 _July 11, 2023_
