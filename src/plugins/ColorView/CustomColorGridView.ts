@@ -2,7 +2,7 @@ import {
     ColorGridView,
     ColorTileView,
 } from "@ckeditor/ckeditor5-ui";
-import { Locale, Collection, GetCallback, BaseEvent, EventInfo } from "@ckeditor/ckeditor5-utils";
+import { Locale, Collection, GetCallback, BaseEvent } from "@ckeditor/ckeditor5-utils";
 import { Color } from "../../BaseEditor";
 
 export class CustomColorGridView extends ColorGridView {
@@ -33,6 +33,7 @@ export class CustomColorGridView extends ColorGridView {
     }
 
     selectColor(color: string) {
+        this.selectedColor = color;
         for (const c of this.colors) {
             c.selected = c.color === color;
         }

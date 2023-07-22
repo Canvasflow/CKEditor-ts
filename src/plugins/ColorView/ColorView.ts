@@ -3,7 +3,6 @@ import {
   submitHandler,
   LabelView,
   ButtonView,
-  InputView,
   ColorTileView,
 } from "@ckeditor/ckeditor5-ui";
 import { CustomColorGridView } from './CustomColorGridView';
@@ -111,8 +110,8 @@ export class ColorView extends View {
   setGridsSelectedColor(color: string) {
     this.selectedColor = color;
 
-    this.defaultColorsGridView?.selectColor(color);
-    this.customColorsGridView?.selectColor(color);
+    this.defaultColorsGridView.selectColor(color);
+    this.customColorsGridView.selectColor(color);
   }
 
   private getRemoveColorView(): ButtonView {
@@ -268,6 +267,7 @@ class ColorsGridView extends View {
     const { onSetColor } = this.viewer;
     const view: ColorTileView = evt.source as any;
     const { color } = view;
+    console.log(`COLOR: ${color}`);
     onSetColor(color!);
     this.gridView.selectColor(color!);
   };
