@@ -41,11 +41,15 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
       if (node) {
         node.onclick = () => {
           console.log(`Listener font color`);
-          view.resetCustomColorCollection();
         };
       }
       return view;
     });
+
+    this.on('add:color', (_, color: any) => {
+      console.log(`IN THE CONSTRUCTOR`, color)
+      this.textFontColorView.addColor(color);
+    })
   }
 
   static get requires() {
@@ -78,6 +82,7 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
         const evt: AddCustomColorEvent = {
           color,
         };
+        this.fire('add:color', { color: color, label: color })
         this.editor.dispatch("colors:addCustomColor", evt);
       }
     };
@@ -85,17 +90,8 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
   }
 
   private setColor = (color: string) => {
-    const colors = this.editor.colors;
-    if (!colors) {
-      return;
-    }
-    const findList = colors.customColor.find((value: any) => {
-      if (value.color === color) return value;
-    });
+    console.log(`I add to custom text color: ${color}`)
+    // this.textFontColorView.customColorsGridView.gridView.add({ label: color, color: color });
 
-    if (findList) {
-      return;
-    }
-    colors.customColor.push({ label: color, color: color });
   };
 }
