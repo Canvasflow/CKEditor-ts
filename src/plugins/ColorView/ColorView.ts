@@ -127,9 +127,7 @@ export class ColorView extends View {
     clearButton.type = "button";
     clearButton.class = "clear-color-button";
     clearButton.on("execute", () => {
-
-      this.viewer.onClearColor();
-      this.setGridsSelectedColor("");
+      this.clearAllColors();
     });
 
     return clearButton;
@@ -187,6 +185,46 @@ export class ColorView extends View {
       withText: true,
     });
     return button;
+  }
+
+  clearSelectedColor(color: string) {
+    let found = false;
+    this.defaultColorsGridView?.gridView.items.map((value) => {
+      if (value.class === "selected-color" && value.color !== color) {
+        found = true;
+        value.class = "";
+        return;
+      }
+    });
+    if (!found) {
+      this.customColorsGridView?.gridView.items.map((value) => {
+        if (value.class === "selected-color" && value.color !== color) {
+          found = true;
+          value.class = "";
+          return;
+        }
+      });
+    }
+  }
+
+  clearAllColors() {
+    let found = false;
+    this.defaultColorsGridView?.gridView.items.map((value) => {
+      if (value.class === "selected-color") {
+        found = true;
+        value.class = "";
+        return;
+      }
+    });
+    if (!found) {
+      this.customColorsGridView?.gridView.items.map((value) => {
+        if (value.class === "selected-color") {
+          found = true;
+          value.class = "";
+          return;
+        }
+      });
+    }
   }
 
   render() {
