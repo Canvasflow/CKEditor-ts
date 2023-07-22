@@ -10,14 +10,12 @@ import { CustomColorGridView } from './CustomColorGridView';
 import { InputColorView } from './InputColorView';
 import { BaseEvent, GetCallback } from "@ckeditor/ckeditor5-utils";
 import CanvasflowEditor, { Colors, Color } from "../../BaseEditor";
-import picker from "../../assets/icons/colorPicker.svg?raw";
 import remove from "../../assets/icons/removeColor.svg?raw";
 
 export class ColorView extends View {
   private viewer: ColorViewer;
   private removeColorButton?: ButtonView;
-  private selectColorButton?: ButtonView;
-  private colorInput?: InputView;
+  private selectColorView?: InputColorView;
 
   colors: Colors;
   defaultColorsGridView: ColorsGridView;
@@ -36,21 +34,15 @@ export class ColorView extends View {
     this.removeColorButton = this.getRemoveColorView();
     this.defaultColorsGridView = this.getDefaultColorView();
     this.customColorsGridView = this.getCustomColorView();
-    this.selectColorButton = this.getSelectColorView();
-    // this.colorInput = this.getInputColorView();
-
+    this.selectColorView = new InputColorView({
+      locale, onChange: this.onAddColor
+    })
 
     items.addMany([
       this.removeColorButton,
       this.defaultColorsGridView,
       this.customColorsGridView,
-      this.selectColorButton,
-      // this.colorInput,
-      new InputColorView({
-        locale, onChange: (color: string) => {
-          this.customColorsGridView.gridView.add({ color: color, label: color });
-        }
-      })
+      this.selectColorView,
     ]);
     this.setTemplate({
       tag: "form",
@@ -61,6 +53,11 @@ export class ColorView extends View {
     });
 
     document.selection.on("change:range", this.onSelectionChange);
+  }
+
+  private onAddColor = (color: string) => {
+    this.viewer.onAddColor(color);
+    this.customColorsGridView.gridView.add({ color: color, label: color });
   }
 
   private onSelectionChange = () => {
@@ -133,18 +130,6 @@ export class ColorView extends View {
     return clearButton;
   }
 
-  private getSelectColorView(): ButtonView {
-    let pickerButton = this.createButton("Select color", picker, "");
-    pickerButton.type = "button";
-    pickerButton.class = "submit-color-button";
-    pickerButton.on("execute", () => {
-      this.addColor({ color: '#00f', label: '#00f' })
-      this.viewer.onPickColor();
-      console.log(pickerButton)
-    });
-    return pickerButton;
-  }
-
   addColor = (color: Color) => {
     this.customColorsGridView.gridView.add(color)
   }
@@ -163,16 +148,6 @@ export class ColorView extends View {
       "Custom Color",
       this.colors!.customColor,
     );
-  }
-
-  private getInputColorView(): InputView {
-    const colorInputView = new InputView(this.locale);
-    colorInputView.inputMode = 'color';
-    colorInputView.id =
-      this.viewer.attribute === "fontColor"
-        ? "font-color-picker"
-        : "background-color-picker";
-    return colorInputView;
   }
 
   private createButton(label: any, icon: any, className: any) {
@@ -242,7 +217,7 @@ export interface ColorViewer {
   onClearColor: () => void;
   onSetColor: (color: string) => void;
   selectedColor: string;
-  onPickColor: () => void;
+  onAddColor: (color: string) => void;
 }
 
 export type ColorViewerType = "fontColor" | "backgroundColor";

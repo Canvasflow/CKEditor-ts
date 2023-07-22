@@ -1,6 +1,10 @@
 .ck-input-color {
-    display: block;
-    min-height: 20px;
-    min-width: 100%;
-    background: red;
+    display: flex;
+    flex-direction: column;
+}
+
+.ck-input-color input{
+    max-height: 0;
+    width: 0;
+    visibility: hidden;
 }
