@@ -1,6 +1,7 @@
 import { TextEditorConfig, PageAnchorSource } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
 import { createListeners } from "./listeners";
+import { CustomEditor } from "./CustomEditor";
 declare global {
   interface Window {
     CanvasflowTextEditor: any;
@@ -60,7 +61,9 @@ const config = {
   },
 };
 
-TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
+CustomEditor.build(document.querySelector("#editor") as HTMLElement, config, [
+  "DarkMode",
+])
   .then((editor) => {
     createListeners(editor);
   })
@@ -68,13 +71,13 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
     console.error(error);
   });
 
-TextEditor.create(document.querySelector("#editor2") as HTMLElement, config)
-  .then((editor) => {
-    createListeners(editor);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+// TextEditor.create(document.querySelector("#editor2") as HTMLElement, config)
+//   .then((editor) => {
+//     createListeners(editor);
+//   })
+//   .catch((error) => {
+//     console.error(error);
+//   });
 
 async function fetchAnchors(id: string): Promise<Array<PageAnchorSource>> {
   if (id === "1111") {
