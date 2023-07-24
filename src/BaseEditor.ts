@@ -56,6 +56,19 @@ export interface TextEditorConfig extends EditorConfig {
   fontBackground?: Colors;
 }
 
+export interface CustomEditorConfig extends EditorConfig {
+  colors?: Colors;
+  pageLink?: {
+    source: Array<PageLinkSource>;
+    fetchAnchors?: AnchorFn;
+  };
+  pageLinkSources?: Array<PageLinkSource>;
+  fontFamily?: { options: Array<string> };
+  fetchAnchors?: AnchorFn;
+  fontBackground?: Colors;
+  components?: Array<string>;
+}
+
 export interface Colors {
   defaultColor: Array<Color>;
   customColor: Array<Color>;
