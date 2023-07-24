@@ -30,7 +30,7 @@ import { Capitalize } from "./plugins/Capitalize/Capitalize";
 import { FontBackground } from "./plugins/FontBackground/FontBackground";
 import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
-import { TextSize } from "./plugins/TextSize/TextSize";
+import { FontSize } from "./plugins/TextSize/FontSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
 import { FontStyles } from "./plugins/FontStyles/FontStyles";
 
@@ -137,7 +137,7 @@ const PLUGINS = [
   FontBackground,
   TextFontColor,
   RemoveFormat,
-  TextSize,
+  FontSize,
   FontFamily,
   FontStyles,
 ];

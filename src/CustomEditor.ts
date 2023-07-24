@@ -30,7 +30,7 @@ import { FontBackground } from "./plugins/FontBackground/FontBackground";
 import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
 import { ClearFormatting } from "./plugins/ClearFormatting/ClearFormatting";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
-import { TextSize } from "./plugins/TextSize/TextSize";
+import { FontSize } from "./plugins/TextSize/FontSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
 import { FontStyles } from "./plugins/FontStyles/FontStyles";
 
@@ -152,7 +152,7 @@ function getPluginConfig(plugin: string) {
 
     case "FontSize":
       return {
-        plugins: [Essentials, Paragraph, Font, TextSize],
+        plugins: [Essentials, Paragraph, Font, FontSize],
         toolbar: TextSizeComponent.viewName,
       };
 
