@@ -54,19 +54,7 @@ export interface TextEditorConfig extends EditorConfig {
   fontFamily?: { options: Array<string> };
   fetchAnchors?: AnchorFn;
   fontBackground?: Colors;
-}
-
-export interface CustomEditorConfig extends EditorConfig {
-  colors?: Colors;
-  pageLink?: {
-    source: Array<PageLinkSource>;
-    fetchAnchors?: AnchorFn;
-  };
-  pageLinkSources?: Array<PageLinkSource>;
-  fontFamily?: { options: Array<string> };
-  fetchAnchors?: AnchorFn;
-  fontBackground?: Colors;
-  components?: Array<string>;
+  toolbar?: Array<string | GroupItem>;
 }
 
 export interface Colors {
@@ -91,3 +79,9 @@ export interface PageAnchorSource {
 }
 
 export type AnchorFn = (id: string) => Promise<Array<PageAnchorSource>>;
+
+export interface GroupItem {
+  label: string;
+  icon: string;
+  items: Array<string>;
+}

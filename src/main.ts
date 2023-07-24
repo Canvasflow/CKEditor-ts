@@ -59,10 +59,12 @@ const config = {
     defaultColor: [{ color: "red", label: "red" }],
     customColor: customBackgroundColor,
   },
-  components: ["bold"],
 };
 
-CustomEditor.create(document.querySelector("#editor") as HTMLElement, config)
+CustomEditor.build(document.querySelector("#editor") as HTMLElement, config, [
+  "bold",
+  "ClearFormatting",
+])
   .then((editor) => {
     createListeners(editor);
   })

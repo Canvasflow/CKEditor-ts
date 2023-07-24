@@ -1,4 +1,4 @@
-import BaseEditor, { CustomEditorConfig } from "./BaseEditor";
+import BaseEditor, { TextEditorConfig, GroupItem } from "./BaseEditor";
 import { Essentials } from "@ckeditor/ckeditor5-essentials";
 import {
   Bold,
@@ -11,7 +11,7 @@ import {
 import { List } from "@ckeditor/ckeditor5-list";
 import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
 import { Font } from "@ckeditor/ckeditor5-font";
-import { Alignment, AlignmentConfig } from "@ckeditor/ckeditor5-alignment";
+import { Alignment } from "@ckeditor/ckeditor5-alignment";
 import { Link } from "@ckeditor/ckeditor5-link";
 import { Base64UploadAdapter } from "@ckeditor/ckeditor5-upload";
 import {
@@ -25,13 +25,13 @@ import { PageLink } from "./plugins/PageLink/PageLink";
 import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
 import { Uppercase } from "./plugins/Uppercase/Uppercase";
 import { Lowercase } from "./plugins/Lowercase/Lowercase";
-import { ClearFormatting } from "./plugins/ClearFormatting/ClearFormatting";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
 import { FontBackground } from "./plugins/FontBackground/FontBackground";
 import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
-// import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
-// import { TextSize } from "./plugins/TextSize/TextSize";
-// import { FontFamily } from "./plugins/FontFamily/FontFamily";
+import { ClearFormatting } from "./plugins/ClearFormatting/ClearFormatting";
+import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
+import { TextSize } from "./plugins/TextSize/TextSize";
+import { FontFamily } from "./plugins/FontFamily/FontFamily";
 import { FontStyles } from "./plugins/FontStyles/FontStyles";
 
 // Views
@@ -59,7 +59,7 @@ import { TextSizeComponent } from "./plugins/TextSize/TextSizeComponent";
 export class CustomEditor extends BaseEditor {
   constructor(
     sourceElementOrData: HTMLElement | string,
-    config?: CustomEditorConfig,
+    config?: TextEditorConfig,
   ) {
     console.log(`Custom canvaflow editor loaded`);
     if (!config) {
@@ -67,34 +67,12 @@ export class CustomEditor extends BaseEditor {
       return;
     }
 
-    config.plugins = PLUGINS;
-    config.toolbar = TOOLBAR;
+    if (config.toolbar) {
+      const build = buildPlugins(config.toolbar);
+      config.plugins = [...build.plugins];
+      config.toolbar = [...build.toolbar];
+    }
 
-    let ELEMENTS = { plugins: [], toolbar: [] };
-    console.log(TOOLBAR);
-
-    // if (config.components) {
-    //   ELEMENTS = buildPlugins(config.components);
-    // }
-
-    //config.plugins = Array.from(ELEMENTS.plugins);
-    //config.toolbar = Array.from(ELEMENTS.toolbar);
-
-    //  config.alignment = ALIGNMENT as AlignmentConfig;
-    //config.image = IMAGE;
-
-    // config.link = {
-    //   decorators: {
-    //     openInNewTab: {
-    //       mode: "manual",
-    //       label: "Open in a new tab",
-    //       attributes: {
-    //         target: "_blank",
-    //         rel: "noopener noreferrer",
-    //       },
-    //     },
-    //   },
-    // };
     super(sourceElementOrData, config);
     if (config.colors) {
       this.colors = config.colors;
@@ -106,9 +84,21 @@ export class CustomEditor extends BaseEditor {
       this.fontBackground = config.fontBackground;
     }
   }
+
+  static build(
+    sourceElementOrData: HTMLElement | string,
+    config: TextEditorConfig,
+    toolbar: Array<string | GroupItem>,
+  ): Promise<BaseEditor> {
+    config.toolbar = toolbar;
+    return super.create(sourceElementOrData, config) as Promise<BaseEditor>;
+  }
 }
 
-function buildPlugins(components: Array<string>) {
+function buildPlugins(components: Array<string | GroupItem>): {
+  plugins: Set<any>;
+  toolbar: Set<any>;
+} {
   let plugins = new Set();
   let toolbar = new Set();
   for (const plugin of components) {
@@ -118,7 +108,6 @@ function buildPlugins(components: Array<string>) {
     });
     toolbar.add(pluginConfig?.toolbar);
   }
-
   return { plugins, toolbar };
 }
 
@@ -128,44 +117,50 @@ function getPluginConfig(plugin: string) {
       return { plugins: [], toolbar: "|" };
 
     case "FontFamily":
-      return { plugins: [], toolbar: FontFamilyView.viewName };
+      return {
+        plugins: [Essentials, Paragraph, Font, FontFamily],
+        toolbar: FontFamilyView.viewName,
+      };
 
     case "FontSize":
-      return { plugins: [], toolbar: TextSizeComponent.viewName };
+      return {
+        plugins: [Essentials, Paragraph, Font, TextSize],
+        toolbar: TextSizeComponent.viewName,
+      };
 
     case "bold":
       return {
-        plugins: [Essentials, Bold, FontStyles],
+        plugins: [Essentials, Paragraph, Font, FontStyles, Bold],
         toolbar: BoldView.viewName,
       };
 
     case "italic":
       return {
-        plugins: [Essentials, Italic, FontStyles],
+        plugins: [Essentials, Paragraph, Font, FontStyles, Italic],
         toolbar: ItalicView.viewName,
       };
 
     case "underline":
       return {
-        plugins: [Essentials, Underline, FontStyles],
+        plugins: [Essentials, Paragraph, Font, FontStyles, Underline],
         toolbar: UnderlineView.viewName,
       };
 
     case "strikethrough":
       return {
-        plugins: [Essentials, Strikethrough, FontStyles],
+        plugins: [Essentials, Paragraph, Font, FontStyles, Strikethrough],
         toolbar: StrikethroughView.viewName,
       };
 
     case "subscript":
       return {
-        plugins: [Essentials, Subscript, FontStyles],
+        plugins: [Essentials, Paragraph, Font, FontStyles, Subscript],
         toolbar: SubscriptView.viewName,
       };
 
     case "superscript":
       return {
-        plugins: [Essentials, Superscript, FontStyles],
+        plugins: [Essentials, Paragraph, Font, FontStyles, Superscript],
         toolbar: SuperscriptView.viewName,
       };
 
@@ -176,36 +171,73 @@ function getPluginConfig(plugin: string) {
       return { plugins: [FontBackground], toolbar: "backgroundColor" };
 
     case "ClearFormatting":
-      return { plugins: [ClearFormatting], toolbar: "ClearFormatting" };
+      //ERROR
+      return {
+        plugins: [Essentials, RemoveFormat, ClearFormatting],
+        toolbar: "ClearFormatting",
+      };
 
     case "BulletedList":
-      return { plugins: [List], toolbar: "bulletedList" };
+      return {
+        plugins: [Essentials, List, Paragraph],
+        toolbar: "bulletedList",
+      };
 
     case "NumberedList":
-      return { plugins: [List], toolbar: "numberedList" };
+      return {
+        plugins: [Essentials, List, Paragraph],
+        toolbar: "numberedList",
+      };
 
     case "alignment":
-      //AQUI HAY QUE PONER CONFIG
-      return { plugins: [Alignment], toolbar: "alignment" };
+      return {
+        plugins: [Essentials, Paragraph, Alignment],
+        toolbar: "alignment",
+      };
 
     case "Uppercase":
-      return { plugins: [Uppercase], toolbar: "Uppercase" };
+      return {
+        plugins: [Essentials, Paragraph, Uppercase],
+        toolbar: "Uppercase",
+      };
 
     case "lowercase":
-      return { plugins: [Lowercase], toolbar: "Lowercase" };
+      return {
+        plugins: [Essentials, Paragraph, Lowercase],
+        toolbar: "Lowercase",
+      };
 
     case "capitalize":
-      return { plugins: [Capitalize], toolbar: "Capitalize" };
+      return {
+        plugins: [Essentials, Paragraph, Capitalize],
+        toolbar: "Capitalize",
+      };
 
     case "link":
-      return { plugins: [Link], toolbar: "Link" };
+      // config.link = {
+      //   decorators: {
+      //     openInNewTab: {
+      //       mode: "manual",
+      //       label: "Open in a new tab",
+      //       attributes: {
+      //         target: "_blank",
+      //         rel: "noopener noreferrer",
+      //       },
+      //     },
+      //   },
+      // };
+      return {
+        plugins: [Paragraph, Link],
+        toolbar: "Link",
+      };
 
     case "PageLink":
-      return { plugins: [Link, PageLink], toolbar: "pageLink" };
+      return { plugins: [Paragraph, Link, PageLink], toolbar: "pageLink" };
 
     case "SpecialCharacters":
       return {
         plugins: [
+          Paragraph,
           SpecialCharacters,
           SpecialCharactersEssentials,
           SpecialCharactersEmoji as any,
@@ -214,9 +246,51 @@ function getPluginConfig(plugin: string) {
       };
 
     case "ImageUpload":
-      //NECESITAMOS OPTIONS
+      //   const IMAGE = {
+      //     resizeOptions: [
+      //       {
+      //         name: "resizeImage:original",
+      //         value: null,
+      //         icon: "original",
+      //       },
+      //       {
+      //         name: "resizeImage:50",
+      //         value: "50",
+      //         icon: "medium",
+      //       },
+      //       {
+      //         name: "resizeImage:75",
+      //         value: "75",
+      //         icon: "large",
+      //       },
+      //     ],
+      //     styles: {
+      //       options: [
+      //         "inline",
+      //         "alignLeft",
+      //         "alignRight",
+      //         "alignCenter",
+      //         "alignBlockLeft",
+      //         "alignBlockRight",
+      //         "block",
+      //         "side",
+      //       ],
+      //     },
+      //     toolbar: [
+      //       "imageStyle:alignLeft",
+      //       "imageStyle:alignRight",
+      //       "imageStyle:alignCenter",
+      //       "|",
+      //       "resizeImage:50",
+      //       "resizeImage:75",
+      //       "resizeImage:original",
+      //     ],
+      //   };
+
       return {
         plugins: [
+          Essentials,
+          Paragraph,
           Base64UploadAdapter,
           Image,
           ImageInsert,
@@ -231,95 +305,12 @@ function getPluginConfig(plugin: string) {
       };
 
     case "DarkMode":
-      return { plugins: [DarkMode], toolbar: "dark-mode" };
+      return {
+        plugins: [Paragraph, DarkMode, Essentials],
+        toolbar: "dark-mode",
+      };
 
     default:
       break;
   }
 }
-
-const PLUGINS = [
-  Essentials,
-  Bold,
-  //   Italic,
-  //   List,
-  //   Paragraph,
-  //   Underline,
-  //   Strikethrough,
-  //   Subscript,
-  //   Superscript,
-  Font,
-  //   Alignment,
-  //   Link,
-  //   SpecialCharacters,
-  //   SpecialCharactersEssentials,
-  //   SpecialCharactersEmoji as any,
-  //   Base64UploadAdapter,
-  //   Image,
-  //   ImageInsert,
-  //   AutoImage,
-  //   ImageResizeEditing,
-  //   ImageResizeHandles,
-  //   ImageStyle,
-  //   ImageToolbar,
-  //   ImageResizeButtons,
-  //   DarkMode,
-  //   PageLink,
-  //   Uppercase,
-  //   Lowercase,
-  //   ClearFormatting,
-  //   Capitalize,
-  //   FontBackground,
-  //   TextFontColor,
-  //   RemoveFormat,
-  //   TextSize,
-  //   FontFamily,
-  FontStyles,
-];
-
-const TOOLBAR = [BoldView.viewName];
-
-const IMAGE = {
-  resizeOptions: [
-    {
-      name: "resizeImage:original",
-      value: null,
-      icon: "original",
-    },
-    {
-      name: "resizeImage:50",
-      value: "50",
-      icon: "medium",
-    },
-    {
-      name: "resizeImage:75",
-      value: "75",
-      icon: "large",
-    },
-  ],
-  styles: {
-    options: [
-      "inline",
-      "alignLeft",
-      "alignRight",
-      "alignCenter",
-      "alignBlockLeft",
-      "alignBlockRight",
-      "block",
-      "side",
-    ],
-  },
-  toolbar: [
-    "imageStyle:alignLeft",
-    "imageStyle:alignRight",
-    "imageStyle:alignCenter",
-    "|",
-    "resizeImage:50",
-    "resizeImage:75",
-    "resizeImage:original",
-  ],
-};
-
-const ALIGNMENT = {
-  options: ["left", "right", "center", "justify"],
-};
