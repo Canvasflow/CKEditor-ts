@@ -183,6 +183,7 @@ export class ColorView extends View {
 
   clearAllColors() {
     let found = false;
+    this.viewer.onClearColor();
     this.defaultColorsGridView?.gridView.items.map((value) => {
       if (value.class === "selected-color") {
         found = true;
