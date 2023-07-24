@@ -56,6 +56,13 @@ import {
 
 import { TextSizeComponent } from "./plugins/TextSize/TextSizeComponent";
 
+import fontStyles from "./assets/icons/fontStyles.svg?raw";
+import lists from "./assets/icons/lists.svg?raw";
+import textTransform from "./assets/icons/textFormatting.svg?raw";
+import other from "./assets/icons/other.svg?raw";
+import fontColor from "./assets/icons/fontColor.svg?raw";
+import backgroundColor from "./assets/icons/fontBackground.svg?raw";
+
 export class CustomEditor extends BaseEditor {
   constructor(
     sourceElementOrData: HTMLElement | string,
@@ -102,11 +109,32 @@ function buildPlugins(components: Array<string | GroupItem>): {
   let plugins = new Set();
   let toolbar = new Set();
   for (const plugin of components) {
-    const pluginConfig = getPluginConfig(plugin);
-    pluginConfig?.plugins.map((value) => {
-      plugins.add(value);
-    });
-    toolbar.add(pluginConfig?.toolbar);
+    if (typeof plugin === "string") {
+      const pluginConfig = getPluginConfig(plugin);
+      pluginConfig?.plugins.map((value) => {
+        plugins.add(value);
+      });
+      if (plugin === "Fontcolor" || plugin === "BackgroundColor") {
+        const pluginView = {
+          label: plugin,
+          icon: getIcon(plugin),
+          items: ["textFontColor"],
+        };
+        toolbar.add(pluginView);
+      } else {
+        toolbar.add(pluginConfig?.toolbar);
+      }
+    } else {
+      for (const item of plugin.items) {
+        const pluginConfig = getPluginConfig(item);
+        console.log(pluginConfig);
+        pluginConfig?.plugins.map((value) => {
+          plugins.add(value);
+        });
+      }
+      plugin.icon = getIcon(plugin.icon);
+      toolbar.add(plugin);
+    }
   }
   return { plugins, toolbar };
 }
@@ -165,10 +193,16 @@ function getPluginConfig(plugin: string) {
       };
 
     case "Fontcolor":
-      return { plugins: [TextFontColor], toolbar: "textFontColor" };
+      return {
+        plugins: [Essentials, Paragraph, Font, TextFontColor],
+        toolbar: "textFontColor",
+      };
 
     case "BackgroundColor":
-      return { plugins: [FontBackground], toolbar: "backgroundColor" };
+      return {
+        plugins: [Essentials, Paragraph, Font, FontBackground],
+        toolbar: "backgroundColor",
+      };
 
     case "ClearFormatting":
       //ERROR
@@ -201,31 +235,19 @@ function getPluginConfig(plugin: string) {
         toolbar: "Uppercase",
       };
 
-    case "lowercase":
+    case "Lowercase":
       return {
         plugins: [Essentials, Paragraph, Lowercase],
         toolbar: "Lowercase",
       };
 
-    case "capitalize":
+    case "Capitalize":
       return {
         plugins: [Essentials, Paragraph, Capitalize],
         toolbar: "Capitalize",
       };
 
     case "link":
-      // config.link = {
-      //   decorators: {
-      //     openInNewTab: {
-      //       mode: "manual",
-      //       label: "Open in a new tab",
-      //       attributes: {
-      //         target: "_blank",
-      //         rel: "noopener noreferrer",
-      //       },
-      //     },
-      //   },
-      // };
       return {
         plugins: [Paragraph, Link],
         toolbar: "Link",
@@ -246,47 +268,6 @@ function getPluginConfig(plugin: string) {
       };
 
     case "ImageUpload":
-      //   const IMAGE = {
-      //     resizeOptions: [
-      //       {
-      //         name: "resizeImage:original",
-      //         value: null,
-      //         icon: "original",
-      //       },
-      //       {
-      //         name: "resizeImage:50",
-      //         value: "50",
-      //         icon: "medium",
-      //       },
-      //       {
-      //         name: "resizeImage:75",
-      //         value: "75",
-      //         icon: "large",
-      //       },
-      //     ],
-      //     styles: {
-      //       options: [
-      //         "inline",
-      //         "alignLeft",
-      //         "alignRight",
-      //         "alignCenter",
-      //         "alignBlockLeft",
-      //         "alignBlockRight",
-      //         "block",
-      //         "side",
-      //       ],
-      //     },
-      //     toolbar: [
-      //       "imageStyle:alignLeft",
-      //       "imageStyle:alignRight",
-      //       "imageStyle:alignCenter",
-      //       "|",
-      //       "resizeImage:50",
-      //       "resizeImage:75",
-      //       "resizeImage:original",
-      //     ],
-      //   };
-
       return {
         plugins: [
           Essentials,
@@ -306,11 +287,36 @@ function getPluginConfig(plugin: string) {
 
     case "DarkMode":
       return {
-        plugins: [Paragraph, DarkMode, Essentials],
+        plugins: [Paragraph, Essentials, DarkMode],
         toolbar: "dark-mode",
       };
 
     default:
       break;
+  }
+}
+
+function getIcon(icon: string): any {
+  switch (icon) {
+    case "fontStyles":
+      return fontStyles;
+
+    case "lists":
+      return lists;
+
+    case "textTransform":
+      return textTransform;
+
+    case "other":
+      return other;
+
+    case "Fontcolor":
+      return fontColor;
+
+    case "BackgroundColor":
+      return backgroundColor;
+
+    default:
+      return other;
   }
 }

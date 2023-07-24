@@ -62,8 +62,7 @@ const config = {
 };
 
 CustomEditor.build(document.querySelector("#editor") as HTMLElement, config, [
-  "bold",
-  "ClearFormatting",
+  "DarkMode",
 ])
   .then((editor) => {
     createListeners(editor);

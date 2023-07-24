@@ -51,7 +51,6 @@ export class DarkMode extends Plugin {
 
           var position = selection.getFirstPosition();
           if (position) {
-            console.log("HERE");
             writer.insertText(
               value,
               { "data-anf-dark-mode": "true" },
