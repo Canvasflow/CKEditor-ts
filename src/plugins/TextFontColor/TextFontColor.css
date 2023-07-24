@@ -37,3 +37,7 @@ input.ck-input[type="color"] {
   width: 0px !important;
   max-width: 0px !important;
 }
+
+.selected-color {
+  box-shadow: inset 0 0 0 1px white, 0 0 0 2px blue !important;
+}

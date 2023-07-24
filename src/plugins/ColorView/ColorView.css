@@ -1,0 +1,10 @@
+.ck-input-color {
+    display: flex;
+    flex-direction: column;
+}
+
+.ck-input-color input{
+    max-height: 0;
+    width: 0;
+    visibility: hidden;
+}

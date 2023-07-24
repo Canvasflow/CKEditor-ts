@@ -3,20 +3,18 @@ import {
   submitHandler,
   LabelView,
   ButtonView,
-  InputView,
-  ColorGridView,
   ColorTileView,
 } from "@ckeditor/ckeditor5-ui";
-import { BaseEvent, GetCallback, Collection } from "@ckeditor/ckeditor5-utils";
+import { CustomColorGridView } from './CustomColorGridView';
+import { InputColorView } from './InputColorView';
+import { BaseEvent, GetCallback } from "@ckeditor/ckeditor5-utils";
 import CanvasflowEditor, { Colors, Color } from "../../BaseEditor";
-import picker from "../../assets/icons/colorPicker.svg?raw";
 import remove from "../../assets/icons/removeColor.svg?raw";
 
 export class ColorView extends View {
   private viewer: ColorViewer;
   private removeColorButton?: ButtonView;
-  private selectColorButton?: ButtonView;
-  private colorInput?: InputView;
+  private selectColorView?: InputColorView;
 
   colors: Colors;
   defaultColorsGridView: ColorsGridView;
@@ -30,32 +28,20 @@ export class ColorView extends View {
     super(locale);
     this.viewer = viewer;
     const items = this.createCollection();
-    // console.log(
-    //   "THIS VIEW IS CREATED BY: ",
-    //   this.viewer.attribute,
-    //   " with: ",
-    //   colors,
-    // );
-
-    // this.on("render", (evt) => {
-    //   console.log(`ITEMS`, items);
-    //   console.log(`ELEMENT`, this.element?.parentNode);
-    //   console.log("here in change:isRendered", evt);
-    // });
 
     this.colors = colors;
     this.removeColorButton = this.getRemoveColorView();
     this.defaultColorsGridView = this.getDefaultColorView();
     this.customColorsGridView = this.getCustomColorView();
-    this.selectColorButton = this.getSelectColorView();
-    this.colorInput = this.getInputColorView();
+    this.selectColorView = new InputColorView({
+      locale, onChange: this.onAddColor
+    })
 
     items.addMany([
       this.removeColorButton,
       this.defaultColorsGridView,
       this.customColorsGridView,
-      this.selectColorButton,
-      this.colorInput,
+      this.selectColorView,
     ]);
     this.setTemplate({
       tag: "form",
@@ -68,15 +54,9 @@ export class ColorView extends View {
     document.selection.on("change:range", this.onSelectionChange);
   }
 
-  resetCustomColorCollection() {
-    this.customColorsGridView.colors.clear();
-    const customColors = this.customColorsGridView.getUniqueColors(
-      this.colors.customColor,
-    );
-    for (const c of customColors) {
-      c.selected = this.customColorsGridView?.selectedColor === c.color;
-      this.customColorsGridView.colors.add(c);
-    }
+  private onAddColor = (color: string) => {
+    this.viewer.onAddColor(color);
+    this.customColorsGridView.gridView.add({ color: color, label: color });
   }
 
   private onSelectionChange = () => {
@@ -130,8 +110,8 @@ export class ColorView extends View {
   setGridsSelectedColor(color: string) {
     this.selectedColor = color;
 
-    this.defaultColorsGridView?.selectColor(color);
-    this.customColorsGridView?.selectColor(color);
+    this.defaultColorsGridView.selectColor(color);
+    this.customColorsGridView.selectColor(color);
   }
 
   private getRemoveColorView(): ButtonView {
@@ -143,29 +123,21 @@ export class ColorView extends View {
     clearButton.type = "button";
     clearButton.class = "clear-color-button";
     clearButton.on("execute", () => {
-      this.viewer.onClearColor();
-      this.setGridsSelectedColor("");
+      this.clearAllColors();
     });
 
     return clearButton;
   }
 
-  private getSelectColorView(): ButtonView {
-    let pickerButton = this.createButton("Select color", picker, "");
-    pickerButton.type = "button";
-    pickerButton.class = "submit-color-button";
-    pickerButton.on("execute", () => {
-      this.viewer.onPickColor();
-    });
-    return pickerButton;
+  addColor = (color: Color) => {
+    this.customColorsGridView.gridView.add(color)
   }
 
   private getDefaultColorView(): ColorsGridView {
     return new ColorsGridView(
       this.viewer,
       "Default Color",
-      this.colors!.defaultColor,
-      false,
+      this.colors!.defaultColor
     );
   }
 
@@ -174,17 +146,7 @@ export class ColorView extends View {
       this.viewer,
       "Custom Color",
       this.colors!.customColor,
-      true,
     );
-  }
-
-  private getInputColorView(): InputView {
-    const colorInputView = new InputView(this.locale);
-    colorInputView.id =
-      this.viewer.attribute === "fontColor"
-        ? "font-color-picker"
-        : "background-color-picker";
-    return colorInputView;
   }
 
   private createButton(label: any, icon: any, className: any) {
@@ -197,6 +159,47 @@ export class ColorView extends View {
       withText: true,
     });
     return button;
+  }
+
+  clearSelectedColor(color: string) {
+    let found = false;
+    this.defaultColorsGridView?.gridView.items.map((value) => {
+      if (value.class === "selected-color" && value.color !== color) {
+        found = true;
+        value.class = "";
+        return;
+      }
+    });
+    if (!found) {
+      this.customColorsGridView?.gridView.items.map((value) => {
+        if (value.class === "selected-color" && value.color !== color) {
+          found = true;
+          value.class = "";
+          return;
+        }
+      });
+    }
+  }
+
+  clearAllColors() {
+    let found = false;
+    this.viewer.onClearColor();
+    this.defaultColorsGridView?.gridView.items.map((value) => {
+      if (value.class === "selected-color") {
+        found = true;
+        value.class = "";
+        return;
+      }
+    });
+    if (!found) {
+      this.customColorsGridView?.gridView.items.map((value) => {
+        if (value.class === "selected-color") {
+          found = true;
+          value.class = "";
+          return;
+        }
+      });
+    }
   }
 
   render() {
@@ -214,7 +217,7 @@ export interface ColorViewer {
   onClearColor: () => void;
   onSetColor: (color: string) => void;
   selectedColor: string;
-  onPickColor: () => void;
+  onAddColor: (color: string) => void;
 }
 
 export type ColorViewerType = "fontColor" | "backgroundColor";
@@ -222,22 +225,25 @@ export type ColorViewerType = "fontColor" | "backgroundColor";
 class ColorsGridView extends View {
   private viewer: ColorViewer;
   private label: string;
-  public gridView: ColorGridView;
-  colors: Collection<Color>;
+  public gridView: CustomColorGridView;
+  colors: Array<Color>;
   selectedColor?: string;
 
   constructor(
     viewer: ColorViewer,
     label: string,
-    input: Array<Color>,
-    isCustom: boolean = false,
+    input: Array<Color>
   ) {
     const { locale } = viewer.editor;
     super(locale);
     this.viewer = viewer;
     this.label = label;
-    const colors = new Collection(this.getUniqueColors(input));
-    this.gridView = this.getGridView();
+    this.colors = input;
+    this.gridView = new CustomColorGridView({
+      locale,
+      colors: input,
+      onClickColor: this.onClickColor
+    });
     this.setTemplate({
       tag: "div",
       attributes: {
@@ -245,27 +251,6 @@ class ColorsGridView extends View {
       },
       children: [this.getLabel(), this.gridView],
     });
-
-    if (isCustom) {
-      this.viewer.editor.addEventListener(
-        this.viewer.attribute === "fontColor"
-          ? "colors:addCustomColor"
-          : "colors:addCustomBackgroundColor",
-        (color: any) => {
-          setTimeout(() => {
-            const response = { color: color.color, label: color.color };
-            this.colors.add(response);
-          }, 1);
-        },
-      );
-    }
-
-    this.colors = colors;
-  }
-
-  render() {
-    super.render();
-    this.gridView.items.bindTo(this.colors).using(this.mapColor());
   }
 
   getLabel(): LabelView {
@@ -279,55 +264,16 @@ class ColorsGridView extends View {
     return labelView;
   }
 
-  getGridView(): ColorGridView {
-    const colorGridView = new ColorGridView(this.locale, {
-      colorDefinitions: [],
-      columns: 4,
-    });
-
-    return colorGridView;
-  }
-
-  getUniqueColors(colorList: Array<Color>): Array<Color> {
-    const colorsSet = new Set();
-    const colors: Array<Color> = colorList.reduce(
-      (acc: Array<Color>, color: Color) => {
-        if (colorsSet.has(color.color)) {
-          return acc;
-        }
-        colorsSet.add(color.color);
-        acc.push(color);
-        return acc;
-      },
-      [],
-    );
-    return colors;
-  }
-
-  mapColor() {
-    const { onClickColor, locale } = this;
-    return (color: Color): ColorTileView => {
-      const colorTileView = new ColorTileView(locale);
-      colorTileView.label = color.label;
-      colorTileView.color = color.color;
-      colorTileView.class = color.selected ? "selected-color" : "";
-      colorTileView.on("execute", onClickColor);
-      return colorTileView;
-    };
-  }
-
   onClickColor: GetCallback<BaseEvent> = (evt) => {
     const { onSetColor } = this.viewer;
     const view: ColorTileView = evt.source as any;
     const { color } = view;
+    console.log(`COLOR: ${color}`);
     onSetColor(color!);
-    this.selectColor(color!);
+    this.gridView.selectColor(color!);
   };
 
-  selectColor = (color: string) => {
-    this.selectedColor = color;
-    for (const c of this.colors) {
-      c.selected = c.color === color;
-    }
-  };
+  selectColor(color: string) {
+    this.gridView.selectColor(color);
+  }
 }
