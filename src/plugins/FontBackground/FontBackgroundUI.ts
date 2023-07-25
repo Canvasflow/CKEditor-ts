@@ -5,7 +5,7 @@ import {
   ColorView,
   ColorViewer,
   ColorViewerType,
-} from "../ColorView/ColorView";
+} from "../../views/ColorView/ColorView";
 import CanvasflowEditor, { Colors } from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
 import {
