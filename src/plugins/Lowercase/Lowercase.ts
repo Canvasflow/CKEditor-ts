@@ -1,7 +1,8 @@
-import { LowercaseEditing } from "./LowercaseEditing";
 import { Plugin } from "@ckeditor/ckeditor5-core";
-
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
+
+import { LowercaseEditing } from "./LowercaseEditing";
+
 import CanvasflowEditor from "../../BaseEditor";
 import { TEXT_TRANSFORM_COMMAND } from "../../commands/TextTransform/TextTransformCommand";
 
@@ -18,6 +19,7 @@ export class Lowercase extends Plugin {
     button.label = "Lowercase";
     button.tooltip = false;
     button.withText = true;
+
     this.listenTo(button, "execute", () => {
       this.editor.execute(TEXT_TRANSFORM_COMMAND, "lowercase");
     });
