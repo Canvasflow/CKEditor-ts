@@ -22,7 +22,7 @@ import {
 /*CUSTOM PLUGINS*/
 import { DarkMode } from "./plugins/DarkMode/DarkMode";
 import { PageLink } from "./plugins/PageLink/PageLink";
-import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
+import { SpecialCharactersEmoji } from "./plugins/SpecialCharacters/SpecialCharacters";
 import { Uppercase } from "./plugins/Uppercase/Uppercase";
 import { Lowercase } from "./plugins/Lowercase/Lowercase";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
