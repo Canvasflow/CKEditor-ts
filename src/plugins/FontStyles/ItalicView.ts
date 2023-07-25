@@ -5,7 +5,7 @@ import CanvasflowEditor from "../../BaseEditor";
 
 export class ItalicView extends ButtonView {
   private editor: CanvasflowEditor;
-  static viewName = "ItalicCF";
+  static viewName = "cf-italic";
   constructor(viewer: FontStylesViewer) {
     super(viewer.editor.locale);
     const { editor } = viewer;

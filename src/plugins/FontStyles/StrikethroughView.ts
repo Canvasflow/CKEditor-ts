@@ -5,7 +5,7 @@ import CanvasflowEditor from "../../BaseEditor";
 
 export class StrikethroughView extends ButtonView {
   private editor: CanvasflowEditor;
-  static viewName = "StrikethroughCF";
+  static viewName = "cf-strikethrough";
   constructor(viewer: FontStylesViewer) {
     super(viewer.editor.locale);
     const { editor } = viewer;

@@ -5,7 +5,7 @@ import CanvasflowEditor from "../../BaseEditor";
 
 export class UnderlineView extends ButtonView {
   private editor: CanvasflowEditor;
-  static viewName = "UnderlineCF";
+  static viewName = "cf-underline";
   constructor(viewer: FontStylesViewer) {
     super(viewer.editor.locale);
     const { editor } = viewer;

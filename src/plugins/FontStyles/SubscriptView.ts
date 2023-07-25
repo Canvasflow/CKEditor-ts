@@ -5,7 +5,7 @@ import CanvasflowEditor from "../../BaseEditor";
 
 export class SubscriptView extends ButtonView {
   private editor: CanvasflowEditor;
-  static viewName = "SubscriptCF";
+  static viewName = "cf-subscript";
   constructor(viewer: FontStylesViewer) {
     super(viewer.editor.locale);
     const { editor } = viewer;

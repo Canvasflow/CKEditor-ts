@@ -5,7 +5,7 @@ import CanvasflowEditor from "../../BaseEditor";
 
 export class SuperscriptView extends ButtonView {
   private editor: CanvasflowEditor;
-  static viewName = "SuperscriptCF";
+  static viewName = "cf-superscript";
   constructor(viewer: FontStylesViewer) {
     super(viewer.editor.locale);
     const { editor } = viewer;

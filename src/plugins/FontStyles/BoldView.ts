@@ -5,7 +5,7 @@ import CanvasflowEditor from "../../BaseEditor";
 
 export class BoldView extends ButtonView {
   private editor: CanvasflowEditor;
-  static viewName = "boldCF";
+  static viewName = "cf-bold";
   constructor(viewer: FontStylesViewer) {
     super(viewer.editor.locale);
     const { editor } = viewer;
