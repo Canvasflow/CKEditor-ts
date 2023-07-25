@@ -25,7 +25,7 @@ import { PageLink } from "./plugins/PageLink/PageLink";
 import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
 import { Uppercase } from "./plugins/Uppercase/Uppercase";
 import { Lowercase } from "./plugins/Lowercase/Lowercase";
-import { ClearFormatting } from "./plugins/ClearFormatting/ClearFormatting";
+import { ClearFormat } from "./plugins/ClearFormat/ClearFormat";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
 import { FontBackground } from "./plugins/HighlightColor/HighlightColor";
 import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
@@ -132,7 +132,7 @@ const PLUGINS = [
   PageLink,
   Uppercase,
   Lowercase,
-  ClearFormatting,
+  ClearFormat,
   Capitalize,
   FontBackground,
   TextFontColor,

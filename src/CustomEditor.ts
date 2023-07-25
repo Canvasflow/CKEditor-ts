@@ -28,7 +28,7 @@ import { Lowercase } from "./plugins/Lowercase/Lowercase";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
 import { FontBackground } from "./plugins/HighlightColor/HighlightColor";
 import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
-import { ClearFormatting } from "./plugins/ClearFormatting/ClearFormatting";
+import { ClearFormat } from "./plugins/ClearFormat/ClearFormat";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 import { FontSize } from "./plugins/TextSize/FontSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
@@ -207,7 +207,7 @@ function getPluginConfig(plugin: string) {
     case "ClearFormatting":
       //ERROR
       return {
-        plugins: [Essentials, RemoveFormat, ClearFormatting],
+        plugins: [Essentials, RemoveFormat, ClearFormat],
         toolbar: "ClearFormatting",
       };
 

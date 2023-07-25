@@ -1,19 +1,20 @@
-import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
+import { ClearFormatEditing } from "./ClearFormatEditing";
+import { Plugin } from "@ckeditor/ckeditor5-core";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import CanvasflowEditor from "../../BaseEditor";
 import icon from "../../assets/icons/clearFormatting.svg?raw";
-export class ClearFormattingUI extends Plugin {
+
+export class ClearFormat extends Plugin {
   declare editor: CanvasflowEditor;
+  static viewName = "cf-clear-format";
   balloon: any;
 
   init() {
     const editor = this.editor;
-    editor.ui.componentFactory.add("ClearFormatting", () => {
-      return this.createButton();
-    });
+    editor.ui.componentFactory.add(ClearFormat.viewName, this.renderView);
   }
 
-  private createButton() {
+  renderView = () => {
     const button = new ButtonView();
     button.label = "Clear Format";
     button.tooltip = true;
@@ -23,5 +24,9 @@ export class ClearFormattingUI extends Plugin {
       this.editor.execute("clear");
     });
     return button;
+  }
+
+  static get requires() {
+    return [ClearFormatEditing];
   }
 }

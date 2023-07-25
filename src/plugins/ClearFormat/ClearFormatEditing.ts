@@ -1,9 +1,9 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
-import { ClearFormattingCommands, CLEAR } from "./ClearFormattingCommands";
+import { ClearFormatCommands, CLEAR } from "./ClearFormatCommands";
 
-export class ClearFormattingEditing extends Plugin {
+export class ClearFormatEditing extends Plugin {
   static get pluginName() {
-    return "ClearFormattingEditing";
+    return "ClearFormatEditing";
   }
 
   constructor(editor: any) {
@@ -14,7 +14,7 @@ export class ClearFormattingEditing extends Plugin {
       converterPriority: "high",
     });
 
-    editor.commands.add(CLEAR, new ClearFormattingCommands(editor));
+    editor.commands.add(CLEAR, new ClearFormatCommands(editor));
     editor.model.schema.extend("$text", { allowAttributes: CLEAR });
     editor.model.schema.setAttributeProperties(CLEAR, {
       isFormatting: true,
