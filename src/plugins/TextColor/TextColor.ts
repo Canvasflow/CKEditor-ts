@@ -1,4 +1,6 @@
-import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
+
+import { TextColorEditing } from "./TextColorEditing";
+import { Plugin } from "@ckeditor/ckeditor5-core";
 import { ContextualBalloon } from "@ckeditor/ckeditor5-ui";
 
 import {
@@ -9,18 +11,19 @@ import {
 import CanvasflowEditor, { Colors } from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
 import {
-  SET_FONT_COLOR_COMMAND,
-  CLEAR_FONT_COLOR_COMMAND,
-} from "./TextFontColorCommands";
-import { AddCustomColorEvent } from "./TextFontColorEvents";
+  SET_TEXT_COLOR_COMMAND,
+  CLEAR_TEXT_COLOR_COMMAND,
+} from "./TextColorCommands";
+import { AddCustomTextColorEvent } from "./TextColorEvents";
 
-export class TextFontColorUI extends Plugin implements ColorViewer {
+export class TextColor extends Plugin implements ColorViewer {
+  static viewName = "cf-text-color";
+
   selectedColor: string = "";
   editor: CanvasflowEditor;
-  static viewName = "textFontColor";
-  view: ColorView;
   locale?: Locale;
   attribute: ColorViewerType = "fontColor";
+  view: ColorView;
   colors: Colors = {
     defaultColor: [],
     customColor: [],
@@ -34,26 +37,30 @@ export class TextFontColorUI extends Plugin implements ColorViewer {
 
     this.view = new ColorView(this);
     this.editor.ui.componentFactory
-      .add(TextFontColorUI.viewName, () => this.view);
+      .add(TextColor.viewName, () => this.view);
   }
 
-  static get requires() {
-    return [ContextualBalloon];
+  renderView = () => {
+    return this.view;
   }
 
   onSetColor = (color: string) => {
-    this.editor.execute(SET_FONT_COLOR_COMMAND, color);
+    this.editor.execute(SET_TEXT_COLOR_COMMAND, color);
     this.view.setGridsSelectedColor(color);
   };
 
   onClearColor() {
-    this.editor.execute(CLEAR_FONT_COLOR_COMMAND);
+    this.editor.execute(CLEAR_TEXT_COLOR_COMMAND);
   }
 
   onAddColor = (color: string) => {
-    const evt: AddCustomColorEvent = {
+    const evt: AddCustomTextColorEvent = {
       color,
     };
-    this.editor.dispatch("colors:addCustomColor", evt);
+    this.editor.dispatch("textColor:addCustomColor", evt);
+  }
+
+  static get requires() {
+    return [ContextualBalloon, TextColorEditing];
   }
 }

@@ -27,7 +27,7 @@ import { Uppercase } from "./plugins/Uppercase/Uppercase";
 import { Lowercase } from "./plugins/Lowercase/Lowercase";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
 import { FontBackground } from "./plugins/HighlightColor/HighlightColor";
-import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
+import { TextColor } from "./plugins/TextColor/TextColor";
 import { ClearFormat } from "./plugins/ClearFormat/ClearFormat";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 import { FontSize } from "./plugins/TextSize/FontSize";
@@ -194,7 +194,7 @@ function getPluginConfig(plugin: string) {
 
     case "Fontcolor":
       return {
-        plugins: [Essentials, Paragraph, Font, TextFontColor],
+        plugins: [Essentials, Paragraph, Font, TextColor],
         toolbar: "textFontColor",
       };
 

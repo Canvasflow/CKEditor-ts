@@ -1,11 +1,11 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
 
-export const FONT_COLOR_ATTR = "fontColor";
-export const CLEAR_FONT_COLOR_COMMAND = "clearFontColor";
-export const SET_FONT_COLOR_COMMAND = "setFontColor";
+export const TEXT_COLOR_ATTR = "fontColor";
+export const CLEAR_TEXT_COLOR_COMMAND = "clearTextColor";
+export const SET_TEXT_COLOR_COMMAND = "setTextColor";
 
-export class TextFontColorCommand extends Command {
+export class TextColorCommand extends Command {
   constructor(editor: CanvasflowEditor) {
     super(editor);
   }
@@ -13,10 +13,10 @@ export class TextFontColorCommand extends Command {
   refresh() {
     const model = this.editor.model;
     const doc = model.document;
-    this.value = doc.selection.getAttribute(FONT_COLOR_ATTR);
+    this.value = doc.selection.getAttribute(TEXT_COLOR_ATTR);
     this.isEnabled = model.schema.checkAttributeInSelection(
       doc.selection,
-      FONT_COLOR_ATTR,
+      TEXT_COLOR_ATTR,
     );
   }
 
@@ -28,7 +28,7 @@ export class TextFontColorCommand extends Command {
     model.change((writer) => {
       const ranges = model.schema.getValidRanges(
         selection.getRanges(),
-        FONT_COLOR_ATTR,
+        TEXT_COLOR_ATTR,
       );
 
       for (const range of ranges) {
@@ -53,10 +53,10 @@ export class ClearFontColorCommand extends Command {
   refresh() {
     const model = this.editor.model;
     const doc = model.document;
-    this.value = doc.selection.getAttribute(FONT_COLOR_ATTR);
+    this.value = doc.selection.getAttribute(TEXT_COLOR_ATTR);
     this.isEnabled = model.schema.checkAttributeInSelection(
       doc.selection,
-      FONT_COLOR_ATTR,
+      TEXT_COLOR_ATTR,
     );
   }
 
@@ -67,11 +67,11 @@ export class ClearFontColorCommand extends Command {
     model.change((writer) => {
       const ranges = model.schema.getValidRanges(
         selection.getRanges(),
-        FONT_COLOR_ATTR,
+        TEXT_COLOR_ATTR,
       );
 
       for (const range of ranges) {
-        writer.removeAttribute(FONT_COLOR_ATTR, range);
+        writer.removeAttribute(TEXT_COLOR_ATTR, range);
       }
     });
   }

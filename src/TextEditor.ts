@@ -28,7 +28,7 @@ import { Lowercase } from "./plugins/Lowercase/Lowercase";
 import { ClearFormat } from "./plugins/ClearFormat/ClearFormat";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
 import { FontBackground } from "./plugins/HighlightColor/HighlightColor";
-import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
+import { TextColor } from "./plugins/TextColor/TextColor";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 import { FontSize } from "./plugins/TextSize/FontSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
@@ -134,7 +134,7 @@ const PLUGINS = [
   ClearFormat,
   Capitalize,
   FontBackground,
-  TextFontColor,
+  TextColor,
   RemoveFormat,
   FontSize,
   FontFamily,
@@ -162,7 +162,7 @@ const TOOLBAR = [
   {
     label: "Font Color",
     icon: fontColor,
-    items: ["textFontColor"],
+    items: [TextColor.viewName],
   },
   {
     label: "Highlight Color",

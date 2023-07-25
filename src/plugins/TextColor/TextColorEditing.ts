@@ -1,32 +1,32 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import {
-  TextFontColorCommand,
+  TextColorCommand,
   ClearFontColorCommand,
-  FONT_COLOR_ATTR,
-  SET_FONT_COLOR_COMMAND,
-  CLEAR_FONT_COLOR_COMMAND,
-} from "./TextFontColorCommands";
+  TEXT_COLOR_ATTR,
+  SET_TEXT_COLOR_COMMAND,
+  CLEAR_TEXT_COLOR_COMMAND,
+} from "./TextColorCommands";
 import CanvasflowEditor from "../../BaseEditor";
-export class TextFontColorEditing extends Plugin {
+export class TextColorEditing extends Plugin {
   static get pluginName() {
     return "TextFontColorEditing";
   }
   constructor(editor: CanvasflowEditor) {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
-      model: FONT_COLOR_ATTR,
+      model: TEXT_COLOR_ATTR,
       view: renderDowncastElement(),
     });
     editor.commands.add(
-      SET_FONT_COLOR_COMMAND,
-      new TextFontColorCommand(editor),
+      SET_TEXT_COLOR_COMMAND,
+      new TextColorCommand(editor),
     );
     editor.commands.add(
-      CLEAR_FONT_COLOR_COMMAND,
+      CLEAR_TEXT_COLOR_COMMAND,
       new ClearFontColorCommand(editor),
     );
-    editor.model.schema.extend("$text", { allowAttributes: FONT_COLOR_ATTR });
-    editor.model.schema.setAttributeProperties(FONT_COLOR_ATTR, {
+    editor.model.schema.extend("$text", { allowAttributes: TEXT_COLOR_ATTR });
+    editor.model.schema.setAttributeProperties(TEXT_COLOR_ATTR, {
       isFormatting: true,
       copyOnEnter: true,
     });
