@@ -58,3 +58,8 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+
+.ck.ck-editor__editable_inline {
+  overflow: revert;
+}
