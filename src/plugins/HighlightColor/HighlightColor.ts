@@ -9,18 +9,19 @@ import {
 import CanvasflowEditor, { Colors } from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
 import {
-  SET_BACKGROUND_COLOR_COMMAND,
-  CLEAR_BACKGROUND_COLOR_COMMAND,
-} from "./FontBackgroundCommands";
-import { AddCustomFontBackgroundEvent } from "./FontBackgroundEvents";
+  SET_HIGHLIGHT_COLOR_COMMAND,
+  CLEAR_HIGHLIGHT_COLOR_COMMAND,
+} from "./HighlightColorCommands";
+import { AddCustomHighlightColorEvent } from "./HighlightColorEvents";
+import { FontBackgroundEditing } from "./HighlightColorEditing";
 
-export class FontBackgroundUI extends Plugin implements ColorViewer {
-  static viewName = "backgroundColor";
+export class FontBackground extends Plugin implements ColorViewer {
+  static viewName = "cf-hightlight-color";
   selectedColor: string = "";
   editor: CanvasflowEditor;
   view: ColorView;
   locale?: Locale;
-  attribute: ColorViewerType = "backgroundColor";
+  attribute: ColorViewerType = "highlightColor";
   colors: Colors = {
     defaultColor: [],
     customColor: [],
@@ -34,26 +35,26 @@ export class FontBackgroundUI extends Plugin implements ColorViewer {
 
     this.view = new ColorView(this);
     this.editor.ui.componentFactory
-      .add(FontBackgroundUI.viewName, () => this.view);
+      .add(FontBackground.viewName, () => this.view);
   }
 
   static get requires() {
-    return [ContextualBalloon];
+    return [ContextualBalloon, FontBackgroundEditing];
   }
 
   onSetColor = (color: string) => {
-    this.editor.execute(SET_BACKGROUND_COLOR_COMMAND, color);
+    this.editor.execute(SET_HIGHLIGHT_COLOR_COMMAND, color);
     this.view.setGridsSelectedColor(color);
   };
 
   onClearColor() {
-    this.editor.execute(CLEAR_BACKGROUND_COLOR_COMMAND);
+    this.editor.execute(CLEAR_HIGHLIGHT_COLOR_COMMAND);
   }
 
   onAddColor = (color: string) => {
-    const evt: AddCustomFontBackgroundEvent = {
+    const evt: AddCustomHighlightColorEvent = {
       color,
     };
-    this.editor.dispatch("colors:addCustomBackgroundColor", evt);
+    this.editor.dispatch("highlightColor:addCustomColor", evt);
   }
 }

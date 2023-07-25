@@ -26,7 +26,7 @@ import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/Special
 import { Uppercase } from "./plugins/Uppercase/Uppercase";
 import { Lowercase } from "./plugins/Lowercase/Lowercase";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
-import { FontBackground } from "./plugins/FontBackground/FontBackground";
+import { FontBackground } from "./plugins/HighlightColor/HighlightColor";
 import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
 import { ClearFormatting } from "./plugins/ClearFormatting/ClearFormatting";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";

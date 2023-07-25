@@ -220,7 +220,7 @@ export interface ColorViewer {
   onAddColor: (color: string) => void;
 }
 
-export type ColorViewerType = "fontColor" | "backgroundColor";
+export type ColorViewerType = "fontColor" | "highlightColor";
 
 class ColorsGridView extends View {
   private viewer: ColorViewer;

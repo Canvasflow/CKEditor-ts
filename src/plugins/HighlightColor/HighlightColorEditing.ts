@@ -1,37 +1,37 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import {
-  FontBackgroundCommand,
-  BACKGROUND_COLOR_ATTR,
-  ClearFontBackgroundCommand,
-  CLEAR_BACKGROUND_COLOR_COMMAND,
-  SET_BACKGROUND_COLOR_COMMAND,
-} from "./FontBackgroundCommands";
+  HighlightColorCommand,
+  HIGHLIGHT_COLOR_ATTR,
+  ClearHighlightColorCommand,
+  CLEAR_HIGHLIGHT_COLOR_COMMAND,
+  SET_HIGHLIGHT_COLOR_COMMAND,
+} from "./HighlightColorCommands";
 import CanvasflowEditor from "../../BaseEditor";
 
 export class FontBackgroundEditing extends Plugin {
   static get pluginName() {
-    return "FontBackgroundEditing";
+    return "HighlightColorEditing";
   }
 
   constructor(editor: CanvasflowEditor) {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
-      model: BACKGROUND_COLOR_ATTR,
+      model: HIGHLIGHT_COLOR_ATTR,
       view: this.renderDowncastElement(),
     });
 
     editor.commands.add(
-      SET_BACKGROUND_COLOR_COMMAND,
-      new FontBackgroundCommand(editor),
+      SET_HIGHLIGHT_COLOR_COMMAND,
+      new HighlightColorCommand(editor),
     );
     editor.commands.add(
-      CLEAR_BACKGROUND_COLOR_COMMAND,
-      new ClearFontBackgroundCommand(editor),
+      CLEAR_HIGHLIGHT_COLOR_COMMAND,
+      new ClearHighlightColorCommand(editor),
     );
     editor.model.schema.extend("$text", {
-      allowAttributes: BACKGROUND_COLOR_ATTR,
+      allowAttributes: HIGHLIGHT_COLOR_ATTR,
     });
-    editor.model.schema.setAttributeProperties(BACKGROUND_COLOR_ATTR, {
+    editor.model.schema.setAttributeProperties(HIGHLIGHT_COLOR_ATTR, {
       isFormatting: true,
       copyOnEnter: true,
     });

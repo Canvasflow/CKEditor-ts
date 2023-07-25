@@ -1,9 +1,9 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
-export const BACKGROUND_COLOR_ATTR = "backgroundColor";
-export const CLEAR_BACKGROUND_COLOR_COMMAND = "clearBackground";
-export const SET_BACKGROUND_COLOR_COMMAND = "setBackgroundColor";
-export class FontBackgroundCommand extends Command {
+export const HIGHLIGHT_COLOR_ATTR = "backgroundColor";
+export const CLEAR_HIGHLIGHT_COLOR_COMMAND = "clearHighlightColor";
+export const SET_HIGHLIGHT_COLOR_COMMAND = "setHighlightColor";
+export class HighlightColorCommand extends Command {
   constructor(editor: CanvasflowEditor) {
     super(editor);
   }
@@ -11,10 +11,10 @@ export class FontBackgroundCommand extends Command {
   refresh() {
     const model = this.editor.model;
     const doc = model.document;
-    this.value = doc.selection.getAttribute(BACKGROUND_COLOR_ATTR);
+    this.value = doc.selection.getAttribute(HIGHLIGHT_COLOR_ATTR);
     this.isEnabled = model.schema.checkAttributeInSelection(
       doc.selection,
-      BACKGROUND_COLOR_ATTR,
+      HIGHLIGHT_COLOR_ATTR,
     );
   }
 
@@ -26,7 +26,7 @@ export class FontBackgroundCommand extends Command {
     model.change((writer) => {
       const ranges = model.schema.getValidRanges(
         selection.getRanges(),
-        BACKGROUND_COLOR_ATTR,
+        HIGHLIGHT_COLOR_ATTR,
       );
 
       for (const range of ranges) {
@@ -43,7 +43,7 @@ export class FontBackgroundCommand extends Command {
   }
 }
 
-export class ClearFontBackgroundCommand extends Command {
+export class ClearHighlightColorCommand extends Command {
   constructor(editor: CanvasflowEditor) {
     super(editor);
   }
@@ -51,10 +51,10 @@ export class ClearFontBackgroundCommand extends Command {
   refresh() {
     const model = this.editor.model;
     const doc = model.document;
-    this.value = doc.selection.getAttribute(BACKGROUND_COLOR_ATTR);
+    this.value = doc.selection.getAttribute(HIGHLIGHT_COLOR_ATTR);
     this.isEnabled = model.schema.checkAttributeInSelection(
       doc.selection,
-      BACKGROUND_COLOR_ATTR,
+      HIGHLIGHT_COLOR_ATTR,
     );
   }
 
@@ -65,11 +65,11 @@ export class ClearFontBackgroundCommand extends Command {
     model.change((writer) => {
       const ranges = model.schema.getValidRanges(
         selection.getRanges(),
-        BACKGROUND_COLOR_ATTR,
+        HIGHLIGHT_COLOR_ATTR,
       );
 
       for (const range of ranges) {
-        writer.removeAttribute(BACKGROUND_COLOR_ATTR, range);
+        writer.removeAttribute(HIGHLIGHT_COLOR_ATTR, range);
       }
     });
   }
