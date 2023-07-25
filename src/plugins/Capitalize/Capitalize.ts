@@ -8,12 +8,9 @@ import { TEXT_TRANSFORM_COMMAND } from "../../commands/TextTransform/TextTransfo
 export class Capitalize extends Plugin {
   static viewName = "cf-capitalize";
   declare editor: CanvasflowEditor;
-  balloon: any;
-  formView: any;
 
   init() {
-    const editor = this.editor;
-    editor.ui.componentFactory.add(Capitalize.viewName, this.renderView);
+    this.editor.ui.componentFactory.add(Capitalize.viewName, this.renderView);
   }
 
   renderView = () => {

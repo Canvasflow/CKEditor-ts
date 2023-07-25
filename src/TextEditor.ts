@@ -180,7 +180,7 @@ const TOOLBAR = [
   {
     label: "Text Transform",
     icon: textTransform,
-    items: ["Uppercase", "Lowercase", Capitalize.viewName],
+    items: ["Uppercase", Lowercase.viewName, Capitalize.viewName],
   },
   "|",
   "Link",
