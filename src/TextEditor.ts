@@ -170,7 +170,7 @@ const TOOLBAR = [
     icon: backgroundColor,
     items: [FontBackground.viewName],
   },
-  "ClearFormatting",
+  ClearFormat.viewName,
   "|",
   {
     label: "Lists",
