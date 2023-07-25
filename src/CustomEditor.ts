@@ -26,7 +26,7 @@ import { SpecialCharactersEmoji } from "./plugins/SpecialCharacters/SpecialChara
 import { Uppercase } from "./plugins/Uppercase/Uppercase";
 import { Lowercase } from "./plugins/Lowercase/Lowercase";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
-import { FontBackground } from "./plugins/HighlightColor/HighlightColor";
+import { HighlightColor } from "./plugins/HighlightColor/HighlightColor";
 import { TextColor } from "./plugins/TextColor/TextColor";
 import { ClearFormat } from "./plugins/ClearFormat/ClearFormat";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
@@ -200,7 +200,7 @@ function getPluginConfig(plugin: string) {
 
     case "BackgroundColor":
       return {
-        plugins: [Essentials, Paragraph, Font, FontBackground],
+        plugins: [Essentials, Paragraph, Font, HighlightColor],
         toolbar: "backgroundColor",
       };
 

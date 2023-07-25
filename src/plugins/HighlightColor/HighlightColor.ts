@@ -15,7 +15,7 @@ import {
 import { AddCustomHighlightColorEvent } from "./HighlightColorEvents";
 import { FontBackgroundEditing } from "./HighlightColorEditing";
 
-export class FontBackground extends Plugin implements ColorViewer {
+export class HighlightColor extends Plugin implements ColorViewer {
   static viewName = "cf-hightlight-color";
   selectedColor: string = "";
   editor: CanvasflowEditor;
@@ -35,7 +35,7 @@ export class FontBackground extends Plugin implements ColorViewer {
 
     this.view = new ColorView(this);
     this.editor.ui.componentFactory
-      .add(FontBackground.viewName, () => this.view);
+      .add(HighlightColor.viewName, () => this.view);
   }
 
   static get requires() {
