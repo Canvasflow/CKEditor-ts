@@ -4,7 +4,7 @@ import {
   TextTransformCommand,
   TEXT_TRANSFORM_ATTR,
   TEXT_TRANSFORM_COMMAND,
-} from "../TextTransform/TextTransformCommand";
+} from "../../commands/TextTransform/TextTransformCommand";
 export class LowercaseEditing extends Plugin {
   static get pluginName() {
     return "LowercaseEditing";

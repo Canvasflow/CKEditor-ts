@@ -1,7 +1,7 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import CanvasflowEditor from "../../BaseEditor";
-import { TEXT_TRANSFORM_COMMAND } from "../TextTransform/TextTransformCommand";
+import { TEXT_TRANSFORM_COMMAND } from "../../commands/TextTransform/TextTransformCommand";
 export class LowercaseUI extends Plugin {
   declare editor: CanvasflowEditor;
   balloon: any;

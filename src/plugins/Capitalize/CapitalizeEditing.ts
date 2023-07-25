@@ -4,7 +4,7 @@ import {
   TextTransformCommand,
   TEXT_TRANSFORM_ATTR,
   TEXT_TRANSFORM_COMMAND,
-} from "../TextTransform/TextTransformCommand";
+} from "../../commands/TextTransform/TextTransformCommand";
 export class CapitalizeEditing extends Plugin {
   static get pluginName() {
     return "CapitalizeEditing";
@@ -33,7 +33,6 @@ export class CapitalizeEditing extends Plugin {
 
 function renderDowncastElement() {
   return (modelAttributeValue: string, viewWriter: any) => {
-    console.log("capitalize");
     const attributes = {
       style: `text-transform:${modelAttributeValue};`,
     };

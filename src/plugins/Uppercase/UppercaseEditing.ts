@@ -3,7 +3,7 @@ import {
   TextTransformCommand,
   TEXT_TRANSFORM_ATTR,
   TEXT_TRANSFORM_COMMAND,
-} from "../TextTransform/TextTransformCommand";
+} from "../../commands/TextTransform/TextTransformCommand";
 import CanvasflowEditor from "../../BaseEditor";
 export class UppercaseEditing extends Plugin {
   static get pluginName() {
