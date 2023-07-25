@@ -61,11 +61,12 @@ const config = {
   },
 };
 
-CustomEditor.build(document.querySelector("#editor") as HTMLElement, config, [
-  "DarkMode",
-])
+TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
   .then((editor) => {
     createListeners(editor);
+    setTimeout(() => {
+      console.log("here");
+    }, 5000);
   })
   .catch((error) => {
     console.error(error);
