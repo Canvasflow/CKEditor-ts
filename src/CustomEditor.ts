@@ -110,7 +110,7 @@ function buildPlugins(components: Array<string | GroupItem>): {
       });
       if (plugin === "FontColor" || plugin === "HighlightColor") {
         const pluginView = {
-          label: plugin,
+          label: plugin === "FontColor" ? "Text Color" : "Highlight Color",
           icon: getIconList(plugin),
           items: [
             plugin === "FontColor" ? "cf-text-color" : "cf-hightlight-color",
@@ -123,7 +123,6 @@ function buildPlugins(components: Array<string | GroupItem>): {
     } else {
       for (const item of plugin.items) {
         const pluginConfig = getPluginConfig(item);
-        console.log(pluginConfig);
         pluginConfig?.plugins.map((value) => {
           plugins.add(value);
         });

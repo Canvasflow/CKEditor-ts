@@ -33,7 +33,18 @@ export class TextColor extends Plugin implements ColorViewer {
     this.locale = this.editor.locale;
 
     this.view = new ColorView(this);
-    this.editor.ui.componentFactory.add(TextColor.viewName, () => this.view);
+    this.editor.ui.componentFactory.add(TextColor.viewName, () => {
+      const view = new ColorView(this);
+      const querySelector = `[data-cke-tooltip-text="Text Color"]`;
+      const node: HTMLButtonElement | null =
+        document.querySelector(querySelector);
+      if (node) {
+        node.onclick = () => {
+          view.resetCustomColorCollection();
+        };
+      }
+      return view;
+    });
   }
 
   renderView = () => {

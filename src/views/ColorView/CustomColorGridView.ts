@@ -15,7 +15,7 @@ export class CustomColorGridView extends ColorGridView {
   constructor(viewer: GridViewer) {
     const { locale, colors, onClickColor } = viewer;
     super(locale, { columns: 4, colorDefinitions: [] });
-    const uniqueColors = getUniqueColors(colors);
+    const uniqueColors = this.getUniqueColors(colors);
     this.colorSet = new Set(uniqueColors.map((c) => c.color));
     this.onClickColor = onClickColor;
     this.colors = new Collection(uniqueColors);
@@ -27,11 +27,14 @@ export class CustomColorGridView extends ColorGridView {
   }
 
   add = (color: Color) => {
-    console.log(`IN GRID VIEW`, color);
     if (this.colorSet.has(color.color)) {
       return;
     }
     this.fire("add:color", color);
+  };
+
+  clear = () => {
+    this.colors.clear();
   };
 
   selectColor(color: string) {
@@ -52,26 +55,26 @@ export class CustomColorGridView extends ColorGridView {
       return colorTileView;
     };
   }
+
+  getUniqueColors(colorList: Array<Color>): Array<Color> {
+    const colorsSet = new Set();
+    const colors: Array<Color> = colorList.reduce(
+      (acc: Array<Color>, color: Color) => {
+        if (colorsSet.has(color.color)) {
+          return acc;
+        }
+        colorsSet.add(color.color);
+        acc.push(color);
+        return acc;
+      },
+      [],
+    );
+    return colors;
+  }
 }
 
 interface GridViewer {
   locale: Locale;
   colors: Array<Color>;
   onClickColor: GetCallback<BaseEvent>;
-}
-
-function getUniqueColors(colorList: Array<Color>): Array<Color> {
-  const colorsSet = new Set();
-  const colors: Array<Color> = colorList.reduce(
-    (acc: Array<Color>, color: Color) => {
-      if (colorsSet.has(color.color)) {
-        return acc;
-      }
-      colorsSet.add(color.color);
-      acc.push(color);
-      return acc;
-    },
-    [],
-  );
-  return colors;
 }

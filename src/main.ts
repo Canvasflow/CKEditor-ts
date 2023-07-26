@@ -21,6 +21,7 @@ const customColor = [
   { color: "yellow", label: "bright yellow" },
   { color: "grey", label: "dark grey" },
 ];
+
 const customBackgroundColor = [{ color: "orange", label: "orange" }];
 
 const config = {
@@ -64,9 +65,15 @@ const config = {
 TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
   .then((editor) => {
     createListeners(editor);
-    setTimeout(() => {
-      console.log("here");
-    }, 5000);
+    editor.addEventListener("textColor:addCustomColor", (evt: any) => {
+      const { color } = evt;
+      customColor.push({ color, label: "" });
+    });
+
+    editor.addEventListener("highlightColor:addCustomColor", (evt: any) => {
+      const { color } = evt;
+      customBackgroundColor.push({ color, label: "" });
+    });
   })
   .catch((error) => {
     console.error(error);
@@ -78,10 +85,20 @@ CustomEditor.build(document.querySelector("#editor2") as HTMLElement, config, [
   "FontFamily",
   "DarkMode",
   "FontColor",
-  { label: "Font Styles", icon: "fontStyles", items: ["bold"] },
+  "HighlightColor",
+  { label: "Font Styles", icon: "fontStyles", items: ["Bold", "Italic"] },
 ])
   .then((editor) => {
     createListeners(editor);
+    editor.addEventListener("textColor:addCustomColor", (evt: any) => {
+      const { color } = evt;
+      customColor.push({ color, label: "" });
+    });
+
+    editor.addEventListener("highlightColor:addCustomColor", (evt: any) => {
+      const { color } = evt;
+      customBackgroundColor.push({ color, label: "" });
+    });
   })
   .catch((error) => {
     console.error(error);

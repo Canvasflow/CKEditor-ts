@@ -55,6 +55,17 @@ export class ColorView extends View {
     document.selection.on("change:range", this.onSelectionChange);
   }
 
+  resetCustomColorCollection() {
+    this.customColorsGridView.gridView.clear;
+    const customColors = this.customColorsGridView.gridView.getUniqueColors(
+      this.colors.customColor,
+    );
+    for (const c of customColors) {
+      c.selected = this.customColorsGridView?.selectedColor === c.color;
+      this.customColorsGridView.gridView.add(c);
+    }
+  }
+
   private onAddColor = (color: string) => {
     this.viewer.onAddColor(color);
     this.customColorsGridView.gridView.add({ color: color, label: color });
@@ -241,6 +252,8 @@ class ColorsGridView extends View {
       colors: input,
       onClickColor: this.onClickColor,
     });
+
+    //this.gridView.clear()
     this.setTemplate({
       tag: "div",
       attributes: {
