@@ -53,7 +53,6 @@ export class TextColor extends Plugin implements ColorViewer {
 
   onSetColor = (color: string) => {
     this.editor.execute(SET_TEXT_COLOR_COMMAND, color);
-    this.view.setGridsSelectedColor("");
     this.view.setGridsSelectedColor(color);
   };
 
