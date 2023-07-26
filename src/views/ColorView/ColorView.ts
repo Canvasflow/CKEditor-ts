@@ -129,7 +129,7 @@ export class ColorView extends View {
       this.viewer.attribute === "fontColor"
         ? "Remove color"
         : "Remove background";
-    let clearButton = this.createButton(label, getIcon("removeColor"), "");
+    let clearButton = this.createButton(label, getIcon("removeColor"));
     clearButton.type = "button";
     clearButton.class = "clear-color-button";
     clearButton.on("execute", () => {
@@ -159,7 +159,7 @@ export class ColorView extends View {
     );
   }
 
-  private createButton(label: any, icon: any, className: any) {
+  private createButton(label: any, className: any) {
     const button = new ButtonView();
     button.set({
       label,

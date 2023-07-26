@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.3.1
+
+_July 26, 2023_
+
+♻️ Build
+
+- Updated build settings
+
 ## 🏷️ 1.3.0
 
 _July 26, 2023_
@@ -21,6 +29,15 @@ _July 21, 2023_
 - Support for array of functions in Event Listeners
 - Removed unused events
 - Default color wont listen to the add color event
+
+## 🏷️ 1.1.5
+
+_July 11, 2023_
+
+🐛 events name conflict
+
+- Updated event names
+- Added Background color events
 
 ## 🏷️ 1.1.4
 
