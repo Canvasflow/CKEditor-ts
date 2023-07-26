@@ -54,6 +54,7 @@ export interface TextEditorConfig extends EditorConfig {
   fontFamily?: { options: Array<string> };
   fetchAnchors?: AnchorFn;
   fontBackground?: Colors;
+  toolbar?: Array<string | GroupItem>;
 }
 
 export interface Colors {
@@ -78,3 +79,9 @@ export interface PageAnchorSource {
 }
 
 export type AnchorFn = (id: string) => Promise<Array<PageAnchorSource>>;
+
+export interface GroupItem {
+  label: string;
+  icon: string;
+  items: Array<string>;
+}

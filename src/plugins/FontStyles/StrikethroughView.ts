@@ -1,16 +1,16 @@
-import { ButtonView } from "@ckeditor/ckeditor5-ui";
-import icon from "./../../assets/icons/striketrough.svg?raw";
-import { FontStylesViewer, hasAttribute } from "./FontStylesViewer";
 import CanvasflowEditor from "../../BaseEditor";
+import { ButtonView } from "@ckeditor/ckeditor5-ui";
+import { FontStylesViewer, hasAttribute } from "./FontStylesViewer";
+import { getIcon } from "../../icons/icons";
 
 export class StrikethroughView extends ButtonView {
   private editor: CanvasflowEditor;
-  static viewName = "StrikethroughCF";
+  static viewName = "cf-strikethrough";
   constructor(viewer: FontStylesViewer) {
     super(viewer.editor.locale);
     const { editor } = viewer;
     this.label = "Strikethrough";
-    this.icon = icon;
+    this.icon = getIcon("striketrough");
     this.tooltip = true;
     this.withText = false;
     this.editor = editor;

@@ -1,16 +1,16 @@
-import { ButtonView } from "@ckeditor/ckeditor5-ui";
-import icon from "./../../assets/icons/italic.svg?raw";
-import { FontStylesViewer, hasAttribute } from "./FontStylesViewer";
 import CanvasflowEditor from "../../BaseEditor";
+import { ButtonView } from "@ckeditor/ckeditor5-ui";
+import { FontStylesViewer, hasAttribute } from "./FontStylesViewer";
+import { getIcon } from "../../icons/icons";
 
 export class ItalicView extends ButtonView {
   private editor: CanvasflowEditor;
-  static viewName = "ItalicCF";
+  static viewName = "cf-italic";
   constructor(viewer: FontStylesViewer) {
     super(viewer.editor.locale);
     const { editor } = viewer;
     this.label = "Italic";
-    this.icon = icon;
+    this.icon = getIcon("italic");
     this.tooltip = true;
     this.withText = false;
     this.class = "";

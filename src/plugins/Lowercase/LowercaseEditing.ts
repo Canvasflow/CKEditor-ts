@@ -1,10 +1,11 @@
-import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import CanvasflowEditor from "../../BaseEditor";
+import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import {
   TextTransformCommand,
   TEXT_TRANSFORM_ATTR,
   TEXT_TRANSFORM_COMMAND,
-} from "../TextTransform/TextTransformCommand";
+} from "../../commands/TextTransform/TextTransformCommand";
+
 export class LowercaseEditing extends Plugin {
   static get pluginName() {
     return "LowercaseEditing";
@@ -33,7 +34,6 @@ export class LowercaseEditing extends Plugin {
 
 function renderDowncastElement() {
   return (modelAttributeValue: string, viewWriter: any) => {
-    console.log("capitalize");
     const attributes = {
       style: `text-transform:${modelAttributeValue};`,
     };

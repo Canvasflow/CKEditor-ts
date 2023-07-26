@@ -1,6 +1,6 @@
 import { ButtonView } from "@ckeditor/ckeditor5-ui";
 import { Plugin } from "ckeditor5/src/core";
-import icon from "../../assets/icons/darkMode.svg?raw";
+import { getIcon } from "../../icons/icons";
 
 export class DarkMode extends Plugin {
   init() {
@@ -29,7 +29,7 @@ export class DarkMode extends Plugin {
       button.set({
         tooltip: "Apple dark mode",
         withText: false,
-        icon,
+        icon: getIcon("darkmode"),
       });
 
       button.on("execute", () => {
@@ -51,7 +51,6 @@ export class DarkMode extends Plugin {
 
           var position = selection.getFirstPosition();
           if (position) {
-            console.log("HERE");
             writer.insertText(
               value,
               { "data-anf-dark-mode": "true" },

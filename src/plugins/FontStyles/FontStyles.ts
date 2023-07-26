@@ -1,6 +1,5 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import CanvasflowEditor from "../../BaseEditor";
-
 import { FontStylesViewer } from "./FontStylesViewer";
 import { BoldView } from "./BoldView";
 import { ItalicView } from "./ItalicView";
@@ -11,14 +10,8 @@ import { SuperscriptView } from "./SuperscriptView";
 
 export class FontStyles extends Plugin implements FontStylesViewer {
   declare editor: CanvasflowEditor;
-  fonts: string[] = [];
 
   init() {
-    // this.fonts = this.editor.fonts;
-    // if (!this.fonts.length) {
-    //   return;
-    // }
-
     this.createBoldView();
     this.createItalicView();
     this.createUnderlineView();

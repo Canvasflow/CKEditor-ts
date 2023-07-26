@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 🏷️ 1.3.0
+
+_July 26, 2023_
+
+♻️ Refactor
+
+- Mayor code clean-up
+- Removed unused files along all plugins (better efficiency)
+- Icons are now handled from an assets provider
+- Improved hover visibility in Font style
+- Font style dropdown contained into parent
+
 ## 🏷️ 1.2.0
 
 _July 21, 2023_

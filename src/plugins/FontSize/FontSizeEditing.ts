@@ -1,22 +1,22 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
-import { PageLinkCommand } from "./PageLinkCommands";
+import { FontSizeCommand } from "./FontSizeCommands";
 
-export class PageLinkEditing extends Plugin {
+export class FontSizeEditing extends Plugin {
   static get pluginName() {
-    return "PageLinkEditing";
+    return "TextSizeEditing";
   }
 
   constructor(editor: CanvasflowEditor) {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
-      model: "PageLink",
+      model: "textSize",
       view: renderDowncastElement(),
     });
 
-    editor.commands.add("PageLink", new PageLinkCommand(editor));
-    editor.model.schema.extend("$text", { allowAttributes: "PageLink" });
-    editor.model.schema.setAttributeProperties("PageLink", {
+    editor.commands.add("textSize", new FontSizeCommand(editor));
+    editor.model.schema.extend("$text", { allowAttributes: "textSize" });
+    editor.model.schema.setAttributeProperties("textSize", {
       isFormatting: true,
       copyOnEnter: true,
     });
