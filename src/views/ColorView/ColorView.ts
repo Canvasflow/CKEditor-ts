@@ -278,7 +278,6 @@ class ColorsGridView extends View {
     const { onSetColor } = this.viewer;
     const view: ColorTileView = evt.source as any;
     const { color } = view;
-    console.log(`COLOR: ${color}`);
     onSetColor(color!);
     this.gridView.selectColor(color!);
   };

@@ -25,7 +25,6 @@ export class ClearFormatEditing extends Plugin {
   private renderDowncastElement() {
     return (_: any, viewWriter: any) => {
       const attributes = { style: "" };
-      console.log(viewWriter.writer);
       return viewWriter.writer.createAttributeElement("span", attributes, {
         priority: 7,
       });
