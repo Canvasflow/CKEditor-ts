@@ -61,12 +61,7 @@ const config = {
   },
 };
 
-CustomEditor.build(document.querySelector("#editor") as HTMLElement, config, [
-  "bold",
-  "separator",
-  "FontFamily",
-  "DarkMode",
-])
+TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
   .then((editor) => {
     createListeners(editor);
   })
@@ -74,13 +69,19 @@ CustomEditor.build(document.querySelector("#editor") as HTMLElement, config, [
     console.error(error);
   });
 
-// TextEditor.create(document.querySelector("#editor2") as HTMLElement, config)
-//   .then((editor) => {
-//     createListeners(editor);
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//   });
+CustomEditor.build(document.querySelector("#editor2") as HTMLElement, config, [
+  "bold",
+  "separator",
+  "FontFamily",
+  "DarkMode",
+  "FontColor",
+])
+  .then((editor) => {
+    createListeners(editor);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
 async function fetchAnchors(id: string): Promise<Array<PageAnchorSource>> {
   if (id === "1111") {
