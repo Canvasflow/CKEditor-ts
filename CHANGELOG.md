@@ -1,10 +1,18 @@
 # CHANGELOG
 
+## 🏷️ 1.3.3
+
+_July 26, 2023_
+
+🐛 Fixed
+
+- Exclude files from build
+
 ## 🏷️ 1.3.2
 
 _July 26, 2023_
 
-🐛 Build Settings
+🐛 Fixed
 
 - Add support for custom editor
 
@@ -12,7 +20,7 @@ _July 26, 2023_
 
 _July 26, 2023_
 
-♻️ Build
+♻️ Refactor
 
 - Updated build settings
 
@@ -42,7 +50,7 @@ _July 21, 2023_
 
 _July 11, 2023_
 
-🐛 events name conflict
+🐛 Fixed
 
 - Updated event names
 - Added Background color events
@@ -78,7 +86,7 @@ _July 11, 2023_
 
 _June 29, 2023_
 
-🚧 Page Link
+🚧 Work in Progress
 
 - Removed duplicated anchor DropdownView
 
@@ -96,7 +104,7 @@ _June 30, 2023_
 
 _June 29, 2023_
 
-🚧 Build
+🚧 Work in Progress
 
 - Removed unused variables and functions
 
