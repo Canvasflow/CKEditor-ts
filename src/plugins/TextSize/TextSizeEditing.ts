@@ -1,6 +1,7 @@
+import CanvasflowEditor from "../../BaseEditor";
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { TextSizeCommand } from "./TextSizeCommands";
-import CanvasflowEditor from "../../BaseEditor";
+
 export class TextSizeEditing extends Plugin {
   static get pluginName() {
     return "TextSizeEditing";

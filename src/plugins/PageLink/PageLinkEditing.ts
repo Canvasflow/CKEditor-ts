@@ -1,6 +1,7 @@
+import CanvasflowEditor from "../../BaseEditor";
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { PageLinkCommand } from "./PageLinkCommands";
-import CanvasflowEditor from "../../BaseEditor";
+
 export class PageLinkEditing extends Plugin {
   static get pluginName() {
     return "PageLinkEditing";

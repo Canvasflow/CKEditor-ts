@@ -1,7 +1,7 @@
-import { ButtonView } from "@ckeditor/ckeditor5-ui";
-import icon from "./../../assets/icons/superscript.svg?raw";
-import { FontStylesViewer, hasAttribute } from "./FontStylesViewer";
 import CanvasflowEditor from "../../BaseEditor";
+import { ButtonView } from "@ckeditor/ckeditor5-ui";
+import { FontStylesViewer, hasAttribute } from "./FontStylesViewer";
+import { getIcon } from "../../icons/icons";
 
 export class SuperscriptView extends ButtonView {
   private editor: CanvasflowEditor;
@@ -10,7 +10,7 @@ export class SuperscriptView extends ButtonView {
     super(viewer.editor.locale);
     const { editor } = viewer;
     this.label = "Superscript";
-    this.icon = icon;
+    this.icon = getIcon("superscript");
     this.tooltip = true;
     this.withText = false;
     this.editor = editor;

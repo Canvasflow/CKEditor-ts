@@ -1,9 +1,8 @@
-import { View, ViewCollection, ButtonView } from "@ckeditor/ckeditor5-ui";
 import CanvasflowEditor from "../../BaseEditor";
+import { View, ViewCollection, ButtonView } from "@ckeditor/ckeditor5-ui";
 import { TextSizeView } from "./TextSizeView";
 import { Locale } from "@ckeditor/ckeditor5-utils";
-import minus from "../../assets/icons/minusIcon.svg?raw";
-import plus from "../../assets/icons/plusIcon.svg?raw";
+import { getIcon } from "../../icons/icons";
 
 export class TextSizeComponent extends View {
   static viewName = "fontSizeInputCF";
@@ -21,9 +20,9 @@ export class TextSizeComponent extends View {
   }
 
   private init() {
-    this.items.add(this.sizeDown("", minus));
+    this.items.add(this.sizeDown("", getIcon("minus")));
     this.items.add(this.input);
-    this.items.add(this.sizeUp("", plus));
+    this.items.add(this.sizeUp("", getIcon("plus")));
   }
 
   private sizeUp(label: string, icon: any) {

@@ -1,6 +1,7 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
 export const CLEAR = "clear";
+
 export class ClearFormatCommands extends Command {
   constructor(editor: CanvasflowEditor) {
     super(editor);

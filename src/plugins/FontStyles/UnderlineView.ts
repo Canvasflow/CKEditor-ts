@@ -1,7 +1,7 @@
-import { ButtonView } from "@ckeditor/ckeditor5-ui";
-import icon from "./../../assets/icons/underline.svg?raw";
-import { FontStylesViewer, hasAttribute } from "./FontStylesViewer";
 import CanvasflowEditor from "../../BaseEditor";
+import { ButtonView } from "@ckeditor/ckeditor5-ui";
+import { FontStylesViewer, hasAttribute } from "./FontStylesViewer";
+import { getIcon } from "../../icons/icons";
 
 export class UnderlineView extends ButtonView {
   private editor: CanvasflowEditor;
@@ -10,7 +10,7 @@ export class UnderlineView extends ButtonView {
     super(viewer.editor.locale);
     const { editor } = viewer;
     this.label = "Underline";
-    this.icon = icon;
+    this.icon = getIcon("underline");
     this.tooltip = true;
     this.withText = false;
     this.editor = editor;

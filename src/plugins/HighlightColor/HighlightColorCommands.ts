@@ -28,7 +28,6 @@ export class HighlightColorCommand extends Command {
         selection.getRanges(),
         HIGHLIGHT_COLOR_ATTR,
       );
-
       for (const range of ranges) {
         if (value) {
           writer.setAttributes(

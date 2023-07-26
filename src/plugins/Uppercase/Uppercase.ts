@@ -1,9 +1,7 @@
+import CanvasflowEditor from "../../BaseEditor";
 import { Plugin } from "@ckeditor/ckeditor5-core";
 import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
-
 import { UppercaseEditing } from "./UppercaseEditing";
-
-import CanvasflowEditor from "../../BaseEditor";
 import { TEXT_TRANSFORM_COMMAND } from "../../commands/TextTransform/TextTransformCommand";
 
 export class Uppercase extends Plugin {
@@ -24,7 +22,7 @@ export class Uppercase extends Plugin {
       this.editor.execute(TEXT_TRANSFORM_COMMAND, "uppercase");
     });
     return button;
-  }
+  };
 
   static get requires() {
     return [UppercaseEditing];

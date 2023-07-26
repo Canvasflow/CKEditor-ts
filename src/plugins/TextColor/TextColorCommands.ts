@@ -1,6 +1,5 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
-
 export const TEXT_COLOR_ATTR = "fontColor";
 export const CLEAR_TEXT_COLOR_COMMAND = "clearTextColor";
 export const SET_TEXT_COLOR_COMMAND = "setTextColor";

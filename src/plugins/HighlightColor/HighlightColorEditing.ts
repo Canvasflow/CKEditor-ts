@@ -1,3 +1,4 @@
+import CanvasflowEditor from "../../BaseEditor";
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import {
   HighlightColorCommand,
@@ -6,7 +7,6 @@ import {
   CLEAR_HIGHLIGHT_COLOR_COMMAND,
   SET_HIGHLIGHT_COLOR_COMMAND,
 } from "./HighlightColorCommands";
-import CanvasflowEditor from "../../BaseEditor";
 
 export class FontBackgroundEditing extends Plugin {
   static get pluginName() {

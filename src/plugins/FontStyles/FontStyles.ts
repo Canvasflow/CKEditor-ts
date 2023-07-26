@@ -1,6 +1,5 @@
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import CanvasflowEditor from "../../BaseEditor";
-
 import { FontStylesViewer } from "./FontStylesViewer";
 import { BoldView } from "./BoldView";
 import { ItalicView } from "./ItalicView";

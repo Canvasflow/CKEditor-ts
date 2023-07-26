@@ -1,7 +1,8 @@
-import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
-import { TextSizeComponent, TextSizeViewer } from "./TextSizeComponent";
 import CanvasflowEditor from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
+import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
+import { TextSizeComponent, TextSizeViewer } from "./TextSizeComponent";
+
 export class TextSizeUI extends Plugin implements TextSizeViewer {
   declare editor: CanvasflowEditor;
   fontSizeView: TextSizeComponent;

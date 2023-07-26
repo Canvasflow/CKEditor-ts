@@ -1,8 +1,8 @@
+import CanvasflowEditor from "../../BaseEditor";
+import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { ClearFormatEditing } from "./ClearFormatEditing";
 import { Plugin } from "@ckeditor/ckeditor5-core";
-import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
-import CanvasflowEditor from "../../BaseEditor";
-import icon from "../../assets/icons/clearFormatting.svg?raw";
+import { getIcon } from "../../icons/icons";
 
 export class ClearFormat extends Plugin {
   declare editor: CanvasflowEditor;
@@ -19,12 +19,12 @@ export class ClearFormat extends Plugin {
     button.label = "Clear Format";
     button.tooltip = true;
     button.withText = false;
-    button.icon = icon;
+    button.icon = getIcon("clearFormatting");
     this.listenTo(button, "execute", () => {
       this.editor.execute("clear");
     });
     return button;
-  }
+  };
 
   static get requires() {
     return [ClearFormatEditing];

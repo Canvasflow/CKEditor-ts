@@ -1,19 +1,18 @@
+import CanvasflowEditor, { Colors } from "../../BaseEditor";
+import { Locale } from "@ckeditor/ckeditor5-utils";
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { ContextualBalloon } from "@ckeditor/ckeditor5-ui";
-
 import {
   ColorView,
   ColorViewer,
   ColorViewerType,
 } from "../../views/ColorView/ColorView";
-import CanvasflowEditor, { Colors } from "../../BaseEditor";
-import { Locale } from "@ckeditor/ckeditor5-utils";
+import { AddCustomHighlightColorEvent } from "./HighlightColorEvents";
+import { FontBackgroundEditing } from "./HighlightColorEditing";
 import {
   SET_HIGHLIGHT_COLOR_COMMAND,
   CLEAR_HIGHLIGHT_COLOR_COMMAND,
 } from "./HighlightColorCommands";
-import { AddCustomHighlightColorEvent } from "./HighlightColorEvents";
-import { FontBackgroundEditing } from "./HighlightColorEditing";
 
 export class HighlightColor extends Plugin implements ColorViewer {
   static viewName = "cf-hightlight-color";
@@ -34,8 +33,10 @@ export class HighlightColor extends Plugin implements ColorViewer {
     this.locale = this.editor.locale;
 
     this.view = new ColorView(this);
-    this.editor.ui.componentFactory
-      .add(HighlightColor.viewName, () => this.view);
+    this.editor.ui.componentFactory.add(
+      HighlightColor.viewName,
+      () => this.view,
+    );
   }
 
   static get requires() {
@@ -56,5 +57,5 @@ export class HighlightColor extends Plugin implements ColorViewer {
       color,
     };
     this.editor.dispatch("highlightColor:addCustomColor", evt);
-  }
+  };
 }

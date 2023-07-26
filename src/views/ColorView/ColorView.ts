@@ -1,3 +1,7 @@
+import CanvasflowEditor, { Colors, Color } from "../../BaseEditor";
+import { CustomColorGridView } from "./CustomColorGridView";
+import { InputColorView } from "./InputColorView";
+import { BaseEvent, GetCallback } from "@ckeditor/ckeditor5-utils";
 import {
   View,
   submitHandler,
@@ -5,11 +9,7 @@ import {
   ButtonView,
   ColorTileView,
 } from "@ckeditor/ckeditor5-ui";
-import { CustomColorGridView } from './CustomColorGridView';
-import { InputColorView } from './InputColorView';
-import { BaseEvent, GetCallback } from "@ckeditor/ckeditor5-utils";
-import CanvasflowEditor, { Colors, Color } from "../../BaseEditor";
-import remove from "../../assets/icons/removeColor.svg?raw";
+import { getIcon } from "../../icons/icons";
 
 export class ColorView extends View {
   private viewer: ColorViewer;
@@ -34,8 +34,9 @@ export class ColorView extends View {
     this.defaultColorsGridView = this.getDefaultColorView();
     this.customColorsGridView = this.getCustomColorView();
     this.selectColorView = new InputColorView({
-      locale, onChange: this.onAddColor
-    })
+      locale,
+      onChange: this.onAddColor,
+    });
 
     items.addMany([
       this.removeColorButton,
@@ -57,7 +58,7 @@ export class ColorView extends View {
   private onAddColor = (color: string) => {
     this.viewer.onAddColor(color);
     this.customColorsGridView.gridView.add({ color: color, label: color });
-  }
+  };
 
   private onSelectionChange = () => {
     const { editor, attribute } = this.viewer;
@@ -119,7 +120,7 @@ export class ColorView extends View {
       this.viewer.attribute === "fontColor"
         ? "Remove color"
         : "Remove background";
-    let clearButton = this.createButton(label, remove, "");
+    let clearButton = this.createButton(label, getIcon("removeColor"), "");
     clearButton.type = "button";
     clearButton.class = "clear-color-button";
     clearButton.on("execute", () => {
@@ -130,14 +131,14 @@ export class ColorView extends View {
   }
 
   addColor = (color: Color) => {
-    this.customColorsGridView.gridView.add(color)
-  }
+    this.customColorsGridView.gridView.add(color);
+  };
 
   private getDefaultColorView(): ColorsGridView {
     return new ColorsGridView(
       this.viewer,
       "Default Color",
-      this.colors!.defaultColor
+      this.colors!.defaultColor,
     );
   }
 
@@ -153,7 +154,7 @@ export class ColorView extends View {
     const button = new ButtonView();
     button.set({
       label,
-      icon,
+      icon: getIcon("removeColor"),
       tooltip: true,
       class: className,
       withText: true,
@@ -229,11 +230,7 @@ class ColorsGridView extends View {
   colors: Array<Color>;
   selectedColor?: string;
 
-  constructor(
-    viewer: ColorViewer,
-    label: string,
-    input: Array<Color>
-  ) {
+  constructor(viewer: ColorViewer, label: string, input: Array<Color>) {
     const { locale } = viewer.editor;
     super(locale);
     this.viewer = viewer;
@@ -242,7 +239,7 @@ class ColorsGridView extends View {
     this.gridView = new CustomColorGridView({
       locale,
       colors: input,
-      onClickColor: this.onClickColor
+      onClickColor: this.onClickColor,
     });
     this.setTemplate({
       tag: "div",

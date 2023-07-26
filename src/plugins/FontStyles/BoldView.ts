@@ -1,7 +1,7 @@
-import { ButtonView } from "@ckeditor/ckeditor5-ui";
-import icon from "./../../assets/icons/bold.svg?raw";
-import { FontStylesViewer, hasAttribute } from "./FontStylesViewer";
 import CanvasflowEditor from "../../BaseEditor";
+import { ButtonView } from "@ckeditor/ckeditor5-ui";
+import { FontStylesViewer, hasAttribute } from "./FontStylesViewer";
+import { getIcon } from "../../icons/icons";
 
 export class BoldView extends ButtonView {
   private editor: CanvasflowEditor;
@@ -10,7 +10,7 @@ export class BoldView extends ButtonView {
     super(viewer.editor.locale);
     const { editor } = viewer;
     this.label = "Bold";
-    this.icon = icon;
+    this.icon = getIcon("bold");
     this.tooltip = true;
     this.withText = false;
     this.class = "";
@@ -30,10 +30,12 @@ export class BoldView extends ButtonView {
   }
 
   private onSelectionChange = () => {
-    if (hasAttribute({
-      editor: this.editor,
-      attribute: 'bold'
-    })) {
+    if (
+      hasAttribute({
+        editor: this.editor,
+        attribute: "bold",
+      })
+    ) {
       this.class = "ck-on";
       return;
     }

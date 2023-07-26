@@ -1,4 +1,4 @@
-// import classes from './FontFamily.module.css';
+import CanvasflowEditor from "../../BaseEditor";
 import {
   Model,
   addListToDropdown,
@@ -7,7 +7,7 @@ import {
   DropdownPanelView,
   ListDropdownButtonDefinition,
 } from "@ckeditor/ckeditor5-ui";
-import CanvasflowEditor from "../../BaseEditor";
+
 import { Collection } from "@ckeditor/ckeditor5-utils";
 
 const EMPTY_LABEL = "-";

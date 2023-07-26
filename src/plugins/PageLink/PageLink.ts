@@ -1,13 +1,11 @@
-import { Plugin } from "@ckeditor/ckeditor5-core";
-import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
+import CanvasflowEditor, { PageLinkSource } from "../../BaseEditor";
 import { ContextualBalloon, clickOutsideHandler } from "@ckeditor/ckeditor5-ui";
 import { BaseEvent, GetCallback, Locale } from "@ckeditor/ckeditor5-utils";
+import { Plugin } from "@ckeditor/ckeditor5-core";
+import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { PageLinkView, PageLinkViewer } from "./PageLinkView";
-import CanvasflowEditor, { PageLinkSource } from "../../BaseEditor";
-
 import { PageLinkEditing } from "./PageLinkEditing";
-
-import icon from "../../assets/icons/goToPage.svg?raw";
+import { getIcon } from "../../icons/icons";
 
 export class PageLink extends Plugin implements PageLinkViewer {
   static viewName = "cf-page-link";
@@ -74,7 +72,7 @@ export class PageLink extends Plugin implements PageLinkViewer {
       button.label = "Go to Page";
       button.tooltip = true;
       button.withText = false;
-      button.icon = icon;
+      button.icon = getIcon("goToPage");
       this.listenTo(button, "execute", () => {
         this.showUI();
       });
