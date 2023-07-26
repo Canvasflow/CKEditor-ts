@@ -106,7 +106,6 @@ export class FontFamilyView extends DropdownView {
       const { index } = data;
       const font = fonts[index];
       this.applyClassToSelectedFont(index);
-      console.log(`Selected font "${font}"`);
       /*Close the panel without closing the toolbar*/
       this.isOpen = false;
       this.focus();

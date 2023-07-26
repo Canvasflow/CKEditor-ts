@@ -33,10 +33,19 @@ export class HighlightColor extends Plugin implements ColorViewer {
     this.locale = this.editor.locale;
 
     this.view = new ColorView(this);
-    this.editor.ui.componentFactory.add(
-      HighlightColor.viewName,
-      () => this.view,
-    );
+
+    this.editor.ui.componentFactory.add(HighlightColor.viewName, () => {
+      const view = new ColorView(this);
+      const querySelector = `[data-cke-tooltip-text="Highlight Color"]`;
+      const node: HTMLButtonElement | null =
+        document.querySelector(querySelector);
+      if (node) {
+        node.onclick = () => {
+          view.resetCustomColorCollection();
+        };
+      }
+      return view;
+    });
   }
 
   static get requires() {

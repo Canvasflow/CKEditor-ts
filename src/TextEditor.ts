@@ -154,7 +154,7 @@ const TOOLBAR = [
     ],
   },
   {
-    label: "Font Color",
+    label: "Text Color",
     icon: getIcon("fontColor"),
     items: [TextColor.viewName],
   },

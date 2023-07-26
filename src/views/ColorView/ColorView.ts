@@ -55,6 +55,17 @@ export class ColorView extends View {
     document.selection.on("change:range", this.onSelectionChange);
   }
 
+  resetCustomColorCollection() {
+    this.customColorsGridView.gridView.clear;
+    const customColors = this.customColorsGridView.gridView.getUniqueColors(
+      this.colors.customColor,
+    );
+    for (const c of customColors) {
+      c.selected = this.customColorsGridView?.selectedColor === c.color;
+      this.customColorsGridView.gridView.add(c);
+    }
+  }
+
   private onAddColor = (color: string) => {
     this.viewer.onAddColor(color);
     this.customColorsGridView.gridView.add({ color: color, label: color });
@@ -109,8 +120,6 @@ export class ColorView extends View {
   };
 
   setGridsSelectedColor(color: string) {
-    this.selectedColor = color;
-
     this.defaultColorsGridView.selectColor(color);
     this.customColorsGridView.selectColor(color);
   }
@@ -183,24 +192,9 @@ export class ColorView extends View {
   }
 
   clearAllColors() {
-    let found = false;
     this.viewer.onClearColor();
-    this.defaultColorsGridView?.gridView.items.map((value) => {
-      if (value.class === "selected-color") {
-        found = true;
-        value.class = "";
-        return;
-      }
-    });
-    if (!found) {
-      this.customColorsGridView?.gridView.items.map((value) => {
-        if (value.class === "selected-color") {
-          found = true;
-          value.class = "";
-          return;
-        }
-      });
-    }
+    this.defaultColorsGridView.selectColor("");
+    this.customColorsGridView.selectColor("");
   }
 
   render() {
@@ -241,6 +235,8 @@ class ColorsGridView extends View {
       colors: input,
       onClickColor: this.onClickColor,
     });
+
+    //this.gridView.clear()
     this.setTemplate({
       tag: "div",
       attributes: {
@@ -265,12 +261,11 @@ class ColorsGridView extends View {
     const { onSetColor } = this.viewer;
     const view: ColorTileView = evt.source as any;
     const { color } = view;
-    console.log(`COLOR: ${color}`);
     onSetColor(color!);
     this.gridView.selectColor(color!);
   };
 
-  selectColor(color: string) {
+  selectColor = (color: string) => {
     this.gridView.selectColor(color);
-  }
+  };
 }

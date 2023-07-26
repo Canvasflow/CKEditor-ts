@@ -34,7 +34,6 @@ export class LowercaseEditing extends Plugin {
 
 function renderDowncastElement() {
   return (modelAttributeValue: string, viewWriter: any) => {
-    console.log("capitalize");
     const attributes = {
       style: `text-transform:${modelAttributeValue};`,
     };

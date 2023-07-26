@@ -33,7 +33,6 @@ export class TextSizeUI extends Plugin implements FontSizeViewer {
       }
       const source: any = evt.source;
       const value = `${source.value}px`;
-      console.log(`The value is: "${value}"`);
       this.editor.execute(`fontSize`, { value });
     });
 
