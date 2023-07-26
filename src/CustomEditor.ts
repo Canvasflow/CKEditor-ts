@@ -240,7 +240,7 @@ function getPluginConfig(plugin: string) {
         toolbar: Capitalize.viewName,
       };
 
-    case "link":
+    case "Link":
       return {
         plugins: [Paragraph, Link],
         toolbar: "Link",
