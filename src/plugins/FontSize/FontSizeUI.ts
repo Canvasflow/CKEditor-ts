@@ -1,12 +1,11 @@
 import CanvasflowEditor from "../../BaseEditor";
 import { Locale } from "@ckeditor/ckeditor5-utils";
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
-import { TextSizeComponent, TextSizeViewer } from "./TextSizeComponent";
-import { TextSizeEditing } from "./TextSizeEditing";
+import { FontSizeComponent, FontSizeViewer } from "./FontSizeComponent";
 
-export class FontSize extends Plugin implements TextSizeViewer {
+export class TextSizeUI extends Plugin implements FontSizeViewer {
   declare editor: CanvasflowEditor;
-  fontSizeView: TextSizeComponent;
+  fontSizeView: FontSizeComponent;
   locale: Locale;
   min: number = 8;
   max: number = 50;
@@ -16,7 +15,7 @@ export class FontSize extends Plugin implements TextSizeViewer {
   constructor(editor: CanvasflowEditor) {
     super(editor);
     this.locale = this.editor.locale;
-    this.fontSizeView = new TextSizeComponent(this);
+    this.fontSizeView = new FontSizeComponent(this);
   }
 
   init() {
@@ -24,8 +23,8 @@ export class FontSize extends Plugin implements TextSizeViewer {
     const { document } = model;
 
     this.fontSizeView.showView();
-    this.editor.ui.componentFactory.add(TextSizeComponent.viewName, () => {
-      return this.fontSizeView;
+    this.editor.ui.componentFactory.add(FontSizeComponent.viewName, () => {
+      return this.fontSizeView!;
     });
 
     this.fontSizeView.on("change:value", (evt) => {
@@ -127,9 +126,5 @@ export class FontSize extends Plugin implements TextSizeViewer {
     this.currentValue = value;
     this.fontSizeView.input.set("value", this.currentValue);
     this.fontSizeView.updateInputElement(this.currentValue);
-  }
-
-  static get requires() {
-    return [TextSizeEditing];
   }
 }

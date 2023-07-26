@@ -1,7 +1,7 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
 
-export class TextSizeCommand extends Command {
+export class FontSizeCommand extends Command {
   constructor(editor: CanvasflowEditor) {
     super(editor);
   }

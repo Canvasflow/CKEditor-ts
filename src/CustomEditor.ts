@@ -30,7 +30,7 @@ import { HighlightColor } from "./plugins/HighlightColor/HighlightColor";
 import { TextColor } from "./plugins/TextColor/TextColor";
 import { ClearFormat } from "./plugins/ClearFormat/ClearFormat";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
-import { FontSize } from "./plugins/TextSize/FontSize";
+import { FontSize } from "./plugins/FontSize/FontSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
 import { FontStyles } from "./plugins/FontStyles/FontStyles";
 
@@ -54,7 +54,7 @@ import {
   ImageResizeButtons,
 } from "@ckeditor/ckeditor5-image";
 
-import { TextSizeComponent } from "./plugins/TextSize/TextSizeComponent";
+import { TextSizeComponent } from "./plugins/FontSize/FontSizeComponent";
 
 import fontStyles from "./assets/icons/fontStyles.svg?raw";
 import lists from "./assets/icons/lists.svg?raw";

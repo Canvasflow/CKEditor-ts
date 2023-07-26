@@ -1,21 +1,21 @@
 import CanvasflowEditor from "../../BaseEditor";
 import { View, ViewCollection, ButtonView } from "@ckeditor/ckeditor5-ui";
-import { TextSizeView } from "./TextSizeView";
+import { FontSizeView } from "./FontSizeView";
 import { Locale } from "@ckeditor/ckeditor5-utils";
 import { getIcon } from "../../icons/icons";
 
-export class TextSizeComponent extends View {
+export class FontSizeComponent extends View {
   static viewName = "fontSizeInputCF";
   private items: ViewCollection;
   private iconButton?: ButtonView;
-  private viewer: TextSizeViewer;
-  input: TextSizeView;
+  private viewer: FontSizeViewer;
+  input: FontSizeView;
 
-  constructor(viewer: TextSizeViewer) {
+  constructor(viewer: FontSizeViewer) {
     super(viewer.locale);
     this.viewer = viewer;
     this.items = this.createCollection();
-    this.input = new TextSizeView(viewer);
+    this.input = new FontSizeView(viewer);
     this.init();
   }
 
@@ -78,7 +78,7 @@ export class TextSizeComponent extends View {
   }
 }
 
-export interface TextSizeViewer {
+export interface FontSizeViewer {
   editor: CanvasflowEditor;
   locale?: Locale;
   min: number;

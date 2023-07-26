@@ -1,10 +1,10 @@
 import { View } from "@ckeditor/ckeditor5-ui";
-import { TextSizeViewer } from "./TextSizeComponent";
+import { FontSizeViewer } from "./FontSizeComponent";
 
-export class TextSizeView extends View {
+export class FontSizeView extends View {
   static viewName = "fontSizeInputCF";
   declare value: string;
-  constructor(viewer: TextSizeViewer) {
+  constructor(viewer: FontSizeViewer) {
     const { min, max, step, editor, onChange } = viewer;
     const { locale } = editor;
     super(locale);

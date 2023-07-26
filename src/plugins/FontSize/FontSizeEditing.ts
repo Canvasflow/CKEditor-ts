@@ -1,8 +1,8 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
-import { TextSizeCommand } from "./TextSizeCommands";
+import { FontSizeCommand } from "./FontSizeCommands";
 
-export class TextSizeEditing extends Plugin {
+export class FontSizeEditing extends Plugin {
   static get pluginName() {
     return "TextSizeEditing";
   }
@@ -14,7 +14,7 @@ export class TextSizeEditing extends Plugin {
       view: renderDowncastElement(),
     });
 
-    editor.commands.add("textSize", new TextSizeCommand(editor));
+    editor.commands.add("textSize", new FontSizeCommand(editor));
     editor.model.schema.extend("$text", { allowAttributes: "textSize" });
     editor.model.schema.setAttributeProperties("textSize", {
       isFormatting: true,

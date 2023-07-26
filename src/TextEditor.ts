@@ -29,7 +29,7 @@ import {
 } from "@ckeditor/ckeditor5-special-characters";
 
 import BaseEditor, { TextEditorConfig } from "./BaseEditor";
-import { getIcon } from './icons/icons'
+import { getIcon } from "./icons/icons";
 
 /*CUSTOM PLUGINS*/
 import { DarkMode } from "./plugins/DarkMode/DarkMode";
@@ -42,7 +42,7 @@ import { Capitalize } from "./plugins/Capitalize/Capitalize";
 import { HighlightColor } from "./plugins/HighlightColor/HighlightColor";
 import { TextColor } from "./plugins/TextColor/TextColor";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
-import { FontSize } from "./plugins/TextSize/FontSize";
+import { FontSize } from "./plugins/FontSize/FontSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
 import { FontStyles } from "./plugins/FontStyles/FontStyles";
 
@@ -53,8 +53,7 @@ import { StrikethroughView } from "./plugins/FontStyles/StrikethroughView";
 import { SubscriptView } from "./plugins/FontStyles/SubscriptView";
 import { SuperscriptView } from "./plugins/FontStyles/SuperscriptView";
 import { UnderlineView } from "./plugins/FontStyles/UnderlineView";
-import { TextSizeComponent } from "./plugins/TextSize/TextSizeComponent";
-
+import { FontSizeComponent } from "./plugins/FontSize/FontSizeComponent";
 
 export class TextEditor extends BaseEditor {
   constructor(
@@ -140,11 +139,11 @@ const TOOLBAR = [
   FontFamily.viewName,
   //"fontSize",
   "|",
-  TextSizeComponent.viewName,
+  FontSizeComponent.viewName,
   "|",
   {
     label: "Font Styles",
-    icon: getIcon('fontStyles'),
+    icon: getIcon("fontStyles"),
     items: [
       BoldView.viewName,
       ItalicView.viewName,
@@ -156,25 +155,25 @@ const TOOLBAR = [
   },
   {
     label: "Font Color",
-    icon: getIcon('fontColor'),
+    icon: getIcon("fontColor"),
     items: [TextColor.viewName],
   },
   {
     label: "Highlight Color",
-    icon: getIcon('highlightColor'),
+    icon: getIcon("highlightColor"),
     items: [HighlightColor.viewName],
   },
   ClearFormat.viewName,
   "|",
   {
     label: "Lists",
-    icon: getIcon('list'),
+    icon: getIcon("list"),
     items: ["bulletedList", "numberedList"],
   },
   "alignment",
   {
     label: "Text Transform",
-    icon: getIcon('textTransform'),
+    icon: getIcon("textTransform"),
     items: [Uppercase.viewName, Lowercase.viewName, Capitalize.viewName],
   },
   "|",
@@ -182,7 +181,7 @@ const TOOLBAR = [
   PageLink.viewName,
   {
     label: "More",
-    icon: getIcon('other'),
+    icon: getIcon("other"),
     items: ["specialCharacters", "imageUpload", "dark-mode"],
   },
 ];
