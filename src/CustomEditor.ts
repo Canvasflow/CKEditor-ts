@@ -22,20 +22,19 @@ import {
 /*CUSTOM PLUGINS*/
 import { DarkMode } from "./plugins/DarkMode/DarkMode";
 import { PageLink } from "./plugins/PageLink/PageLink";
-import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
+import { SpecialCharactersEmoji } from "./plugins/SpecialCharacters/SpecialCharacters";
 import { Uppercase } from "./plugins/Uppercase/Uppercase";
 import { Lowercase } from "./plugins/Lowercase/Lowercase";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
-import { FontBackground } from "./plugins/FontBackground/FontBackground";
-import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
-import { ClearFormatting } from "./plugins/ClearFormatting/ClearFormatting";
+import { HighlightColor } from "./plugins/HighlightColor/HighlightColor";
+import { TextColor } from "./plugins/TextColor/TextColor";
+import { ClearFormat } from "./plugins/ClearFormat/ClearFormat";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
-import { TextSize } from "./plugins/TextSize/TextSize";
+import { FontSize } from "./plugins/FontSize/FontSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
 import { FontStyles } from "./plugins/FontStyles/FontStyles";
 
 // Views
-import { FontFamilyView } from "./plugins/FontFamily/FontFamilyView";
 import { BoldView } from "./plugins/FontStyles/BoldView";
 import { ItalicView } from "./plugins/FontStyles/ItalicView";
 import { StrikethroughView } from "./plugins/FontStyles/StrikethroughView";
@@ -54,14 +53,9 @@ import {
   ImageResizeButtons,
 } from "@ckeditor/ckeditor5-image";
 
-import { TextSizeComponent } from "./plugins/TextSize/TextSizeComponent";
+import { FontSizeComponent } from "./plugins/FontSize/FontSizeComponent";
 
-import fontStyles from "./assets/icons/fontStyles.svg?raw";
-import lists from "./assets/icons/lists.svg?raw";
-import textTransform from "./assets/icons/textFormatting.svg?raw";
-import other from "./assets/icons/other.svg?raw";
-import fontColor from "./assets/icons/fontColor.svg?raw";
-import backgroundColor from "./assets/icons/fontBackground.svg?raw";
+import { getIcon } from "./icons/icons";
 
 export class CustomEditor extends BaseEditor {
   constructor(
@@ -114,11 +108,13 @@ function buildPlugins(components: Array<string | GroupItem>): {
       pluginConfig?.plugins.map((value) => {
         plugins.add(value);
       });
-      if (plugin === "Fontcolor" || plugin === "BackgroundColor") {
+      if (plugin === "FontColor" || plugin === "HighlightColor") {
         const pluginView = {
           label: plugin,
-          icon: getIcon(plugin),
-          items: ["textFontColor"],
+          icon: getIconList(plugin),
+          items: [
+            plugin === "FontColor" ? "cf-text-color" : "cf-hightlight-color",
+          ],
         };
         toolbar.add(pluginView);
       } else {
@@ -132,7 +128,7 @@ function buildPlugins(components: Array<string | GroupItem>): {
           plugins.add(value);
         });
       }
-      plugin.icon = getIcon(plugin.icon);
+      plugin.icon = getIconList(plugin.icon);
       toolbar.add(plugin);
     }
   }
@@ -147,13 +143,13 @@ function getPluginConfig(plugin: string) {
     case "FontFamily":
       return {
         plugins: [Essentials, Paragraph, Font, FontFamily],
-        toolbar: FontFamilyView.viewName,
+        toolbar: FontFamily.viewName,
       };
 
     case "FontSize":
       return {
-        plugins: [Essentials, Paragraph, Font, TextSize],
-        toolbar: TextSizeComponent.viewName,
+        plugins: [Essentials, Paragraph, Font, FontSize],
+        toolbar: FontSizeComponent.viewName,
       };
 
     case "bold":
@@ -192,23 +188,21 @@ function getPluginConfig(plugin: string) {
         toolbar: SuperscriptView.viewName,
       };
 
-    case "Fontcolor":
+    case "FontColor":
       return {
-        plugins: [Essentials, Paragraph, Font, TextFontColor],
-        toolbar: "textFontColor",
+        plugins: [Essentials, Paragraph, Font, TextColor],
       };
 
-    case "BackgroundColor":
+    case "HighlightColor":
       return {
-        plugins: [Essentials, Paragraph, Font, FontBackground],
-        toolbar: "backgroundColor",
+        plugins: [Essentials, Paragraph, Font, HighlightColor],
       };
 
     case "ClearFormatting":
       //ERROR
       return {
-        plugins: [Essentials, RemoveFormat, ClearFormatting],
-        toolbar: "ClearFormatting",
+        plugins: [Essentials, RemoveFormat, ClearFormat],
+        toolbar: ClearFormat.viewName,
       };
 
     case "BulletedList":
@@ -232,19 +226,19 @@ function getPluginConfig(plugin: string) {
     case "Uppercase":
       return {
         plugins: [Essentials, Paragraph, Uppercase],
-        toolbar: "Uppercase",
+        toolbar: Uppercase.viewName,
       };
 
     case "Lowercase":
       return {
         plugins: [Essentials, Paragraph, Lowercase],
-        toolbar: "Lowercase",
+        toolbar: Lowercase.viewName,
       };
 
     case "Capitalize":
       return {
         plugins: [Essentials, Paragraph, Capitalize],
-        toolbar: "Capitalize",
+        toolbar: Capitalize.viewName,
       };
 
     case "link":
@@ -254,7 +248,10 @@ function getPluginConfig(plugin: string) {
       };
 
     case "PageLink":
-      return { plugins: [Paragraph, Link, PageLink], toolbar: "pageLink" };
+      return {
+        plugins: [Paragraph, Link, PageLink],
+        toolbar: PageLink.viewName,
+      };
 
     case "SpecialCharacters":
       return {
@@ -296,27 +293,27 @@ function getPluginConfig(plugin: string) {
   }
 }
 
-function getIcon(icon: string): any {
+function getIconList(icon: string): any {
   switch (icon) {
     case "fontStyles":
-      return fontStyles;
+      return getIcon("fontStyles");
 
     case "lists":
-      return lists;
+      return getIcon("list");
 
     case "textTransform":
-      return textTransform;
+      return getIcon("textTransform");
 
     case "other":
-      return other;
+      return getIcon("other");
 
-    case "Fontcolor":
-      return fontColor;
+    case "FontColor":
+      return getIcon("fontColor");
 
-    case "BackgroundColor":
-      return backgroundColor;
+    case "HighlightColor":
+      return getIcon("highlightColor");
 
     default:
-      return other;
+      return getIcon("other");
   }
 }

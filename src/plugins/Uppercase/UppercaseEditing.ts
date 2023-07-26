@@ -1,10 +1,11 @@
+import CanvasflowEditor from "../../BaseEditor";
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import {
   TextTransformCommand,
   TEXT_TRANSFORM_ATTR,
   TEXT_TRANSFORM_COMMAND,
-} from "../TextTransform/TextTransformCommand";
-import CanvasflowEditor from "../../BaseEditor";
+} from "../../commands/TextTransform/TextTransformCommand";
+
 export class UppercaseEditing extends Plugin {
   static get pluginName() {
     return "UppercaseEditing";

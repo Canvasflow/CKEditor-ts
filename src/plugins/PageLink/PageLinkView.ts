@@ -1,3 +1,4 @@
+import { PageLinkSource } from "../../BaseEditor";
 import {
   View,
   ButtonView,
@@ -14,7 +15,6 @@ import {
   GetCallback,
   BaseEvent,
 } from "@ckeditor/ckeditor5-utils/src/emittermixin";
-import { PageLinkSource } from "../../BaseEditor";
 
 export class PageLinkView extends View {
   private items: ViewCollection;

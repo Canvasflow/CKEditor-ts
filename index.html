@@ -1,44 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="./src/style.css" />
+    <link rel="stylesheet" href="./src/views/ColorView/ColorView.css" />
+    <link
+      rel="stylesheet"
+      href="./src/plugins/FontFamily/FontFamily.module.css"
+    />
+    <link rel="stylesheet" href="./src/plugins/TextColor/TextColor.css" />
+    <link rel="stylesheet" href="./src/plugins/PageLink/PageLink.css" />
+    <link rel="stylesheet" href="./src/plugins/TextSize/TextSize.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <link rel="stylesheet" href="./src/style.css" />
-  <link rel="stylesheet" href="./src/plugins/ColorView/ColorView.css" />
-  <link rel="stylesheet" href="./src/plugins/FontFamily/FontFamily.module.css" />
-  <link rel="stylesheet" href="./src/plugins/TextFontColor/TextFontColor.css" />
-  <link rel="stylesheet" href="./src/plugins/PageLink/PageLink.css" />
-  <link rel="stylesheet" href="./src/plugins/TextSize/TextSize.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vite + TS</title>
-</head>
+  <body>
+    <div id="editor"></div>
 
-<body>
-  <div id="editor"></div>
+    <div id="editor2"></div>
 
-  <div id="editor2"></div>
+    <script type="module" src="/src/main.ts"></script>
+    <style>
+      #editor {
+        border: 1px solid #c3c3c3;
+        border-radius: 4px;
+        min-height: 40px;
+        margin-bottom: 20px;
+        max-width: 800px;
+        margin-left: 100px;
+      }
 
-  <script type="module" src="/src/main.ts"></script>
-  <style>
-    #editor {
-      border: 1px solid #c3c3c3;
-      border-radius: 4px;
-      min-height: 40px;
-      margin-bottom: 20px;
-      max-width: 800px;
-      margin-left: 100px;
-    }
-
-    #editor2 {
-      border: 1px solid #c3c3c3;
-      border-radius: 4px;
-      min-height: 40px;
-      margin-bottom: 20px;
-      max-width: 800px;
-      margin-left: 100px;
-    }
-  </style>
-</body>
-
+      #editor2 {
+        border: 1px solid #c3c3c3;
+        border-radius: 4px;
+        min-height: 40px;
+        margin-bottom: 20px;
+        max-width: 800px;
+        margin-left: 100px;
+      }
+    </style>
+  </body>
 </html>

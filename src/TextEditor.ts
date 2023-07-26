@@ -1,4 +1,3 @@
-import BaseEditor, { TextEditorConfig } from "./BaseEditor";
 import { Essentials } from "@ckeditor/ckeditor5-essentials";
 import {
   Bold,
@@ -8,6 +7,16 @@ import {
   Subscript,
   Superscript,
 } from "@ckeditor/ckeditor5-basic-styles";
+import {
+  Image,
+  ImageInsert,
+  AutoImage,
+  ImageResizeEditing,
+  ImageResizeHandles,
+  ImageStyle,
+  ImageToolbar,
+  ImageResizeButtons,
+} from "@ckeditor/ckeditor5-image";
 import { List } from "@ckeditor/ckeditor5-list";
 import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
 import { Font } from "@ckeditor/ckeditor5-font";
@@ -19,48 +28,32 @@ import {
   SpecialCharactersEssentials,
 } from "@ckeditor/ckeditor5-special-characters";
 
+import BaseEditor, { TextEditorConfig } from "./BaseEditor";
+import { getIcon } from "./icons/icons";
+
 /*CUSTOM PLUGINS*/
 import { DarkMode } from "./plugins/DarkMode/DarkMode";
 import { PageLink } from "./plugins/PageLink/PageLink";
-import { SpecialCharactersEmoji } from "./plugins/SpecialCharactersEmoji/SpecialCharactersEmoji";
+import { SpecialCharactersEmoji } from "./plugins/SpecialCharacters/SpecialCharacters";
 import { Uppercase } from "./plugins/Uppercase/Uppercase";
 import { Lowercase } from "./plugins/Lowercase/Lowercase";
-import { ClearFormatting } from "./plugins/ClearFormatting/ClearFormatting";
+import { ClearFormat } from "./plugins/ClearFormat/ClearFormat";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
-import { FontBackground } from "./plugins/FontBackground/FontBackground";
-import { TextFontColor } from "./plugins/TextFontColor/TextFontColor";
+import { HighlightColor } from "./plugins/HighlightColor/HighlightColor";
+import { TextColor } from "./plugins/TextColor/TextColor";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
-import { TextSize } from "./plugins/TextSize/TextSize";
+import { FontSize } from "./plugins/FontSize/FontSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
 import { FontStyles } from "./plugins/FontStyles/FontStyles";
 
 // Views
-import { FontFamilyView } from "./plugins/FontFamily/FontFamilyView";
 import { BoldView } from "./plugins/FontStyles/BoldView";
 import { ItalicView } from "./plugins/FontStyles/ItalicView";
 import { StrikethroughView } from "./plugins/FontStyles/StrikethroughView";
 import { SubscriptView } from "./plugins/FontStyles/SubscriptView";
 import { SuperscriptView } from "./plugins/FontStyles/SuperscriptView";
 import { UnderlineView } from "./plugins/FontStyles/UnderlineView";
-
-import {
-  Image,
-  ImageInsert,
-  AutoImage,
-  ImageResizeEditing,
-  ImageResizeHandles,
-  ImageStyle,
-  ImageToolbar,
-  ImageResizeButtons,
-} from "@ckeditor/ckeditor5-image";
-
-import fontStyles from "./assets/icons/fontStyles.svg?raw";
-import lists from "./assets/icons/lists.svg?raw";
-import textTransform from "./assets/icons/textFormatting.svg?raw";
-import other from "./assets/icons/other.svg?raw";
-import fontColor from "./assets/icons/fontColor.svg?raw";
-import backgroundColor from "./assets/icons/fontBackground.svg?raw";
-import { TextSizeComponent } from "./plugins/TextSize/TextSizeComponent";
+import { FontSizeComponent } from "./plugins/FontSize/FontSizeComponent";
 
 export class TextEditor extends BaseEditor {
   constructor(
@@ -132,25 +125,25 @@ const PLUGINS = [
   PageLink,
   Uppercase,
   Lowercase,
-  ClearFormatting,
+  ClearFormat,
   Capitalize,
-  FontBackground,
-  TextFontColor,
+  HighlightColor,
+  TextColor,
   RemoveFormat,
-  TextSize,
+  FontSize,
   FontFamily,
   FontStyles,
 ];
 
 const TOOLBAR = [
-  FontFamilyView.viewName,
+  FontFamily.viewName,
   //"fontSize",
   "|",
-  TextSizeComponent.viewName,
+  FontSizeComponent.viewName,
   "|",
   {
     label: "Font Styles",
-    icon: fontStyles,
+    icon: getIcon("fontStyles"),
     items: [
       BoldView.viewName,
       ItalicView.viewName,
@@ -162,34 +155,33 @@ const TOOLBAR = [
   },
   {
     label: "Font Color",
-    icon: fontColor,
-    items: ["textFontColor"],
+    icon: getIcon("fontColor"),
+    items: [TextColor.viewName],
   },
   {
-    label: "Background Color",
-    icon: backgroundColor,
-    items: ["backgroundColor"],
+    label: "Highlight Color",
+    icon: getIcon("highlightColor"),
+    items: [HighlightColor.viewName],
   },
-  "ClearFormatting",
+  ClearFormat.viewName,
   "|",
   {
     label: "Lists",
-    icon: lists,
+    icon: getIcon("list"),
     items: ["bulletedList", "numberedList"],
   },
   "alignment",
   {
     label: "Text Transform",
-    icon: textTransform,
-    items: ["Uppercase", "Lowercase", "Capitalize"],
+    icon: getIcon("textTransform"),
+    items: [Uppercase.viewName, Lowercase.viewName, Capitalize.viewName],
   },
   "|",
   "Link",
-
-  "pageLink",
+  PageLink.viewName,
   {
     label: "More",
-    icon: other,
+    icon: getIcon("other"),
     items: ["specialCharacters", "imageUpload", "dark-mode"],
   },
 ];
