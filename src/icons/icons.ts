@@ -18,17 +18,17 @@ import image from "./assets/image.svg?raw";
 import italic from "./assets/italic.svg?raw";
 import justify from "./assets/justify.svg";
 import link from "./assets/link.svg?raw";
-import list from "./assets/list.svg?raw";
-import minus from "./assets/minusIcon.svg";
-import numberedList from "./assets/numberedList.svg";
-import other from "./assets/other.svg";
-import plus from "./assets/plusIcon.svg";
-import removeColor from "./assets/removeColor.svg";
-import striketrough from "./assets/striketrough.svg";
-import subscript from "./assets/subscript.svg";
-import superscript from "./assets/superscript.svg";
-import textFormatting from "./assets/textFormatting.svg";
-import underline from "./assets/underline.svg";
+import list from "./assets/lists.svg?raw";
+import minus from "./assets/minusIcon.svg?raw";
+import numberedList from "./assets/numberedList.svg?raw";
+import other from "./assets/other.svg?raw";
+import plus from "./assets/plusIcon.svg?raw";
+import removeColor from "./assets/removeColor.svg?raw";
+import striketrough from "./assets/striketrough.svg?raw";
+import subscript from "./assets/subscript.svg?raw";
+import superscript from "./assets/superscript.svg?raw";
+import textFormatting from "./assets/textFormatting.svg?raw";
+import underline from "./assets/underline.svg?raw";
 
 export function getIcon(name: IconType) {
     switch (name) {
@@ -52,7 +52,7 @@ export function getIcon(name: IconType) {
             return colorPicker;
         case 'darkmode':
             return darkmode;
-        case 'fontBackground':
+        case 'highlightColor':
             return fontBackground;
         case 'fontColor':
             return fontColor;
@@ -90,7 +90,7 @@ export function getIcon(name: IconType) {
             return subscript;
         case 'superscript':
             return superscript;
-        case 'textFormatting':
+        case 'textTransform':
             return textFormatting;
         case 'underline':
             return underline;
@@ -99,9 +99,9 @@ export function getIcon(name: IconType) {
 
 type IconType = 'alignCenter' | 'alignLeft' | 'alignment' |
     'alignRight' | 'bold' | 'bulletList' | 'characters' | 'clearFormatting' |
-    'colorPicker' | 'darkmode' | 'fontBackground' | 'fontColor' | 'fontFamily' |
+    'colorPicker' | 'darkmode' | 'highlightColor' | 'fontColor' | 'fontFamily' |
     'fontSize' | 'fontStyles' | 'goToPage' | 'image' | 'italic' | 'justify' |
     'link' | 'list' | 'minus' | 'numberedList' | 'other' | 'plus' |
     'removeColor' | 'striketrough' | 'subscript' | 'superscript' |
-    'textFormatting' | 'underline';
+    'textTransform' | 'underline';
 

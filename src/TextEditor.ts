@@ -1,4 +1,3 @@
-import BaseEditor, { TextEditorConfig } from "./BaseEditor";
 import { Essentials } from "@ckeditor/ckeditor5-essentials";
 import {
   Bold,
@@ -8,6 +7,16 @@ import {
   Subscript,
   Superscript,
 } from "@ckeditor/ckeditor5-basic-styles";
+import {
+  Image,
+  ImageInsert,
+  AutoImage,
+  ImageResizeEditing,
+  ImageResizeHandles,
+  ImageStyle,
+  ImageToolbar,
+  ImageResizeButtons,
+} from "@ckeditor/ckeditor5-image";
 import { List } from "@ckeditor/ckeditor5-list";
 import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
 import { Font } from "@ckeditor/ckeditor5-font";
@@ -18,6 +27,9 @@ import {
   SpecialCharacters,
   SpecialCharactersEssentials,
 } from "@ckeditor/ckeditor5-special-characters";
+
+import BaseEditor, { TextEditorConfig } from "./BaseEditor";
+import { getIcon } from './icons/icons'
 
 /*CUSTOM PLUGINS*/
 import { DarkMode } from "./plugins/DarkMode/DarkMode";
@@ -41,25 +53,8 @@ import { StrikethroughView } from "./plugins/FontStyles/StrikethroughView";
 import { SubscriptView } from "./plugins/FontStyles/SubscriptView";
 import { SuperscriptView } from "./plugins/FontStyles/SuperscriptView";
 import { UnderlineView } from "./plugins/FontStyles/UnderlineView";
-
-import {
-  Image,
-  ImageInsert,
-  AutoImage,
-  ImageResizeEditing,
-  ImageResizeHandles,
-  ImageStyle,
-  ImageToolbar,
-  ImageResizeButtons,
-} from "@ckeditor/ckeditor5-image";
-
-import fontStyles from "./assets/icons/fontStyles.svg?raw";
-import lists from "./assets/icons/lists.svg?raw";
-import textTransform from "./assets/icons/textFormatting.svg?raw";
-import other from "./assets/icons/other.svg?raw";
-import fontColor from "./assets/icons/fontColor.svg?raw";
-import backgroundColor from "./assets/icons/fontBackground.svg?raw";
 import { TextSizeComponent } from "./plugins/TextSize/TextSizeComponent";
+
 
 export class TextEditor extends BaseEditor {
   constructor(
@@ -149,7 +144,7 @@ const TOOLBAR = [
   "|",
   {
     label: "Font Styles",
-    icon: fontStyles,
+    icon: getIcon('fontStyles'),
     items: [
       BoldView.viewName,
       ItalicView.viewName,
@@ -161,25 +156,25 @@ const TOOLBAR = [
   },
   {
     label: "Font Color",
-    icon: fontColor,
+    icon: getIcon('fontColor'),
     items: [TextColor.viewName],
   },
   {
     label: "Highlight Color",
-    icon: backgroundColor,
+    icon: getIcon('highlightColor'),
     items: [HighlightColor.viewName],
   },
   ClearFormat.viewName,
   "|",
   {
     label: "Lists",
-    icon: lists,
+    icon: getIcon('list'),
     items: ["bulletedList", "numberedList"],
   },
   "alignment",
   {
     label: "Text Transform",
-    icon: textTransform,
+    icon: getIcon('textTransform'),
     items: [Uppercase.viewName, Lowercase.viewName, Capitalize.viewName],
   },
   "|",
@@ -187,7 +182,7 @@ const TOOLBAR = [
   PageLink.viewName,
   {
     label: "More",
-    icon: other,
+    icon: getIcon('other'),
     items: ["specialCharacters", "imageUpload", "dark-mode"],
   },
 ];
