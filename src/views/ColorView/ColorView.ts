@@ -120,8 +120,6 @@ export class ColorView extends View {
   };
 
   setGridsSelectedColor(color: string) {
-    this.selectedColor = color;
-
     this.defaultColorsGridView.selectColor(color);
     this.customColorsGridView.selectColor(color);
   }
@@ -194,24 +192,9 @@ export class ColorView extends View {
   }
 
   clearAllColors() {
-    let found = false;
     this.viewer.onClearColor();
-    this.defaultColorsGridView?.gridView.items.map((value) => {
-      if (value.class === "selected-color") {
-        found = true;
-        value.class = "";
-        return;
-      }
-    });
-    if (!found) {
-      this.customColorsGridView?.gridView.items.map((value) => {
-        if (value.class === "selected-color") {
-          found = true;
-          value.class = "";
-          return;
-        }
-      });
-    }
+    this.defaultColorsGridView.selectColor("");
+    this.customColorsGridView.selectColor("");
   }
 
   render() {
@@ -282,7 +265,7 @@ class ColorsGridView extends View {
     this.gridView.selectColor(color!);
   };
 
-  selectColor(color: string) {
+  selectColor = (color: string) => {
     this.gridView.selectColor(color);
-  }
+  };
 }
