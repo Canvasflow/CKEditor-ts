@@ -1,10 +1,11 @@
 import { TextEditorConfig } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
 // import { createListeners } from "./listeners";
-// import { CustomEditor } from "./CustomEditor";
+import { CustomEditor } from "./CustomEditor";
 declare global {
   interface Window {
     CanvasflowTextEditor: any;
+    CanvasflowCustomTextEditor: any;
   }
 }
 
@@ -14,6 +15,14 @@ if (typeof window !== "undefined") {
     config: TextEditorConfig,
   ) => {
     return TextEditor.create(element, config);
+  };
+
+  window.CanvasflowCustomTextEditor = (
+    element: HTMLElement,
+    config: TextEditorConfig,
+    params: any,
+  ) => {
+    return CustomEditor.build(element, config, params);
   };
 }
 

@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.3.2
+
+_July 26, 2023_
+
+🐛 Build Settings
+
+- Add support for custom editor
+
 ## 🏷️ 1.3.1
 
 _July 26, 2023_
