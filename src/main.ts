@@ -73,11 +73,12 @@ TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
   });
 
 CustomEditor.build(document.querySelector("#editor2") as HTMLElement, config, [
-  "bold",
-  "separator",
+  "Bold",
+  "Separator",
   "FontFamily",
   "DarkMode",
   "FontColor",
+  { label: "Font Styles", icon: "fontStyles", items: ["bold"] },
 ])
   .then((editor) => {
     createListeners(editor);

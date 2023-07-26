@@ -137,7 +137,7 @@ function buildPlugins(components: Array<string | GroupItem>): {
 
 function getPluginConfig(plugin: string) {
   switch (plugin) {
-    case "separator":
+    case "Separator":
       return { plugins: [], toolbar: "|" };
 
     case "FontFamily":
@@ -152,37 +152,37 @@ function getPluginConfig(plugin: string) {
         toolbar: FontSizeComponent.viewName,
       };
 
-    case "bold":
+    case "Bold":
       return {
         plugins: [Essentials, Paragraph, Font, FontStyles, Bold],
         toolbar: BoldView.viewName,
       };
 
-    case "italic":
+    case "Italic":
       return {
         plugins: [Essentials, Paragraph, Font, FontStyles, Italic],
         toolbar: ItalicView.viewName,
       };
 
-    case "underline":
+    case "Underline":
       return {
         plugins: [Essentials, Paragraph, Font, FontStyles, Underline],
         toolbar: UnderlineView.viewName,
       };
 
-    case "strikethrough":
+    case "Strikethrough":
       return {
         plugins: [Essentials, Paragraph, Font, FontStyles, Strikethrough],
         toolbar: StrikethroughView.viewName,
       };
 
-    case "subscript":
+    case "Subscript":
       return {
         plugins: [Essentials, Paragraph, Font, FontStyles, Subscript],
         toolbar: SubscriptView.viewName,
       };
 
-    case "superscript":
+    case "Superscript":
       return {
         plugins: [Essentials, Paragraph, Font, FontStyles, Superscript],
         toolbar: SuperscriptView.viewName,
@@ -217,7 +217,7 @@ function getPluginConfig(plugin: string) {
         toolbar: "numberedList",
       };
 
-    case "alignment":
+    case "Alignment":
       return {
         plugins: [Essentials, Paragraph, Alignment],
         toolbar: "alignment",
