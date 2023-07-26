@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.3.1
+
+_July 26, 2023_
+
+♻️ Build
+
+- Updated build settings
+
 ## 🏷️ 1.3.0
 
 _July 26, 2023_
