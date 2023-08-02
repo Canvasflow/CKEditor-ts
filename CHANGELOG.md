@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.3.4
+
+_August 2, 2023_
+
+🐛 Fixed
+
+- render font family type in panel view
+
 ## 🏷️ 1.3.3
 
 _July 26, 2023_

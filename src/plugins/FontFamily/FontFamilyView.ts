@@ -34,6 +34,29 @@ export class FontFamilyView extends DropdownView {
     const { model } = this.editor;
     const { document } = model;
     document.selection.on("change:range", this.onSelectionChange);
+    //TODO ghetto fix, this should be
+    this.listenTo(this.panelView, "change:isVisible", () => {
+      this.changeFonts();
+    });
+  }
+
+  private changeFonts() {
+    if (this.panelView.element && this.panelView.element.firstElementChild) {
+      const list = this.panelView.element.firstElementChild;
+      if (list.children.length)
+        for (const children of list.children) {
+          const button = children.firstElementChild;
+          if (button) {
+            let span = button.firstElementChild;
+            if (span) {
+              span.setAttribute(
+                "style",
+                `font-family: ${span.innerHTML} !important`,
+              );
+            }
+          }
+        }
+    }
   }
 
   private onSelectionChange = () => {
