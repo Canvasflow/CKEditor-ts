@@ -29,10 +29,6 @@ jobs:
       - name: minify
         run: npm run minify
 
-      - run: |
-          echo @lexacode:https://npm.pkg.github.com/ > build/.npmrc
-          echo '//npm.pkg.github.com/:_authToken=${{secrets.NPM_TOKEN}}' >> build/.npmrc
-
       - name: publish
         run: npm publish
         working-directory: ./build
