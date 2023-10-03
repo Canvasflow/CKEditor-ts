@@ -20,12 +20,12 @@ jobs:
       - name: Install dependencies
         run: npm i
 
+      - name: build
+        run: npm run build
+
       - run: |
           echo @lexacode:https://npm.pkg.github.com/ > build/.npmrc
           echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> build/.npmrc
-
-      - name: build
-        run: npm run build
 
       - name: minify
         run: npm run minify
