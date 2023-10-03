@@ -18,22 +18,23 @@ jobs:
         with:
           node-version: 16
       - name: Install dependencies
-        run: npm i
+        run: npm install
 
       - name: build
         run: npm run build
+
+      - name: pack
+        run: npm pack --dry-run
+
+      - name: minify
+        run: npm run minify
 
       - run: |
           echo @lexacode:https://npm.pkg.github.com/ > build/.npmrc
           echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> build/.npmrc
 
-      - name: minify
-        run: npm run minify
-
-      - name: pack
-        run: npm pack --dry-run
-
       - name: publish
         run: npm publish
+        working-directory: ./build
         env:
           NPM_TOKEN: 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
