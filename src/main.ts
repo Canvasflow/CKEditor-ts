@@ -26,7 +26,7 @@ if (typeof window !== "undefined") {
   };
 }
 
-//RELEASE CON GITHUB ACTIONS HERE .6
+//RELEASE CON GITHUB ACTIONS HERE .7
 
 // const customColor = [
 //   { color: "yellow", label: "bright yellow" },
