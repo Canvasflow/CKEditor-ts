@@ -20,6 +20,10 @@ jobs:
       - name: Install dependencies
         run: npm i
 
+      - run: |
+          echo @lexacode:https://npm.pkg.github.com/ > build/.npmrc
+          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> build/.npmrc
+
       - name: build
         run: npm run build
 
@@ -31,6 +35,6 @@ jobs:
 
       - name: publish
         run: npm publish
-
+        working-directory: ./build
         env:
           NPM_TOKEN: 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
