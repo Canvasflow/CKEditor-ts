@@ -35,3 +35,6 @@ jobs:
 
       - name: publish
         run: npm publish
+        working-directory: ./build
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
