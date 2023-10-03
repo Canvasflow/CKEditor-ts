@@ -26,6 +26,8 @@ if (typeof window !== "undefined") {
   };
 }
 
+//RELEASE CON GITHUB ACTIONS HERE
+
 // const customColor = [
 //   { color: "yellow", label: "bright yellow" },
 //   { color: "grey", label: "dark grey" },

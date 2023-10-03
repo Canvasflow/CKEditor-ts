@@ -45,6 +45,7 @@ import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 import { FontSize } from "./plugins/FontSize/FontSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
 import { FontStyles } from "./plugins/FontStyles/FontStyles";
+import { SmallCaps } from "./plugins/SmallCaps/SmallCaps";
 
 // Views
 import { BoldView } from "./plugins/FontStyles/BoldView";
@@ -133,6 +134,7 @@ const PLUGINS = [
   FontSize,
   FontFamily,
   FontStyles,
+  SmallCaps,
 ];
 
 const TOOLBAR = [
@@ -174,7 +176,12 @@ const TOOLBAR = [
   {
     label: "Text Transform",
     icon: getIcon("textTransform"),
-    items: [Uppercase.viewName, Lowercase.viewName, Capitalize.viewName],
+    items: [
+      Uppercase.viewName,
+      Lowercase.viewName,
+      Capitalize.viewName,
+      SmallCaps.viewName,
+    ],
   },
   "|",
   "Link",

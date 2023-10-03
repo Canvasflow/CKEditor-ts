@@ -1,0 +1,20 @@
+name: "🚀 publish"
+
+on:
+    release:
+        branches:
+          - master
+
+jobs:
+    release:
+        name: 🚀 publish
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v2
+          - uses: actions/setup-node@v2
+            with:
+              node-version: 16
+          - name: 🚀 publish
+              run: npm run build && npm run minify && npm pack --dry-run && npm publish
+              env:
+                NPM_TOKEN: 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
