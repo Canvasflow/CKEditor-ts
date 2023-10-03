@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.3.9
+
+_August 2, 2023_
+
+♻️ Refactor
+
+- Added github actions files
+
 ## 🏷️ 1.3.4
 
 _August 2, 2023_
