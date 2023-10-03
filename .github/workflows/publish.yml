@@ -16,13 +16,15 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16
+
       - name: build
         run: npm run build
+
       - name: minify
         run: npm run minify
+
       - name: pack
         run: npm pack --dry-run
+
       - name: publish
         run: npm publish
-        env:
-          NPM_TOKEN: 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
