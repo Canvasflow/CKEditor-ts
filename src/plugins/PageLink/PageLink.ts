@@ -107,15 +107,19 @@ export class PageLink extends Plugin implements PageLinkViewer {
    *
    */
   onSelectPage: GetCallback<BaseEvent> = (evt) => {
+    console.log(evt);
     const source: any = evt.source;
-    const { data } = source;
-    this.selectedPage = data.pageLink.id;
-    this.pageLinkView?.selectPage(data.pageLink.title);
+    console.log(source["tooltip"]);
+    const id = source["tooltip"];
+    const label = source["label"];
+
+    this.selectedPage = id;
+    this.pageLinkView?.selectPage(label);
     this.selectedAnchor = undefined;
     if (!this.editor.anchorFn) {
       return;
     }
-    this.editor.anchorFn(data.pageLink.id).then((anchors) => {
+    this.editor.anchorFn(id).then((anchors) => {
       if (anchors.length === 0) {
         this.pageLinkView?.removeAnchorDropdown();
         this.pageLinkView?.insertButtonView();
