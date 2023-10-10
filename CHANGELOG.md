@@ -7,6 +7,7 @@ _October 10, 2023_
 ♻️ Refactor
 
 - Page Link UI improved
+- Page Link Code cleanup
 
 ## 🏷️ 1.3.4
 
