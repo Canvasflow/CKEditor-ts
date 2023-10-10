@@ -1,6 +1,7 @@
 .page-link {
   height: 200px !important;
   width: 300px !important;
+  /* overflow: scroll; */
 }
 
 .button-blue {
@@ -9,8 +10,9 @@
   color: white !important;
 
   text-decoration: none !important;
-  margin-left: 30% !important;
+
   cursor: pointer !important;
+  margin-left: 30% !important;
   margin-top: 20px !important;
 }
 
@@ -19,11 +21,49 @@
 }
 
 #dropdown-element {
-  margin-left: 25% !important;
+  margin-left: 20% !important;
   margin-top: 20px !important;
+  width: 60%;
 }
 
 #dropdown-anchors {
-  margin-left: 25% !important;
+  margin-left: 20% !important;
   margin-top: 20px !important;
+  width: 60%;
+}
+
+.ck-button__label {
+  width: 90% !important;
+}
+
+.ck-page-link_label {
+  font-weight: 600 !important;
+  border-bottom: 1px solid #e5e7e9 !important;
+  margin-top: 5% !important;
+  padding-left: 5% !important;
+  height: 16% !important;
+  width: 100%;
+}
+
+.page-link-button {
+  position: absolute !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  margin: 4% !important;
+
+  background-color: #168cf3 !important;
+  border: none !important;
+  color: white !important;
+
+  text-decoration: none !important;
+
+  cursor: pointer !important;
+}
+
+.page-link-element-button {
+  height: 60px !important;
+  width: 80px !important;
+  margin: 3% !important;
+  background-color: #f2f3f4 !important;
+  color: #168cf3 !important;
 }

@@ -1,7 +1,8 @@
 import { TextEditorConfig } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
-// import { createListeners } from "./listeners";
+//import { createListeners } from "./listeners";
 import { CustomEditor } from "./CustomEditor";
+
 declare global {
   interface Window {
     CanvasflowTextEditor: any;
@@ -26,8 +27,6 @@ if (typeof window !== "undefined") {
   };
 }
 
-//RELEASE CON GITHUB ACTIONS HERE .7
-
 // const customColor = [
 //   { color: "yellow", label: "bright yellow" },
 //   { color: "grey", label: "dark grey" },
@@ -44,6 +43,38 @@ if (typeof window !== "undefined") {
 //     {
 //       id: "1112",
 //       title: "Example 2",
+//     },
+//     {
+//       id: "1113",
+//       title: "Example 3",
+//     },
+//     {
+//       id: "1114",
+//       title: "Example 4",
+//     },
+//     {
+//       id: "1115",
+//       title: "Example 5",
+//     },
+//     {
+//       id: "1116",
+//       title: "Example 6",
+//     },
+//     {
+//       id: "1117",
+//       title: "Example 7",
+//     },
+//     {
+//       id: "1118",
+//       title: "Example 8",
+//     },
+//     {
+//       id: "1119",
+//       title: "Example 9",
+//     },
+//     {
+//       id: "1120",
+//       title: "Example 10",
 //     },
 //   ],
 //   fontFamily: {
