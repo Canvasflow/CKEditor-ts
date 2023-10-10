@@ -34,16 +34,22 @@ export class PageLinkView extends View {
   }
 
   private initItems() {
-    this.items.add(this.createLabel("Insert Page Link"));
-    this.createButton();
+    this.addTitle();
+    this.createAddButton();
   }
 
-  private createButton() {
+  private addTitle() {
+    const label = "Article Reference";
+    this.items.add(this.createLabel(label));
+  }
+
+  private createAddButton() {
     this.addLinkButtonView = this.createButtonObject(
-      "Insert Link",
-      ``,
-      "button-blue",
+      "Add",
+      "",
+      "page-link-button",
     );
+
     this.addLinkButtonView.type = "submit";
     this.addLinkButtonView.isEnabled = true;
   }
@@ -53,6 +59,14 @@ export class PageLinkView extends View {
    *
    */
   createPages(pageLinkSources: Array<PageLinkSource>) {
+    this.items.add(this.createSpacer());
+    // for (let index = 0; index < pageLinkSources.length; index++) {
+    //   if (index % 3 === 0) {
+    //     this.items.add(this.createSpacer());
+    //   }
+    //   const page = pageLinkSources[index];
+    //   this.createPageButton(page);
+    // }
     this.pageLinkDropDown = this.getPageDropdown();
     const collection: Collection<any> = pageLinkSources.reduce(
       reduceCollection,
@@ -60,6 +74,20 @@ export class PageLinkView extends View {
     );
     addListToDropdown(this.pageLinkDropDown, collection);
     this.items.add(this.pageLinkDropDown);
+    this.items.add(this.createSpacer());
+  }
+
+  private createPageButton(page: PageLinkSource) {
+    console.log(page);
+    const pageButton = this.createButtonObject(
+      page.title,
+      "",
+      "page-link-element-button",
+    );
+    pageButton.tooltip = page.id;
+    pageButton.isOn = false;
+    pageButton.on("execute", this.viewer.onSelectPage);
+    this.items.add(pageButton);
   }
 
   private getPageDropdown() {
@@ -79,7 +107,7 @@ export class PageLinkView extends View {
    */
   insertButtonView() {
     if (!this.items.has(this.addLinkButtonView!)) {
-      this.items.add(this.createLabel(""));
+      // this.items.add(this.createLabel(""));
       this.items.add(this.addLinkButtonView!);
     }
   }
@@ -132,7 +160,7 @@ export class PageLinkView extends View {
    *
    */
   createAnchors(anchors: Array<PageLinkSource>) {
-    this.items.add(this.createLabel(""));
+    this.items.add(this.createSpacer());
     this.anchorDropdown = createDropdown(this.locale);
     this.anchorDropdown.on("execute", this.viewer.onSelectAnchor);
 
@@ -190,7 +218,18 @@ export class PageLinkView extends View {
     labelView.text = text;
     labelView.extendTemplate({
       attributes: {
-        class: ["ck", "ck-color-grid__label"],
+        class: ["ck", "ck-page-link_label"],
+      },
+    });
+    return labelView;
+  }
+
+  private createSpacer() {
+    const labelView = new LabelView(this.locale);
+    labelView.text = "";
+    labelView.extendTemplate({
+      attributes: {
+        class: ["ck", "ck-page-link_spacer"],
       },
     });
     return labelView;
