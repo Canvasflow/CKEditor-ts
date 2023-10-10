@@ -60,21 +60,21 @@ export class PageLinkView extends View {
    */
   createPages(pageLinkSources: Array<PageLinkSource>) {
     this.items.add(this.createSpacer());
-    for (let index = 0; index < pageLinkSources.length; index++) {
-      if (index % 3 === 0) {
-        this.items.add(this.createSpacer());
-      }
-      const page = pageLinkSources[index];
-      this.createPageButton(page);
-    }
-    // this.items.add(this.createSpacer());
-    // this.pageLinkDropDown = this.getPageDropdown();
-    // const collection: Collection<any> = pageLinkSources.reduce(
-    //   reduceCollection,
-    //   new Collection(),
-    // );
-    // addListToDropdown(this.pageLinkDropDown, collection);
-    // this.items.add(this.pageLinkDropDown);
+    // for (let index = 0; index < pageLinkSources.length; index++) {
+    //   if (index % 3 === 0) {
+    //     this.items.add(this.createSpacer());
+    //   }
+    //   const page = pageLinkSources[index];
+    //   this.createPageButton(page);
+    // }
+    this.pageLinkDropDown = this.getPageDropdown();
+    const collection: Collection<any> = pageLinkSources.reduce(
+      reduceCollection,
+      new Collection(),
+    );
+    addListToDropdown(this.pageLinkDropDown, collection);
+    this.items.add(this.pageLinkDropDown);
+    this.items.add(this.createSpacer());
   }
 
   private createPageButton(page: PageLinkSource) {
