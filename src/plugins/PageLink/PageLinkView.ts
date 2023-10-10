@@ -77,19 +77,6 @@ export class PageLinkView extends View {
     this.items.add(this.createSpacer());
   }
 
-  private createPageButton(page: PageLinkSource) {
-    console.log(page);
-    const pageButton = this.createButtonObject(
-      page.title,
-      "",
-      "page-link-element-button",
-    );
-    pageButton.tooltip = page.id;
-    pageButton.isOn = false;
-    pageButton.on("execute", this.viewer.onSelectPage);
-    this.items.add(pageButton);
-  }
-
   private getPageDropdown() {
     this.listDropdown = createDropdown(this.locale);
     this.listDropdown.on("execute", this.viewer.onSelectPage);

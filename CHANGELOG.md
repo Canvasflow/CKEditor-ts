@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.4.0
+
+_October 10, 2023_
+
+♻️ Refactor
+
+- Page Link UI improved
+
 ## 🏷️ 1.3.4
 
 _August 2, 2023_
