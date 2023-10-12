@@ -84,5 +84,12 @@ input[type="number"] {
 }
 
 .ck.ck-editor__editable_inline {
-  overflow: revert;
+  overflow: revert !important;
+  /* overflow: auto; */
+  padding: unset !important;
+  border: unset !important;
+}
+
+.ck.ck-editor__editable_inline[dir="ltr"] {
+  text-align: unset !important;
 }

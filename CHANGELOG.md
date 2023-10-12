@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 🏷️ 1.4.1
+
+_October 10, 2023_
+
+🐛 Fixed
+
+- Added Tooltips to some plugins
+- Increased font size value
+- Removed image extra options
+
 ## 🏷️ 1.4.0
 
 _October 10, 2023_
@@ -16,7 +26,6 @@ _August 2, 2023_
 ♻️ Refactor
 
 - Added github actions files
-
 
 ## 🏷️ 1.3.4
 
