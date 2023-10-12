@@ -1,6 +1,9 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
 
+export const TEXT_SIZE_ATTR = "font-size";
+export const TEXT_SIZE_COMMAND = "setTextSize";
+
 export class FontSizeCommand extends Command {
   constructor(editor: CanvasflowEditor) {
     super(editor);
@@ -9,33 +12,28 @@ export class FontSizeCommand extends Command {
   refresh() {
     const model = this.editor.model;
     const doc = model.document;
-    this.value = doc.selection.getAttribute("textSize");
+    this.value = doc.selection.getAttribute(TEXT_SIZE_ATTR);
     this.isEnabled = model.schema.checkAttributeInSelection(
       doc.selection,
-      "textSize",
+      TEXT_SIZE_ATTR,
     );
   }
 
-  execute() {
-    // this.editor.model.change(async (writer) => {
-    //   const selection = this.editor.model.document.selection;
-    //   if (!selection) {
-    //     return;
-    //   }
-    //   const range = selection.getFirstRange();
-    //   if (!range) {
-    //     return;
-    //   }
-    //   let value = "";
-    //   for (const item of range.getItems()) {
-    //     const proxy = item as any;
-    //     value = proxy.data;
-    //     writer.remove(item);
-    //   }
-    //   var position = selection.getFirstPosition();
-    //   if (position) {
-    //     // writer.insertText(value, { linkHref: url }, position);
-    //   }
-    // });
+  execute(size: string) {
+    const model = this.editor.model;
+    const document = model.document;
+    const selection = document.selection;
+    model.change((writer) => {
+      const ranges = model.schema.getValidRanges(
+        selection.getRanges(),
+        TEXT_SIZE_ATTR,
+      );
+
+      for (const range of ranges) {
+        const attr: any = {};
+        attr[TEXT_SIZE_ATTR] = size;
+        writer.setAttributes(attr, range);
+      }
+    });
   }
 }

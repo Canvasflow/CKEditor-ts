@@ -89,6 +89,7 @@ export class FontFamilyView extends DropdownView {
     if (!filteredEmpty.length || filteredEmpty.length !== fonts.length) {
       this.buttonView.set({
         label: EMPTY_LABEL,
+        tooltip: "Font Style",
       });
 
       return;
@@ -100,6 +101,7 @@ export class FontFamilyView extends DropdownView {
     if (fontSet.size > 1) {
       this.buttonView.set({
         label: EMPTY_LABEL,
+        tooltip: "Font Style",
       });
 
       return;
@@ -109,13 +111,14 @@ export class FontFamilyView extends DropdownView {
 
     this.buttonView.set({
       label: fontFamily,
+      tooltip: "Font Style",
     });
   };
 
   private initButton() {
     this.buttonView.set({
       label: "-",
-      withText: true,
+      tooltip: "Font Style",
     });
   }
 
@@ -134,6 +137,7 @@ export class FontFamilyView extends DropdownView {
       this.focus();
       this.buttonView.set({
         label: font,
+        tooltip: "Font Style",
       });
 
       onSelectFont(font);

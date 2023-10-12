@@ -32,7 +32,7 @@ const customColor = [
   { color: "grey", label: "dark grey" },
 ];
 
-const customBackgroundColor = [{ color: "orange", label: "orange" }];
+const customBackgroundColor = [{ color: "grey", label: "dark grey" }];
 
 const config = {
   pageLinkSources: [
