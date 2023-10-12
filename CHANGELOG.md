@@ -1,8 +1,16 @@
 # CHANGELOG
 
+## 🏷️ 1.4.2
+
+_October 12, 2023_
+
+🐛 Fixed
+
+- Increased version of package
+
 ## 🏷️ 1.4.1
 
-_October 10, 2023_
+_October 12, 2023_
 
 🐛 Fixed
 
