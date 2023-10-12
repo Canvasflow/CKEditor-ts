@@ -22,7 +22,7 @@ export class FontSizeView extends View {
         max,
         step,
         style: {
-          width: "35px",
+          width: "40px",
           border: "1px solid #c3c3c3",
           borderRadius: "4px",
           margin: "0px 0px",

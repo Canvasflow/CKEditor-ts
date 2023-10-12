@@ -3,13 +3,14 @@ import { Locale } from "@ckeditor/ckeditor5-utils";
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { FontSizeComponent, FontSizeViewer } from "./FontSizeComponent";
 import { FontSizeEditing } from "./FontSizeEditing";
+import { TEXT_SIZE_ATTR, TEXT_SIZE_COMMAND } from "./FontSizeCommands";
 
 export class FontSize extends Plugin implements FontSizeViewer {
   declare editor: CanvasflowEditor;
   fontSizeView: FontSizeComponent;
   locale: Locale;
   min: number = 8;
-  max: number = 50;
+  max: number = 150;
   step: number = 1;
   currentValue: string = "";
 
@@ -34,7 +35,7 @@ export class FontSize extends Plugin implements FontSizeViewer {
       }
       const source: any = evt.source;
       const value = `${source.value}px`;
-      this.editor.execute(`fontSize`, { value });
+      this.editor.execute(TEXT_SIZE_COMMAND, { value });
     });
 
     document.selection.on("change:range", this.onSelectionChange);
@@ -53,8 +54,8 @@ export class FontSize extends Plugin implements FontSizeViewer {
 
     const sizes = [];
     for (const item of range.getItems()) {
-      if (item.hasAttribute("fontSize")) {
-        sizes.push(item.getAttribute("fontSize"));
+      if (item.hasAttribute(TEXT_SIZE_ATTR)) {
+        sizes.push(item.getAttribute(TEXT_SIZE_ATTR));
         continue;
       }
       sizes.push("");
@@ -92,7 +93,7 @@ export class FontSize extends Plugin implements FontSizeViewer {
 
     this.currentValue = size;
     const value = `${size}px`;
-    this.editor.execute(`fontSize`, { value });
+    this.editor.execute(TEXT_SIZE_COMMAND, value);
   };
 
   onIncreaseSize() {

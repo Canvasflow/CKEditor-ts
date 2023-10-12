@@ -1,4 +1,4 @@
-import { PageAnchorSource, TextEditorConfig } from "./BaseEditor";
+import { TextEditorConfig, PageAnchorSource } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
 import { createListeners } from "./listeners";
 import { CustomEditor } from "./CustomEditor";
@@ -32,7 +32,7 @@ const customColor = [
   { color: "grey", label: "dark grey" },
 ];
 
-const customBackgroundColor = [{ color: "orange", label: "orange" }];
+const customBackgroundColor = [{ color: "grey", label: "dark grey" }];
 
 const config = {
   pageLinkSources: [

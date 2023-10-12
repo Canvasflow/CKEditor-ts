@@ -13,3 +13,4 @@ tsconfig.json
 vite.config.js
 vite.minify.config.js
 .npmrc
+.env

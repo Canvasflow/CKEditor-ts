@@ -13,9 +13,6 @@ import {
   AutoImage,
   ImageResizeEditing,
   ImageResizeHandles,
-  ImageStyle,
-  ImageToolbar,
-  ImageResizeButtons,
 } from "@ckeditor/ckeditor5-image";
 import { List } from "@ckeditor/ckeditor5-list";
 import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
@@ -70,7 +67,6 @@ export class TextEditor extends BaseEditor {
     config.plugins = PLUGINS;
     config.toolbar = TOOLBAR;
     config.alignment = ALIGNMENT as AlignmentConfig;
-    config.image = IMAGE;
 
     config.link = {
       decorators: {
@@ -119,9 +115,6 @@ const PLUGINS = [
   AutoImage,
   ImageResizeEditing,
   ImageResizeHandles,
-  ImageStyle,
-  ImageToolbar,
-  ImageResizeButtons,
   DarkMode,
   PageLink,
   Uppercase,
@@ -192,47 +185,6 @@ const TOOLBAR = [
     items: ["specialCharacters", "imageUpload", "dark-mode"],
   },
 ];
-
-const IMAGE = {
-  resizeOptions: [
-    {
-      name: "resizeImage:original",
-      value: null,
-      icon: "original",
-    },
-    {
-      name: "resizeImage:50",
-      value: "50",
-      icon: "medium",
-    },
-    {
-      name: "resizeImage:75",
-      value: "75",
-      icon: "large",
-    },
-  ],
-  styles: {
-    options: [
-      "inline",
-      "alignLeft",
-      "alignRight",
-      "alignCenter",
-      "alignBlockLeft",
-      "alignBlockRight",
-      "block",
-      "side",
-    ],
-  },
-  toolbar: [
-    "imageStyle:alignLeft",
-    "imageStyle:alignRight",
-    "imageStyle:alignCenter",
-    "|",
-    "resizeImage:50",
-    "resizeImage:75",
-    "resizeImage:original",
-  ],
-};
 
 const ALIGNMENT = {
   options: ["left", "right", "center", "justify"],

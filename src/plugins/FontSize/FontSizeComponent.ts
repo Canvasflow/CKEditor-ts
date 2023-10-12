@@ -20,9 +20,9 @@ export class FontSizeComponent extends View {
   }
 
   private init() {
-    this.items.add(this.sizeDown("", getIcon("minus")));
+    this.items.add(this.sizeDown("Decrease Font Size", getIcon("minus")));
     this.items.add(this.input);
-    this.items.add(this.sizeUp("", getIcon("plus")));
+    this.items.add(this.sizeUp("Increase Font Size", getIcon("plus")));
   }
 
   private sizeUp(label: string, icon: any) {
@@ -52,7 +52,7 @@ export class FontSizeComponent extends View {
       icon,
       tooltip: true,
       class: className,
-      withText: true,
+      withText: false,
     });
 
     return button;
