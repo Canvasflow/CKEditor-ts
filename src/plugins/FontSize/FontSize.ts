@@ -1,9 +1,10 @@
 import CanvasflowEditor from "../../BaseEditor";
-import { Locale } from "@ckeditor/ckeditor5-utils";
+import { Locale, GetCallback, EventInfo } from "@ckeditor/ckeditor5-utils";
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { FontSizeComponent, FontSizeViewer } from "./FontSizeComponent";
 import { FontSizeEditing } from "./FontSizeEditing";
 import { TEXT_SIZE_ATTR, TEXT_SIZE_COMMAND } from "./FontSizeCommands";
+import { DomConverter } from "@ckeditor/ckeditor5-engine";
 
 export class FontSize extends Plugin implements FontSizeViewer {
   declare editor: CanvasflowEditor;
@@ -41,16 +42,32 @@ export class FontSize extends Plugin implements FontSizeViewer {
     document.selection.on("change:range", this.onSelectionChange);
   }
 
-  private onSelectionChange = () => {
+  private onSelectionChange = (evt: EventInfo): void => {
+    const source: any = evt.source;
     const element: any = this.fontSizeView.input.element;
     const { selection } = this.editor.model.document;
+    const editingView = this.editor.editing.view;
     if (!selection) {
       return;
     }
+
     const range = selection.getFirstRange();
     if (!range) {
       return;
     }
+
+    let count = 0;
+    for (const _ of range.getItems()) {
+      count += 1;
+    }
+
+    if (!count) {
+      return;
+    }
+
+    // TODO Implement default font size logic
+    let defaultFontSize = this.getDefaultFontSize();
+    console.log(`DEFAULT FONT SIZE: ${defaultFontSize}`);
 
     const sizes = [];
     for (const item of range.getItems()) {
@@ -79,6 +96,21 @@ export class FontSize extends Plugin implements FontSizeViewer {
       element.value = this.currentValue;
     }
   };
+
+  private getDefaultFontSize(): null | number {
+    const editingView = this.editor.editing.view;
+    let defaultFontSize: null | number = null;
+    const editorEl = editingView.getDomRoot();
+    if (editorEl && window.getComputedStyle(editorEl, null)) {
+      let value = window.getComputedStyle(editorEl, null)
+        .getPropertyValue('font-size')
+      if (value) {
+        value = value.replace('px', '');
+        defaultFontSize = parseFloat(value);
+      }
+    }
+    return defaultFontSize;
+  }
 
   onChange = (size: string) => {
     const parsedSize = parseInt(size);
