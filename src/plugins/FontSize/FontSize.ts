@@ -79,8 +79,12 @@ export class FontSize extends Plugin implements FontSizeViewer {
     }
     const filteredEmpty = sizes.filter((i) => !!i);
     if (!filteredEmpty.length || filteredEmpty.length !== sizes.length) {
-      element.value = "";
+      element.value = '';
       this.currentValue = "";
+      if (defaultFontSize) {
+        element.value = `${defaultFontSize}`;
+        this.currentValue = `${defaultFontSize}`;
+      }
       return;
     }
     const sizeSet = new Set([...filteredEmpty]);
@@ -129,8 +133,11 @@ export class FontSize extends Plugin implements FontSizeViewer {
   };
 
   onIncreaseSize() {
+    let fontSizeValue = this.getDefaultFontSize();
+    const fontSize: number = fontSizeValue ?? 0;
     if (!this.currentValue) {
-      this.setValue(this.min.toString());
+      // this.setValue(this.min.toString());
+      this.setValue(`${fontSize + 1}`)
       return;
     }
 
@@ -142,8 +149,10 @@ export class FontSize extends Plugin implements FontSizeViewer {
     this.setValue(current.toString());
   }
   onDecreaseSize() {
+    let fontSizeValue = this.getDefaultFontSize();
+    const fontSize: number = fontSizeValue ?? 0;
     if (!this.currentValue) {
-      this.setValue(this.min.toString());
+      this.setValue(`${fontSize + 1}`)
       return;
     }
 
