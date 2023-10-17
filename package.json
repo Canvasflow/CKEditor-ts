@@ -1,6 +1,6 @@
 {
   "name": "@canvasflow/editor",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "type": "module",
   "main": "./dist/canvasflow-editor.umd.cjs",
   "module": "./dist/canvasflow-editor.js",
@@ -16,10 +16,10 @@
     "url": "https://github.com/Canvasflow/CKEditor-ts.git"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "minify": "vite build --config vite.minify.config.js"
+    "dev": "node version.js & vite",
+    "build": "node version & tsc && vite build",
+    "preview": "node version & vite preview",
+    "minify": "node version & vite build --config vite.minify.config.js"
   },
   "devDependencies": {
     "typescript": "^5.0.2",
