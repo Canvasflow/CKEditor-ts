@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 🏷️ 1.4.3
+
+_October 17, 2023_
+
+♻️ Refactor
+
+- Improved Font size UI/UX
+- Add build version support on console
+- Tooltip on font size input
+
 ## 🏷️ 1.4.2
 
 _October 12, 2023_

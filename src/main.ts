@@ -2,21 +2,26 @@ import { TextEditorConfig, PageAnchorSource } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
 import { createListeners } from "./listeners";
 import { CustomEditor } from "./CustomEditor";
+import { version } from './version';
 
 declare global {
   interface Window {
     CanvasflowTextEditor: any;
     CanvasflowCustomTextEditor: any;
+    editorVersion: string;
   }
 }
 
 if (typeof window !== "undefined") {
+  window.editorVersion = version;
   window.CanvasflowTextEditor = (
     element: HTMLElement,
     config: TextEditorConfig,
   ) => {
     return TextEditor.create(element, config);
   };
+
+  window.CanvasflowTextEditor.version = version;
 
   window.CanvasflowCustomTextEditor = (
     element: HTMLElement,
@@ -25,6 +30,8 @@ if (typeof window !== "undefined") {
   ) => {
     return CustomEditor.build(element, config, params);
   };
+
+  window.CanvasflowCustomTextEditor.version = version;
 }
 
 const customColor = [

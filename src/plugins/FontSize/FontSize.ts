@@ -41,16 +41,28 @@ export class FontSize extends Plugin implements FontSizeViewer {
     document.selection.on("change:range", this.onSelectionChange);
   }
 
-  private onSelectionChange = () => {
+  private onSelectionChange = (): void => {
     const element: any = this.fontSizeView.input.element;
     const { selection } = this.editor.model.document;
     if (!selection) {
       return;
     }
+
     const range = selection.getFirstRange();
     if (!range) {
       return;
     }
+
+    let count = 0;
+    for (const _ of range.getItems()) {
+      count += 1;
+    }
+
+    if (!count) {
+      return;
+    }
+
+    let defaultFontSize = this.getDefaultFontSize();
 
     const sizes = [];
     for (const item of range.getItems()) {
@@ -64,8 +76,13 @@ export class FontSize extends Plugin implements FontSizeViewer {
     if (!filteredEmpty.length || filteredEmpty.length !== sizes.length) {
       element.value = "";
       this.currentValue = "";
+      if (defaultFontSize && !filteredEmpty.length) {
+        element.value = `${defaultFontSize}`;
+        this.currentValue = `${defaultFontSize}`;
+      }
       return;
     }
+
     const sizeSet = new Set([...filteredEmpty]);
     if (sizeSet.size > 1) {
       element.value = "";
@@ -79,6 +96,22 @@ export class FontSize extends Plugin implements FontSizeViewer {
       element.value = this.currentValue;
     }
   };
+
+  private getDefaultFontSize(): null | number {
+    const editingView = this.editor.editing.view;
+    let defaultFontSize: null | number = null;
+    const editorEl = editingView.getDomRoot();
+    if (editorEl && window.getComputedStyle(editorEl, null)) {
+      let value = window
+        .getComputedStyle(editorEl, null)
+        .getPropertyValue("font-size");
+      if (value) {
+        value = value.replace("px", "");
+        defaultFontSize = parseFloat(value);
+      }
+    }
+    return defaultFontSize;
+  }
 
   onChange = (size: string) => {
     const parsedSize = parseInt(size);
@@ -97,8 +130,10 @@ export class FontSize extends Plugin implements FontSizeViewer {
   };
 
   onIncreaseSize() {
+    let fontSizeValue = this.getDefaultFontSize();
+    const fontSize: number = fontSizeValue ?? 0;
     if (!this.currentValue) {
-      this.setValue(this.min.toString());
+      this.setValue(`${fontSize + 1}`);
       return;
     }
 
@@ -110,8 +145,10 @@ export class FontSize extends Plugin implements FontSizeViewer {
     this.setValue(current.toString());
   }
   onDecreaseSize() {
+    let fontSizeValue = this.getDefaultFontSize();
+    const fontSize: number = fontSizeValue ?? 0;
     if (!this.currentValue) {
-      this.setValue(this.min.toString());
+      this.setValue(`${fontSize + 1}`);
       return;
     }
 

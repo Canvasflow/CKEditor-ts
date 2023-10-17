@@ -17,16 +17,17 @@ export class FontSizeView extends View {
       attributes: {
         type: "number",
         value: bind.to("value"),
+        title: "Font Size",
         tabindex: 0,
         min,
         max,
         step,
         style: {
-          width: "40px",
+          width: "45px",
           border: "1px solid #c3c3c3",
           borderRadius: "4px",
           margin: "0px 0px",
-          paddingLeft: "10px",
+          paddingLeft: "4px",
         },
       },
     });
