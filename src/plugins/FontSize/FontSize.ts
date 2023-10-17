@@ -1,10 +1,9 @@
 import CanvasflowEditor from "../../BaseEditor";
-import { Locale, GetCallback, EventInfo } from "@ckeditor/ckeditor5-utils";
+import { Locale } from "@ckeditor/ckeditor5-utils";
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { FontSizeComponent, FontSizeViewer } from "./FontSizeComponent";
 import { FontSizeEditing } from "./FontSizeEditing";
 import { TEXT_SIZE_ATTR, TEXT_SIZE_COMMAND } from "./FontSizeCommands";
-import { DomConverter } from "@ckeditor/ckeditor5-engine";
 
 export class FontSize extends Plugin implements FontSizeViewer {
   declare editor: CanvasflowEditor;
@@ -42,11 +41,9 @@ export class FontSize extends Plugin implements FontSizeViewer {
     document.selection.on("change:range", this.onSelectionChange);
   }
 
-  private onSelectionChange = (evt: EventInfo): void => {
-    const source: any = evt.source;
+  private onSelectionChange = (): void => {
     const element: any = this.fontSizeView.input.element;
     const { selection } = this.editor.model.document;
-    const editingView = this.editor.editing.view;
     if (!selection) {
       return;
     }
@@ -136,7 +133,6 @@ export class FontSize extends Plugin implements FontSizeViewer {
     let fontSizeValue = this.getDefaultFontSize();
     const fontSize: number = fontSizeValue ?? 0;
     if (!this.currentValue) {
-      // this.setValue(this.min.toString());
       this.setValue(`${fontSize + 1}`);
       return;
     }
