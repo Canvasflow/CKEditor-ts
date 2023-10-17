@@ -17,6 +17,7 @@ export class FontSizeView extends View {
       attributes: {
         type: "number",
         value: bind.to("value"),
+        title: "Font Size",
         tabindex: 0,
         min,
         max,

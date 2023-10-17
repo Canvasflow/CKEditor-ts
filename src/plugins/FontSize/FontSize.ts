@@ -65,9 +65,7 @@ export class FontSize extends Plugin implements FontSizeViewer {
       return;
     }
 
-    // TODO Implement default font size logic
     let defaultFontSize = this.getDefaultFontSize();
-    console.log(`DEFAULT FONT SIZE: ${defaultFontSize}`);
 
     const sizes = [];
     for (const item of range.getItems()) {
@@ -79,14 +77,15 @@ export class FontSize extends Plugin implements FontSizeViewer {
     }
     const filteredEmpty = sizes.filter((i) => !!i);
     if (!filteredEmpty.length || filteredEmpty.length !== sizes.length) {
-      element.value = '';
+      element.value = "";
       this.currentValue = "";
-      if (defaultFontSize) {
+      if (defaultFontSize && !filteredEmpty.length) {
         element.value = `${defaultFontSize}`;
         this.currentValue = `${defaultFontSize}`;
       }
       return;
     }
+
     const sizeSet = new Set([...filteredEmpty]);
     if (sizeSet.size > 1) {
       element.value = "";
@@ -106,10 +105,11 @@ export class FontSize extends Plugin implements FontSizeViewer {
     let defaultFontSize: null | number = null;
     const editorEl = editingView.getDomRoot();
     if (editorEl && window.getComputedStyle(editorEl, null)) {
-      let value = window.getComputedStyle(editorEl, null)
-        .getPropertyValue('font-size')
+      let value = window
+        .getComputedStyle(editorEl, null)
+        .getPropertyValue("font-size");
       if (value) {
-        value = value.replace('px', '');
+        value = value.replace("px", "");
         defaultFontSize = parseFloat(value);
       }
     }
@@ -137,7 +137,7 @@ export class FontSize extends Plugin implements FontSizeViewer {
     const fontSize: number = fontSizeValue ?? 0;
     if (!this.currentValue) {
       // this.setValue(this.min.toString());
-      this.setValue(`${fontSize + 1}`)
+      this.setValue(`${fontSize + 1}`);
       return;
     }
 
@@ -152,7 +152,7 @@ export class FontSize extends Plugin implements FontSizeViewer {
     let fontSizeValue = this.getDefaultFontSize();
     const fontSize: number = fontSizeValue ?? 0;
     if (!this.currentValue) {
-      this.setValue(`${fontSize + 1}`)
+      this.setValue(`${fontSize + 1}`);
       return;
     }
 
