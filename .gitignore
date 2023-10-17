@@ -27,3 +27,5 @@ dist-ssr
 /js
 .npmrc
 .env
+
+src/version.ts

@@ -8,6 +8,7 @@ export default abstract class BaseEditor extends BalloonEditor {
   fontBackground?: Colors;
   subscribers: Map<string, Array<Function>> = new Map();
   fonts: Array<string> = [];
+  public version: number = 0;
   protected constructor(
     sourceElementOrData: HTMLElement | string,
     config?: TextEditorConfig,
