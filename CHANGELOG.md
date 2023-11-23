@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.4.5
+
+_November 23, 2023_
+
+🐛 Fixed
+
+- Only watch data when the `save` even is fired
+
 ## 🏷️ 1.4.4
 
 _November 23, 2023_
