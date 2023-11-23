@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.4.4
+
+_November 23, 2023_
+
+🐛 Fixed
+
+- Added even to enable `Save` button on system
+
 ## 🏷️ 1.4.3
 
 _October 17, 2023_

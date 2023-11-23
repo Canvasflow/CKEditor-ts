@@ -50,4 +50,10 @@ export function createListeners(editor: TextEditor) {
       console.log(`selectedSpecialCharacter:`, data);
     },
   );
+
+  //CHANGES TO DATA
+  editor.addEventListener("changes:content", (evt: any) => {
+    const { changes } = evt;
+    console.log(`changes:content:`, changes);
+  });
 }
