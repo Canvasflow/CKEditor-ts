@@ -17,6 +17,11 @@ export default abstract class BaseEditor extends BalloonEditor {
     if (config?.fetchAnchors) {
       this.anchorFn = config.fetchAnchors;
     }
+    this.model.document.on("change", () => {
+      console.log("The Document has changed!");
+      const evt = { changes: true };
+      this.dispatch("changes:content", evt);
+    });
   }
 
   static create(
