@@ -13,6 +13,9 @@ export default abstract class BaseEditor extends BalloonEditor {
     sourceElementOrData: HTMLElement | string,
     config?: TextEditorConfig,
   ) {
+    if (config?.fontFamily) {
+      config.fontFamily.supportAllValues = true;
+    }
     super(sourceElementOrData, config);
     if (config?.fetchAnchors) {
       this.anchorFn = config.fetchAnchors;
@@ -56,7 +59,7 @@ export interface TextEditorConfig extends EditorConfig {
     fetchAnchors?: AnchorFn;
   };
   pageLinkSources?: Array<PageLinkSource>;
-  fontFamily?: { options: Array<string> };
+  fontFamily?: { options: Array<string>; supportAllValues?: boolean };
   fetchAnchors?: AnchorFn;
   fontBackground?: Colors;
   toolbar?: Array<string | GroupItem>;

@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.4.6
+
+_November 24, 2023_
+
+🐛 Fixed
+
+- Font with `namespaces` were not working with the editor
+
 ## 🏷️ 1.4.5
 
 _November 23, 2023_
