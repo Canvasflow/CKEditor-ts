@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.4.7
+
+_November 24, 2023_
+
+🐛 Fixed
+
+- Build configuration updated
+
 ## 🏷️ 1.4.6
 
 _November 24, 2023_
