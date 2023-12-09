@@ -2,6 +2,14 @@
 
 ## 🏷️ 1.4.7
 
+_December 9, 2023_
+
+♻️ Documentation
+
+- Added NPM registry
+
+## 🏷️ 1.4.7
+
 _November 24, 2023_
 
 🐛 Fixed
