@@ -52,6 +52,7 @@ import { SubscriptView } from "./plugins/FontStyles/SubscriptView";
 import { SuperscriptView } from "./plugins/FontStyles/SuperscriptView";
 import { UnderlineView } from "./plugins/FontStyles/UnderlineView";
 import { FontSizeComponent } from "./plugins/FontSize/FontSizeComponent";
+import { StrikethroughColor } from "./plugins/StrikethroughColor/StrikethroughColor";
 
 export class TextEditor extends BaseEditor {
   constructor(
@@ -128,6 +129,7 @@ const PLUGINS = [
   FontFamily,
   FontStyles,
   SmallCaps,
+  StrikethroughColor,
 ];
 
 const TOOLBAR = [
@@ -147,6 +149,11 @@ const TOOLBAR = [
       SubscriptView.viewName,
       SuperscriptView.viewName,
     ],
+  },
+  {
+    label: "Strikethrough",
+    icon: getIcon("striketrough"),
+    items: [TextColor.viewName],
   },
   {
     label: "Text Color",
