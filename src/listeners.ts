@@ -53,7 +53,7 @@ export function createListeners(editor: TextEditor) {
 
   //CHANGES TO DATA
   editor.addEventListener("changes:content", (evt: any) => {
-    const { changes } = evt;
+    //  const { changes } = evt;
     // console.log(`changes:content:`, changes);
   });
 }
