@@ -2,9 +2,9 @@ import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import {
   StrikethroughColorCommand,
   ClearStrikethroughColorCommand,
-  TEXT_COLOR_ATTR,
-  SET_TEXT_COLOR_COMMAND,
-  CLEAR_TEXT_COLOR_COMMAND,
+  STRIKETHROUGH_COLOR_ATTR,
+  SET_STRIKETHROUGH_TEXT_COLOR_COMMAND,
+  CLEAR_STRIKETHROUGH_TEXT_COLOR_COMMAND,
 } from "./StrikethroughColorCommands";
 import CanvasflowEditor from "../../BaseEditor";
 export class StrikethroughColorEditing extends Plugin {
@@ -14,19 +14,22 @@ export class StrikethroughColorEditing extends Plugin {
   constructor(editor: CanvasflowEditor) {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
-      model: TEXT_COLOR_ATTR,
+      model: STRIKETHROUGH_COLOR_ATTR,
       view: renderDowncastElement(),
     });
     editor.commands.add(
-      SET_TEXT_COLOR_COMMAND,
+      SET_STRIKETHROUGH_TEXT_COLOR_COMMAND,
       new StrikethroughColorCommand(editor),
     );
     editor.commands.add(
-      CLEAR_TEXT_COLOR_COMMAND,
+      CLEAR_STRIKETHROUGH_TEXT_COLOR_COMMAND,
       new ClearStrikethroughColorCommand(editor),
     );
-    editor.model.schema.extend("$text", { allowAttributes: TEXT_COLOR_ATTR });
-    editor.model.schema.setAttributeProperties(TEXT_COLOR_ATTR, {
+
+    editor.model.schema.extend("$text", {
+      allowAttributes: STRIKETHROUGH_COLOR_ATTR,
+    });
+    editor.model.schema.setAttributeProperties(STRIKETHROUGH_COLOR_ATTR, {
       isFormatting: true,
       copyOnEnter: true,
     });
@@ -35,9 +38,9 @@ export class StrikethroughColorEditing extends Plugin {
 function renderDowncastElement() {
   return (modelAttributeValue: any, viewWriter: any) => {
     const attributes = {
-      style: `color:${modelAttributeValue}`,
+      style: `text-decoration-color:${modelAttributeValue}`,
     };
-    return viewWriter.writer.createAttributeElement("span", attributes, {
+    return viewWriter.writer.createAttributeElement("s", attributes, {
       priority: 7,
     });
   };

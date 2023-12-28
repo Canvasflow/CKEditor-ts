@@ -1,8 +1,9 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
-export const TEXT_COLOR_ATTR = "fontColor";
-export const CLEAR_TEXT_COLOR_COMMAND = "clearTextColor";
-export const SET_TEXT_COLOR_COMMAND = "setTextColor";
+export const STRIKETHROUGH_COLOR_ATTR = "text-decoration-color";
+export const CLEAR_STRIKETHROUGH_TEXT_COLOR_COMMAND =
+  "clearStrikethroughTextColor";
+export const SET_STRIKETHROUGH_TEXT_COLOR_COMMAND = "setStrikethroughTextColor";
 
 export class StrikethroughColorCommand extends Command {
   constructor(editor: CanvasflowEditor) {
@@ -12,10 +13,10 @@ export class StrikethroughColorCommand extends Command {
   refresh() {
     const model = this.editor.model;
     const doc = model.document;
-    this.value = doc.selection.getAttribute(TEXT_COLOR_ATTR);
+    this.value = doc.selection.getAttribute(STRIKETHROUGH_COLOR_ATTR);
     this.isEnabled = model.schema.checkAttributeInSelection(
       doc.selection,
-      TEXT_COLOR_ATTR,
+      STRIKETHROUGH_COLOR_ATTR,
     );
   }
 
@@ -23,22 +24,17 @@ export class StrikethroughColorCommand extends Command {
     const model = this.editor.model;
     const document = model.document;
     const selection = document.selection;
-    const value = color;
+
     model.change((writer) => {
       const ranges = model.schema.getValidRanges(
         selection.getRanges(),
-        TEXT_COLOR_ATTR,
+        STRIKETHROUGH_COLOR_ATTR,
       );
 
       for (const range of ranges) {
-        if (value) {
-          writer.setAttributes(
-            {
-              fontColor: value,
-            },
-            range,
-          );
-        }
+        const attr: any = {};
+        attr[STRIKETHROUGH_COLOR_ATTR] = color;
+        writer.setAttributes(attr, range);
       }
     });
   }
@@ -52,10 +48,10 @@ export class ClearStrikethroughColorCommand extends Command {
   refresh() {
     const model = this.editor.model;
     const doc = model.document;
-    this.value = doc.selection.getAttribute(TEXT_COLOR_ATTR);
+    this.value = doc.selection.getAttribute(STRIKETHROUGH_COLOR_ATTR);
     this.isEnabled = model.schema.checkAttributeInSelection(
       doc.selection,
-      TEXT_COLOR_ATTR,
+      STRIKETHROUGH_COLOR_ATTR,
     );
   }
 
@@ -66,11 +62,11 @@ export class ClearStrikethroughColorCommand extends Command {
     model.change((writer) => {
       const ranges = model.schema.getValidRanges(
         selection.getRanges(),
-        TEXT_COLOR_ATTR,
+        STRIKETHROUGH_COLOR_ATTR,
       );
 
       for (const range of ranges) {
-        writer.removeAttribute(TEXT_COLOR_ATTR, range);
+        writer.removeAttribute(STRIKETHROUGH_COLOR_ATTR, range);
       }
     });
   }

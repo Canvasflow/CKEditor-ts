@@ -38,6 +38,7 @@ import { ClearFormat } from "./plugins/ClearFormat/ClearFormat";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
 import { HighlightColor } from "./plugins/HighlightColor/HighlightColor";
 import { TextColor } from "./plugins/TextColor/TextColor";
+import { StrikethroughColor } from "./plugins/StrikethroughColor/StrikethroughColor";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 import { FontSize } from "./plugins/FontSize/FontSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
@@ -52,7 +53,6 @@ import { SubscriptView } from "./plugins/FontStyles/SubscriptView";
 import { SuperscriptView } from "./plugins/FontStyles/SuperscriptView";
 import { UnderlineView } from "./plugins/FontStyles/UnderlineView";
 import { FontSizeComponent } from "./plugins/FontSize/FontSizeComponent";
-import { StrikethroughColor } from "./plugins/StrikethroughColor/StrikethroughColor";
 
 export class TextEditor extends BaseEditor {
   constructor(
@@ -145,7 +145,7 @@ const TOOLBAR = [
       BoldView.viewName,
       ItalicView.viewName,
       UnderlineView.viewName,
-      StrikethroughView.viewName,
+      //StrikethroughView.viewName,
       SubscriptView.viewName,
       SuperscriptView.viewName,
     ],
@@ -153,7 +153,7 @@ const TOOLBAR = [
   {
     label: "Strikethrough",
     icon: getIcon("striketrough"),
-    items: [TextColor.viewName],
+    items: [StrikethroughColor.viewName],
   },
   {
     label: "Text Color",
