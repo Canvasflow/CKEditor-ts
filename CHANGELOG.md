@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.4.9
+
+_December 28, 2023_
+
+✨ Features
+
+- Support for Colors on Strikethrough
+
 ## 🏷️ 1.4.7
 
 _December 9, 2023_
