@@ -48,7 +48,6 @@ import { SmallCaps } from "./plugins/SmallCaps/SmallCaps";
 // Views
 import { BoldView } from "./plugins/FontStyles/BoldView";
 import { ItalicView } from "./plugins/FontStyles/ItalicView";
-import { StrikethroughView } from "./plugins/FontStyles/StrikethroughView";
 import { SubscriptView } from "./plugins/FontStyles/SubscriptView";
 import { SuperscriptView } from "./plugins/FontStyles/SuperscriptView";
 import { UnderlineView } from "./plugins/FontStyles/UnderlineView";

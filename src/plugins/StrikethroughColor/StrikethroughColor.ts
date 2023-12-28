@@ -81,7 +81,7 @@ export class StrikethroughColor extends Plugin implements ColorViewer {
     this.editor.execute(CLEAR_STRIKETHROUGH_TEXT_COLOR_COMMAND);
   }
 
-  onAddColor = (color: string) => {
+  onAddColor = () => {
     //this.editor.dispatch("textColor:addCustomColor", evt);
   };
 
