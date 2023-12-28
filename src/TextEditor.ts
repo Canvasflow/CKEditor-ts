@@ -38,6 +38,7 @@ import { ClearFormat } from "./plugins/ClearFormat/ClearFormat";
 import { Capitalize } from "./plugins/Capitalize/Capitalize";
 import { HighlightColor } from "./plugins/HighlightColor/HighlightColor";
 import { TextColor } from "./plugins/TextColor/TextColor";
+import { StrikethroughColor } from "./plugins/StrikethroughColor/StrikethroughColor";
 import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 import { FontSize } from "./plugins/FontSize/FontSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
@@ -128,6 +129,7 @@ const PLUGINS = [
   FontFamily,
   FontStyles,
   SmallCaps,
+  StrikethroughColor,
 ];
 
 const TOOLBAR = [
@@ -143,10 +145,15 @@ const TOOLBAR = [
       BoldView.viewName,
       ItalicView.viewName,
       UnderlineView.viewName,
-      StrikethroughView.viewName,
+      //StrikethroughView.viewName,
       SubscriptView.viewName,
       SuperscriptView.viewName,
     ],
+  },
+  {
+    label: "Strikethrough",
+    icon: getIcon("striketrough"),
+    items: [StrikethroughColor.viewName],
   },
   {
     label: "Text Color",
