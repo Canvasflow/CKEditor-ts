@@ -134,7 +134,6 @@ const PLUGINS = [
 
 const TOOLBAR = [
   FontFamily.viewName,
-  //"fontSize",
   "|",
   FontSizeComponent.viewName,
   "|",
