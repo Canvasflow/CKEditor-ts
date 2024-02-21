@@ -42,20 +42,10 @@ export class DarkMode extends Plugin {
           if (!range) {
             return;
           }
-          let value = "";
-          for (const item of range.getItems()) {
-            const proxy = item as any;
-            value = proxy.data;
-            writer.remove(item);
-          }
 
           var position = selection.getFirstPosition();
           if (position) {
-            writer.insertText(
-              value,
-              { "data-anf-dark-mode": "true" },
-              position,
-            );
+            writer.setAttributes({ "data-anf-dark-mode": "true" }, range);
           }
         });
       });
