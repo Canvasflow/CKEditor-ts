@@ -34,6 +34,8 @@ import { FontSize } from "./plugins/FontSize/FontSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
 import { FontStyles } from "./plugins/FontStyles/FontStyles";
 
+import { TitleCase } from "./plugins/TitleCase/TitleCase";
+
 // Views
 import { BoldView } from "./plugins/FontStyles/BoldView";
 import { ItalicView } from "./plugins/FontStyles/ItalicView";
@@ -285,6 +287,12 @@ function getPluginConfig(plugin: string) {
       return {
         plugins: [Paragraph, Essentials, DarkMode],
         toolbar: "dark-mode",
+      };
+
+    case "TitleCase":
+      return {
+        plugins: [Essentials, Paragraph, TitleCase],
+        toolbar: TitleCase.viewName,
       };
 
     default:
