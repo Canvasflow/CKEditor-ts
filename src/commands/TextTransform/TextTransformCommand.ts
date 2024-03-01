@@ -37,4 +37,8 @@ export class TextTransformCommand extends Command {
   }
 }
 
-type TextTransformValues = "uppercase" | "lowercase" | "capitalize";
+type TextTransformValues =
+  | "uppercase"
+  | "lowercase"
+  | "capitalize"
+  | "titlecase";

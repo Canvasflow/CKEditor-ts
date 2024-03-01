@@ -15,14 +15,41 @@ export class DarkMode extends Plugin {
       model: "data-anf-dark-mode",
     });
 
+    // editor.conversion.for("downcast").attributeToAttribute({
+    //   model: "data-anf-dark-mode",
+    //   view: (modelAttributeValue) => ({
+    //     key: "style",
+    //     value: {
+    //       "data-anf-dark-mode": true,
+    //     },
+    //   }),
+    // });
+
     editor.conversion.for("downcast").attributeToElement({
       model: "data-anf-dark-mode",
-      view: (_modelElement, { writer }) => {
-        return writer.createAttributeElement("span", {
-          "data-anf-dark-mode": "true",
-        });
-      },
+      view: renderDowncastElement(),
     });
+
+    // editor.conversion.for("downcast").attributeToElement({
+    //   model: "data-anf-dark-mode",
+    //   view: (_modelElement, { writer }) => {
+    //     return writer.createAttributeElement("span", {
+    //       "data-anf-dark-mode": "true",
+    //     });
+    //   },
+    // });
+
+    // editor.conversion.for("downcast").attributeToAttribute({
+    //   model: {
+    //     name: "data-anf-dark-mode",
+    //     key: "source",
+    //   },
+    //   view: (_modelElement, { writer }) => {
+    //     return writer.createAttributeElement("span", {
+    //       "data-anf-dark-mode": "true",
+    //     });
+    //   },
+    // });
 
     editor.ui.componentFactory.add("dark-mode", () => {
       const button = new ButtonView();
@@ -53,4 +80,13 @@ export class DarkMode extends Plugin {
       return button;
     });
   }
+}
+
+function renderDowncastElement() {
+  return (_: string, viewWriter: any) => {
+    const attributes = { "data-anf-dark-mode": true };
+    return viewWriter.writer.createAttributeElement("span", attributes, {
+      priority: 7,
+    });
+  };
 }

@@ -44,6 +44,7 @@ import { FontSize } from "./plugins/FontSize/FontSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
 import { FontStyles } from "./plugins/FontStyles/FontStyles";
 import { SmallCaps } from "./plugins/SmallCaps/SmallCaps";
+import { TitleCase } from "./plugins/TitleCase/TitleCase";
 
 // Views
 import { BoldView } from "./plugins/FontStyles/BoldView";
@@ -130,6 +131,7 @@ const PLUGINS = [
   FontStyles,
   SmallCaps,
   StrikethroughColor,
+  TitleCase,
 ];
 
 const TOOLBAR = [
@@ -179,6 +181,7 @@ const TOOLBAR = [
       Lowercase.viewName,
       Capitalize.viewName,
       SmallCaps.viewName,
+      TitleCase.viewName,
     ],
   },
   "|",

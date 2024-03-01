@@ -109,6 +109,7 @@ if (typeof window !== "undefined") {
 //     defaultColor: [{ color: "red", label: "red" }],
 //     customColor: customBackgroundColor,
 //   },
+//   caseChange: { titleCase: { excludeWords: [] } },
 // };
 
 // TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
@@ -118,7 +119,6 @@ if (typeof window !== "undefined") {
 //       const { color } = evt;
 //       customColor.push({ color, label: "" });
 //     });
-
 //     editor.addEventListener("highlightColor:addCustomColor", (evt: any) => {
 //       const { color } = evt;
 //       customBackgroundColor.push({ color, label: "" });
