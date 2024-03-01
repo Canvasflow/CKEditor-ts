@@ -42,7 +42,7 @@ const customColor = [
 const customBackgroundColor = [{ color: "grey", label: "dark grey" }];
 
 const config = {
-  toolbar: ["FontFamily", "FontSize", "Bold", "TitleCase"],
+  toolbar: ["FontFamily", "FontSize", "Bold", "TitleCase", "DarkMode"],
   pageLinkSources: [
     {
       id: "1111",

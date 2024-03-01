@@ -38,7 +38,7 @@ export class TitleCase extends Plugin {
             const formatted = value
               .toLowerCase()
               .replace(excludeWords, (s) => s[0].toUpperCase() + s.slice(1));
-            proxy.data = formatted;
+            // proxy.data = formatted;
             var position = selection.getFirstPosition();
             writer.remove(item);
             if (position) {
