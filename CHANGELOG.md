@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 🏷️ 1.5.2
+
+_December 28, 2023_
+
+✨ Features
+
+- Support for Dark mode without adding a child element
+- Support for Title Case
+
 ## 🏷️ 1.5.0
 
 _December 28, 2023_

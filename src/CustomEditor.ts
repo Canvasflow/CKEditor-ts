@@ -33,7 +33,6 @@ import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
 import { FontSize } from "./plugins/FontSize/FontSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
 import { FontStyles } from "./plugins/FontStyles/FontStyles";
-
 import { TitleCase } from "./plugins/TitleCase/TitleCase";
 
 // Views
