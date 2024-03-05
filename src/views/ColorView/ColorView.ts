@@ -125,10 +125,32 @@ export class ColorView extends View {
   }
 
   private getRemoveColorView(): ButtonView {
-    const label =
-      this.viewer.attribute === "fontColor"
-        ? "Remove color"
-        : "Remove background";
+    let label = "";
+
+    switch (this.viewer.attribute) {
+      case "fontColor":
+        label = "Remove Font color";
+        break;
+
+      case "highlightColor":
+        label = "Remove background";
+        break;
+
+      case "strikethroughColor":
+        label = "Remove Color";
+        break;
+
+      case "darkColor":
+        label = "Remove Dark Color";
+        break;
+
+      case "darkBackgroundColor":
+        label = "Remove Dark Background Color";
+        break;
+
+      default:
+        break;
+    }
     let clearButton = this.createButton(label, getIcon("removeColor"));
     clearButton.type = "button";
     clearButton.class = "clear-color-button";
