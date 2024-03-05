@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 🏷️ 1.5.3
+
+_March 5, 2024_
+
+✨ Features
+
+- Support for Dark Mode Color
+- Support for Dark Mode Background Color
+
 ## 🏷️ 1.5.2
 
 _December 28, 2023_
