@@ -218,7 +218,9 @@ export interface ColorViewer {
 export type ColorViewerType =
   | "fontColor"
   | "highlightColor"
-  | "strikethroughColor";
+  | "strikethroughColor"
+  | "darkColor"
+  | "darkBackgroundColor";
 
 class ColorsGridView extends View {
   private viewer: ColorViewer;
