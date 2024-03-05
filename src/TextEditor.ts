@@ -54,6 +54,9 @@ import { SuperscriptView } from "./plugins/FontStyles/SuperscriptView";
 import { UnderlineView } from "./plugins/FontStyles/UnderlineView";
 import { FontSizeComponent } from "./plugins/FontSize/FontSizeComponent";
 
+import { DarkColor } from "./plugins/DarkColor/DarkColor";
+import { DarkBackgroundColor } from "./plugins/DarkBackground/DarkBackgroundColor";
+
 export class TextEditor extends BaseEditor {
   constructor(
     sourceElementOrData: HTMLElement | string,
@@ -131,11 +134,12 @@ const PLUGINS = [
   SmallCaps,
   StrikethroughColor,
   TitleCase,
+  DarkColor,
+  DarkBackgroundColor,
 ];
 
 const TOOLBAR = [
   FontFamily.viewName,
-  //"fontSize",
   "|",
   FontSizeComponent.viewName,
   "|",
@@ -146,7 +150,6 @@ const TOOLBAR = [
       BoldView.viewName,
       ItalicView.viewName,
       UnderlineView.viewName,
-      //StrikethroughView.viewName,
       SubscriptView.viewName,
       SuperscriptView.viewName,
     ],
@@ -189,9 +192,26 @@ const TOOLBAR = [
   "Link",
   PageLink.viewName,
   {
+    label: "Dark Mode Options",
+    icon: getIcon("darkmode"),
+    items: [
+      "dark-mode",
+      {
+        label: "Dark Color",
+        icon: getIcon("fontColor"),
+        items: [DarkColor.viewName],
+      },
+      {
+        label: "Dark Background Color",
+        icon: getIcon("highlightColor"),
+        items: [DarkBackgroundColor.viewName],
+      },
+    ],
+  },
+  {
     label: "More",
     icon: getIcon("other"),
-    items: ["specialCharacters", "imageUpload", "dark-mode"],
+    items: ["specialCharacters", "imageUpload"],
   },
 ];
 

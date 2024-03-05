@@ -91,5 +91,5 @@ export type AnchorFn = (id: string) => Promise<Array<PageAnchorSource>>;
 export interface GroupItem {
   label: string;
   icon: string;
-  items: Array<string>;
+  items: Array<string | GroupItem>;
 }
