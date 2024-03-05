@@ -135,7 +135,7 @@ function buildPlugins(components: Array<string | GroupItem>): {
   return { plugins, toolbar };
 }
 
-function getPluginConfig(plugin: string) {
+function getPluginConfig(plugin: any) {
   switch (plugin) {
     case "Separator":
       return { plugins: [], toolbar: "|" };

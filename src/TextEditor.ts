@@ -150,7 +150,6 @@ const TOOLBAR = [
       BoldView.viewName,
       ItalicView.viewName,
       UnderlineView.viewName,
-      //StrikethroughView.viewName,
       SubscriptView.viewName,
       SuperscriptView.viewName,
     ],
