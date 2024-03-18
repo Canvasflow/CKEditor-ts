@@ -57,6 +57,8 @@ import { FontSizeComponent } from "./plugins/FontSize/FontSizeComponent";
 import { DarkColor } from "./plugins/DarkColor/DarkColor";
 import { DarkBackgroundColor } from "./plugins/DarkBackground/DarkBackgroundColor";
 
+import { TitleEditor } from "./plugins/TitleEditor/TitleEditor";
+
 export class TextEditor extends BaseEditor {
   constructor(
     sourceElementOrData: HTMLElement | string,
@@ -136,9 +138,12 @@ const PLUGINS = [
   TitleCase,
   DarkColor,
   DarkBackgroundColor,
+  TitleEditor,
 ];
 
 const TOOLBAR = [
+  TitleEditor.viewName,
+  "|",
   FontFamily.viewName,
   "|",
   FontSizeComponent.viewName,
