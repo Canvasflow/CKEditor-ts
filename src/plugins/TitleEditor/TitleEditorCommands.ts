@@ -1,5 +1,8 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
+export const TITLE_EDITOR_ATTR = "title";
+export const TITLE_EDITOR_COMMAND = "setTitleEditor";
+export const TITLE_EDITOR_CLEAR = "clearTitleEditor";
 
 export class TitleEditorCommand extends Command {
   constructor(editor: CanvasflowEditor) {
@@ -7,36 +10,63 @@ export class TitleEditorCommand extends Command {
   }
 
   refresh() {
-    // const model = this.editor.model;
-    //const doc = model.document;
-    // this.value = doc.selection.getAttribute("PageLink");
-    // this.isEnabled = model.schema.checkAttributeInSelection(
-    //   doc.selection,
-    //   "PageLink",
-    // );
+    const model = this.editor.model;
+    const doc = model.document;
+    this.value = doc.selection.getAttribute(TITLE_EDITOR_ATTR);
+    this.isEnabled = model.schema.checkAttributeInSelection(
+      doc.selection,
+      TITLE_EDITOR_ATTR,
+    );
+  }
+
+  execute(color: any) {
+    const model = this.editor.model;
+    const document = model.document;
+    const selection = document.selection;
+    const value = color;
+    model.change((writer) => {
+      const ranges = model.schema.getValidRanges(
+        selection.getRanges(),
+        TITLE_EDITOR_ATTR,
+      );
+
+      for (const range of ranges) {
+        if (value) {
+          writer.setAttributes({ title: value }, range);
+        }
+      }
+    });
+  }
+}
+
+export class ClearTitleCommand extends Command {
+  constructor(editor: CanvasflowEditor) {
+    super(editor);
+  }
+
+  refresh() {
+    const model = this.editor.model;
+    const doc = model.document;
+    this.value = doc.selection.getAttribute(TITLE_EDITOR_ATTR);
+    this.isEnabled = model.schema.checkAttributeInSelection(
+      doc.selection,
+      TITLE_EDITOR_ATTR,
+    );
   }
 
   execute() {
-    console.log("EXECUTE CALLED");
-    // this.editor.model.change(async (writer) => {
-    //   const selection = this.editor.model.document.selection;
-    //   if (!selection) {
-    //     return;
-    //   }
-    //   const range = selection.getFirstRange();
-    //   if (!range) {
-    //     return;
-    //   }
-    //   let value = "";
-    //   for (const item of range.getItems()) {
-    //     const proxy = item as any;
-    //     value = proxy.data;
-    //     writer.remove(item);
-    //   }
-    //   var position = selection.getFirstPosition();
-    //   if (position) {
-    //     writer.insertText(value, { linkHref: url }, position);
-    //   }
-    // });
+    const model = this.editor.model;
+    const document = model.document;
+    const selection = document.selection;
+    model.change((writer) => {
+      const ranges = model.schema.getValidRanges(
+        selection.getRanges(),
+        TITLE_EDITOR_ATTR,
+      );
+
+      for (const range of ranges) {
+        writer.removeAttribute(TITLE_EDITOR_ATTR, range);
+      }
+    });
   }
 }

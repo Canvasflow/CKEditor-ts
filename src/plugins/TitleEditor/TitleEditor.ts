@@ -6,6 +6,7 @@ import ButtonView from "@ckeditor/ckeditor5-ui/src/button/buttonview";
 import { TitleEditorView, TitleEditorViewer } from "./TitleEditorView";
 import { TitleEditorEditing } from "./TitleEditorEditing";
 import { getIcon } from "../../icons/icons";
+import { TITLE_EDITOR_COMMAND } from "./TitleEditorCommands";
 
 export class TitleEditor extends Plugin implements TitleEditorViewer {
   static viewName = "cf-title-editor";
@@ -26,8 +27,12 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
     this.titleEditorView.showView();
 
     this.listenTo(this.titleEditorView, "submit", () => {
-      if (this.titleEditorView?.element)
-        console.log("ADD WAS CALLED", this.titleEditorView.titleValue);
+      this.editor.execute(
+        TITLE_EDITOR_COMMAND,
+        this.titleEditorView!.titleValue,
+      );
+      this.hideUI();
+      // CLEAR VALUES AND CLOSE PANEL
     });
 
     clickOutsideHandler({
@@ -45,10 +50,10 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
   private createButton() {
     this.editor.ui.componentFactory.add(TitleEditor.viewName, () => {
       const button = new ButtonView();
-      button.label = "Go to Page";
+      button.label = "Title Editor";
       button.tooltip = true;
       button.withText = false;
-      button.icon = getIcon("goToPage");
+      button.icon = getIcon("title");
       this.listenTo(button, "execute", () => {
         this.showUI();
       });

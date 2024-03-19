@@ -29,6 +29,7 @@ import subscript from "./assets/subscript.svg?raw";
 import superscript from "./assets/superscript.svg?raw";
 import textFormatting from "./assets/textFormatting.svg?raw";
 import underline from "./assets/underline.svg?raw";
+import title from "./assets/title.svg?raw";
 
 export function getIcon(name: IconType) {
   switch (name) {
@@ -94,6 +95,8 @@ export function getIcon(name: IconType) {
       return textFormatting;
     case "underline":
       return underline;
+    case "title":
+      return title;
   }
 }
 
@@ -128,4 +131,5 @@ type IconType =
   | "subscript"
   | "superscript"
   | "textTransform"
-  | "underline";
+  | "underline"
+  | "title";

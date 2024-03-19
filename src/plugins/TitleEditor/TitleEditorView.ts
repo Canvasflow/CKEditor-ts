@@ -7,7 +7,6 @@ import {
   ViewCollection,
 } from "@ckeditor/ckeditor5-ui";
 import { FocusTracker, Locale } from "@ckeditor/ckeditor5-utils";
-
 import { TitleEditorComponentView } from "./TitleEditorComponent";
 
 export class TitleEditorView extends View {
@@ -35,9 +34,7 @@ export class TitleEditorView extends View {
   private initItems() {
     this.addTitle();
     this.createAddButton();
-
     this.items.add(this.titleView);
-
     this.items.add(this.addLinkButtonView!);
   }
 
