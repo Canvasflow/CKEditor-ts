@@ -7,7 +7,10 @@ import { TitleEditorView, TitleEditorViewer } from "./TitleEditorView";
 import { TitlePopupView } from "./TitlePopupView";
 import { TitleEditorEditing } from "./TitleEditorEditing";
 import { getIcon } from "../../icons/icons";
-import { TITLE_EDITOR_COMMAND } from "./TitleEditorCommands";
+import {
+  TITLE_EDITOR_COMMAND,
+  TITLE_EDITOR_CLEAR,
+} from "./TitleEditorCommands";
 
 export class TitleEditor extends Plugin implements TitleEditorViewer {
   static viewName = "cf-title-editor";
@@ -17,14 +20,19 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
   titleEditorPopup?: TitlePopupView;
   locale?: Locale;
 
-  init() {
+  constructor(editor: CanvasflowEditor) {
+    super(editor);
     this.locale = this.editor.locale;
     this.balloon = this.editor.plugins.get(ContextualBalloon);
+  }
+
+  init() {
+    const { model } = this.editor;
+    const { document } = model;
+
     this.createView();
     this.createButton();
 
-    const { model } = this.editor;
-    const { document } = model;
     document.selection.on("change:range", this.onSelectionChange);
   }
 
@@ -44,10 +52,19 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
         continue;
       }
     }
-    // CONFIRM IF THE ONLY PROPERTY THAT EXIST WAS TITLE
+    // TODO: CONFIRM IF THE ONLY PROPERTY THAT EXIST WAS TITLE
+
     if (found) {
       this.titleEditorPopup = new TitlePopupView(this);
       this.titleEditorPopup.showView();
+      this.listenTo(
+        this.titleEditorPopup.removeTitleButtonView,
+        "execute",
+        () => {
+          this.editor.execute(TITLE_EDITOR_CLEAR);
+          if (this.balloon) this.balloon.remove(this.titleEditorPopup);
+        },
+      );
       this.balloon.add({
         view: this.titleEditorPopup,
         position: this.getBalloonPositionData(),
@@ -58,14 +75,14 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
   private createView() {
     this.titleEditorView = new TitleEditorView(this);
     this.titleEditorView.showView();
-
     this.listenTo(this.titleEditorView, "submit", () => {
       this.editor.execute(
         TITLE_EDITOR_COMMAND,
         this.titleEditorView!.titleValue,
       );
+
       this.hideUI();
-      // CLEAR VALUES AND CLOSE PANEL
+      // TODO: CLEAR VALUES AND CLOSE PANEL
     });
 
     clickOutsideHandler({

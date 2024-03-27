@@ -13,7 +13,6 @@ export class DarkColorEditing extends Plugin {
   }
   constructor(editor: CanvasflowEditor) {
     super(editor);
-
     editor.conversion.for("downcast").attributeToElement({
       model: DARK_COLOR_ATTR,
       view: renderDowncastElement(),
@@ -34,7 +33,7 @@ function renderDowncastElement() {
   return (modelAttributeValue: any, viewWriter: any) => {
     const attributes = { "dark-mode-color": modelAttributeValue };
     return viewWriter.writer.createAttributeElement("span", attributes, {
-      priority: 7,
+      priority: "highest",
     });
   };
 }

@@ -11,10 +11,10 @@ import { TitleEditorComponentView } from "./TitleEditorComponent";
 
 export class TitleEditorView extends View {
   declare editor: CanvasflowEditor;
+  declare titleValue: string;
   private items: ViewCollection;
   private focusTracker: FocusTracker;
   private addLinkButtonView?: ButtonView;
-  declare titleValue: string;
 
   titleInput: any;
   currentValue: string = "";

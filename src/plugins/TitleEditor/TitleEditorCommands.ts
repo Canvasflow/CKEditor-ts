@@ -19,11 +19,11 @@ export class TitleEditorCommand extends Command {
     );
   }
 
-  execute(color: any) {
+  execute(title: any) {
     const model = this.editor.model;
     const document = model.document;
     const selection = document.selection;
-    const value = color;
+    const value = title;
     model.change((writer) => {
       const ranges = model.schema.getValidRanges(
         selection.getRanges(),

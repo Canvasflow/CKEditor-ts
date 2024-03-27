@@ -12,12 +12,12 @@ import { getIcon } from "../../icons/icons";
 
 export class TitlePopupView extends View {
   declare editor: CanvasflowEditor;
+  declare titleValue: string;
   private items: ViewCollection;
   private focusTracker: FocusTracker;
-  private removeTitleButtonView?: ButtonView;
-  declare titleValue: string;
+  removeTitleButtonView: ButtonView;
+  EditTitleButtonView: ButtonView;
 
-  titleInput: any;
   currentValue: string = "";
   titleView: TitleEditorComponentView;
   locale: Locale;
@@ -29,13 +29,26 @@ export class TitlePopupView extends View {
     this.editor = viewer.editor;
     this.locale = this.editor.locale;
     this.titleView = new TitleEditorComponentView(this);
+    this.removeTitleButtonView = this.createRemoveButton(
+      getIcon("remove"),
+      "remove-title-button",
+    );
+    this.EditTitleButtonView = this.createEditButton(
+      getIcon("edit"),
+      "edit-title-button",
+    );
     this.initItems();
   }
 
   private initItems() {
     this.addTitle();
-    this.createButton(getIcon("remove"), "remove-title-button");
-    this.createButton(getIcon("edit"), "edit-title-button");
+
+    this.items.add(this.removeTitleButtonView);
+    this.items.add(this.EditTitleButtonView);
+
+    this.listenTo(this.removeTitleButtonView, "submit", () => {
+      console.log("remove button called");
+    });
   }
 
   onChange = (value: string) => {
@@ -47,12 +60,26 @@ export class TitlePopupView extends View {
     this.items.add(this.createLabel(label));
   }
 
-  private createButton(icon: string, className: string) {
-    this.removeTitleButtonView = this.createButtonObject("", icon, className);
-    this.removeTitleButtonView.withText = false;
-    this.removeTitleButtonView.type = "submit";
-    this.removeTitleButtonView.isEnabled = true;
-    this.items.add(this.removeTitleButtonView);
+  private createRemoveButton(icon: string, className: string) {
+    const removeTitleButtonView = this.createButtonObject("", icon, className);
+    removeTitleButtonView.withText = false;
+
+    // this.listenTo(removeTitleButtonView, "execute", () => {
+    //   console.log("remove button called");
+    // });
+
+    return removeTitleButtonView;
+  }
+
+  private createEditButton(icon: string, className: string) {
+    const EditTitleButtonView = this.createButtonObject("", icon, className);
+    EditTitleButtonView.withText = false;
+
+    this.listenTo(EditTitleButtonView, "execute", () => {
+      console.log("edit button called");
+    });
+
+    return EditTitleButtonView;
   }
 
   render() {

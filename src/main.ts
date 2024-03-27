@@ -114,6 +114,9 @@ const config = {
 
 TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
   .then((editor) => {
+    editor.setData(
+      "<p><span dark-mode-color='blue' dark-mode-background='orange' data-anf-dark-mode='true'><strong>HERE</strong></span></p>",
+    );
     createListeners(editor);
     editor.addEventListener("textColor:addCustomColor", (evt: any) => {
       const { color } = evt;
