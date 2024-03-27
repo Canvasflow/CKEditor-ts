@@ -30,6 +30,8 @@ import superscript from "./assets/superscript.svg?raw";
 import textFormatting from "./assets/textFormatting.svg?raw";
 import underline from "./assets/underline.svg?raw";
 import title from "./assets/title.svg?raw";
+import remove from "./assets/remove.svg?raw";
+import edit from "./assets/edit.svg?raw";
 
 export function getIcon(name: IconType) {
   switch (name) {
@@ -97,6 +99,10 @@ export function getIcon(name: IconType) {
       return underline;
     case "title":
       return title;
+    case "remove":
+      return remove;
+    case "edit":
+      return edit;
   }
 }
 
@@ -132,4 +138,6 @@ type IconType =
   | "superscript"
   | "textTransform"
   | "underline"
-  | "title";
+  | "title"
+  | "remove"
+  | "edit";

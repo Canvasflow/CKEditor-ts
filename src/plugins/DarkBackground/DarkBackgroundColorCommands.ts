@@ -20,7 +20,6 @@ export class DarkBackgroundColorCommand extends Command {
   }
 
   execute(color: any) {
-    console.log("EXCEUTED dark-mode-background");
     const model = this.editor.model;
     const document = model.document;
     const selection = document.selection;
