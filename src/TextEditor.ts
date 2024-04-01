@@ -77,6 +77,7 @@ export class TextEditor extends BaseEditor {
         openInNewTab: {
           mode: "manual",
           label: "Open in a new tab",
+          defaultValue: true,
           attributes: {
             target: "_blank",
             rel: "noopener noreferrer",

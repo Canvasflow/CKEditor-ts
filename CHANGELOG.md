@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.5.4
+
+_April 1, 2024_
+
+✨ Fixed
+
+- Support for multiple `properties` import from Dark Mode
+
 ## 🏷️ 1.5.3
 
 _March 5, 2024_
