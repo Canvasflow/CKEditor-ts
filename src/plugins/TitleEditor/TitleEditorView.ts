@@ -12,9 +12,9 @@ import { TitleEditorComponentView } from "./TitleEditorComponent";
 export class TitleEditorView extends View {
   declare editor: CanvasflowEditor;
   declare titleValue: string;
-  private items: ViewCollection;
   private focusTracker: FocusTracker;
   private addLinkButtonView?: ButtonView;
+  items: ViewCollection;
 
   titleInput: any;
   currentValue: string = "";
@@ -43,7 +43,7 @@ export class TitleEditorView extends View {
   };
 
   private addTitle() {
-    const label = "Title Editor";
+    const label = "Add Title";
     this.items.add(this.createLabel(label));
   }
 

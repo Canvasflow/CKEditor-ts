@@ -143,9 +143,10 @@ const PLUGINS = [
 
 const TOOLBAR = [
   {
-    label: "Strikethrough",
-    icon: getIcon("striketrough"),
+    label: "Title",
+    icon: getIcon("title"),
     items: [TitleEditor.viewName],
+    isEnabled: false,
   },
   // ,
   "|",

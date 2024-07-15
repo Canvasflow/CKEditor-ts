@@ -73,6 +73,21 @@
 }
 
 .remove-title-button {
+  position: absolute !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  margin: 4% !important;
+
+  background-color: red !important;
+  border: none !important;
+  color: white !important;
+
+  text-decoration: none !important;
+
+  cursor: pointer !important;
+}
+
+.remove-title-button {
 }
 
 .edit-title-button {
