@@ -6,16 +6,14 @@ import {
   LabelView,
   ViewCollection,
 } from "@ckeditor/ckeditor5-ui";
-import { FocusTracker, Locale } from "@ckeditor/ckeditor5-utils";
+import { Locale } from "@ckeditor/ckeditor5-utils";
 import { TitleEditorComponentView } from "./TitleEditorComponent";
-import { getIcon } from "../../icons/icons";
 import { TitleEditorView } from "./TitleEditorView";
 
 export class TitlePopupView extends View {
   declare editor: CanvasflowEditor;
   declare titleValue: string;
   private items: ViewCollection;
-  private focusTracker: FocusTracker;
   removeTitleButtonView: ButtonView;
   private titleCreatorView: TitleEditorView;
   // EditTitleButtonView: ButtonView;
@@ -26,15 +24,11 @@ export class TitlePopupView extends View {
 
   constructor(viewer: TitlePopupViewer) {
     super(viewer.locale);
-    this.focusTracker = new FocusTracker();
     this.items = this.createCollection();
     this.editor = viewer.editor;
     this.locale = this.editor.locale;
     this.titleView = new TitleEditorComponentView(this);
-    this.removeTitleButtonView = this.createRemoveButton(
-      "",
-      "remove-title-button",
-    );
+    this.removeTitleButtonView = this.createRemoveButton("remove-title-button");
     this.titleValue = viewer.titleValue;
     this.titleCreatorView = new TitleEditorView(this);
   }
@@ -76,7 +70,7 @@ export class TitlePopupView extends View {
     this.items.add(this.createLabel(title));
   }
 
-  private createRemoveButton(icon: string, className: string) {
+  private createRemoveButton(className: string) {
     const removeTitleButtonView = this.createButtonObject(
       "Remove",
       "",
