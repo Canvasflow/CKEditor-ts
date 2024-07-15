@@ -1,0 +1,94 @@
+.title-editor-page {
+  height: 150px !important;
+  width: 250px !important;
+}
+
+.title-popup-page {
+  height: 50px !important;
+  width: 200px !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.add-title-input {
+  margin-left: 10% !important;
+  margin-top: 20px !important;
+}
+
+.add-title-input > :first-child > :first-child {
+  width: 90% !important;
+}
+
+.button-blue {
+  background-color: #168cf3 !important;
+  border: none !important;
+  color: white !important;
+
+  text-decoration: none !important;
+
+  cursor: pointer !important;
+  margin-left: 30% !important;
+  margin-top: 20px !important;
+}
+
+.ck-button__label {
+  width: 90% !important;
+}
+
+.ck-title-editor_label {
+  font-weight: 600 !important;
+  border-bottom: 1px solid #e5e7e9 !important;
+  margin-top: 5% !important;
+  padding-left: 5% !important;
+  height: 16% !important;
+  width: 100%;
+}
+
+.ck-title-popup_label {
+  font-weight: 600 !important;
+  /* margin-top: 25px !important;
+  padding-left: 5% !important; */
+  width: 50% !important;
+  /* border-bottom: 1px solid #e5e7e9 !important;
+  margin-top: 5% !important;
+  padding-left: 5% !important;
+  height: 16% !important;
+  width: 100%; */
+}
+
+.add-title-button {
+  position: absolute !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  margin: 4% !important;
+
+  background-color: #168cf3 !important;
+  border: none !important;
+  color: white !important;
+
+  text-decoration: none !important;
+
+  cursor: pointer !important;
+}
+
+.remove-title-button {
+  position: absolute !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  margin: 4% !important;
+
+  background-color: red !important;
+  border: none !important;
+  color: white !important;
+
+  text-decoration: none !important;
+
+  cursor: pointer !important;
+}
+
+.remove-title-button {
+}
+
+.edit-title-button {
+}

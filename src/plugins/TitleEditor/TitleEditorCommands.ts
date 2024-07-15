@@ -1,10 +1,10 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
-export const DARK_BACKGROUND_COLOR_ATTR = "dark-mode-background";
-export const CLEAR_DARK_BACKGROUND_COLOR_COMMAND = "clearDarkBackgroundColor";
-export const SET_DARK_BACKGROUND_COLOR_COMMAND = "setDarkBackgroundColor";
+export const TITLE_EDITOR_ATTR = "title";
+export const TITLE_EDITOR_COMMAND = "setTitleEditor";
+export const TITLE_EDITOR_CLEAR = "clearTitleEditor";
 
-export class DarkBackgroundColorCommand extends Command {
+export class TitleEditorCommand extends Command {
   constructor(editor: CanvasflowEditor) {
     super(editor);
   }
@@ -12,34 +12,34 @@ export class DarkBackgroundColorCommand extends Command {
   refresh() {
     const model = this.editor.model;
     const doc = model.document;
-    this.value = doc.selection.getAttribute(DARK_BACKGROUND_COLOR_ATTR);
+    this.value = doc.selection.getAttribute(TITLE_EDITOR_ATTR);
     this.isEnabled = model.schema.checkAttributeInSelection(
       doc.selection,
-      DARK_BACKGROUND_COLOR_ATTR,
+      TITLE_EDITOR_ATTR,
     );
   }
 
-  execute(color: any) {
+  execute(title: any) {
     const model = this.editor.model;
     const document = model.document;
     const selection = document.selection;
-    const value = color;
+    const value = title;
     model.change((writer) => {
       const ranges = model.schema.getValidRanges(
         selection.getRanges(),
-        DARK_BACKGROUND_COLOR_ATTR,
+        TITLE_EDITOR_ATTR,
       );
 
       for (const range of ranges) {
         if (value) {
-          writer.setAttributes({ "dark-mode-background": value }, range);
+          writer.setAttributes({ title: value }, range);
         }
       }
     });
   }
 }
 
-export class ClearDarkBackgroundColorCommand extends Command {
+export class ClearTitleCommand extends Command {
   constructor(editor: CanvasflowEditor) {
     super(editor);
   }
@@ -47,10 +47,10 @@ export class ClearDarkBackgroundColorCommand extends Command {
   refresh() {
     const model = this.editor.model;
     const doc = model.document;
-    this.value = doc.selection.getAttribute(DARK_BACKGROUND_COLOR_ATTR);
+    this.value = doc.selection.getAttribute(TITLE_EDITOR_ATTR);
     this.isEnabled = model.schema.checkAttributeInSelection(
       doc.selection,
-      DARK_BACKGROUND_COLOR_ATTR,
+      TITLE_EDITOR_ATTR,
     );
   }
 
@@ -61,11 +61,11 @@ export class ClearDarkBackgroundColorCommand extends Command {
     model.change((writer) => {
       const ranges = model.schema.getValidRanges(
         selection.getRanges(),
-        DARK_BACKGROUND_COLOR_ATTR,
+        TITLE_EDITOR_ATTR,
       );
 
       for (const range of ranges) {
-        writer.removeAttribute(DARK_BACKGROUND_COLOR_ATTR, range);
+        writer.removeAttribute(TITLE_EDITOR_ATTR, range);
       }
     });
   }
