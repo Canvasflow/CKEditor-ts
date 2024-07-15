@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.5.6
+
+July 15, 2024\_
+
+✨ Feature
+
+- Support for title editor plugin
+
 ## 🏷️ 1.5.4
 
 _April 1, 2024_
