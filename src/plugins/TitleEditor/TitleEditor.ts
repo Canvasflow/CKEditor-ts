@@ -19,24 +19,44 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
   titleEditorView?: TitleEditorView;
   titleEditorPopup?: TitlePopupView;
   locale?: Locale;
+  view: TitlePopupView;
+  titleValue: any;
 
   constructor(editor: CanvasflowEditor) {
     super(editor);
     this.locale = this.editor.locale;
     this.balloon = this.editor.plugins.get(ContextualBalloon);
-  }
-
-  init() {
     const { model } = this.editor;
     const { document } = model;
-
     this.createView();
     this.createButton();
+    this.titleValue = document.selection.on(
+      "change:range",
+      this.onSelectionChange,
+    );
 
-    document.selection.on("change:range", this.onSelectionChange);
+    this.view = new TitlePopupView(this);
+    this.editor.ui.componentFactory.add(TitleEditor.viewName, () => {
+      const titleEditorPopup = new TitlePopupView(this);
+      titleEditorPopup.showView();
+      this.listenTo(titleEditorPopup.removeTitleButtonView, "execute", () => {
+        this.editor.execute(TITLE_EDITOR_CLEAR);
+        //CLOSE UI
+      });
+      return titleEditorPopup;
+    });
   }
 
+  // init() {
+  //   // const { model } = this.editor;
+  //   // const { document } = model;
+  //   // this.createView();
+  //   // this.createButton();
+  //   // document.selection.on("change:range", this.onSelectionChange);
+  // }
+
   onSelectionChange = () => {
+    //console.log(this.balloon.visibleView);
     const { selection } = this.editor.model.document;
     if (!selection) {
       return;
@@ -46,29 +66,43 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
       return;
     }
     let found = false;
+    let title: any = "";
     for (const item of range.getItems()) {
       if (item.hasAttribute("title")) {
-        found = true;
+        title = item.getAttribute("title");
         continue;
       }
     }
+
+    return title;
+    console.log("title", title);
     // TODO: CONFIRM IF THE ONLY PROPERTY THAT EXIST WAS TITLE
 
     if (found) {
-      this.titleEditorPopup = new TitlePopupView(this);
-      this.titleEditorPopup.showView();
-      this.listenTo(
-        this.titleEditorPopup.removeTitleButtonView,
-        "execute",
-        () => {
-          this.editor.execute(TITLE_EDITOR_CLEAR);
-          if (this.balloon) this.balloon.remove(this.titleEditorPopup);
-        },
-      );
-      this.balloon.add({
-        view: this.titleEditorPopup,
-        position: this.getBalloonPositionData(),
-      });
+      //console.log("found title", range.getItems());
+      // this.titleEditorPopup = new TitlePopupView(this);
+      // this.titleEditorPopup.showView();
+      // this.listenTo(
+      //   this.titleEditorPopup.removeTitleButtonView,
+      //   "execute",
+      //   () => {
+      //     console.log("CALLED REMOVE TITLE");
+      //     this.balloon.remove(this.titleEditorPopup);
+      //     this.editor.execute(TITLE_EDITOR_CLEAR);
+      //     //if (this.balloon) this.balloon.remove(this.titleEditorPopup);
+      //   },
+      // );
+      // this.listenTo(
+      //   this.titleEditorPopup.EditTitleButtonView,
+      //   "execute",
+      //   () => {
+      //     this.balloon.remove(this.titleEditorPopup);
+      //   },
+      // );
+      // // this.balloon.add({
+      // //   view: this.titleEditorPopup,
+      // //   position: this.getBalloonPositionData(),
+      // // });
     }
   };
 

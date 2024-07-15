@@ -24,6 +24,7 @@ export class TitlePopupView extends View {
 
   constructor(viewer: TitlePopupViewer) {
     super(viewer.locale);
+    console.log(title);
     this.focusTracker = new FocusTracker();
     this.items = this.createCollection();
     this.editor = viewer.editor;
@@ -44,11 +45,6 @@ export class TitlePopupView extends View {
     this.addTitle();
 
     this.items.add(this.removeTitleButtonView);
-    this.items.add(this.EditTitleButtonView);
-
-    this.listenTo(this.removeTitleButtonView, "submit", () => {
-      console.log("remove button called");
-    });
   }
 
   onChange = (value: string) => {
@@ -77,6 +73,7 @@ export class TitlePopupView extends View {
 
     this.listenTo(EditTitleButtonView, "execute", () => {
       console.log("edit button called");
+      this.destroy();
     });
 
     return EditTitleButtonView;
