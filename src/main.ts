@@ -1,6 +1,5 @@
 import { TextEditorConfig } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
-//import { createListeners } from "./listeners";
 import { CustomEditor } from "./CustomEditor";
 import { version } from "./version";
 
@@ -114,6 +113,9 @@ if (typeof window !== "undefined") {
 
 // TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
 //   .then((editor) => {
+//     editor.setData(
+//       "<p><span> engaged<sup title='ENGAGED'> 23 </sup >in a 3D mapping project to try to unearth.</span></p>",
+//     );
 //     createListeners(editor);
 //     editor.addEventListener("textColor:addCustomColor", (evt: any) => {
 //       const { color } = evt;
@@ -139,3 +141,4 @@ if (typeof window !== "undefined") {
 //     },
 //   ];
 // }
+//

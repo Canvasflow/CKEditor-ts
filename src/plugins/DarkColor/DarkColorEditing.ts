@@ -15,7 +15,6 @@ export class DarkColorEditing extends Plugin {
   }
   constructor(editor: CanvasflowEditor) {
     super(editor);
-
     editor.commands.add(SET_DARK_COLOR_COMMAND, new DarkColorCommand(editor));
     editor.commands.add(
       CLEAR_DARK_COLOR_COMMAND,
