@@ -10,80 +10,69 @@ import { FocusTracker, Locale } from "@ckeditor/ckeditor5-utils";
 import { TitleEditorComponentView } from "./TitleEditorComponent";
 import { getIcon } from "../../icons/icons";
 import { TitleEditorView } from "./TitleEditorView";
+import { TitleUpdateView } from "./TitleUpdateView";
 
 export class TitlePopupView extends View {
   declare editor: CanvasflowEditor;
   declare titleValue: string;
   private items: ViewCollection;
-  private focusTracker: FocusTracker;
+
+  private titleCreatorView!: TitleEditorView;
+  private titleUpdateView!: TitleUpdateView;
+
   removeTitleButtonView: ButtonView;
-  private titleCreatorView: TitleEditorView;
-  // EditTitleButtonView: ButtonView;
+  updateTitleButtonView: ButtonView;
 
   currentValue: string = "";
   titleView: TitleEditorComponentView;
   locale: Locale;
 
+  popupTitle: LabelView;
+
   constructor(viewer: TitlePopupViewer) {
     super(viewer.locale);
-    this.focusTracker = new FocusTracker();
     this.items = this.createCollection();
     this.editor = viewer.editor;
     this.locale = this.editor.locale;
     this.titleView = new TitleEditorComponentView(this);
-    this.removeTitleButtonView = this.createRemoveButton(
+    this.removeTitleButtonView = this.createButton(
       "",
       "remove-title-button",
+      "Remove",
+    );
+    this.updateTitleButtonView = this.createButton(
+      "",
+      "update-title-button",
+      "Save",
     );
     this.titleValue = viewer.titleValue;
+    this.popupTitle = this.createLabel("Update Title");
+    this.titleUpdateView = new TitleUpdateView(this, "");
     this.titleCreatorView = new TitleEditorView(this);
   }
 
-  updateTitle(title: string) {
-    this.initItems(title);
+  createTitle() {
+    // this.titleCreatorView = new TitleEditorView(this);
+    this.titleCreatorView.titleView.set("value", "");
+    this.items.clear();
+    this.items.addMany(this.titleCreatorView.items);
   }
 
-  private initItems(title: string) {
+  updateTitleView(title: string) {
+    //this.titleUpdateView = new TitleUpdateView(this, title);
+    this.titleUpdateView.titleView.set("value", title);
     this.items.clear();
-    if (title.length === 0 || !title) {
-      //this.addTitle("No title selected");
-
-      this.items.addMany(this.titleCreatorView.items);
-    } else {
-      this.addTitle("Selected Title");
-      this.addTitle(title);
-      this.items.add(this.removeTitleButtonView);
-      //this.items.add(this.createAddButton());
-    }
+    this.items.addMany(this.titleUpdateView.items);
   }
 
   onChange = (value: string) => {
     this.titleValue = value;
   };
-  createAddButton() {
-    const removeButtonView = this.createButtonObject(
-      "Remove",
-      "",
-      "remove-title-button",
-    );
 
-    // addLinkButtonView.type = "execute";
-    removeButtonView.isEnabled = true;
-    return removeButtonView;
-  }
-
-  private addTitle(title: string) {
-    this.items.add(this.createLabel(title));
-  }
-
-  private createRemoveButton(icon: string, className: string) {
-    const removeTitleButtonView = this.createButtonObject(
-      "Remove",
-      "",
-      className,
-    );
-    removeTitleButtonView.withText = true;
-    return removeTitleButtonView;
+  private createButton(icon: string, className: string, label: string) {
+    const button = this.createButtonObject(label, "", className);
+    button.withText = true;
+    return button;
   }
 
   render() {
@@ -92,11 +81,6 @@ export class TitlePopupView extends View {
       view: this,
     });
   }
-
-  // destroy() {
-  //   super.destroy();
-  //   this.focusTracker.destroy();
-  // }
 
   private createButtonObject(label: any, icon: any, className: any) {
     const button = new ButtonView();

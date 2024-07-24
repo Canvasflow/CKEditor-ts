@@ -9,34 +9,46 @@ import {
 import { FocusTracker, Locale } from "@ckeditor/ckeditor5-utils";
 import { TitleEditorComponentView } from "./TitleEditorComponent";
 
-export class TitleEditorView extends View {
+export class TitleUpdateView extends View {
   declare editor: CanvasflowEditor;
-  declare titleValue: string;
   private focusTracker: FocusTracker;
-  private addLinkButtonView?: ButtonView;
   items: ViewCollection;
 
-  titleInput: any;
-  currentValue: string = "";
   titleView: TitleEditorComponentView;
   locale: Locale;
+  removeTitleButtonView: ButtonView;
+  updateTitleButtonView: ButtonView;
 
-  constructor(viewer: TitleEditorViewer) {
+  declare titleValue: string;
+  titleInput: any;
+  currentValue: string = "";
+
+  constructor(viewer: TitleEditorViewer, title: string) {
     super(viewer.locale);
     this.focusTracker = new FocusTracker();
     this.items = this.createCollection();
     this.editor = viewer.editor;
     this.locale = this.editor.locale;
     this.titleView = new TitleEditorComponentView(this);
+    this.titleView.set("value", title);
+    this.removeTitleButtonView = this.createButtonObject(
+      "Remove",
+      "",
+      "remove-title-button",
+    );
+    this.updateTitleButtonView = this.createButtonObject(
+      "Save",
+      "",
+      "add-title-button",
+    );
     this.initItems();
   }
 
   private initItems() {
     this.addTitle();
-    this.createAddButton();
     this.items.add(this.titleView);
-
-    this.items.add(this.addLinkButtonView!);
+    this.items.add(this.removeTitleButtonView);
+    this.items.add(this.updateTitleButtonView);
   }
 
   onChange = (value: string) => {
@@ -44,18 +56,8 @@ export class TitleEditorView extends View {
   };
 
   private addTitle() {
-    const label = "Add Title";
+    const label = "Update Title";
     this.items.add(this.createLabel(label));
-  }
-
-  private createAddButton() {
-    this.addLinkButtonView = this.createButtonObject(
-      "Add",
-      "",
-      "add-title-button",
-    );
-
-    this.addLinkButtonView.isEnabled = true;
   }
 
   render() {

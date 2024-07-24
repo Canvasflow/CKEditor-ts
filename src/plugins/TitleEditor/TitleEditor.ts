@@ -14,6 +14,9 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
   declare editor: CanvasflowEditor;
   titleValue: any;
   titleEditorPopup: any;
+  selectedTitle: any = null;
+  selectedText: any = null;
+  selectedItem: any;
 
   constructor(editor: CanvasflowEditor) {
     super(editor);
@@ -25,25 +28,42 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
     this.editor.ui.componentFactory.add(TitleEditor.viewName, () => {
       this.titleEditorPopup.showView();
       this.listenTo(
-        this.titleEditorPopup.removeTitleButtonView,
+        this.titleEditorPopup.titleUpdateView.removeTitleButtonView,
         "execute",
         () => {
-          console.log("execute called");
-          this.editor.execute(TITLE_EDITOR_CLEAR);
-          this.titleEditorPopup.updateTitle("");
+          this.editor.execute(TITLE_EDITOR_CLEAR, this.selectedItem);
+          this.titleEditorPopup.items.clear();
         },
       );
 
-      this.listenTo(this.titleEditorPopup, "submit", () => {
-        this.editor.execute(
-          TITLE_EDITOR_COMMAND,
-          this.titleEditorPopup.titleCreatorView.titleValue,
-        );
-        this.titleEditorPopup.updateTitle(
-          this.titleEditorPopup.titleCreatorView.titleValue,
-        );
-        this.titleEditorPopup.titleCreatorView.onChange("");
-      });
+      this.listenTo(
+        this.titleEditorPopup.titleUpdateView.updateTitleButtonView,
+        "execute",
+        () => {
+          this.editor.execute(
+            TITLE_EDITOR_COMMAND,
+            this.titleEditorPopup.titleUpdateView.titleValue,
+          );
+          this.titleEditorPopup.items.clear();
+        },
+      );
+
+      this.listenTo(
+        this.titleEditorPopup.titleCreatorView.addLinkButtonView,
+        "execute",
+        () => {
+          this.editor.execute(
+            TITLE_EDITOR_COMMAND,
+            this.titleEditorPopup.titleCreatorView.titleValue,
+          );
+          this.titleEditorPopup.items.clear();
+          // this.titleEditorPopup.updateTitle(
+          //   this.titleEditorPopup.titleCreatorView.titleValue,
+          //   false,
+          // );
+          // this.titleEditorPopup.titleCreatorView.onChange("");
+        },
+      );
       return this.titleEditorPopup;
     });
   }
@@ -57,6 +77,25 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
     if (!range) {
       return;
     }
+
+    let valueElement: any;
+    let titlesFound = 0;
+
+    for (const value of range.getWalker()) {
+      if (value.item.getAttribute("title")) {
+        titlesFound++;
+        if (titlesFound > 1) {
+          valueElement = null;
+          this.selectedTitle = null;
+        } else {
+          valueElement = JSON.parse(JSON.stringify(value.item));
+          this.selectedItem = value.item;
+          this.selectedTitle = valueElement.textNode.attributes.title || null;
+          this.selectedText = valueElement.textNode.data || null;
+        }
+      }
+    }
+
     let title: any = "";
     for (const item of range.getItems()) {
       if (item.hasAttribute("title")) {
@@ -64,7 +103,11 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
         continue;
       }
     }
-    this.titleEditorPopup.updateTitle(title);
+    if (title) {
+      this.titleEditorPopup.updateTitleView(title);
+    } else {
+      this.titleEditorPopup.createTitle();
+    }
   };
 
   static get requires() {

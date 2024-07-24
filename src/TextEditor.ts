@@ -145,7 +145,7 @@ const PLUGINS = [
 const TOOLBAR = [
   {
     label: "Title",
-    icon: getIcon("title"),
+    icon: getIcon("fontSize"),
     items: [TitleEditor.viewName],
     isEnabled: false,
   },
