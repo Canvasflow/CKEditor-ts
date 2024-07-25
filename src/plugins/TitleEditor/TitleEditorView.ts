@@ -17,8 +17,7 @@ export class TitleEditorView extends View {
   items: ViewCollection;
 
   titleInput: any;
-  currentValue: string = "";
-  titleView: TitleEditorComponentView;
+  titleView!: TitleEditorComponentView;
   locale: Locale;
 
   constructor(viewer: TitleEditorViewer) {
@@ -31,12 +30,20 @@ export class TitleEditorView extends View {
     this.initItems();
   }
 
-  private initItems() {
+  initItems() {
     this.addTitle();
     this.createAddButton();
     this.items.add(this.titleView);
-
     this.items.add(this.addLinkButtonView!);
+  }
+
+  renderTitleInput() {
+    if (this.items.has(this.titleView)) {
+      this.items.remove(this.titleView);
+      this.titleView = new TitleEditorComponentView(this);
+      this.titleView.set("value", "");
+      this.items.add(this.titleView);
+    }
   }
 
   onChange = (value: string) => {

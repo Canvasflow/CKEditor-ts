@@ -32,6 +32,7 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
         "execute",
         () => {
           this.editor.execute(TITLE_EDITOR_CLEAR, this.selectedItem);
+          this.selectedTitle = null;
           this.titleEditorPopup.items.clear();
         },
       );
@@ -44,6 +45,7 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
             TITLE_EDITOR_COMMAND,
             this.titleEditorPopup.titleUpdateView.titleValue,
           );
+          this.selectedTitle = null;
           this.titleEditorPopup.items.clear();
         },
       );
@@ -56,12 +58,8 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
             TITLE_EDITOR_COMMAND,
             this.titleEditorPopup.titleCreatorView.titleValue,
           );
+          this.selectedTitle = null;
           this.titleEditorPopup.items.clear();
-          // this.titleEditorPopup.updateTitle(
-          //   this.titleEditorPopup.titleCreatorView.titleValue,
-          //   false,
-          // );
-          // this.titleEditorPopup.titleCreatorView.onChange("");
         },
       );
       return this.titleEditorPopup;
@@ -96,15 +94,17 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
       }
     }
 
-    let title: any = "";
-    for (const item of range.getItems()) {
-      if (item.hasAttribute("title")) {
-        title = item.getAttribute("title");
-        continue;
-      }
-    }
-    if (title) {
-      this.titleEditorPopup.updateTitleView(title);
+    // for (const item of range.getItems()) {
+    //   if (item.hasAttribute("title")) {
+    //     title = item.getAttribute("title");
+    //     continue;
+    //   }
+    // }
+
+    console.log(this.selectedTitle);
+    this.titleEditorPopup.clearTitle();
+    if (this.selectedTitle) {
+      this.titleEditorPopup.updateTitleView(this.selectedTitle);
     } else {
       this.titleEditorPopup.createTitle();
     }

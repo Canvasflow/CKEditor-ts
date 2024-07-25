@@ -115,7 +115,7 @@ const config = {
 TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
   .then((editor) => {
     editor.setData(
-      "<p><span> engaged <span title='ENGAGED'>to try to unearth</span> in a 3D mapping project. </span> <sup title='SECOND'>second title</sup></p>",
+      "<p><span> engaged <span title='ENGAGED: focus'>to try to unearth</span> in a 3D mapping project. </span> <sup title='Number: two'>this is a second title</sup></p>",
     );
     createListeners(editor);
     editor.addEventListener("textColor:addCustomColor", (evt: any) => {

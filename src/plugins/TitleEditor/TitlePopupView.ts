@@ -8,7 +8,7 @@ import {
 } from "@ckeditor/ckeditor5-ui";
 import { FocusTracker, Locale } from "@ckeditor/ckeditor5-utils";
 import { TitleEditorComponentView } from "./TitleEditorComponent";
-import { getIcon } from "../../icons/icons";
+
 import { TitleEditorView } from "./TitleEditorView";
 import { TitleUpdateView } from "./TitleUpdateView";
 
@@ -52,17 +52,18 @@ export class TitlePopupView extends View {
   }
 
   createTitle() {
-    // this.titleCreatorView = new TitleEditorView(this);
-    this.titleCreatorView.titleView.set("value", "");
     this.items.clear();
     this.items.addMany(this.titleCreatorView.items);
   }
 
   updateTitleView(title: string) {
-    //this.titleUpdateView = new TitleUpdateView(this, title);
     this.titleUpdateView.titleView.set("value", title);
     this.items.clear();
     this.items.addMany(this.titleUpdateView.items);
+  }
+
+  clearTitle() {
+    this.titleCreatorView.renderTitleInput();
   }
 
   onChange = (value: string) => {
