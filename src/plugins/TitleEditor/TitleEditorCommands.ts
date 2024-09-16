@@ -54,19 +54,23 @@ export class ClearTitleCommand extends Command {
     );
   }
 
-  execute() {
+  execute(selectedItem: any) {
     const model = this.editor.model;
-    const document = model.document;
-    const selection = document.selection;
     model.change((writer) => {
-      const ranges = model.schema.getValidRanges(
-        selection.getRanges(),
-        TITLE_EDITOR_ATTR,
-      );
-
-      for (const range of ranges) {
-        writer.removeAttribute(TITLE_EDITOR_ATTR, range);
-      }
+      writer.removeAttribute(TITLE_EDITOR_ATTR, selectedItem.textNode);
     });
   }
+
+  // execute(selectedTitle: string, selectedText: string) {
+  //   const model = this.editor.model;
+  //   model.change(() => {
+  //     let data = this.editor.data.get();
+
+  //     const replaced = data.replace(
+  //       `<span title="${selectedTitle}">${selectedText}</span>`,
+  //       selectedText,
+  //     );
+  //     this.editor.data.set(replaced);
+  //   });
+  // }
 }
