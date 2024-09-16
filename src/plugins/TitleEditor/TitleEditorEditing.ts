@@ -95,9 +95,9 @@ export class TitleEditorEditing extends Plugin {
               ? modelAttributeValue["title"]
               : modelAttributeValue,
           };
-          return writer.createAttributeElement("span", downcastValues);
+          return writer.createAttributeElement("sup", downcastValues);
         } else {
-          return writer.createAttributeElement("span", {
+          return writer.createAttributeElement("sup", {
             title: modelAttributeValue,
           });
         }
@@ -121,7 +121,7 @@ export class TitleEditorEditing extends Plugin {
 function renderDowncastElement() {
   return (modelAttributeValue: any, viewWriter: any) => {
     const attributes = { title: modelAttributeValue };
-    return viewWriter.writer.createAttributeElement("span", attributes, {
+    return viewWriter.writer.createAttributeElement("sup", attributes, {
       priority: 7,
     });
   };
