@@ -35,12 +35,10 @@ export class TitlePopupView extends View {
     this.locale = this.editor.locale;
     this.titleView = new TitleEditorComponentView(this);
     this.removeTitleButtonView = this.createButton(
-      "",
       "remove-title-button",
       "Remove",
     );
     this.updateTitleButtonView = this.createButton(
-      "",
       "update-title-button",
       "Save",
     );
@@ -69,7 +67,7 @@ export class TitlePopupView extends View {
     this.titleValue = value;
   };
 
-  private createButton(icon: string, className: string, label: string) {
+  private createButton(className: string, label: string) {
     const button = this.createButtonObject(label, "", className);
     button.withText = true;
     return button;
