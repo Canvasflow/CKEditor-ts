@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.5.7
+
+_September 16, 2024_
+
+✨ Fixed
+
+- Support for <sup> and span titles
+
 ## 🏷️ 1.5.4
 
 _April 1, 2024_
