@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.5.8
+
+_September 16, 2024_
+
+✨ Fixed
+
+- Support for <sup> and removed <span title=">
+
 ## 🏷️ 1.5.7
 
 _September 16, 2024_
