@@ -7,6 +7,7 @@ _September 16, 2024_
 ✨ Fixed
 
 - Support for <sup> and span titles
+- title view improved
 
 ## 🏷️ 1.5.4
 
