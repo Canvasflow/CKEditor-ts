@@ -1,12 +1,13 @@
 # CHANGELOG
 
-## 🏷️ 1.5.6
+## 🏷️ 1.5.7
 
-July 15, 2024\_
+_September 16, 2024_
 
-✨ Feature
+✨ Fixed
 
-- Support for title editor plugin
+- Support for <sup> and span titles
+- title view improved
 
 ## 🏷️ 1.5.4
 

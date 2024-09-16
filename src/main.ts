@@ -2,6 +2,7 @@ import { TextEditorConfig } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
 import { CustomEditor } from "./CustomEditor";
 import { version } from "./version";
+//import { createListeners } from "./listeners";
 
 declare global {
   interface Window {
@@ -33,7 +34,7 @@ if (typeof window !== "undefined") {
   window.CanvasflowCustomTextEditor.version = version;
 }
 
-// const customColor = [
+//const customColor = [
 //   { color: "yellow", label: "bright yellow" },
 //   { color: "grey", label: "dark grey" },
 // ];
@@ -114,7 +115,7 @@ if (typeof window !== "undefined") {
 // TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
 //   .then((editor) => {
 //     editor.setData(
-//       "<p><span> engaged<sup title='ENGAGED'> 23 </sup >in a 3D mapping project to try to unearth.</span></p>",
+//       "<p><span> engaged <span title='ENGAGED: focus'>to try to unearth</span> in a 3D mapping project. </span> <sup title='Number: two'>this is a second title</sup></p>",
 //     );
 //     createListeners(editor);
 //     editor.addEventListener("textColor:addCustomColor", (evt: any) => {

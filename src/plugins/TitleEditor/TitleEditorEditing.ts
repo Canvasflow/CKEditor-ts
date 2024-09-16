@@ -41,6 +41,27 @@ export class TitleEditorEditing extends Plugin {
       converterPriority: "high",
     });
 
+    editor.conversion.for("upcast").elementToAttribute({
+      view: {
+        name: "span",
+      },
+      model: {
+        key: TITLE_EDITOR_ATTR,
+        value: (viewItem: any) => {
+          if (viewItem.getAttribute("title")) {
+            const attributes = ToAttribute(viewItem, {
+              title: viewItem.getAttribute("title"),
+            });
+
+            if (attributes.title) {
+              return attributes.title;
+            }
+          }
+        },
+      },
+      converterPriority: "high",
+    });
+
     editor.conversion.for("downcast").attributeToElement({
       model: TITLE_EDITOR_ATTR,
       // view: (modelAttributeValue, { writer }) => {
