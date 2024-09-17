@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 🏷️ 1.5.8
+## 🏷️ 1.6.0
 
 _September 16, 2024_
 
@@ -15,6 +15,7 @@ _September 17, 2024_
 ✨ Fixed
 
 - Upcast <b> and <strong> colors from import
+- Support for <em> colors import
 
 ## 🏷️ 1.5.7
 

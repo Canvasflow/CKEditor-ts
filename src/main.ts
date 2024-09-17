@@ -3,7 +3,6 @@ import { TextEditor } from "./TextEditor";
 import { CustomEditor } from "./CustomEditor";
 import { version } from "./version";
 // import { createListeners } from "./listeners";
-// import { uid } from "ckeditor5/src/utils";
 
 declare global {
   interface Window {

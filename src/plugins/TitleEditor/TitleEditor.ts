@@ -100,8 +100,6 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
     //     continue;
     //   }
     // }
-
-    console.log(this.selectedTitle);
     this.titleEditorPopup.clearTitle();
     if (this.selectedTitle) {
       this.titleEditorPopup.updateTitleView(this.selectedTitle);

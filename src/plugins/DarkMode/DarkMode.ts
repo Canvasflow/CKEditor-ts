@@ -36,7 +36,6 @@ export class DarkMode extends Plugin {
               delete attributes[key];
             }
           });
-          console.log(attributes);
           return attributes;
         },
       },
