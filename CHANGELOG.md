@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.5.9
+
+_September 17, 2024_
+
+✨ Fixed
+
+- Upcast <b> and <strong> colors from import
+
 ## 🏷️ 1.5.7
 
 _September 16, 2024_
