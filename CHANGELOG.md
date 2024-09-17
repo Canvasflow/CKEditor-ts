@@ -8,6 +8,14 @@ _September 16, 2024_
 
 - Support for <sup> and removed <span title=">
 
+## 🏷️ 1.5.9
+
+_September 17, 2024_
+
+✨ Fixed
+
+- Upcast <b> and <strong> colors from import
+
 ## 🏷️ 1.5.7
 
 _September 16, 2024_

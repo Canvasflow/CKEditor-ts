@@ -2,7 +2,8 @@ import { TextEditorConfig } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
 import { CustomEditor } from "./CustomEditor";
 import { version } from "./version";
-//import { createListeners } from "./listeners";
+// import { createListeners } from "./listeners";
+// import { uid } from "ckeditor5/src/utils";
 
 declare global {
   interface Window {
@@ -34,7 +35,7 @@ if (typeof window !== "undefined") {
   window.CanvasflowCustomTextEditor.version = version;
 }
 
-//const customColor = [
+// const customColor = [
 //   { color: "yellow", label: "bright yellow" },
 //   { color: "grey", label: "dark grey" },
 // ];
@@ -115,8 +116,9 @@ if (typeof window !== "undefined") {
 // TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
 //   .then((editor) => {
 //     editor.setData(
-//       "<p><span> engaged <span title='ENGAGED: focus'>to try to unearth</span> in a 3D mapping project. </span> <sup title='Number: two'>this is a second title</sup></p>",
+//       "<p><strong style='color: rgb(247, 140, 148);'><span style='font-family: AvenirNext-DemiBold;'>I grew up around confident women who saw their appearance as an extension of their strength. I care about how I look but never for the sake of others; I want to feel beautiful for me.</span> </strong></p>",
 //     );
+//     // editor.setData("<b bold-color=true>world</b>");
 //     createListeners(editor);
 //     editor.addEventListener("textColor:addCustomColor", (evt: any) => {
 //       const { color } = evt;
