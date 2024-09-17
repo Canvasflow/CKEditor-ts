@@ -50,7 +50,6 @@ export class DarkColorEditing extends Plugin {
               delete attributes[key];
             }
           });
-          console.log("DARK COLOR ATTRS", attributes);
           return attributes;
         },
       },

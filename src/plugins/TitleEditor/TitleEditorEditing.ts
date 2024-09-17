@@ -64,31 +64,7 @@ export class TitleEditorEditing extends Plugin {
 
     editor.conversion.for("downcast").attributeToElement({
       model: TITLE_EDITOR_ATTR,
-      // view: (modelAttributeValue, { writer }) => {
-      //   if (!modelAttributeValue) {
-      //     return;
-      //   }
-
-      //   let downcastValues: any = {
-      //     "dark-mode-color": modelAttributeValue["dark-mode-color"]
-      //       ? modelAttributeValue["dark-mode-color"]
-      //       : modelAttributeValue,
-      //   };
-
-      //   if (modelAttributeValue["dark-mode-background"]) {
-      //     downcastValues["dark-mode-background"] =
-      //       modelAttributeValue["dark-mode-background"];
-      //   }
-
-      //   if (modelAttributeValue["data-anf-dark-mode"]) {
-      //     downcastValues["data-anf-dark-mode"] =
-      //       modelAttributeValue["data-anf-dark-mode"];
-      //   }
-
-      //   return writer.createAttributeElement("span", downcastValues);
-      // },
       view: (modelAttributeValue, { writer }) => {
-        console.log("view item", modelAttributeValue);
         if (modelAttributeValue && modelAttributeValue.title) {
           let downcastValues: any = {
             title: modelAttributeValue["title"]
@@ -101,10 +77,6 @@ export class TitleEditorEditing extends Plugin {
             title: modelAttributeValue,
           });
         }
-        // else {
-        //   console.log("RENDER DOWNCAST");
-        //   renderDowncastElement();
-        // }
       },
     });
 

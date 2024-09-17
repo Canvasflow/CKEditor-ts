@@ -57,7 +57,6 @@ export class DarkBackgroundColorEditing extends Plugin {
               delete attributes[key];
             }
           });
-          console.log("DARK BACKGROUND ATTRS", attributes);
           return attributes;
         },
       },
