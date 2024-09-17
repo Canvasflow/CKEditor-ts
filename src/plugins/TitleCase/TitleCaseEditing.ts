@@ -79,6 +79,39 @@ export class TitleCaseEditing extends Plugin {
       },
       converterPriority: "high",
     });
+
+    editor.conversion.for("upcast").elementToAttribute({
+      view: {
+        name: "em",
+      },
+      model: {
+        key: "italic",
+        value: (viewItem: any) => {
+          const attributes = ToAttribute(viewItem, {
+            style: viewItem.getAttribute("style"),
+          });
+
+          return attributes;
+        },
+      },
+      converterPriority: "high",
+    });
+
+    editor.conversion.for("downcast").attributeToElement({
+      model: "italic",
+      view: (modelAttributeValue, { writer }) => {
+        if (modelAttributeValue && modelAttributeValue.style) {
+          const attributes = { style: modelAttributeValue.style };
+
+          return writer.createAttributeElement("em", attributes);
+        }
+
+        if (!modelAttributeValue) {
+          return;
+        }
+      },
+      converterPriority: "high",
+    });
   }
 }
 

@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.6.0
+
+_September 16, 2024_
+
+✨ Fixed
+
+- Support for <em> colors import
+
 ## 🏷️ 1.5.7
 
 _September 16, 2024_
