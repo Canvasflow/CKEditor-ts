@@ -64,7 +64,7 @@ export class TextEditor extends BaseEditor {
     sourceElementOrData: HTMLElement | string,
     config?: TextEditorConfig,
   ) {
-    console.log(`Custom canvaflow editor loaded`);
+    console.log(`Canvaflow editor loaded`);
     if (!config) {
       super(sourceElementOrData, config);
       return;

@@ -103,7 +103,7 @@ export class TitleCaseEditing extends Plugin {
         if (modelAttributeValue && modelAttributeValue.style) {
           const attributes = { style: modelAttributeValue.style };
 
-          return writer.createAttributeElement("em", attributes);
+          return writer.createAttributeElement("span", attributes);
         }
 
         if (!modelAttributeValue) {

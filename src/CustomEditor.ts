@@ -43,6 +43,8 @@ import { SubscriptView } from "./plugins/FontStyles/SubscriptView";
 import { SuperscriptView } from "./plugins/FontStyles/SuperscriptView";
 import { UnderlineView } from "./plugins/FontStyles/UnderlineView";
 
+import { TitleEditor } from "./plugins/TitleEditor/TitleEditor";
+
 import {
   Image,
   ImageInsert,
@@ -292,6 +294,12 @@ function getPluginConfig(plugin: any) {
       return {
         plugins: [Essentials, Paragraph, TitleCase],
         toolbar: TitleCase.viewName,
+      };
+
+    case "TitleEditor":
+      return {
+        plugins: [Paragraph, TitleEditor],
+        toolbar: TitleEditor.viewName,
       };
 
     default:
