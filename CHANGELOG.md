@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 🏷️ 1.6.1
+
+_October 8, 2024_
+
+✨ Fixed
+
+- Title editor popup size
+
 ## 🏷️ 1.6.0
 
 _September 16, 2024_
