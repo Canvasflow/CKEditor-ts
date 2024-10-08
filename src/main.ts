@@ -2,7 +2,7 @@ import { TextEditorConfig } from "./BaseEditor";
 import { TextEditor } from "./TextEditor";
 import { CustomEditor } from "./CustomEditor";
 import { version } from "./version";
-// import { createListeners } from "./listeners";
+//import { createListeners } from "./listeners";
 
 declare global {
   interface Window {
@@ -115,7 +115,7 @@ if (typeof window !== "undefined") {
 // TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
 //   .then((editor) => {
 //     editor.setData(
-//       "<p><strong style='color: rgb(247, 140, 148);'><span style='font-family: AvenirNext-DemiBold;'>I grew up around confident women who saw their appearance as an extension of their strength. I care about how I look but never for the sake of others; I want to feel beautiful for me.</span> </strong></p>",
+//       "<p><span style='color:rgb(245,122,5);font-family:PlayfairDisplay-MediumItalic;'><span style='color:rgb(0, 0, 0);'>Post-50, I’m more determined than ever to make every second count. I feel like there’s another book in me and I might like to dip m</span><sup title="title"><span style='color:rgb(0, 0, 0);'>y toe back into acting.</span></sup></span></p>",
 //     );
 //     // editor.setData("<b bold-color=true>world</b>");
 //     createListeners(editor);
@@ -143,4 +143,3 @@ if (typeof window !== "undefined") {
 //     },
 //   ];
 // }
-//
