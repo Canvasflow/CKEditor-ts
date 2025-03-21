@@ -9,6 +9,8 @@ import {
 } from "./TitleEditorCommands";
 import { uid } from "ckeditor5/src/utils";
 
+const titles: Array<string> = [];
+
 export class TitleEditorEditing extends Plugin {
   static get pluginName() {
     return "TitleEditorEditing";
@@ -18,12 +20,14 @@ export class TitleEditorEditing extends Plugin {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
       model: TITLE_EDITOR_ATTR,
-      view: renderDowncastElement(),
+      view: (item: any) => {
+        // renderDowncastUElement(),
+      },
     });
 
     editor.conversion.for("upcast").elementToAttribute({
       view: {
-        name: "sup",
+        name: "u",
       },
       model: {
         key: TITLE_EDITOR_ATTR,
@@ -65,17 +69,38 @@ export class TitleEditorEditing extends Plugin {
     editor.conversion.for("downcast").attributeToElement({
       model: TITLE_EDITOR_ATTR,
       view: (modelAttributeValue, { writer }) => {
-        if (modelAttributeValue && modelAttributeValue.title) {
-          let downcastValues: any = {
-            title: modelAttributeValue["title"]
-              ? modelAttributeValue["title"]
-              : modelAttributeValue,
-          };
-          return writer.createAttributeElement("sup", downcastValues);
+        if (
+          modelAttributeValue &&
+          !titles.includes(modelAttributeValue) &&
+          modelAttributeValue.includes(":")
+        ) {
+          console.log("inside downcast", modelAttributeValue);
+          titles.push(modelAttributeValue);
+          if (modelAttributeValue && modelAttributeValue.title) {
+            let downcastValues: any = {
+              title: modelAttributeValue["title"]
+                ? modelAttributeValue["title"]
+                : modelAttributeValue,
+            };
+            return writer.createAttributeElement("sup", downcastValues);
+          } else {
+            return writer.createAttributeElement("u", {
+              title: modelAttributeValue,
+            });
+          }
         } else {
-          return writer.createAttributeElement("sup", {
-            title: modelAttributeValue,
-          });
+          if (modelAttributeValue && modelAttributeValue.title) {
+            let downcastValues: any = {
+              title: modelAttributeValue["title"]
+                ? modelAttributeValue["title"]
+                : modelAttributeValue,
+            };
+            return writer.createAttributeElement("sup", downcastValues);
+          } else {
+            return writer.createAttributeElement("sup", {
+              title: modelAttributeValue,
+            });
+          }
         }
       },
     });
@@ -90,10 +115,21 @@ export class TitleEditorEditing extends Plugin {
   }
 }
 
-function renderDowncastElement() {
+function renderDowncastSupElement() {
   return (modelAttributeValue: any, viewWriter: any) => {
+    console.log("sup element called");
     const attributes = { title: modelAttributeValue };
     return viewWriter.writer.createAttributeElement("sup", attributes, {
+      priority: 7,
+    });
+  };
+}
+
+function renderDowncastUElement() {
+  return (modelAttributeValue: any, viewWriter: any) => {
+    console.log("u element called");
+    const attributes = { title: modelAttributeValue };
+    return viewWriter.writer.createAttributeElement("u", attributes, {
       priority: 7,
     });
   };
