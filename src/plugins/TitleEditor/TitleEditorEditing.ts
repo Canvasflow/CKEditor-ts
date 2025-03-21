@@ -20,7 +20,7 @@ export class TitleEditorEditing extends Plugin {
     super(editor);
     editor.conversion.for("downcast").attributeToElement({
       model: TITLE_EDITOR_ATTR,
-      view: (item: any) => {
+      view: () => {
         // renderDowncastUElement(),
       },
     });
@@ -115,25 +115,25 @@ export class TitleEditorEditing extends Plugin {
   }
 }
 
-function renderDowncastSupElement() {
-  return (modelAttributeValue: any, viewWriter: any) => {
-    console.log("sup element called");
-    const attributes = { title: modelAttributeValue };
-    return viewWriter.writer.createAttributeElement("sup", attributes, {
-      priority: 7,
-    });
-  };
-}
+// function renderDowncastSupElement() {
+//   return (modelAttributeValue: any, viewWriter: any) => {
+//     console.log("sup element called");
+//     const attributes = { title: modelAttributeValue };
+//     return viewWriter.writer.createAttributeElement("sup", attributes, {
+//       priority: 7,
+//     });
+//   };
+// }
 
-function renderDowncastUElement() {
-  return (modelAttributeValue: any, viewWriter: any) => {
-    console.log("u element called");
-    const attributes = { title: modelAttributeValue };
-    return viewWriter.writer.createAttributeElement("u", attributes, {
-      priority: 7,
-    });
-  };
-}
+// function renderDowncastUElement() {
+//   return (modelAttributeValue: any, viewWriter: any) => {
+//     console.log("u element called");
+//     const attributes = { title: modelAttributeValue };
+//     return viewWriter.writer.createAttributeElement("u", attributes, {
+//       priority: 7,
+//     });
+//   };
+// }
 
 function ToAttribute(viewElementOrGlossary: any, data: any) {
   const textNode = viewElementOrGlossary.getChild(0);
