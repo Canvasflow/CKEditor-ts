@@ -108,8 +108,8 @@ export class TitleEditorEditing extends Plugin {
         if (modelAttributeValue) {
           console.log("inside TITLE_EDITOR_ATTR downcast", modelAttributeValue);
           titles.push(modelAttributeValue);
-          return writer.createAttributeElement("sup", {
-            title: modelAttributeValue,
+          return writer.createAttributeElement("u", {
+            "data-title": modelAttributeValue,
           });
         }
       },
