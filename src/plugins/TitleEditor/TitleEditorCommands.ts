@@ -1,6 +1,6 @@
 import CanvasflowEditor from "../../BaseEditor";
 import Command from "@ckeditor/ckeditor5-core/src/command";
-export const TITLE_EDITOR_ATTR = "title";
+export const TITLE_EDITOR_ATTR = "data-title";
 export const TITLE_EDITOR_COMMAND = "setTitleEditor";
 export const TITLE_EDITOR_CLEAR = "clearTitleEditor";
 
@@ -32,7 +32,7 @@ export class TitleEditorCommand extends Command {
 
       for (const range of ranges) {
         if (value) {
-          writer.setAttributes({ title: value }, range);
+          writer.setAttributes({ "data-title": value }, range);
         }
       }
     });
