@@ -54,8 +54,9 @@ export class TitlePopupView extends View {
   }
 
   updateTitleView(title: string) {
-    this.titleUpdateView.titleView.set("value", title);
     this.items.clear();
+    this.titleUpdateView.items.clear();
+    this.titleUpdateView.initItems(title);
     this.items.addMany(this.titleUpdateView.items);
   }
 

@@ -41,10 +41,12 @@ export class TitleUpdateView extends View {
       "",
       "add-title-button",
     );
-    this.initItems();
+    this.initItems(title);
   }
 
-  private initItems() {
+  initItems(title: string) {
+    this.titleView = new TitleEditorComponentView(this);
+    this.titleView.set("value", title);
     this.addTitle();
     this.items.add(this.titleView);
     this.items.add(this.removeTitleButtonView);
