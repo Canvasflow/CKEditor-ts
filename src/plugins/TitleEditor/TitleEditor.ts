@@ -80,7 +80,7 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
     let titlesFound = 0;
 
     for (const value of range.getWalker()) {
-      if (value.item.getAttribute("title")) {
+      if (value.item.getAttribute("data-title")) {
         titlesFound++;
         if (titlesFound > 1) {
           valueElement = null;
@@ -88,7 +88,8 @@ export class TitleEditor extends Plugin implements TitleEditorViewer {
         } else {
           valueElement = JSON.parse(JSON.stringify(value.item));
           this.selectedItem = value.item;
-          this.selectedTitle = valueElement.textNode.attributes.title || null;
+          this.selectedTitle =
+            valueElement.textNode.attributes["data-title"] || null;
           this.selectedText = valueElement.textNode.data || null;
         }
       }
