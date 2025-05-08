@@ -5,7 +5,6 @@ import {
   TEXT_TRANSFORM_ATTR,
   TEXT_TRANSFORM_COMMAND,
 } from "../../commands/TextTransform/TextTransformCommand";
-import { uid } from "ckeditor5/src/utils";
 
 export class CapitalizeEditing extends Plugin {
   static get pluginName() {
@@ -28,7 +27,7 @@ export class CapitalizeEditing extends Plugin {
       },
       model: {
         key: "text-transform",
-        value: (viewElement: any, conversionApi: any) => {
+        value: (viewElement: any) => {
           const type = viewElement.getStyle("text-transform");
           if (type) {
             return type;
@@ -62,16 +61,4 @@ function renderDowncastElement() {
       priority: 7,
     });
   };
-}
-
-function ToAttribute(viewElementOrGlossary: any, data: any) {
-  const textNode = viewElementOrGlossary.getChild(0);
-  if (!textNode) {
-    return;
-  }
-  return AddPluginAttributes({}, data);
-}
-
-function AddPluginAttributes(baseGlossaryData: any, data: any) {
-  return Object.assign({ uid: uid() }, baseGlossaryData, data || {});
 }
