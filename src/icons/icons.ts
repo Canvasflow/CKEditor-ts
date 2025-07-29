@@ -35,6 +35,7 @@ import edit from "./assets/edit.svg?raw";
 
 import fontDark from "./assets/font-dark.svg?raw";
 import fontDarkBackground from "./assets/background-dark.svg?raw";
+import darkModeNew from "./assets/dark-mode.svg?raw";
 
 export function getIcon(name: IconType) {
   switch (name) {
@@ -110,6 +111,8 @@ export function getIcon(name: IconType) {
       return fontDarkBackground;
     case "fontDark":
       return fontDark;
+    case "darkModeNew":
+      return darkModeNew;
   }
 }
 
@@ -149,4 +152,5 @@ type IconType =
   | "remove"
   | "edit"
   | "darkBackground"
-  | "fontDark";
+  | "fontDark"
+  | "darkModeNew";

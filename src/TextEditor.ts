@@ -205,21 +205,22 @@ const TOOLBAR = [
   PageLink.viewName,
   {
     label: "Dark Mode Options",
-    icon: getIcon("darkmode"),
+    icon: getIcon("darkModeNew"),
     items: [
       "dark-mode",
       {
         label: "Dark Color",
-        icon: getIcon("fontColor"),
+        icon: getIcon("fontDark"),
         items: [DarkColor.viewName],
       },
       {
         label: "Dark Background Color",
-        icon: getIcon("highlightColor"),
+        icon: getIcon("darkBackground"),
         items: [DarkBackgroundColor.viewName],
       },
     ],
   },
+  "|",
   {
     label: "More",
     icon: getIcon("other"),
