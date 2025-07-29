@@ -110,14 +110,33 @@ if (typeof window !== "undefined") {
 //     customColor: customBackgroundColor,
 //   },
 //   caseChange: { titleCase: { excludeWords: [] } },
+//   //toolbar: ["DarkMode", "DarkColor", "DarkBackground", "ClearFormatting"],
 // };
 
 // TextEditor.create(document.querySelector("#editor") as HTMLElement, config)
 //   .then((editor) => {
 //     editor.setData(
-//       "<p>As he grew older, he became increasingly reclusive, eccentric and pessimistic, while his art grew wilder and more intense. His father’s death in 1829 provoked periods of depression and poor health, and his gallery fell into <u data-title='to fall into disrepair: deteriorarse, caer en el abandono'>disrepair</u><strong><sup>34</sup></strong>. He was sustained, however, by intimate relationships with his <u data-title='housekeeper: ama de llaves'>housekeeper</u><strong><sup>35</sup></strong>, Hannah Danby and her aunt, Sarah Danby. He had two daughters, Evelina and Georgiana, with either <u data-title='added new title'>Hannah</u> or Sarah, but kept this secret from the public. He finally recognised his parentage by leaving the two daughters money in his <u data-title='will: testamento'>will</u><strong><sup>36</sup></strong>. He had another lover called Mrs. Booth, the <u data-title='landlady: casera'>landlady</u><strong><sup>37</sup></strong> of the seaside house where he often stayed in Margate.</p>",
+//       "<p><span style='text-transform: capitalize;color: rgb(255, 0, 255); font-family: EsplanadeScriptPERSONALUSE;'>Tula Pink</span> <span style='color: red; font-family: EsplanadeScriptPERSONALUSE;'>Tula Pink</span> <span >Tula Pink</span> <span style='text-transform:uppercase'>Tula Pink</span> </p>",
 //     );
-//     // editor.setData("<b bold-color=true>world</b>");
+//     createListeners(editor);
+//     editor.addEventListener("textColor:addCustomColor", (evt: any) => {
+//       const { color } = evt;
+//       customColor.push({ color, label: "" });
+//     });
+//     editor.addEventListener("highlightColor:addCustomColor", (evt: any) => {
+//       const { color } = evt;
+//       customBackgroundColor.push({ color, label: "" });
+//     });
+//   })
+//   .catch((error) => {
+//     console.error(error);
+//   });
+
+// CustomEditor.create(document.querySelector("#editor") as HTMLElement, config)
+//   .then((editor) => {
+//     editor.setData(
+//       "<p><span style='text-transform: capitalize;color: rgb(255, 0, 255); font-family: EsplanadeScriptPERSONALUSE;'>Tula Pink</span> <span style='color: red; font-family: EsplanadeScriptPERSONALUSE;'>Tula Pink</span> <span >Tula Pink</span> <span style='text-transform:uppercase'>Tula Pink</span> </p>",
+//     );
 //     createListeners(editor);
 //     editor.addEventListener("textColor:addCustomColor", (evt: any) => {
 //       const { color } = evt;

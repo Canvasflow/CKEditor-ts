@@ -33,6 +33,9 @@ import title from "./assets/title.svg?raw";
 import remove from "./assets/remove.svg?raw";
 import edit from "./assets/edit.svg?raw";
 
+import fontDark from "./assets/font-dark.svg?raw";
+import fontDarkBackground from "./assets/background-dark.svg?raw";
+
 export function getIcon(name: IconType) {
   switch (name) {
     case "alignCenter":
@@ -103,6 +106,10 @@ export function getIcon(name: IconType) {
       return remove;
     case "edit":
       return edit;
+    case "darkBackground":
+      return fontDarkBackground;
+    case "fontDark":
+      return fontDark;
   }
 }
 
@@ -140,4 +147,6 @@ type IconType =
   | "underline"
   | "title"
   | "remove"
-  | "edit";
+  | "edit"
+  | "darkBackground"
+  | "fontDark";
