@@ -34,6 +34,8 @@ import { FontSize } from "./plugins/FontSize/FontSize";
 import { FontFamily } from "./plugins/FontFamily/FontFamily";
 import { FontStyles } from "./plugins/FontStyles/FontStyles";
 import { TitleCase } from "./plugins/TitleCase/TitleCase";
+import { DarkColor } from "./plugins/DarkColor/DarkColor";
+import { DarkBackgroundColor } from "./plugins/DarkBackground/DarkBackgroundColor";
 
 // Views
 import { BoldView } from "./plugins/FontStyles/BoldView";
@@ -120,6 +122,20 @@ function buildPlugins(components: Array<string | GroupItem>): {
           ],
         };
         toolbar.add(pluginView);
+      } else if (plugin === "DarkColor" || plugin === "DarkBackground") {
+        const pluginView = {
+          label:
+            plugin === "DarkColor"
+              ? "Dark Text Color"
+              : "Dark Background Color",
+          icon: getIconList(plugin),
+          items: [
+            plugin === "DarkColor"
+              ? "cf-dark-color"
+              : "cf-dark-background-color",
+          ],
+        };
+        toolbar.add(pluginView);
       } else {
         toolbar.add(pluginConfig?.toolbar);
       }
@@ -188,23 +204,6 @@ function getPluginConfig(plugin: any) {
       return {
         plugins: [Essentials, Paragraph, Font, FontStyles, Superscript],
         toolbar: SuperscriptView.viewName,
-      };
-
-    case "FontColor":
-      return {
-        plugins: [Essentials, Paragraph, Font, TextColor],
-      };
-
-    case "HighlightColor":
-      return {
-        plugins: [Essentials, Paragraph, Font, HighlightColor],
-      };
-
-    case "ClearFormatting":
-      //ERROR
-      return {
-        plugins: [Essentials, RemoveFormat, ClearFormat],
-        toolbar: ClearFormat.viewName,
       };
 
     case "BulletedList":
@@ -302,6 +301,32 @@ function getPluginConfig(plugin: any) {
         toolbar: TitleEditor.viewName,
       };
 
+    case "FontColor":
+      return {
+        plugins: [Essentials, Paragraph, Font, TextColor],
+      };
+
+    case "HighlightColor":
+      return {
+        plugins: [Essentials, Paragraph, Font, HighlightColor],
+      };
+
+    case "ClearFormatting":
+      return {
+        plugins: [Essentials, RemoveFormat, ClearFormat],
+        toolbar: ClearFormat.viewName,
+      };
+
+    case "DarkColor":
+      return {
+        plugins: [Essentials, Paragraph, Font, DarkColor],
+      };
+
+    case "DarkBackground":
+      return {
+        plugins: [Essentials, Paragraph, Font, DarkBackgroundColor],
+      };
+
     default:
       break;
   }
@@ -324,8 +349,14 @@ function getIconList(icon: string): any {
     case "FontColor":
       return getIcon("fontColor");
 
+    case "DarkColor":
+      return getIcon("fontDark");
+
     case "HighlightColor":
       return getIcon("highlightColor");
+
+    case "DarkBackground":
+      return getIcon("darkBackground");
 
     default:
       return getIcon("other");
